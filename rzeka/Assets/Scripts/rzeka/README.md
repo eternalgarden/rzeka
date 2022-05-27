@@ -1,9 +1,13 @@
-# rzekaX
+# rzeka
+
+breaks part of the old backwards-compatibility since for older unity versions you are good to use UniRx
 
 ### todo
 
-#### Observer.cs
-- ObserverExtensions (Synchronize)
+#### errors in observable extensions
+as described here:
+https://forum.unity.com/threads/unirx-reactive-extensions-for-unity.248535/page-7
+
 
 
 neuecc blog post where they mention possibly
