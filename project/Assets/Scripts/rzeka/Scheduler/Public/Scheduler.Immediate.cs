@@ -1,0 +1,55 @@
+/*
+      |\      _,,,---,,_
+ZZZzz /,`.-'`'    -.  ;-;;,_
+     |,4-  ) )-,_. ,\ (  `'-'
+    '---''(_/--'  `-'\_)
+
+most of the code straight out copied from @neuecc UniRx project
+https://github.com/neuecc/UniRx
+*/
+using System;
+using System.Threading;
+
+namespace Rzeka
+{
+    public static partial class Scheduler
+    {
+        /* 🌊 ---- ---- */
+    
+        public static readonly IScheduler Immediate = new ImmediateScheduler();
+
+        class ImmediateScheduler : IScheduler
+        {
+            public ImmediateScheduler()
+            {
+            }
+
+            public DateTimeOffset Now
+            {
+                get { return Scheduler.Now; }
+            }
+
+            public IDisposable Schedule(Action action)
+            {
+                action();
+                return Disposable.Empty;
+            }
+
+            public IDisposable Schedule(TimeSpan dueTime, Action action)
+            {
+                var wait = Scheduler.Normalize(dueTime);
+                if (wait.Ticks > 0)
+                {
+                    Thread.Sleep(wait);
+                }
+
+                action();
+                return Disposable.Empty;
+            }
+        }
+    
+        /* ---- ---- ⛺ */
+    }
+}
+/* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
+/* 26 May 2022 🌊 */
