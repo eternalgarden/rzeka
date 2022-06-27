@@ -30,7 +30,7 @@ namespace Rzeka
     {
         /* 🌊 ---- ---- */
     
-        private readonly DisposableBoolean _disposable = new DisposableBoolean();
+        private readonly BooleanDisposable _disposable = new BooleanDisposable();
         private readonly TimeSpan _dueTime;
         private readonly Action _action;
 

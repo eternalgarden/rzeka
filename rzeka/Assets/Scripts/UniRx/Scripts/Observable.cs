@@ -19,13 +19,13 @@ namespace UniRx
 
         public static IObservable<TR> Select<T, TR>(this IObservable<T> source, Func<T, TR> selector)
         {
-            // sometimes cause "which no ahead of time (AOT) code was generated." on IL2CPP...
-
-            //var select = source as ISelect<T>;
-            //if (select != null)
-            //{
-            //    return select.CombineSelector(selector);
-            //}
+            /*
+            TODO this is actually interesting
+            could there be other places for possible optimizations like that
+            could this be automated that operators would actually be packaged like that
+            by default
+            what is the main point of optimization here, instantiated object count?
+            */
 
             // optimized path
             var whereObservable = source as UniRx.Operators.WhereObservable<T>;
@@ -44,7 +44,6 @@ namespace UniRx
 
         public static IObservable<T> Where<T>(this IObservable<T> source, Func<T, bool> predicate)
         {
-            // optimized path
             var whereObservable = source as UniRx.Operators.WhereObservable<T>;
             if (whereObservable != null)
             {

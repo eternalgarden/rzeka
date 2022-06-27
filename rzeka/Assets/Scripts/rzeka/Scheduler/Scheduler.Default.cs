@@ -15,7 +15,7 @@ namespace Rzeka
     {
         /* 🌊 ---- ---- */
 
-        public static class Default
+        public static class DefaultSchedulers
         {
             static IScheduler constantTime;
             public static IScheduler ConstantTimeOperations

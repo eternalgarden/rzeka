@@ -226,9 +226,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796128152}
+  - component: {fileID: 796128157}
   - component: {fileID: 796128153}
+  - component: {fileID: 796128156}
+  - component: {fileID: 796128155}
+  - component: {fileID: 796128154}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Just things
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,6 +254,56 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &796128153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796128151}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8563dc2d72f995345be0e21d8a6891d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spamRegularUpdate: 1
+--- !u!114 &796128154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796128151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda9f395d15136440bf1ee3aeb712a45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &796128155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796128151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14bfa1f5bb4e92840b50ce0a79cbf34f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &796128156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796128151}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a734047e039218b408556e548459ef37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spamRegularUpdate: 0
+--- !u!114 &796128157
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

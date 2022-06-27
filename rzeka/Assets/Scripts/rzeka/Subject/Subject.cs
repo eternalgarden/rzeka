@@ -17,6 +17,12 @@ namespace Rzeka
     public sealed class Subject<T> : ISubject<T>, IDisposable, IOptimizedObservable<T>
     {
         object _observerLock = new object();
+        
+        /// <remarks>
+        /// There is no way to "un-stop" a subject. Once OnError or OnCompleted
+        /// was thrown it gets marked as 'true' and there is no way to "re-up" it. 
+        /// Dispose it and recreate.
+        /// </remarks>
         bool _isStopped;
         bool _isDisposed;
         Exception _lastError;

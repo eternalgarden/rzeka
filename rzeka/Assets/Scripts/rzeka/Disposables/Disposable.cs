@@ -15,6 +15,8 @@ namespace Rzeka
 
     /*
 
+    TODO Enjoy how elegant and cute these little babies idea are
+
     A nice litle cute thing to have anonymous action
     called on Dispose() by a disposable objects that wraps it,
     possibly along with it's own state.

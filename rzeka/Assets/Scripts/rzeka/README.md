@@ -1,6 +1,16 @@
 # rzeka
 
-breaks part of the old backwards-compatibility since for older unity versions you are good to use UniRx
+
+
+## old scripting defines and backwards compatibility
+
+breaks part of the old backwards-compatibility since for older unity versions you are good to use UniRx;
+
+possibly oldest handled version is 2018_3;
+
+### old defines
+SupportCustomYieldInstruction is assumed to be true and removed;
+UniRxLibrary is assumed to be false and removed;
 
 ### todo
 

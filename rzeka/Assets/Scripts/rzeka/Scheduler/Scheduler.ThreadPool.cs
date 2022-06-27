@@ -42,7 +42,7 @@ namespace Rzeka
 
             public IDisposable Schedule(Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
 
                 System.Threading.ThreadPool.QueueUserWorkItem(_ =>
                 {

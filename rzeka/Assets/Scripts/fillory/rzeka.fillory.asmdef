@@ -1,0 +1,16 @@
+{
+    "name": "rzeka.fillory",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f3a868c2076f3b54293ce32562033880"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

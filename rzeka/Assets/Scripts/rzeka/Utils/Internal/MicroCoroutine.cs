@@ -20,67 +20,72 @@ namespace Rzeka.Utils
     /// </summary>
     internal class MicroCoroutine
     {
-        const int InitialSize = 16;
+        const int INITIAL_SIZE = 16;
 
-        readonly object runningAndQueueLock = new object();
-        readonly object arrayLock = new object();
-        readonly Action<Exception> unhandledExceptionCallback;
+        readonly object _runningAndQueueLock = new object();
+        readonly object _arrayLock = new object();
+        readonly Action<Exception> _unhandledExceptionCallback;
 
-        int tail = 0;
-        bool running = false;
-        IEnumerator[] coroutines = new IEnumerator[InitialSize];
-        Queue<IEnumerator> waitQueue = new Queue<IEnumerator>();
+        int _tail = 0;
+        bool _running = false;
+        IEnumerator[] _coroutines = new IEnumerator[INITIAL_SIZE];
+        Queue<IEnumerator> _waitQueue = new Queue<IEnumerator>();
 
         public MicroCoroutine(Action<Exception> unhandledExceptionCallback)
         {
-            this.unhandledExceptionCallback = unhandledExceptionCallback;
+            this._unhandledExceptionCallback = unhandledExceptionCallback;
         }
 
         public void AddCoroutine(IEnumerator enumerator)
         {
-            lock (runningAndQueueLock)
+            lock (_runningAndQueueLock)
             {
-                if (running)
+                if (_running)
                 {
-                    waitQueue.Enqueue(enumerator);
+                    _waitQueue.Enqueue(enumerator);
                     return;
                 }
             }
 
             // worst case at multi threading, wait lock until finish Run() but it is super rarely.
-            lock (arrayLock)
+            lock (_arrayLock)
             {
                 // Ensure Capacity
-                if (coroutines.Length == tail)
+                if (_coroutines.Length == _tail)
                 {
-                    Array.Resize(ref coroutines, checked(tail * 2));
+                    Array.Resize(ref _coroutines, checked(_tail * 2));
                 }
-                coroutines[tail++] = enumerator;
+
+                _coroutines[_tail++] = enumerator;
             }
         }
 
         public void Run()
         {
-            lock (runningAndQueueLock)
+            lock (_runningAndQueueLock)
             {
-                running = true;
+                _running = true;
             }
 
-            lock (arrayLock)
+            lock (_arrayLock)
             {
-                var j = tail - 1;
+                var j = _tail - 1;
 
                 // eliminate array-bound check for i
-                for (int i = 0; i < coroutines.Length; i++)
+                for (int i = 0; i < _coroutines.Length; i++)
                 {
-                    var coroutine = coroutines[i];
+                    var coroutine = _coroutines[i];
+
                     if (coroutine != null)
                     {
                         try
                         {
                             if (!coroutine.MoveNext())
                             {
-                                coroutines[i] = null;
+                                // this will happen when a yield break was called
+                                // inside of that routine
+                                // we get rid of it's reference then
+                                _coroutines[i] = null;
                             }
                             else
                             {
@@ -97,10 +102,10 @@ namespace Rzeka.Utils
                         }
                         catch (Exception ex)
                         {
-                            coroutines[i] = null;
+                            _coroutines[i] = null;
                             try
                             {
-                                unhandledExceptionCallback(ex);
+                                _unhandledExceptionCallback(ex);
                             }
                             catch { }
                         }
@@ -109,14 +114,15 @@ namespace Rzeka.Utils
                     // find null, loop from tail
                     while (i < j)
                     {
-                        var fromTail = coroutines[j];
+                        var fromTail = _coroutines[j];
+
                         if (fromTail != null)
                         {
                             try
                             {
                                 if (!fromTail.MoveNext())
                                 {
-                                    coroutines[j] = null;
+                                    _coroutines[j] = null;
                                     j--;
                                     continue; // next j
                                 }
@@ -131,19 +137,20 @@ namespace Rzeka.Utils
 #endif
 
                                     // swap
-                                    coroutines[i] = fromTail;
-                                    coroutines[j] = null;
+                                    _coroutines[i] = fromTail;
+                                    _coroutines[j] = null;
                                     j--;
+
                                     goto NEXT_LOOP; // next i
                                 }
                             }
                             catch (Exception ex)
                             {
-                                coroutines[j] = null;
+                                _coroutines[j] = null;
                                 j--;
                                 try
                                 {
-                                    unhandledExceptionCallback(ex);
+                                    _unhandledExceptionCallback(ex);
                                 }
                                 catch { }
                                 continue; // next j
@@ -155,7 +162,7 @@ namespace Rzeka.Utils
                         }
                     }
 
-                    tail = i; // loop end
+                    _tail = i; // loop end
                     break; // LOOP END
 
                 NEXT_LOOP:
@@ -163,16 +170,16 @@ namespace Rzeka.Utils
                 }
 
 
-                lock (runningAndQueueLock)
+                lock (_runningAndQueueLock)
                 {
-                    running = false;
-                    while (waitQueue.Count != 0)
+                    _running = false;
+                    while (_waitQueue.Count != 0)
                     {
-                        if (coroutines.Length == tail)
+                        if (_coroutines.Length == _tail)
                         {
-                            Array.Resize(ref coroutines, checked(tail * 2));
+                            Array.Resize(ref _coroutines, checked(_tail * 2));
                         }
-                        coroutines[tail++] = waitQueue.Dequeue();
+                        _coroutines[_tail++] = _waitQueue.Dequeue();
                     }
                 }
             }

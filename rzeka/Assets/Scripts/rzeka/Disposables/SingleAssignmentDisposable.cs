@@ -100,6 +100,10 @@ namespace Rzeka
             {
                 if (!disposed)
                 {
+                    //* isn't this a perfect example of how shady working with automatic garbage collecting is sometimes
+                    //* like you can't just say dispose on the current object, dispose doesn't really mean much in c#
+                    //* it's only like a pattern to follow
+                    //* so you make a thing like this to be dead-sure there are no references hanging around
                     disposed = true;
                     old = current;
                     current = null;

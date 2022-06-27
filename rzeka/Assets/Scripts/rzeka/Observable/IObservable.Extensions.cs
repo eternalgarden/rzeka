@@ -11,11 +11,6 @@ using System;
 
 namespace Rzeka
 {
-    /*
-
-    
-
-    */
     public static partial class IObservableExtensions
     {
         /* 🌊 ---- ---- */

@@ -63,7 +63,7 @@ namespace UniRx
             startTime = scheduler.Now;
         }
 
-        void Trim()
+        void TrimItemQueue()
         {
             var elapsedTime = Scheduler.Normalize(scheduler.Now - startTime);
 
@@ -71,6 +71,8 @@ namespace UniRx
             {
                 queue.Dequeue();
             }
+
+            // TODO explain usage of elapsed time
             while (queue.Count > 0 && elapsedTime.Subtract(queue.Peek().Interval).CompareTo(window) > 0)
             {
                 queue.Dequeue();
@@ -88,7 +90,8 @@ namespace UniRx
                 old = outObserver;
                 outObserver = EmptyObserver<T>.Instance;
                 isStopped = true;
-                Trim();
+                
+                TrimItemQueue();
             }
 
             old.OnCompleted();
@@ -108,7 +111,7 @@ namespace UniRx
                 outObserver = EmptyObserver<T>.Instance;
                 isStopped = true;
                 lastError = error;
-                Trim();
+                TrimItemQueue();
             }
 
             old.OnError(error);
@@ -124,7 +127,7 @@ namespace UniRx
 
                 // enQ
                 queue.Enqueue(new TimeInterval<T>(value, scheduler.Now - startTime));
-                Trim();
+                TrimItemQueue();
 
                 current = outObserver;
             }
@@ -142,31 +145,16 @@ namespace UniRx
             lock (observerLock)
             {
                 ThrowIfDisposed();
+
                 if (!isStopped)
                 {
-                    var listObserver = outObserver as ListObserver<T>;
-                    if (listObserver != null)
-                    {
-                        outObserver = listObserver.Add(observer);
-                    }
-                    else
-                    {
-                        var current = outObserver;
-                        if (current is EmptyObserver<T>)
-                        {
-                            outObserver = observer;
-                        }
-                        else
-                        {
-                            outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] { current, observer }));
-                        }
-                    }
-
+                    SaveObserver(observer);
                     subscription = new Subscription(this, observer);
                 }
 
                 ex = lastError;
-                Trim();
+                TrimItemQueue();
+
                 foreach (var item in queue)
                 {
                     observer.OnNext(item.Value);
@@ -187,6 +175,27 @@ namespace UniRx
             }
 
             return Disposable.Empty;
+        }
+
+        private void SaveObserver(IObserver<T> observer)
+        {
+            var listObserver = outObserver as ListObserver<T>;
+            if (listObserver != null)
+            {
+                outObserver = listObserver.Add(observer);
+            }
+            else
+            {
+                var current = outObserver;
+                if (current is EmptyObserver<T>)
+                {
+                    outObserver = observer;
+                }
+                else
+                {
+                    outObserver = new ListObserver<T>(new ImmutableList<IObserver<T>>(new[] { current, observer }));
+                }
+            }
         }
 
         public void Dispose()

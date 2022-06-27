@@ -92,13 +92,13 @@ namespace Rzeka
 
         #endregion // ---------------------------------- Constructors -------------------------
 
-        
+
         //
         // ⛺ ─── Public methods ───────────────────────────────────────────────────
         //
-        
+
         #region Public methods
-        
+
         /// <summary>
         /// Adds a disposable to the CompositeDisposable or disposes the disposable if the CompositeDisposable is disposed.
         /// </summary>
@@ -120,7 +120,10 @@ namespace Rzeka
                 }
             }
             if (shouldDispose)
+            {
+                UnityEngine.Debug.Log($"<color=yellow>Warning. Composite Disposable has already been disposed, dissposing an item that was just added. Consider using CompositeDisposable.Clear() method instead of it's Dispose() method if you only want to dispose it's member disposables but not the composite itself.</color>");
                 item.Dispose();
+            }
         }
 
         /// <summary>
@@ -193,8 +196,9 @@ namespace Rzeka
             if (currentDisposables != null)
             {
                 foreach (var d in currentDisposables)
-                    if (d != null)
-                        d.Dispose();
+                {
+                    if (d != null) d.Dispose();
+                }
             }
         }
 
@@ -211,9 +215,13 @@ namespace Rzeka
                 _count = 0;
             }
 
-            foreach (var d in currentDisposables)
-                if (d != null)
-                    d.Dispose();
+            if (currentDisposables != null)
+            {
+                foreach (var d in currentDisposables)
+                {
+                    if (d != null) d.Dispose();
+                }
+            }
         }
 
         /// <summary>
@@ -302,7 +310,7 @@ namespace Rzeka
         {
             get { return _disposed; }
         }
-        
+
         #endregion // ---------------------------------- Public methods -------------------------
     }
 

@@ -23,11 +23,11 @@ namespace Rzeka
     {
         public static void SetDefaultForUnity()
         {
-            Scheduler.Default.ConstantTimeOperations = Scheduler.Immediate;
-            Scheduler.Default.TailRecursion = Scheduler.Immediate;
-            Scheduler.Default.Iteration = Scheduler.CurrentThread;
-            Scheduler.Default.TimeBasedOperations = MainThread;
-            Scheduler.Default.AsyncConversions = Scheduler.ThreadPool;
+            Scheduler.DefaultSchedulers.ConstantTimeOperations = Scheduler.Immediate;
+            Scheduler.DefaultSchedulers.TailRecursion = Scheduler.Immediate;
+            Scheduler.DefaultSchedulers.Iteration = Scheduler.CurrentThread;
+            Scheduler.DefaultSchedulers.TimeBasedOperations = MainThread;
+            Scheduler.DefaultSchedulers.AsyncConversions = Scheduler.ThreadPool;
         }
 #endif
         static IScheduler mainThread;
@@ -145,7 +145,7 @@ namespace Rzeka
 
             void Schedule(object state)
             {
-                var t = (Tuple<DisposableBoolean, Action>)state;
+                var t = (Tuple<BooleanDisposable, Action>)state;
                 if (!t.Item1.IsDisposed)
                 {
                     t.Item2();
@@ -154,7 +154,7 @@ namespace Rzeka
 
             public IDisposable Schedule(Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 MainThreadDispatcher.Post(scheduleAction, Tuple.Create(d, action));
                 return d;
             }
@@ -166,7 +166,7 @@ namespace Rzeka
 
             public IDisposable Schedule(TimeSpan dueTime, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(dueTime);
 
                 MainThreadDispatcher.SendStartCoroutine(DelayAction(time, action, d));
@@ -176,7 +176,7 @@ namespace Rzeka
 
             public IDisposable SchedulePeriodic(TimeSpan period, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(period);
 
                 MainThreadDispatcher.SendStartCoroutine(PeriodicAction(time, action, d));
@@ -291,7 +291,7 @@ namespace Rzeka
 
             void Schedule(object state)
             {
-                var t = (Tuple<DisposableBoolean, Action>)state;
+                var t = (Tuple<BooleanDisposable, Action>)state;
                 if (!t.Item1.IsDisposed)
                 {
                     t.Item2();
@@ -300,7 +300,7 @@ namespace Rzeka
 
             public IDisposable Schedule(Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 MainThreadDispatcher.Post(scheduleAction, Tuple.Create(d, action));
                 return d;
             }
@@ -312,7 +312,7 @@ namespace Rzeka
 
             public IDisposable Schedule(TimeSpan dueTime, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(dueTime);
 
                 MainThreadDispatcher.SendStartCoroutine(DelayAction(time, action, d));
@@ -322,7 +322,7 @@ namespace Rzeka
 
             public IDisposable SchedulePeriodic(TimeSpan period, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(period);
 
                 MainThreadDispatcher.SendStartCoroutine(PeriodicAction(time, action, d));
@@ -444,7 +444,7 @@ namespace Rzeka
 
             public IDisposable Schedule(TimeSpan dueTime, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(dueTime);
 
                 MainThreadDispatcher.StartFixedUpdateMicroCoroutine(DelayAction(time, action, d));
@@ -454,7 +454,7 @@ namespace Rzeka
 
             public IDisposable SchedulePeriodic(TimeSpan period, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(period);
 
                 MainThreadDispatcher.StartFixedUpdateMicroCoroutine(PeriodicAction(time, action, d));
@@ -560,7 +560,7 @@ namespace Rzeka
 
             public IDisposable Schedule(TimeSpan dueTime, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(dueTime);
 
                 MainThreadDispatcher.StartEndOfFrameMicroCoroutine(DelayAction(time, action, d));
@@ -570,7 +570,7 @@ namespace Rzeka
 
             public IDisposable SchedulePeriodic(TimeSpan period, Action action)
             {
-                var d = new DisposableBoolean();
+                var d = new BooleanDisposable();
                 var time = Scheduler.Normalize(period);
 
                 MainThreadDispatcher.StartEndOfFrameMicroCoroutine(PeriodicAction(time, action, d));
