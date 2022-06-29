@@ -37,7 +37,7 @@ namespace Rzeka.Stream
             stream.OnNext(thought);
         }
 
-        public IObservable<T> Observe<T>(object context, out IDisposable disposable) where T : StreamEvent
+        public IQbservable<T> Observe<T>(object context, out IDisposable disposable) where T : StreamEvent
         {
             IDisposable localDisposable = null;
 
@@ -51,7 +51,7 @@ namespace Rzeka.Stream
 
             disposable = localDisposable;
 
-            return observable as IObservable<T>;
+            return observable as IQbservable<T>;
         }
 
         class Wellspring

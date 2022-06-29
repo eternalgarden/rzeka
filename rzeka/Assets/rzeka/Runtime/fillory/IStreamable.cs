@@ -14,17 +14,16 @@ using System.Collections.Generic;
 namespace Rzeka.Stream
 {
     /* 🌊 ---- ---- */
-
-    // * to be considered for the reason of an observable having other
-    // * public methods thsn subscribed
-    public interface TStranding<T> : IObservable<T>
+    
+    public interface IQbservable<T> : IObservable<T>
     {
-
+        // * to be considered for the reason of an observable having other
+        // * public methods thsn subscribed
     }
 
     public interface IObservableStream
     {
-        IObservable<T> Observe<T>(object context, out IDisposable disposable) where T : StreamEvent;
+        IQbservable<T> Observe<T>(object context, out IDisposable disposable) where T : StreamEvent;
         void Consider<T>(T thought) where T : StreamEvent;
     }
 

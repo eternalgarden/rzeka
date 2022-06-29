@@ -1,0 +1,14 @@
+{
+    "name": "com.aurelia.rzeka",
+    "version": "0.1.0",
+    "displayName": "rzeka",
+    "description": "a reimplementation of UniRx for the purposes of creating a base for a well debuggable, translucent and testable event-bus architecture",
+    "keywords": [
+      "ecologys"
+    ],
+    "author": {
+      "name": "marai dreams",
+      "url": "https://www.spacejam.com/"
+    },
+    "hideInEditor": false
+  }
