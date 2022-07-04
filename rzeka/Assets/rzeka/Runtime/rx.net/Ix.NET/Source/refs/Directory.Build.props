@@ -1,0 +1,9 @@
+<Project>  
+  
+  <Import Project="..\Directory.Build.props" />
+  
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);REFERENCE_ASSEMBLY</DefineConstants>
+  </PropertyGroup>
+
+</Project>

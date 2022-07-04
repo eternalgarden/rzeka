@@ -1,0 +1,9 @@
+﻿<Project>
+
+  <!-- This props all need to be set in targets as they depend on the values set earlier -->
+
+  <PropertyGroup>
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+  </PropertyGroup>
+
+</Project>
