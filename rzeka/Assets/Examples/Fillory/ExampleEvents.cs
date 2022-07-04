@@ -20,7 +20,7 @@ namespace Rzeka.Examples
 
     public class SpecialKeyPressedEvent : StreamGiftEvent<SimpleGift<KeyCode>>
     {
-        public override string Description => throw new NotImplementedException();
+        public override string Description => $"Dreamer pressed a special key {Gift.Content}";
     }
 
     /* ---- ---- ⛺ */

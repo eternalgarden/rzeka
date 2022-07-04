@@ -9,7 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -17,13 +17,13 @@ namespace Rzeka.Operators
     {
         // oof
         // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/volatile
-        protected internal volatile IObserver<TResult> observer;
-        IDisposable cancel;
+        protected internal volatile IObserver<TResult> _observer;
+        IDisposable _cancel;
 
         public OperatorObserverBase(IObserver<TResult> observer, IDisposable cancel)
         {
-            this.observer = observer;
-            this.cancel = cancel;
+            _observer = observer;
+            _cancel = cancel;
         }
 
         public abstract void OnNext(TSource value);
@@ -34,10 +34,11 @@ namespace Rzeka.Operators
 
         public void Dispose()
         {
-            observer = Rzeka.Utils.EmptyObserver<TResult>.Instance;
+            _observer = Rzeka.Utils.EmptyObserver<TResult>.Instance;
 
             // I shall not preted that I understand threading code
-            var target = System.Threading.Interlocked.Exchange(ref cancel, null);
+            var target = System.Threading.Interlocked.Exchange(ref _cancel, null);
+            
             if (target != null)
             {
                 target.Dispose();

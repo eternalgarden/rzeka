@@ -7,6 +7,8 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
+using System;
+using System.Collections.Generic;
 using Rzeka;
 using Rzeka.Stream;
 using UnityEngine;
@@ -15,23 +17,20 @@ namespace Rzeka.Examples
 {
     /* 🌊 ---- ---- */
 
-    class KeyPressManager : MonoBehaviour
+    class SpecialKeyManager : MonoBehaviour
     {
-        [SerializeField] GameController gc;
         [SerializeField] KeyCode[] specialCodes;
 
-        void Start()
+        IDisposable cat;
+
+        void OnEnable()
         {
             // -------------
 
-            Observable.EveryUpdate()
-                .Select(_ =>
+            cat = Observable.EveryUpdate()
+                .SelectMany(_ =>
                 {
-                    bool foundAny = false;
-
-                    KeyCode[] pressedSpecialKeys = new KeyCode[specialCodes.Length];
-
-                    int pressedIndex = 0;
+                    List<KeyCode> pressedSpecialKeys = new(specialCodes.Length);
 
                     for (int i = 0; i < specialCodes.Length; i++)
                     {
@@ -39,37 +38,39 @@ namespace Rzeka.Examples
 
                         if (Input.GetKeyDown(currentCode))
                         {
-                            pressedSpecialKeys[pressedIndex] = currentCode;
-                            foundAny = true;
-                            pressedIndex++;
+                            pressedSpecialKeys.Add(currentCode);
                         }
                     }
 
-                    return (foundAny: foundAny, codes: pressedSpecialKeys);
+                    return pressedSpecialKeys;
                 })
-                .Where(o => o.foundAny)
-                .Subscribe(o =>
+                .Subscribe(keyCode =>
                 {
+                    SpecialKeyPressedEvent e = new();
 
-                    for (int i = 0; i < o.codes.Length; i++)
-                    {
-                        KeyCode currentCode = o.codes[i];
+                    e.Initialize(
+                        gift: new SimpleGift<KeyCode>(keyCode),
+                        context: this,
+                        circumstances: new RootEvent()
+                    );
 
-                        SpecialKeyPressedEvent e = new();
-
-                        // e.Initialize(
-                        //     gift: new SimpleGift<KeyCode>(currentCode),
-                        //     context: this,
-                        //     circumstances: // TODO a generic root event
-                        // );
-
-                        gc.Fillory.Consider(e);
-                    }
+                    Rzeka.O.Pluck(e);
 
                 });
 
             // -------------
         }
+
+        void OnDisable()
+        {
+            // -------------
+            Debug.Log($"asdf");
+            
+            
+            cat.Dispose();
+            
+            // -------------
+        }    
     }
 
     /* ---- ---- ⛺ */

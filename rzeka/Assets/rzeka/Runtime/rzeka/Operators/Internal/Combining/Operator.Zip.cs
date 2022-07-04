@@ -10,7 +10,7 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections.Generic;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -79,7 +79,7 @@ namespace Rzeka.Operators
                 }
                 else if (leftCompleted || rightCompleted)
                 {
-                    try { observer.OnCompleted(); }
+                    try { _observer.OnCompleted(); }
                     finally { Dispose(); }
                     return;
                 }
@@ -94,7 +94,7 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); }
+                    try { _observer.OnError(ex); }
                     finally { Dispose(); }
                     return;
                 }
@@ -104,18 +104,18 @@ namespace Rzeka.Operators
 
             public override void OnNext(TResult value)
             {
-                base.observer.OnNext(value);
+                base._observer.OnNext(value);
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); }
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
 
@@ -284,7 +284,7 @@ namespace Rzeka.Operators
 
                     if (allCompletedWithoutSelf)
                     {
-                        try { observer.OnCompleted(); }
+                        try { _observer.OnCompleted(); }
                         finally { Dispose(); }
                         return;
                     }
@@ -305,18 +305,18 @@ namespace Rzeka.Operators
 
             public override void OnNext(IList<T> value)
             {
-                base.observer.OnNext(value);
+                base._observer.OnNext(value);
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); }
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
 

@@ -9,7 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -57,7 +57,7 @@ namespace Rzeka.Operators
                     }
                     catch (Exception ex)
                     {
-                        try { observer.OnError(ex); }
+                        try { _observer.OnError(ex); }
                         finally { Dispose(); }
                         return;
                     }
@@ -66,7 +66,7 @@ namespace Rzeka.Operators
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
@@ -77,8 +77,8 @@ namespace Rzeka.Operators
                     throw new InvalidOperationException("Sequence contains no elements.");
                 }
 
-                observer.OnNext(accumulation);
-                try { observer.OnCompleted(); }
+                _observer.OnNext(accumulation);
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
         }
@@ -122,7 +122,7 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); }
+                    try { _observer.OnError(ex); }
                     finally { Dispose(); }
                     return;
                 }
@@ -130,14 +130,14 @@ namespace Rzeka.Operators
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                observer.OnNext(accumulation);
-                try { observer.OnCompleted(); }
+                _observer.OnNext(accumulation);
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
         }
@@ -183,7 +183,7 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); }
+                    try { _observer.OnError(ex); }
                     finally { Dispose(); }
                     return;
                 }
@@ -191,7 +191,7 @@ namespace Rzeka.Operators
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
@@ -208,8 +208,8 @@ namespace Rzeka.Operators
                     return;
                 }
 
-                observer.OnNext(result);
-                try { observer.OnCompleted(); }
+                _observer.OnNext(result);
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
         }

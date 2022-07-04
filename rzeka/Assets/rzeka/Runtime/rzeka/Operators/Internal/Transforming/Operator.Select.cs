@@ -9,7 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -92,21 +92,21 @@ namespace Rzeka.Operators
                     // TODO this is an insufficient error handling method, 
                     // TODO it is not specific enough about the place it happened
                     // TODO or is it?
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
-                observer.OnNext(v);
+                _observer.OnNext(v);
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
 
@@ -132,21 +132,21 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
-                observer.OnNext(v);
+                _observer.OnNext(v);
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
     }

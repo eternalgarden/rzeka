@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -58,7 +58,7 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
@@ -75,22 +75,22 @@ namespace Rzeka.Operators
                     }
                     catch (Exception ex)
                     {
-                        try { observer.OnError(ex); } finally { Dispose(); }
+                        try { _observer.OnError(ex); } finally { Dispose(); }
                         return;
                     }
 
-                    observer.OnNext(v);
+                    _observer.OnNext(v);
                 }
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
     }

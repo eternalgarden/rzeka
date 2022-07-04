@@ -8,6 +8,7 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
+using System.Threading;
 
 namespace Rzeka
 {
@@ -16,13 +17,15 @@ namespace Rzeka
     /*
 
     TODO Enjoy how elegant and cute these little babies idea are
+    TODO But rewrite them so they are even nicer like in NetRx
 
     A nice litle cute thing to have anonymous action
     called on Dispose() by a disposable objects that wraps it,
     possibly along with it's own state.
 
-    */
+    ! In UniRx this was named just as 'Disposable'
 
+    */
     public static class Disposable
     {
         public static readonly IDisposable Empty = EmptyDisposable.Singleton;
@@ -33,19 +36,19 @@ namespace Rzeka
         }
 
         public static IDisposable CreateWithState<TState>(
-            TState state, 
+            TState state,
             Action<TState> disposeAction)
         {
             return new AnonymousDisposable<TState>(state, disposeAction);
         }
 
-        
+
         //
         // ⛺ ─── Nested Types ───────────────────────────────────────────────────
         //
-        
+
         #region Nested Types
-        
+
         class EmptyDisposable : IDisposable
         {
             public static EmptyDisposable Singleton = new EmptyDisposable();
@@ -60,48 +63,8 @@ namespace Rzeka
             }
         }
 
-        class AnonymousDisposable : IDisposable
-        {
-            bool isDisposed = false;
-            readonly Action dispose;
 
-            public AnonymousDisposable(Action dispose)
-            {
-                this.dispose = dispose;
-            }
 
-            public void Dispose()
-            {
-                if (!isDisposed)
-                {
-                    isDisposed = true;
-                    dispose();
-                }
-            }
-        }
-
-        class AnonymousDisposable<T> : IDisposable
-        {
-            bool isDisposed = false;
-            readonly T state;
-            readonly Action<T> dispose;
-
-            public AnonymousDisposable(T state, Action<T> dispose)
-            {
-                this.state = state;
-                this.dispose = dispose;
-            }
-
-            public void Dispose()
-            {
-                if (!isDisposed)
-                {
-                    isDisposed = true;
-                    dispose(state);
-                }
-            }
-        }
-        
         #endregion // ---------------------------------- Nested Types -------------------------
     }
 

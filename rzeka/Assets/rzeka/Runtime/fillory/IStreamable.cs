@@ -14,26 +14,6 @@ using System.Collections.Generic;
 namespace Rzeka.Stream
 {
     /* 🌊 ---- ---- */
-    
-    public interface IQbservable<T> : IObservable<T>
-    {
-        // * to be considered for the reason of an observable having other
-        // * public methods thsn subscribed
-    }
-
-    public interface IObservableStream
-    {
-        IQbservable<T> Observe<T>(object context, out IDisposable disposable) where T : StreamEvent;
-        void Consider<T>(T thought) where T : StreamEvent;
-    }
-
-    public interface IObservableStreamProposals : IObservableStream
-    {
-        StreamEvent CreateCoreEvent();
-        void Promise<T, TR>(Func<IObservable<T>, IObservable<TR>> promise, object context) where T : StreamEvent;
-        IObservable<PromiseResolution<T>> Promise<T>(object context) where T : Gift;
-        IDisposable Observe<T1, T2>(Action<IObservable<T1>, IObservable<T2>> thought, object context) where T1 : StreamEvent where T2 : StreamEvent;
-    }
 
     [Serializable]
     public class LogGift : Gift

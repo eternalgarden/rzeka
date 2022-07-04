@@ -4,28 +4,39 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
      |,4-  ) )-,_. ,\ (  `'-'
     '---''(_/--'  `-'\_)
 
-most of the code straight out copied from @neuecc UniRx project
-https://github.com/neuecc/UniRx
+    Licensed to the .NET Foundation under one or more agreements.
+    The .NET Foundation licenses this file to you under the MIT License.
+    See the LICENSE file in the project root for more information.
+
+    Straita copied from Net.Rx
 */
+
 using System;
 
 namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
-    /// <remarks>
-    /// A Subject that Observes one type of event and emits another as an Observable.
-    /// Currently used only by an AnonymousSubject
-    /// </remarks>
-    public interface ISubject<TSource, TResult> : IObserver<TSource>, IObservable<TResult>
+    /// <summary>
+    /// Represents an object that is both an observable sequence as well as an observer.
+    /// </summary>
+    /// <typeparam name="T">The type of the elements processed by the subject.</typeparam>
+    public interface ISubject<T> : ISubject<T, T>
     {
     }
 
-
-    /// <remarks>
-    /// Subject that provides an Observable of the same type of event it is an Observer of.
-    /// </remarks>
-    public interface ISubject<T> : ISubject<T, T>, IObserver<T>, IObservable<T>
+    /// <summary>
+    /// Represents an object that is both an observable sequence as well as an observer.
+    /// </summary>
+    /// <typeparam name="TSource">
+    /// The type of the elements received by the subject.
+    /// This type parameter is contravariant. That is, you can use either the type you specified or any type that is less derived. For more information about covariance and contravariance, see Covariance and Contravariance in Generics.
+    /// </typeparam>
+    /// <typeparam name="TResult">
+    /// The type of the elements produced by the subject.
+    /// This type parameter is covariant. That is, you can use either the type you specified or any type that is more derived. For more information about covariance and contravariance, see Covariance and Contravariance in Generics.
+    /// </typeparam>
+    public interface ISubject<in TSource, out TResult> : IObserver<TSource>, IObservable<TResult>
     {
     }
 

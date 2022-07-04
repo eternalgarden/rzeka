@@ -8,7 +8,8 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
-using Rzeka.Operators;
+using System.Collections.Generic;
+using Rzeka;
 
 namespace Rzeka
 {
@@ -224,6 +225,24 @@ namespace Rzeka
         }
         
         #endregion // ---------------------------------- Range -------------------------
+
+        
+        //
+        // ⛺ ─── ToObservable ───────────────────────────────────────────────────
+        //
+        #region ToObservable
+        
+        public static IObservable<T> ToObservable<T>(this IEnumerable<T> source)
+        {
+            return ToObservable(source, Scheduler.DefaultSchedulers.Iteration);
+        }
+
+        public static IObservable<T> ToObservable<T>(this IEnumerable<T> source, IScheduler scheduler)
+        {
+            return new ToObservableObservable<T>(source, scheduler);
+        }
+        
+        #endregion // ---------------------------------- ToObservable -------------------------
 
         /* ---- ---- ⛺ */
     }

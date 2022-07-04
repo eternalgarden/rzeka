@@ -9,7 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -48,7 +48,7 @@ namespace Rzeka.Operators
             {
                 try
                 {
-                    base.observer.OnNext(value);
+                    base._observer.OnNext(value);
                 }
                 catch
                 {
@@ -59,13 +59,13 @@ namespace Rzeka.Operators
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); }
+                try { _observer.OnError(error); }
                 finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); }
+                try { _observer.OnCompleted(); }
                 finally { Dispose(); }
             }
         }

@@ -9,7 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 
-namespace Rzeka.Operators
+namespace Rzeka
 {
     /* 🌊 ---- ---- */
 
@@ -18,6 +18,12 @@ namespace Rzeka.Operators
         readonly IObservable<T> source;
         readonly Func<T, bool> predicate;
         readonly Func<T, int, bool> predicateWithIndex;
+
+
+        //
+        // ⛺ ─── Constructors ───────────────────────────────────────────────────
+        //
+        #region Constructors
 
         public WhereObservable(IObservable<T> source, Func<T, bool> predicate)
             : base(source.IsRequiredSubscribeOnCurrentThread())
@@ -32,6 +38,13 @@ namespace Rzeka.Operators
             this.source = source;
             this.predicateWithIndex = predicateWithIndex;
         }
+
+        #endregion // ---------------------------------- Constructors -------------------------
+
+        //
+        // ⛺ ─── Combining methods (process optimization) ───────────────────────────────────────────────────
+        //
+        #region Combining methods (process optimization)
 
         /// <summary>
         /// Optimize for .Where().Where()
@@ -65,6 +78,19 @@ namespace Rzeka.Operators
             }
         }
 
+        #endregion // ---------------------------------- Combining methods (process optimization) -------------------------
+
+
+        /// <remarks>
+        /// A part of this is how is how always works for operators, operator who is an 
+        /// observable creates an observer under the hood who wraps up the original 
+        /// observer, it's basically a 'Decorator' pattern.
+        /// 
+        /// WRONG... It's important to know however that this method is only called when .Subscribe(...) call
+        /// follows directly after that operator.
+        /// 
+        /// If there is another operator following this one, ex. .Select() after .Where()
+        /// </remarks>
         protected override IDisposable SubscribeCore(IObserver<T> observer, IDisposable cancel)
         {
             if (predicate != null)
@@ -98,24 +124,24 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
                 if (isPassed)
                 {
-                    observer.OnNext(value);
+                    _observer.OnNext(value);
                 }
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
 
@@ -140,24 +166,24 @@ namespace Rzeka.Operators
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
                 if (isPassed)
                 {
-                    observer.OnNext(value);
+                    _observer.OnNext(value);
                 }
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
     }

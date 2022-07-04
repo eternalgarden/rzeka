@@ -126,6 +126,7 @@ namespace UniRx
                 if (isStopped) return;
 
                 // enQ
+                // TODO you can remove time interval calculation if no time window is specified
                 queue.Enqueue(new TimeInterval<T>(value, scheduler.Now - startTime));
                 TrimItemQueue();
 

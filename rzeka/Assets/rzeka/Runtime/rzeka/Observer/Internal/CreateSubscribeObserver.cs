@@ -12,7 +12,7 @@ namespace Rzeka
     {
         // -------------
         
-        internal static IObserver<T> CreateSubscribeObserver<T>(Action<T> onNext, Action<Exception> onError, Action onCompleted)
+        public static IObserver<T> CreateSubscribeObserver<T>(Action<T> onNext, Action<Exception> onError, Action onCompleted)
         {
             // need compare for avoid iOS AOT
             if (onNext == Stubs<T>.Ignore)
@@ -25,7 +25,7 @@ namespace Rzeka
             }
         }
 
-        internal static IObserver<T> CreateSubscribeWithStateObserver<T, TState>(TState state, Action<T, TState> onNext, Action<Exception, TState> onError, Action<TState> onCompleted)
+        public static IObserver<T> CreateSubscribeWithStateObserver<T, TState>(TState state, Action<T, TState> onNext, Action<Exception, TState> onError, Action<TState> onCompleted)
         {
             return new Subscribe<T, TState>(state, onNext, onError, onCompleted);
         }

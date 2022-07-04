@@ -20,9 +20,9 @@ namespace Rzeka.Examples
     
     class GameController : MonoBehaviour
     {
-        Fillory fillory = new Fillory();
+        Rzeka fillory = new Rzeka();
 
-        public Fillory Fillory => fillory;
+        public Rzeka Fillory => fillory;
 
         void Start()
         {

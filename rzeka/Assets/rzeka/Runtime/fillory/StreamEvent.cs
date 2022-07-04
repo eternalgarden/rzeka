@@ -12,10 +12,85 @@ using System.Linq;
 
 namespace Rzeka.Stream
 {
+    /*
+
+    Each event also describes the type of strand it creates
+
+    - Hot (Subject)
+        - no default value
+        - throws error when there are no listeners to a published event?
+    - Cold (ReplaySubject)
+        - no default value
+        - published events are getting stored even if there are no listeners at the time
+        - defines it's buffer size
+    - Behaved (BehaviourSubject)
+        - has default value
+
+    */
+    [Flags]
+    public enum StrandDescriptors
+    {
+        Hot,
+        Replay,
+        Behaviour,
+        Pooled
+    }
+
+    public class StrandAttribute : Attribute
+    {
+        public StrandAttribute() { }
+    }
+
+    public class HotAttribute : StrandAttribute
+    {
+        public HotAttribute() { }
+    }
+
+    public class HoardingAttribute : StrandAttribute
+    {
+        private readonly object defaultValue;
+        private readonly int buffer;
+        private readonly bool pooled;
+        private readonly int poolSize;
+
+        public HoardingAttribute(object defaultValue, int buffer)
+        {
+            this.defaultValue = defaultValue;
+            this.buffer = buffer;
+        }
+
+        public HoardingAttribute(object defaultValue, int buffer, bool pooled, int poolSize)
+            : this(defaultValue, buffer)
+        {
+            this.defaultValue = defaultValue;
+            this.pooled = pooled;
+            this.poolSize = poolSize;
+        }
+    }
+
+    public class KindAttribute : StrandAttribute
+    {
+        private object defaultValue;
+
+        public KindAttribute(object defaultValue, int buffer)
+        {
+            this.defaultValue = defaultValue;
+        }
+    }
+
+    //    [Hot] 
     public abstract class StreamEvent
     {
         object context;
         StreamEvent[] circumstances;
+        public abstract string Description { get; }
+
+        //
+        // ⛺ ─── Properties ───────────────────────────────────────────────────
+        //
+        #region Properties
+
+        public virtual StreamEvent Default => null;
 
         public object Context
         {
@@ -43,6 +118,8 @@ namespace Rzeka.Stream
             get => circumstances.Contains(other);
         }
 
+        #endregion // ---------------------------------- Properties -------------------------
+
         public void Initialize(object context, params StreamEvent[] circumstances)
         {
             if (circumstances is null)
@@ -55,14 +132,20 @@ namespace Rzeka.Stream
         }
     }
 
+    public interface IResettable
+    {
+        void Reset();
+    }
+
     public sealed class RootEvent : StreamEvent
     {
-        new private object Context;
-        new private StreamEvent[] Circumstances;
-        new private bool this[StreamEvent other]
-        {
-            get => false;
-        }
+        // new private object Context;
+        // new private StreamEvent[] Circumstances;
+        // new private bool this[StreamEvent other]
+        // {
+        //     get => false;
+        // }
+        public override string Description => throw new NotImplementedException();
     }
 
     public abstract class Gift { }
@@ -101,7 +184,6 @@ namespace Rzeka.Stream
 
         new private void Initialize(object context, params StreamEvent[] circumstances) { }
 
-        public abstract string Description { get; }
 
         public virtual bool HasDefault(out T defaultValue)
         {

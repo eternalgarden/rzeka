@@ -8,7 +8,7 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
-using Rzeka.Operators;
+using Rzeka;
 
 namespace Rzeka
 {
@@ -54,7 +54,7 @@ namespace Rzeka
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
@@ -65,24 +65,24 @@ namespace Rzeka
                 }
                 catch (Exception ex)
                 {
-                    try { observer.OnError(ex); } finally { Dispose(); }
+                    try { _observer.OnError(ex); } finally { Dispose(); }
                     return;
                 }
 
                 if (isPassed)
                 {
-                    observer.OnNext(v);
+                    _observer.OnNext(v);
                 }
             }
 
             public override void OnError(Exception error)
             {
-                try { observer.OnError(error); } finally { Dispose(); }
+                try { _observer.OnError(error); } finally { Dispose(); }
             }
 
             public override void OnCompleted()
             {
-                try { observer.OnCompleted(); } finally { Dispose(); }
+                try { _observer.OnCompleted(); } finally { Dispose(); }
             }
         }
     }
