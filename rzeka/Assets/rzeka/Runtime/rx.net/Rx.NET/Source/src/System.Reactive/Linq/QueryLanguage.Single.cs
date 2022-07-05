@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT License.
-// See the LICENSE file in the project root for more information. 
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Linq;
@@ -125,6 +125,11 @@ namespace System.Reactive.Linq
         public virtual IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext)
         {
             return new Do<TSource>.OnNext(source, onNext);
+        }
+        
+        public virtual IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted, Action<IObserver<TSource>> onSubscribed, Action<IObserver<TSource>> onUnsubscribed)
+        {
+            return new Do<TSource>.Spy(source, onNext, onError, onCompleted, onSubscribed, onUnsubscribed);
         }
 
         public virtual IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action onCompleted)

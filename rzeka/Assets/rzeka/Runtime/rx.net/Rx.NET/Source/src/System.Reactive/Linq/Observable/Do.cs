@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT License.
-// See the LICENSE file in the project root for more information. 
+// See the LICENSE file in the project root for more information.
+
+using System.Reactive.Disposables;
 
 namespace System.Reactive.Linq.ObservableImpl
 {
@@ -146,6 +148,103 @@ namespace System.Reactive.Linq.ObservableImpl
                 private readonly Actions _parent;
 
                 public _(Actions parent, IObserver<TSource> observer)
+                    : base(observer)
+                {
+                    _parent = parent;
+                }
+
+                public override void OnNext(TSource value)
+                {
+                    try
+                    {
+                        _parent._onNext(value);
+                    }
+                    catch (Exception ex)
+                    {
+                        ForwardOnError(ex);
+                        return;
+                    }
+
+                    ForwardOnNext(value);
+                }
+
+                public override void OnError(Exception error)
+                {
+                    try
+                    {
+                        _parent._onError(error);
+                    }
+                    catch (Exception ex)
+                    {
+                        ForwardOnError(ex);
+                        return;
+                    }
+
+                    ForwardOnError(error);
+                }
+
+                public override void OnCompleted()
+                {
+                    try
+                    {
+                        _parent._onCompleted();
+                    }
+                    catch (Exception ex)
+                    {
+                        ForwardOnError(ex);
+                        return;
+                    }
+
+                    ForwardOnCompleted();
+                }
+            }
+        }
+
+        internal sealed class Spy : Producer<TSource, Spy._>
+        {
+            private readonly IObservable<TSource> _source;
+            private readonly Action<TSource> _onNext;
+            private readonly Action<Exception> _onError;
+            private readonly Action _onCompleted;
+            private readonly Action<IObserver<TSource>> _onSubscribed;
+            private readonly Action<IObserver<TSource>> _onUnsubscribed;
+
+            public Spy(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted, Action<IObserver<TSource>> onSubscribed, Action<IObserver<TSource>> onUnsubscribed)
+            {
+                _source = source;
+                _onNext = onNext;
+                _onError = onError;
+                _onCompleted = onCompleted;
+                _onSubscribed = onSubscribed;
+                _onUnsubscribed = onUnsubscribed;
+            }
+
+            public new IDisposable Subscribe(IObserver<TSource> observer)
+            {
+                if (observer == null)
+                {
+                    throw new ArgumentNullException(nameof(observer));
+                }
+
+                _onSubscribed(observer);
+
+                return new CompositeDisposable(
+                    Disposable.Create(() => _onUnsubscribed(observer)),
+                    SubscribeRaw(observer, enableSafeguard: true)
+                );
+            }
+
+            protected override _ CreateSink(IObserver<TSource> observer) => new _(this, observer);
+
+            protected override void Run(_ sink) => sink.Run(_source);
+
+            internal sealed class _ : IdentitySink<TSource>
+            {
+                // CONSIDER: This sink has a parent reference that can be considered for removal.
+
+                private readonly Spy _parent;
+
+                public _(Spy parent, IObserver<TSource> observer)
                     : base(observer)
                 {
                     _parent = parent;

@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT License.
-// See the LICENSE file in the project root for more information. 
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -554,6 +554,7 @@ namespace System.Reactive.Linq
         IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action onCompleted);
         IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError);
         IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted);
+        IObservable<TSource> Do<TSource>(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted, Action<IObserver<TSource>> onSubscribed, Action<IObserver<TSource>> onUnsubscribed);
         IObservable<TSource> Do<TSource>(IObservable<TSource> source, IObserver<TSource> observer);
         IObservable<TSource> Finally<TSource>(IObservable<TSource> source, Action finallyAction);
         IObservable<TSource> IgnoreElements<TSource>(IObservable<TSource> source);

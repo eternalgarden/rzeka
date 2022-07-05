@@ -1,6 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT License.
-// See the LICENSE file in the project root for more information. 
+// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.Reactive.Concurrency;
@@ -373,6 +373,55 @@ namespace System.Reactive.Linq
             }
 
             return s_impl.Do(source, onNext, onError, onCompleted);
+        }
+
+        /// <summary>
+        /// Overload added by Rzeka; Has potentially a considerable overhead, use with caution and only in debuggine environments.
+        /// Invokes an action for each element in the observable sequence and invokes an action upon graceful or exceptional termination of the observable sequence.
+        /// This method can be used for debugging, logging, etc. of query behavior by intercepting the message stream to run arbitrary actions for messages on the pipeline.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the elements in the source sequence.</typeparam>
+        /// <param name="source">Source sequence.</param>
+        /// <param name="onNext">Action to invoke for each element in the observable sequence.</param>
+        /// <param name="onError">Action to invoke upon exceptional termination of the observable sequence.</param>
+        /// <param name="onCompleted">Action to invoke upon graceful termination of the observable sequence.</param>
+        /// <param name="onSubscribed">Action to invoke right BEFORE subscription is made.</param>
+        /// <param name="onUnsubscribed">Action to invoke right BEFORE original dispose action is called.</param>
+        /// <returns>The source sequence with the side-effecting behavior applied.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> or <paramref name="onNext"/> or <paramref name="onError"/> or <paramref name="onCompleted"/> is null.</exception>
+        public static IObservable<TSource> Do<TSource>(this IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted, Action<IObserver<TSource>> onSubscribed, Action<IObserver<TSource>> onUnsubscribed)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            if (onNext == null)
+            {
+                throw new ArgumentNullException(nameof(onNext));
+            }
+
+            if (onError == null)
+            {
+                throw new ArgumentNullException(nameof(onError));
+            }
+
+            if (onCompleted == null)
+            {
+                throw new ArgumentNullException(nameof(onCompleted));
+            }
+
+            if (onSubscribed == null)
+            {
+                throw new ArgumentNullException(nameof(onSubscribed));
+            }
+
+            if (onUnsubscribed == null)
+            {
+                throw new ArgumentNullException(nameof(onUnsubscribed));
+            }
+
+            return s_impl.Do(source, onNext, onError, onCompleted, onSubscribed, onUnsubscribed);
         }
 
         /// <summary>
