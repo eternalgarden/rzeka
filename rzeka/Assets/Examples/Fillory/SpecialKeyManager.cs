@@ -9,6 +9,7 @@ https://github.com/neuecc/UniRx
 */
 using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using Rzeka;
 using Rzeka.Stream;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace Rzeka.Examples
         {
             // -------------
 
-            cat = Observable.EveryUpdate()
+            cat = UnityObservable.EveryUpdate()
                 .SelectMany(_ =>
                 {
                     List<KeyCode> pressedSpecialKeys = new(specialCodes.Length);
@@ -54,8 +55,7 @@ namespace Rzeka.Examples
                         circumstances: new RootEvent()
                     );
 
-                    Rzeka.O.Pluck(e);
-
+                    Rzeka.Pluck(e);
                 });
 
             // -------------
@@ -64,8 +64,6 @@ namespace Rzeka.Examples
         void OnDisable()
         {
             // -------------
-            Debug.Log($"asdf");
-            
             
             cat.Dispose();
             

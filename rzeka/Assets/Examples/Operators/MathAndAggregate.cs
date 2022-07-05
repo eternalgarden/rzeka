@@ -8,10 +8,8 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using Rzeka;
+using System.Reactive.Linq;
 using UnityEngine;
 
 namespace Rzeka.Examples
@@ -23,7 +21,7 @@ namespace Rzeka.Examples
         void Start()
         {
             // TODO weird result with default scheduler (silent)
-            var just = Observable.Range(0, 3, Scheduler.Immediate); // 0 + 1 + 2 = 3
+            var just = Observable.Range(0, 3); // 0 + 1 + 2 = 3
 
             just
                 .Aggregate((s, v) =>

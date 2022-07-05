@@ -10,6 +10,8 @@ https://github.com/neuecc/UniRx
 using System;
 using UnityEngine;
 using NaughtyAttributes;
+using System.Reactive.Subjects;
+using System.Reactive;
 
 namespace Rzeka.Examples
 {

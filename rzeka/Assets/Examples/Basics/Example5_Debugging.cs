@@ -9,6 +9,8 @@ https://github.com/neuecc/UniRx
 */
 using System;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using UnityEngine;
 
 namespace Rzeka
@@ -23,7 +25,7 @@ namespace Rzeka
         {
             // -------------
 
-            _everyUpdate = Observable
+            _everyUpdate = UnityObservable
                 .EveryUpdate()
                 .Where(_ => Input.GetKeyDown(KeyCode.A))
                 .Select(_ =>

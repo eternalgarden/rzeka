@@ -11,6 +11,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using Rzeka;
 using Rzeka.Stream;
 using UnityEngine;
@@ -26,24 +28,24 @@ namespace Rzeka
             return new WhoObserver<T>(onNext, onError, onCompleted, who);
         }
 
+        // public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, object who)
+        // {
+        //     return source.Subscribe(CreateWhoObserver(onNext, Stubs.Throw, Stubs.Nop, who));
+        // }
+
+        // public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, Action<Exception> onError, object who)
+        // {
+        //     return source.Subscribe(CreateWhoObserver(onNext, onError, Stubs.Nop, who));
+        // }
+
+        // public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, Action onCompleted, object who)
+        // {
+        //     return source.Subscribe(CreateWhoObserver(onNext, Stubs.Throw, onCompleted, who));
+        // }
+
         public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, object who)
         {
-            return source.Subscribe(CreateWhoObserver(onNext, Stubs.Throw, Stubs.Nop, who));
-        }
-
-        public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, Action<Exception> onError, object who)
-        {
-            return source.Subscribe(CreateWhoObserver(onNext, onError, Stubs.Nop, who));
-        }
-
-        public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, Action onCompleted, object who)
-        {
-            return source.Subscribe(CreateWhoObserver(onNext, Stubs.Throw, onCompleted, who));
-        }
-
-        public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, Action<Exception> onError, Action onCompleted, object who)
-        {
-            return source.Subscribe(CreateWhoObserver(onNext, onError, onCompleted, who));
+            return source.Subscribe(CreateWhoObserver(onNext, null, null, who));
         }
     }
 
@@ -72,46 +74,37 @@ namespace Rzeka
 
     // * make it a singleton
     // * all methods static
-    public class Rzeka : MonoBehaviour, IObservableStream
+    public class Rzeka : MonoBehaviour
     {
 
         Subject<StreamEvent> rzeka = new Subject<StreamEvent>();
         Dictionary<Type, ISubject<StreamEvent>> strands = new Dictionary<Type, ISubject<StreamEvent>>();
         IRzekaChartable<StreamEvent> cartographer;
 
-        private static Rzeka o;
+        private static Rzeka _instance;
 
-        public static Rzeka O
+        public static Rzeka Instance
         {
             get
             {
-                if (o is null)
+                if (_instance is null)
                 {
-                    Rzeka[] rivers = GameObject.FindObjectsOfType<Rzeka>();
-
-                    if (rivers.Length == 0)
-                    {
-                        throw new Exception("on misses a river");
-                    }
-                    else if (rivers.Length > 1)
-                    {
-                        throw new Exception("double rzeka");
-                    }
-
-                    o = rivers[0];
+                    Debug.LogError($"TOO EARLY, AWAKE DIDN'T GO THROUGH.");
                 }
 
-                return o;
+                return _instance;
             }
         }
 
         void Awake()
         {
             // -------------
+            
+            _instance = this;
 
             cartographer = new LoggingCartographer();
 
-            var riverD = rzeka
+            var riverD = Instance.rzeka
                 .Do(
                     onNext: e => cartographer.OnNext(e),
                     onError: err => cartographer.OnError(err),
@@ -149,17 +142,17 @@ namespace Rzeka
             // -------------
         }
 
-        public void Pluck<T>(T thought) where T : StreamEvent
+        public static void Pluck<T>(T thought) where T : StreamEvent
         {
-            rzeka.OnNext(thought);
+            Instance.rzeka.OnNext(thought);
         }
 
         // * rename to get strand or sth like that
-        public IObservable<T> Strand<T>() where T : StreamEvent
+        public static IObservable<T> Strand<T>() where T : StreamEvent
         {
-            IObservable<StreamEvent> strand = strands[typeof(T)];
+            IObservable<StreamEvent> strand = Instance.strands[typeof(T)];
 
-            return strand.Cast(default(T));
+            return strand.Cast<T>();
         }
     }
 

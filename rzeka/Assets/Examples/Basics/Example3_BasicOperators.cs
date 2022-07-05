@@ -8,12 +8,10 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System.Reactive.Linq;
 using UnityEngine;
 
-namespace Rzeka
+namespace Rzeka.Examples
 {
     /* 🌊 ---- ---- */
 
@@ -28,7 +26,7 @@ namespace Rzeka
         {
             // -------------
 
-            _observableUpdate = Observable.EveryUpdate();
+            _observableUpdate = UnityObservable.EveryUpdate();
 
             // -------------
         }

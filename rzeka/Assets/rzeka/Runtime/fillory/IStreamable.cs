@@ -10,6 +10,7 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reactive.Subjects;
 
 namespace Rzeka.Stream
 {

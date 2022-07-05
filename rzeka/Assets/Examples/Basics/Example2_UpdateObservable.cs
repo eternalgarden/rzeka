@@ -1,7 +1,8 @@
 using System;
-using Rzeka;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using UnityEngine;
-using Observable = Rzeka.Observable;
+using Rzeka;
 
 public class Example2_UpdateObservable : MonoBehaviour
 {
@@ -13,8 +14,8 @@ public class Example2_UpdateObservable : MonoBehaviour
     void Awake()
     {
         // -------------
-
-        _observableUpdate = Observable.EveryUpdate();
+        
+        _observableUpdate = UnityObservable.EveryUpdate();
         _subscriptions = new CompositeDisposable();
 
         // -------------
