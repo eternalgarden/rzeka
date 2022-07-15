@@ -12,23 +12,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Subjects;
 
-namespace Rzeka.Stream
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 
-    [Serializable]
-    public class LogGift : Gift
-    {
-        public string Log { get; set; }
-    }
-
-    public class LogEvent : StreamGiftEvent<LogGift>
-    {
-        // public LogEvent(LogGift gift, object context) : base(gift, context) { }
-
-        public override string Description => "An thought occured to a dreamer.";
-    }
-
+    
     public abstract class StreamPromise<T> : StreamEvent where T : Gift
     {
         IObservableStream stream;

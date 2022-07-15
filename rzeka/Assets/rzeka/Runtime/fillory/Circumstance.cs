@@ -11,19 +11,18 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using Rzeka.Stream;
+using RzekaRiver;
 
-namespace Rzeka.Examples
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
-
-    public class SpecialKeyPressedEvent : StreamGiftEvent<SimpleGift<KeyCode>>
+    
+    public class Circumstances
     {
-        public override string Description => $"Dreamer pressed a special key {Gift.Content}";
+        public static readonly UnknownStrand UNKNOWN = new UnknownStrand();
     }
-
+    
     /* ---- ---- ⛺ */
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
-/* 17 June 2022 🌊 */
+/* 06 July 2022 🌊 */

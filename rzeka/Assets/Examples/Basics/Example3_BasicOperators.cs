@@ -11,7 +11,7 @@ using System;
 using System.Reactive.Linq;
 using UnityEngine;
 
-namespace Rzeka.Examples
+namespace RzekaRiver.Examples
 {
     /* 🌊 ---- ---- */
 

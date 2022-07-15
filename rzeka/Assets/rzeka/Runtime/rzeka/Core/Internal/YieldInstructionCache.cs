@@ -10,7 +10,7 @@ https://github.com/neuecc/UniRx
 
 using UnityEngine;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 

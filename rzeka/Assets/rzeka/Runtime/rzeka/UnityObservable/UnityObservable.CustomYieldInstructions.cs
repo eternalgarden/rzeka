@@ -11,7 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Rzeka.Unity
+namespace RzekaRiver.Unity
 {
     /* 🌊 ---- ---- */
 

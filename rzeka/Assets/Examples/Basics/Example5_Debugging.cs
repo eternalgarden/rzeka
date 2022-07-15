@@ -13,7 +13,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using UnityEngine;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 

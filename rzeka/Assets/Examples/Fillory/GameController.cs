@@ -12,27 +12,26 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Rzeka.Stream;
 
-namespace Rzeka.Examples
+namespace RzekaRiver.Examples
 {
     /* 🌊 ---- ---- */
     
-    class GameController : MonoBehaviour
-    {
-        Rzeka fillory = new Rzeka();
+    // class GameController : MonoBehaviour
+    // {
+    //     Rzeka fillory = new Rzeka();
 
-        public Rzeka Fillory => fillory;
+    //     public Rzeka Fillory => fillory;
 
-        void Start()
-        {
-            // -------------
+    //     void Start()
+    //     {
+    //         // -------------
             
             
             
-            // -------------
-        }
-    }
+    //         // -------------
+    //     }
+    // }
     
     /* ---- ---- ⛺ */
 }

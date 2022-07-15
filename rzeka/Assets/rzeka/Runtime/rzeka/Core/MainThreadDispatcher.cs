@@ -11,10 +11,10 @@ using System;
 using System.Collections;
 using System.Reactive;
 using System.Reactive.Subjects;
-using Rzeka.Utils;
+using RzekaRiver.Utils;
 using UnityEngine;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /*
 

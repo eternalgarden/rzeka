@@ -7,17 +7,24 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
-using System;
 
-namespace Rzeka
+namespace RzekaRiver
 {
-    public interface IRzekaChartable<T> : IObserver<T>
+    public abstract class Gift { }
+
+    public class SimpleGift<T> : Gift
     {
-        void OnSubscribed(IObserver<T> observer);
-        void OnUnsubscribed(IObserver<T> observer);
+        readonly T content;
+
+        public T Content => content;
+
+        public SimpleGift(T content)
+        {
+            this.content = content;
+        }
     }
 
     /* ---- ---- ⛺ */
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
-/* 17 June 2022 🌊 */
+/* 12 June 2022 🌊 */

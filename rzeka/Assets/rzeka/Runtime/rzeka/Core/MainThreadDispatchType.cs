@@ -8,7 +8,7 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 
-namespace Rzeka
+namespace RzekaRiver
 {
     public enum MainThreadDispatchType
     {

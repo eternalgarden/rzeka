@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Threading;
-using Rzeka;
+using RzekaRiver;
 
-namespace Rzeka.Unity.Operators
+namespace RzekaRiver.Unity.Operators
 {
     /* 🌊 ---- ---- */
 

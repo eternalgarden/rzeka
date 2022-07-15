@@ -2,7 +2,7 @@ using System;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using UnityEngine;
-using Rzeka;
+using RzekaRiver;
 
 public class Example2_UpdateObservable : MonoBehaviour
 {

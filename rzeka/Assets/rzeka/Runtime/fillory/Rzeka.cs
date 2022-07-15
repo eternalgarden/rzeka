@@ -13,11 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Rzeka;
-using Rzeka.Stream;
 using UnityEngine;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 
@@ -25,7 +23,7 @@ namespace Rzeka
     {
         internal static IObserver<T> CreateWhoObserver<T>(Action<T> onNext, Action<Exception> onError, Action onCompleted, object who)
         {
-            return new WhoObserver<T>(onNext, onError, onCompleted, who);
+            return new RzekaObserver<T>(onNext, onError, onCompleted, who);
         }
 
         // public static IDisposable Observe<T>(this IObservable<T> source, Action<T> onNext, object who)
@@ -76,53 +74,58 @@ namespace Rzeka
     // * all methods static
     public class Rzeka : MonoBehaviour
     {
+        [SerializeField] RzekaCharter _cartographer;
+        Subject<StreamEvent> _rzeka = new Subject<StreamEvent>();
+        Dictionary<Type, ISubject<StreamEvent>> _strands = new Dictionary<Type, ISubject<StreamEvent>>();
 
-        Subject<StreamEvent> rzeka = new Subject<StreamEvent>();
-        Dictionary<Type, ISubject<StreamEvent>> strands = new Dictionary<Type, ISubject<StreamEvent>>();
-        IRzekaChartable<StreamEvent> cartographer;
+        static Rzeka _instance;
 
-        private static Rzeka _instance;
-
-        public static Rzeka Instance
+        static Rzeka Instance
         {
             get
             {
                 if (_instance is null)
                 {
                     Debug.LogError($"TOO EARLY, AWAKE DIDN'T GO THROUGH.");
+                    return null;
                 }
 
                 return _instance;
             }
         }
-
+        
+        //
+        // ⛺ ─── Lifecycle ───────────────────────────────────────────────────
+        //
+        #region Lifecycle
+        
         void Awake()
         {
             // -------------
             
             _instance = this;
 
-            cartographer = new LoggingCartographer();
+            _cartographer = new DebugCartographer();
 
-            var riverD = Instance.rzeka
+            var riverD = Instance._rzeka
                 .Do(
-                    onNext: e => cartographer.OnNext(e),
-                    onError: err => cartographer.OnError(err),
-                    onCompleted: () => cartographer.OnCompleted(),
-                    onSubscribed: obs => cartographer.OnSubscribed(obs),
-                    onUnsubscribed: obs => cartographer.OnUnsubscribed(obs))
+                    onNext: e => _cartographer.OnNext(e),
+                    onError: err => _cartographer.OnError(err),
+                    onCompleted: () => _cartographer.OnCompleted(),
+                    onSubscribed: obs => _cartographer.OnObserved(obs as RzekaObserver<StreamEvent>),
+                    onUnsubscribed: obs => _cartographer.OnUnobserved(obs as RzekaObserver<StreamEvent>))
                 .Observe(
                     onNext: e =>
                     {
                         Type key = e.GetType();
 
-                        if (strands.ContainsKey(key) == false)
+                        if (_strands.ContainsKey(key) == false)
                         {
                             // * diff  
-                            strands.Add(key, new Subject<StreamEvent>());
+                            _strands.Add(key, new Subject<StreamEvent>());
                         }
 
-                        strands[key].OnNext(e);
+                        _strands[key].OnNext(e);
                     },
                     who: this);
 
@@ -132,28 +135,64 @@ namespace Rzeka
         void OnApplicationQuit()
         {
             // -------------
-
-            Debug.Log($"destroy");
-
-            rzeka.Dispose();
-            strands = null;
-            cartographer = null;
+            
+            Debug.Log($"<color=yellow>Rzeka Quit</color>");
+            
+            _rzeka.Dispose();
+            _instance =  null;
+            _strands = null;
+            _cartographer = null;
 
             // -------------
         }
+        
+        #endregion // ---------------------------------- Lifecycle -------------------------
 
+        
+        //
+        // ⛺ ─── Public Interface ───────────────────────────────────────────────────
+        //
+        #region Public Interface
+        
         public static void Pluck<T>(T thought) where T : StreamEvent
         {
-            Instance.rzeka.OnNext(thought);
+            Instance._rzeka.OnNext(thought);
         }
 
         // * rename to get strand or sth like that
         public static IObservable<T> Strand<T>() where T : StreamEvent
         {
-            IObservable<StreamEvent> strand = Instance.strands[typeof(T)];
+            MakeStrand<T>(out ISubject<StreamEvent> strand);
 
             return strand.Cast<T>();
         }
+        
+        #endregion // ---------------------------------- Public Interface -------------------------
+
+
+        //
+        // ⛺ ─── Private Implementation ───────────────────────────────────────────────────
+        //
+        #region Private Implementation
+        
+        static void MakeStrand<T>(out ISubject<StreamEvent> strand) where T : StreamEvent
+        {
+            Type type = typeof(T);
+
+            if (Instance._strands.ContainsKey(type))
+            {
+                strand = Instance._strands[type];
+            }
+            else
+            {
+                object[] attributes = type.GetCustomAttributes(inherit: false);
+                strand = new Subject<StreamEvent>();
+                // strand = new ReplaySubject<StreamEvent>()
+                Instance._strands.Add(type, strand);
+            }
+        }
+        
+        #endregion // ---------------------------------- Private Implementation -------------------------
     }
 
     /* ---- ---- ⛺ */

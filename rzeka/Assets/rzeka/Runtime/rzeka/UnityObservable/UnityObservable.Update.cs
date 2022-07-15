@@ -10,9 +10,9 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections;
 using System.Threading;
-using Rzeka;
+using RzekaRiver;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 

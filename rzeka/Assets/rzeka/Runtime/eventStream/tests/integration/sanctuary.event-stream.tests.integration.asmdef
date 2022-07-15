@@ -1,0 +1,23 @@
+{
+    "name": "sanctuary.event-stream.tests.integration",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a558f9d9f686369419a7cbe7d0ee7634",
+        "GUID:0acc523941302664db1f4e527237feb3",
+        "GUID:27619889b8ba8c24980f49ee34dbb44a",
+        "GUID:1e5f6322ef572e845be00a14177e43b8"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

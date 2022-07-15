@@ -10,10 +10,10 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections;
 using System.Threading;
-using Rzeka;
-using Rzeka.Unity.Operators;
+using RzekaRiver;
+using RzekaRiver.Unity.Operators;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
     public static partial class UnityObservable

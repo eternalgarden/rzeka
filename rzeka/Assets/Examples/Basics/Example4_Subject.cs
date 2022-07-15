@@ -13,7 +13,7 @@ using NaughtyAttributes;
 using System.Reactive.Subjects;
 using System.Reactive;
 
-namespace Rzeka.Examples
+namespace RzekaRiver.Examples
 {
     /* 🌊 ---- ---- */
 

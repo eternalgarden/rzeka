@@ -11,19 +11,20 @@ using System;
 using System.Threading;
 using UnityEngine;
 
-namespace Rzeka.Stream
+namespace RzekaRiver
 {
-    internal class WhoObserver<T> : IObserver<T>
+    public class RzekaObserver<T> : IObserver<T>, IDisposable
     {
-        readonly Action<T> _onNext;
-        readonly Action<Exception> _onError;
-        readonly Action _onCompleted;
-        readonly object _who;
+        Action<T> _onNext;
+        Action<Exception> _onError;
+        Action _onCompleted;
+        object _who;
         int isStopped = 0;
 
         public object Who => _who;
+        public Type StrandType => typeof(T);
 
-        public WhoObserver(Action<T> onNext, Action<Exception> onError, Action onCompleted, object who)
+        public RzekaObserver(Action<T> onNext, Action<Exception> onError, Action onCompleted, object who)
         {
             _onNext = onNext;
             _onError = onError;
@@ -70,6 +71,14 @@ namespace Rzeka.Stream
                 whoGameobject = null;
                 return false;
             }
+        }
+
+        public void Dispose()
+        {
+            _onNext = null;
+            _onCompleted = null;
+            _onError = null;
+            _who = null;
         }
     }
 }

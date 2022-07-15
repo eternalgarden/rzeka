@@ -13,7 +13,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Rzeka.Examples
+namespace RzekaRiver.Examples
 {
     public class Example1_Observable : MonoBehaviour
     {

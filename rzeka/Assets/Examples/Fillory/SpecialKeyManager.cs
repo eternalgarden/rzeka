@@ -10,11 +10,10 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using Rzeka;
-using Rzeka.Stream;
+using RzekaRiver;
 using UnityEngine;
 
-namespace Rzeka.Examples
+namespace Examples.Fillory
 {
     /* 🌊 ---- ---- */
 
@@ -47,12 +46,12 @@ namespace Rzeka.Examples
                 })
                 .Subscribe(keyCode =>
                 {
-                    SpecialKeyPressedEvent e = new();
+                    SpecialKeyPressEvent e = new();
 
                     e.Initialize(
                         gift: new SimpleGift<KeyCode>(keyCode),
                         context: this,
-                        circumstances: new RootEvent()
+                        circumstances: new UnknownStrand()
                     );
 
                     Rzeka.Pluck(e);

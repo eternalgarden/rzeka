@@ -12,7 +12,7 @@ https://github.com/neuecc/UniRx
 using UnityEditor;
 using UnityEditor.Callbacks;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     /* 🌊 ---- ---- */
 

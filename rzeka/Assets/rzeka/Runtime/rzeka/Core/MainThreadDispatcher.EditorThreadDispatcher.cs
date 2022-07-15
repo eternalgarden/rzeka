@@ -17,7 +17,7 @@ using System.Collections;
 using System.Reflection;
 using UnityEngine;
 
-namespace Rzeka
+namespace RzekaRiver
 {
     public partial class MainThreadDispatcher
     {
