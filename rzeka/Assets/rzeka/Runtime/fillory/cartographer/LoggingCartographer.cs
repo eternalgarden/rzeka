@@ -27,12 +27,12 @@ namespace RzekaRiver
             throw new NotImplementedException();
         }
 
-        public override void OnNext(StreamEvent value)
+        public override void OnNext(ThoughtBase value)
         {
             Debug.Log($"<color=yellow>Event {value.GetType()} :: {value.Description}</color>");
         }
 
-        public override void OnObserved(RzekaObserver<StreamEvent> observer)
+        public override void OnObserved(WhoObserver<ThoughtBase> observer)
         {
             if (observer.WhoAsGameObject(out object plain, out GameObject game))
             {
@@ -44,7 +44,7 @@ namespace RzekaRiver
             }
         }
 
-        public override void OnUnobserved(RzekaObserver<StreamEvent> observer)
+        public override void OnUnobserved(WhoObserver<ThoughtBase> observer)
         {
             if (observer.WhoAsGameObject(out object plain, out GameObject game))
             {

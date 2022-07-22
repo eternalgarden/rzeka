@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RzekaRiver;
 using TMPro;
+using System.Reactive.Linq;
 
 namespace Examples.Fillory
 {
@@ -27,40 +28,46 @@ namespace Examples.Fillory
     
     public class GameConsole : MonoBehaviour
     {
+        [SerializeField] Rzeka rzeka;
         [SerializeField] TextMeshProUGUI consoleBodyTMP;
 
         void Start()
         {
             // -------------
             
-            var strand = Rzeka
-                .Strand<LogStrand>()
-                .Observe(nextlog => {
+            var strand = rzeka
+                .Weave<SpecialKeyPressed>(this)
+                .Subscribe(next => {
+                    WriteLine(next.Matter.Content.ToString());
+                });
 
-                    string color = null;
+            // var strand2 = rzeka
+            //     .Weave<SpecialKeyPressed>(this)
+            //     .Where(key => key.Matter.Content == KeyCode.Tab)
+            //     .Subscribe(next => {
+            //         strand.Dispose();
+            //     });
 
-                    switch(nextlog.Gift.Type)
+            var asdf = UnityObservable.EveryUpdate()
+                .Where(_ => {
+                    if (Input.GetKeyDown(KeyCode.Return))
                     {
-                        case LogType.Info:
-                            color = "white";
-                            break;
-                        case LogType.Warning:
-                            color = "yellow";
-                            break;
-                        case LogType.Error:
-                            color = "red";
-                            break;
-                        case LogType.RedAlert:
-                            color = "magenta";
-                            break;
+                        return true;
                     }
-
-                    consoleBodyTMP.text = $"<color={color}>{nextlog.Gift.Text}</color>\n{consoleBodyTMP.text}";
-
-                }, this);
+                    else return false;
+                })
+                .Subscribe(keyCode =>
+                {
+                    strand.Dispose();
+                });
             
             // -------------
         }
+
+        public void WriteLine(string line, string color = "white")
+        {
+            consoleBodyTMP.text = $"<color={color}>{line}</color>\n{consoleBodyTMP.text}";
+        }   
     }
     
     /* ---- ---- ⛺ */

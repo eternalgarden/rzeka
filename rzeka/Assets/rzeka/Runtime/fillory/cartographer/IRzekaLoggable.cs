@@ -22,7 +22,7 @@ namespace RzekaRiver
         RedAlert,
     }
 
-    public class RzekaLogGift : Gift
+    public class RzekaLogGift : Matter
     {
         public RzekaLogType Type { get; set; }
         public string Text { get; set; }

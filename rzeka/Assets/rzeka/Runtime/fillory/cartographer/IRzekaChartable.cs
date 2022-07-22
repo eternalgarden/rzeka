@@ -14,13 +14,13 @@ namespace RzekaRiver
 {
     /* ---- ---- ⛺ */
     
-    public abstract class RzekaCharter : ScriptableObject, IObserver<StreamEvent>
+    public abstract class RzekaCharter : ScriptableObject, IObserver<ThoughtBase>
     {
         public abstract void OnCompleted();
         public abstract void OnError(Exception error);
-        public abstract void OnNext(StreamEvent value);
-        public abstract void OnObserved(RzekaObserver<StreamEvent> observer);
-        public abstract void OnUnobserved(RzekaObserver<StreamEvent> observer);
+        public abstract void OnNext(ThoughtBase value);
+        public abstract void OnObserved(WhoObserver<ThoughtBase> observer);
+        public abstract void OnUnobserved(WhoObserver<ThoughtBase> observer);
     }
 
     /* ---- ---- ⛺ */

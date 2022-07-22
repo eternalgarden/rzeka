@@ -54,17 +54,17 @@ namespace Examples.Fillory
             }
 #endif
 
-            var log = new LogStrand();
-            log.Initialize(new LogGift()
-            {
-                Type = logType,
-                Text = text,
-                Exception = ex
-            },
-                context: _instance,
-                Circumstances.UNKNOWN);
+            // var log = new LogStrand();
+            // log.Initialize(new LogGift()
+            // {
+            //     Type = logType,
+            //     Text = text,
+            //     Exception = ex
+            // },
+            //     context: _instance,
+            //     Circumstances.UNKNOWN);
 
-            Rzeka.Pluck<LogStrand>(log);
+            // Rzeka.Pluck<LogStrand>(log);
         }
     }
 

@@ -207,7 +207,7 @@ namespace System.Reactive.Linq.ObservableImpl
             private readonly Action<Exception> _onError;
             private readonly Action _onCompleted;
             private readonly Action<IObserver<TSource>> _onSubscribed;
-            private readonly Action<IObserver<TSource>> _onUnsubscribed;
+            private readonly Action<IObserver<TSource>> _onDisposed;
 
             public Spy(IObservable<TSource> source, Action<TSource> onNext, Action<Exception> onError, Action onCompleted, Action<IObserver<TSource>> onSubscribed, Action<IObserver<TSource>> onUnsubscribed)
             {
@@ -216,7 +216,7 @@ namespace System.Reactive.Linq.ObservableImpl
                 _onError = onError;
                 _onCompleted = onCompleted;
                 _onSubscribed = onSubscribed;
-                _onUnsubscribed = onUnsubscribed;
+                _onDisposed = onUnsubscribed;
             }
 
             public new IDisposable Subscribe(IObserver<TSource> observer)
@@ -229,7 +229,7 @@ namespace System.Reactive.Linq.ObservableImpl
                 _onSubscribed(observer);
 
                 return new CompositeDisposable(
-                    Disposable.Create(() => _onUnsubscribed(observer)),
+                    Disposable.Create(() => _onDisposed(observer)),
                     SubscribeRaw(observer, enableSafeguard: true)
                 );
             }
