@@ -1,0 +1,16 @@
+{
+    "name": "com.rzeka.unirx",
+    "rootNamespace": "",
+    "references": [
+        "GUID:28a03ac96c0a5c24195fa757d5ccc7e2"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

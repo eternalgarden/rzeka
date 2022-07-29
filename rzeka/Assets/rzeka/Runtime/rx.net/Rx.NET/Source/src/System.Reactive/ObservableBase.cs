@@ -59,6 +59,8 @@ namespace System.Reactive
                 }
                 catch (Exception exception)
                 {
+                    //RzekaLogger.Log(exception);
+
                     //
                     // This can happen when there's a synchronous callback to OnError in the
                     // implementation of SubscribeCore, which also throws. So, we're seeing

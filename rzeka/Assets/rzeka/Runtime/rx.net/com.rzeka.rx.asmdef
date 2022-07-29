@@ -1,0 +1,16 @@
+{
+    "name": "com.rzeka.rx",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a1f922e297c1e80469349657452ea922"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

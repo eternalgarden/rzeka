@@ -10,7 +10,8 @@ https://github.com/neuecc/UniRx
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using RzekaRiver;
+using Rzeka;
+using Rzeka.Unirx;
 using UnityEngine;
 
 namespace Examples.Fillory
@@ -20,7 +21,7 @@ namespace Examples.Fillory
     class SpecialKeyManager : MonoBehaviour
     {
         [SerializeField] KeyCode[] specialCodes;
-        [SerializeField] Rzeka rzeka;
+        [SerializeField] MonoRzeka rzeka;
 
         IDisposable cat;
 

@@ -43,6 +43,13 @@ namespace System.Reactive
                     _onNext(value);
                     noError = true;
                 }
+                /*catch (Exception ex)
+                {
+
+
+                    UnityEngine.Debug.Log($"asdgasdf");
+
+                }*/
                 finally
                 {
                     if (!noError)

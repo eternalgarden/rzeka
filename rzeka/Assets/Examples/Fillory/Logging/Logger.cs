@@ -8,7 +8,7 @@ most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
 using System;
-using RzekaRiver;
+using Rzeka;
 using UnityEngine;
 
 namespace Examples.Fillory

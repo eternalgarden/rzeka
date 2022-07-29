@@ -12,7 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Subjects;
-using RzekaRiver;
+using Rzeka;
 using UnityEngine;
 
 namespace Examples.Fillory
@@ -21,7 +21,7 @@ namespace Examples.Fillory
 
     class GameController : MonoBehaviour
     {
-        [SerializeField] Rzeka rzeka;
+        [SerializeField] MonoRzeka rzeka;
 
         void Start()
         {

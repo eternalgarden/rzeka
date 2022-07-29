@@ -12,7 +12,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RzekaRiver;
+using Rzeka;
 
 namespace Examples.Fillory
 {
@@ -33,7 +33,7 @@ namespace Examples.Fillory
 
     public class UnchartedGrounds : MonoBehaviour
     {
-        [SerializeField] Rzeka rzeka;
+        [SerializeField] MonoRzeka rzeka;
 
         void Awake()
         {
@@ -41,9 +41,9 @@ namespace Examples.Fillory
 
             InMatter matter = new();
 
-            IWeaveable<PromisingThought> promiseme = rzeka.Weave<PromisingThought, InMatter, OutMatter>(matter, this);
+            // IWeaveable<PromisingThought> promiseme = rzeka.Weave<PromisingThought, InMatter, OutMatter>(matter, this);
 
-            promiseme.Subscribe()
+            // promiseme.Subscribe()
             
             // -------------
         }

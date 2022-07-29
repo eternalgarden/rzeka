@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using UnityEngine;
 
-namespace RzekaRiver.Examples
+namespace Rzeka.Examples
 {
     /* 🌊 ---- ---- */
 

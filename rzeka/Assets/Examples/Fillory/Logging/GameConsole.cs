@@ -12,9 +12,10 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RzekaRiver;
+using Rzeka;
 using TMPro;
 using System.Reactive.Linq;
+using Rzeka.Unirx;
 
 namespace Examples.Fillory
 {
@@ -28,7 +29,7 @@ namespace Examples.Fillory
     
     public class GameConsole : MonoBehaviour
     {
-        [SerializeField] Rzeka rzeka;
+        [SerializeField] MonoRzeka rzeka;
         [SerializeField] TextMeshProUGUI consoleBodyTMP;
 
         void Start()
