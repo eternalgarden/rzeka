@@ -43,12 +43,9 @@ namespace Looming
 {
     /* 🌊 ---- ---- */
 
-    // TODO dont use structs
-    // TODO https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record
-    // TODO but prepare to be able to easily switch to records
     public interface IMatter
     {
-        string Description { get; }
+        string Description => "missing description";
     }
 
     public interface TAllowingMultipleSources<T> where T : IMatter
@@ -57,9 +54,18 @@ namespace Looming
             => Observable.Merge(sources);
     }
 
-    public struct B : IMatter
+    /*
+     * Boith can be observable answer question or specific answer
+     * overload to determine that all answers are interestinh
+     **/
+    public interface IQuestion<T> where T : IMatter, IAnswer
     {
-        public string Description => throw new NotImplementedException();
+        bool IsItMyAnswer(T answer) => answer.QuestionSource == this;
+    }
+
+    public interface IAnswer
+    {
+        public object QuestionSource { get; }
     }
 
     //
@@ -126,7 +132,7 @@ namespace Looming
         }
     }
 
-    public class Thought<M> : ThoughtBase, IObservable<M>
+    public class Dream<M> : ThoughtBase, IObservable<M>
         where M : struct, IMatter
     {
         private IObservable<M> _matter;
@@ -169,12 +175,13 @@ namespace Looming
 
     public class ThoughtFactory
     {
-        public Thought<M> Think<M>(object who, M matter, params ThoughtBase[] circumstances)
+        public Dream<M> Think<M>(object who, M matter, params ThoughtBase[] circumstances)
             where M : struct, IMatter
         {
-            Thought<M> thought = new();
-            thought.Initialize(who, matter, circumstances);
-            return thought;
+            throw new NotImplementedException();
+            //Dream<M> thought = new();
+            //thought.Initialize(who, matter, circumstances);
+            //return thought;
         }
     }
 
@@ -306,7 +313,7 @@ namespace Looming
         public IObservable<M> Weave<M>(object who)
             where M : struct, IMatter
         {
-            Type key = typeof(Thought<M>);
+            Type key = typeof(Dream<M>);
 
             IObservable<M> weave;
 
@@ -352,32 +359,32 @@ namespace Looming
             return null;
         }
 
-        public void Loom<Q, T, Y, U>(object who, Func<Pattern<T, Y, U>, IObservable<Q>> spell)
+        public void Weave<Q, T, Y, U>(object who, Func<Pattern<T, Y, U>, IObservable<Q>> spell)
             where Q : struct, IMatter
             where T : struct, IMatter
             where Y : struct, IMatter
             where U : struct, IMatter
         {
-            // TODO where each of generics are Matter
-            // TODO where each of them is wrapped in a Thought that is an IObservable itself
+            // where each of generics are Matter
+            //  where each of them is wrapped in a Thought that is an IObservable itself
 
-            Type keyT = typeof(Thought<T>);
-            var oT = _web[keyT] as Thought<T>;
+            Type keyT = typeof(Dream<T>);
+            var oT = _web[keyT] as Dream<T>;
 
-            Type keyY = typeof(Thought<Y>);
-            var oY = _web[keyY] as Thought<Y>;
+            Type keyY = typeof(Dream<Y>);
+            var oY = _web[keyY] as Dream<Y>;
 
-            Type keyU = typeof(Thought<U>);
-            var oU = _web[keyU] as Thought<U>;
+            Type keyU = typeof(Dream<U>);
+            var oU = _web[keyU] as Dream<U>;
 
             Pattern<T, Y, U> pattern = oT.And(oY).And(oU);
 
-            IObservable<Q> observable = spell.Invoke(pattern);
+            IObservable<Q> surge = spell.Invoke(pattern);
 
-            Thought<Q> thought = new();
-            thought.Initialize(who, observable, oT, oY, oU);
+            Dream<Q> dream = new();
+            dream.Initialize(who, surge, oT, oY, oU);
 
-            _web.Add(typeof(Thought<Q>), thought);
+            _web.Add(typeof(Dream<Q>), dream);
         }
 
         // TODO At some moment Loom objects might be actually returned but for now thats not necessary
@@ -385,13 +392,13 @@ namespace Looming
         public void Loom<M>(object who, IObservable<M> observable)
             where M : struct, IMatter
         {
-            Type key = typeof(Thought<M>);
+            Type key = typeof(Dream<M>);
 
             observable = observable
                     .Do(onNext: e =>
                     {
                         // TODO circumstances are skipped at the moment
-                        Thought<M> thought = _factory.Think(who, e);
+                        Dream<M> thought = _factory.Think(who, e);
 
                         //TODO add an onNext receiver of debugger
                         // use the above thought

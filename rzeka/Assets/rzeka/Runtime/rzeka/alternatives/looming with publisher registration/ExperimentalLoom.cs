@@ -19,8 +19,6 @@ namespace Looming
 
         // TODO Description property could be added to Matter instances automaticually
         // TODO without inheritance, then they could be structs and gain immutability
-        public string Description => throw new NotImplementedException();
-
         public NewUserMessageMatter(string text)
         {
             this.text = text;
@@ -30,8 +28,6 @@ namespace Looming
     public struct CurrentUserMessageColor : IMatter
     {
         public Color color;
-        public string Description => throw new NotImplementedException();
-
         public CurrentUserMessageColor(Color color)
         {
             this.color = color;
@@ -43,8 +39,6 @@ namespace Looming
         public NewUserMessageMatter message;
         public CurrentUserMessageColor color;
 
-        public string Description => throw new NotImplementedException();
-
         public LastReddishUserMessage(NewUserMessageMatter message, CurrentUserMessageColor color)
         {
             this.message = message;
@@ -52,26 +46,46 @@ namespace Looming
         }
     }
 
-    public struct InterestingIndicesMatter : IMatter
+
+    public struct RequestDataForIndexRange : IMatter
     {
         public int from;
         public int to;
 
-        public InterestingIndicesMatter(int from, int to)
+        public RequestDataForIndexRange(int from, int to)
         {
             this.from = from;
             this.to = to;
         }
-
-        public string Description => throw new NotImplementedException();
     }
 
-    public struct GiverOfDataForThoseIndices : IMatter
+    public struct ProvideDataForThoseIndices : IMatter
     {
         public string[] stringsForIndices;
 
         public string Description => throw new NotImplementedException();
     }
+
+    public struct RequestDataForIndexRangeV2 : IMatter, IQuestion<RequestDataForIndexRangeV2.Answer>
+    {
+        public int from;
+        public int to;
+
+        public struct Answer : IMatter, IAnswer
+        {
+            public RequestDataForIndexRangeV2 request;
+            public string[] stringsForIndices;
+            public object QuestionSource => request;
+
+            public Answer(RequestDataForIndexRangeV2 request, string[] stringsForIndices)
+            {
+                this.request = request;
+                this.stringsForIndices = stringsForIndices;
+            }
+
+        }
+    }
+
 
     public class ExperimentalLoom : LoomingMono
     {
@@ -236,9 +250,9 @@ namespace Looming
                 "v",
             };
 
-            _rzeka.Loom<InterestingIndicesMatter, GiverOfDataForThoseIndices>(
+            _rzeka.Loom<RequestDataForIndexRange, ProvideDataForThoseIndices>(
                 this,
-                question => Observable.Create<GiverOfDataForThoseIndices>(observer =>
+                question => Observable.Create<ProvideDataForThoseIndices>(observer =>
                 {
                     int length = question.to - question.from;
 
@@ -255,7 +269,7 @@ namespace Looming
                 }));
 
             using var printer = _rzeka
-                .Weave<InterestingIndicesMatter, GiverOfDataForThoseIndices>(this, new(1, 3))
+                .Weave<RequestDataForIndexRange, ProvideDataForThoseIndices>(this, new(1, 3))
                 .Subscribe(onNext: next =>
                 {
                     foreach (string s in next.stringsForIndices)
