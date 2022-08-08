@@ -31,6 +31,16 @@ namespace System.Reactive.Linq
             return s_impl.Cast<TResult>(source);
         }
 
+        public static IObservable<TResult> Cast<TSource, TResult>(this IObservable<TSource> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            return s_impl.Cast<TResult, TSource>(source);
+        }
+
         #endregion
 
         #region + DefaultIfEmpty +

@@ -19,6 +19,10 @@ namespace System.Reactive.Linq
         {
             return new Cast<object, TResult>(source);
         }
+        public virtual IObservable<TResult> Cast<TResult, TSource>(IObservable<TSource> source)
+        {
+            return new Cast<TSource, TResult>(source);
+        }
 
         #endregion
 
