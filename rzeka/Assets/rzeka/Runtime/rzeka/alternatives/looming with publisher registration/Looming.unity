@@ -770,7 +770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbf1363290945be44a427bd751830c9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rzeka: {fileID: 709062480}
+  Rzeka: {fileID: 709062480}
   _inputField: {fileID: 920779454}
   _textPrefab: {fileID: 2054966991520193200, guid: 4ebc722747ef3cd4fbaa5324b69e5d67, type: 3}
   _chatBoxContainer: {fileID: 1945006115}

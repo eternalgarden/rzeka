@@ -13,13 +13,13 @@ using Rzeka;
 
 namespace Looming
 {
-    public struct NewUserMessageMatter : IMatter
+    public struct NewUserMessage : IMatter
     {
         public string text;
 
         // TODO Description property could be added to Matter instances automaticually
         // TODO without inheritance, then they could be structs and gain immutability
-        public NewUserMessageMatter(string text)
+        public NewUserMessage(string text)
         {
             this.text = text;
         }
@@ -34,12 +34,12 @@ namespace Looming
         }
     }
 
-    public struct LastReddishUserMessage : IMatter
+    public struct LastBlueishMessage : IMatter
     {
-        public NewUserMessageMatter message;
+        public NewUserMessage message;
         public CurrentUserMessageColor color;
 
-        public LastReddishUserMessage(NewUserMessageMatter message, CurrentUserMessageColor color)
+        public LastBlueishMessage(NewUserMessage message, CurrentUserMessageColor color)
         {
             this.message = message;
             this.color = color;
@@ -71,7 +71,7 @@ namespace Looming
         public int from;
         public int to;
 
-        public struct Answer : IMatter, IAnswer
+        public struct Answer : IAnswer
         {
             public RequestDataForIndexRangeV2 request;
             public string[] stringsForIndices;
@@ -89,7 +89,7 @@ namespace Looming
 
     public class ExperimentalLoom : LoomingMono
     {
-        [SerializeField] LoomingRzeka _rzeka;
+        [SerializeField] LoomingRzeka Rzeka;
         [SerializeField] TMP_InputField _inputField;
         [SerializeField] GameObject _textPrefab;
         [SerializeField] Transform _chatBoxContainer;
@@ -111,6 +111,18 @@ namespace Looming
 
             base.OnEnable();
 
+            // Register Return press
+            q += UnityObservable
+                .EveryUpdate()
+                .Where(_ => Input.GetKeyDown(KeyCode.Return))
+                .Subscribe(_ =>
+                {
+                    string message = _inputField.text;
+                    _inputField.text = "";
+
+                    newMessage.Invoke(this, message);
+                });
+
             _toggleColourButton.onClick.AddListener(() => toggleColorButtonClicked.Invoke(this, null));
 
             _toggleColourButton.onClick.AddListener(() =>
@@ -126,100 +138,102 @@ namespace Looming
                 _colorPreview.color = c;
             });
 
-            //QATest1();
 
             SimpleTest1();
 
+            //QATest1();
 
             // -------------
         }
 
         private void SimpleTest1()
         {
-            _rzeka
-                .Loom<CurrentUserMessageColor>(this, Observable
-                .FromEventPattern(
-                    h => toggleColorButtonClicked += h,
-                    h => toggleColorButtonClicked -= h)
-                .Select(message =>
-                {
-                    Debug.Log("current col");
-
-                    return new CurrentUserMessageColor(new Color(
-                    r: UnityEngine.Random.Range(0.0f, 1.0f),
-                    g: UnityEngine.Random.Range(0.0f, 1.0f),
-                    b: UnityEngine.Random.Range(0.0f, 1.0f)));
-                }));
-
-
-            _rzeka
-                .Loom<NewUserMessageMatter>(this, Observable
-                .FromEventPattern<string>(
-                    h => newMessage += h,
-                    h => newMessage -= h)
-                .Select(message =>
-                {
-                    return new NewUserMessageMatter(message.EventArgs);
-                }));
-
-            _rzeka
-                .Loom<LastReddishUserMessage>(this,
-                    _rzeka.Weave<NewUserMessageMatter>(this)
-                    .CombineLatest(_rzeka.Weave<CurrentUserMessageColor>(this), 
-                        resultSelector: (message, color) => new { message, color })
-                    .DistinctUntilChanged(comb => comb.message)
-                    .Where(comb =>
+            Rzeka
+                .Weave<CurrentUserMessageColor>(this, spell: () => Observable
+                    .FromEventPattern(
+                        h => toggleColorButtonClicked += h,
+                        h => toggleColorButtonClicked -= h)
+                    .Select(message =>
                     {
-                        Color col = comb.color.color;
-                        Debug.Log(col);
-
-                        return col.r > 0.6f && col.b < 0.3f && col.g < 0.3f;
-                    })
-                    .Select(comb =>
-                    {
-                        Debug.Log("meow");
-                        return new LastReddishUserMessage(comb.message, comb.color);
+                        return new CurrentUserMessageColor(new Color(
+                        r: UnityEngine.Random.Range(0.0f, 1.0f),
+                        g: UnityEngine.Random.Range(0.0f, 1.0f),
+                        b: UnityEngine.Random.Range(0.0f, 1.0f)));
                     }));
 
-            // Register Return press
-            q += UnityObservable
-                .EveryUpdate()
-                .Where(_ => Input.GetKeyDown(KeyCode.Return))
-                .Subscribe(_ =>
-                {
-                    string message = _inputField.text;
-                    _inputField.text = "";
+            Rzeka
+                .Weave<NewUserMessage>(this, spell: () => Observable
+                    .FromEventPattern<string>(
+                        h => newMessage += h,
+                        h => newMessage -= h)
+                    .Select(message =>
+                    {
+                        return new NewUserMessage(message.EventArgs);
+                    }));
 
-                    newMessage.Invoke(this, message);
+            Rzeka
+                .Weave<
+                CurrentUserMessageColor, // ! what if it's provider unregisters beofre this combination stops working/unregisters itself
+                NewUserMessage,
+                LastBlueishMessage>(this, spell: pattern =>
+                {
+                    var plan = pattern.Then((currentCol, newMsg) => new { currentCol, newMsg });
+
+                    return Observable
+                        .When(plan)
+                        .DistinctUntilChanged(comb => comb.newMsg.text)
+                        .Where(comb =>
+                        {
+                            Debug.Log("are we here !");
+
+                            Color col = comb.currentCol.color;
+                            Debug.Log(col);
+
+                            return col.r < 0.3f && col.b > col.g;
+                        })
+                        .Select(x =>
+                        {
+                            Debug.Log("bluish!");
+
+                            return new LastBlueishMessage(
+                                message: x.newMsg,
+                                color: x.currentCol);
+                        });
                 });
 
-            q += _rzeka
-                .Weave<NewUserMessageMatter>(this)
-                .CombineLatest(second: _textColor)
-                .DistinctUntilChanged(o => o.First.text)
-                .Subscribe(o =>
+            q += Rzeka
+                .Weave<LastBlueishMessage>(this, spell: lastBlueishMessage =>
                 {
-                    var go = Instantiate(_textPrefab);
-                    go.transform.SetParent(_chatBoxContainer);
-                    go.GetComponentInChildren<TextMeshProUGUI>().text = o.First.text;
-                    go.GetComponentInChildren<TextMeshProUGUI>().color = o.Second;
+                    return lastBlueishMessage
+                        .Subscribe(o =>
+                        {
+                            Debug.Log("blueish");
+                            GameObject child = _lastReddishMessage.childCount > 0
+                                ? _lastReddishMessage.GetChild(0).gameObject
+                                : null;
+
+                            if (child is not null) Destroy(child);
+
+                            var go = Instantiate(_textPrefab);
+                            go.transform.SetParent(_lastReddishMessage);
+                            go.GetComponentInChildren<TextMeshProUGUI>().text = o.message.text;
+                            go.GetComponentInChildren<TextMeshProUGUI>().color = o.color.color;
+                        });
                 });
 
-            q += _rzeka
-                .Weave<LastReddishUserMessage>(this)
-                .Subscribe(o =>
+            q += Rzeka
+                .Weave<NewUserMessage>(this, spell: newUserMessageMatter =>
                 {
-                    Debug.Log("reddish");
-                    GameObject child = _lastReddishMessage.childCount > 0
-                        ? _lastReddishMessage.GetChild(0).gameObject
-                        : null;
-
-                    if(child is not null) Destroy(child);
-
-                    var go = Instantiate(_textPrefab);
-                    go.transform.SetParent(_lastReddishMessage);
-                    go.GetComponentInChildren<TextMeshProUGUI>().text = o.message.text;
-                    go.GetComponentInChildren<TextMeshProUGUI>().color = o.color.color;
+                    return newUserMessageMatter
+                        .CombineLatest(second: _textColor)
+                        .DistinctUntilChanged(o => o.First.text)
+                        .Subscribe(o =>
+                        {
+                            var go = Instantiate(_textPrefab);
+                            go.transform.SetParent(_chatBoxContainer);
+                            go.GetComponentInChildren<TextMeshProUGUI>().text = o.First.text;
+                            go.GetComponentInChildren<TextMeshProUGUI>().color = o.Second;
+                        });
                 });
         }
 
@@ -250,33 +264,76 @@ namespace Looming
                 "v",
             };
 
-            _rzeka.Loom<RequestDataForIndexRange, ProvideDataForThoseIndices>(
-                this,
-                question => Observable.Create<ProvideDataForThoseIndices>(observer =>
+            Rzeka.Answer<
+                RequestDataForIndexRangeV2,
+                RequestDataForIndexRangeV2.Answer>
+                (this, spell: question =>
                 {
-                    int length = question.to - question.from;
+                    return question
+                        .Select(q =>
+                        {
+                            int length = q.to - q.from;
 
-                    var results = new string[length];
+                            var results = new string[length];
 
-                    if (stringDataArray.Length <= question.to)
-                    {
-                        observer.OnError(new Exception("Array out of bounds."));
-                    };
+                            if (stringDataArray.Length <= q.to)
+                            {
+                                throw new Exception("Array out of bounds.");
+                            };
 
-                    Array.Copy(stringDataArray, question.from, results, 0, length);
+                            Array.Copy(stringDataArray, q.from, results, 0, length);
 
-                    return Disposable.Empty;
-                }));
-
-            using var printer = _rzeka
-                .Weave<RequestDataForIndexRange, ProvideDataForThoseIndices>(this, new(1, 3))
-                .Subscribe(onNext: next =>
-                {
-                    foreach (string s in next.stringsForIndices)
-                    {
-                        Debug.Log(s);
-                    }
+                            return new RequestDataForIndexRangeV2.Answer(q, results);
+                        });
                 });
+
+            Rzeka.Weave<
+                RequestDataForIndexRangeV2,
+                RequestDataForIndexRangeV2.Answer>
+                (this,
+                question: () =>
+                {
+                    return Observable.Return(new RequestDataForIndexRangeV2() { from = 2, to = 5 });
+                },
+                answer: answer =>
+                {
+                    answer
+                    .Subscribe(next =>
+                    {
+                        foreach (var x in next.stringsForIndices)
+                        {
+                            Debug.Log(x);
+                        }
+                    });
+                });
+
+            //_rzeka.Loom<RequestDataForIndexRange, ProvideDataForThoseIndices>(
+            //    this,
+            //    question => Observable.Create<ProvideDataForThoseIndices>(observer =>
+            //    {
+            //        int length = question.to - question.from;
+
+            //        var results = new string[length];
+
+            //        if (stringDataArray.Length <= question.to)
+            //        {
+            //            observer.OnError(new Exception("Array out of bounds."));
+            //        };
+
+            //        Array.Copy(stringDataArray, question.from, results, 0, length);
+
+            //        return Disposable.Empty;
+            //    }));
+
+            //using var printer = _rzeka
+            //    .Weave<RequestDataForIndexRange, ProvideDataForThoseIndices>(this, new(1, 3))
+            //    .Subscribe(onNext: next =>
+            //    {
+            //        foreach (string s in next.stringsForIndices)
+            //        {
+            //            Debug.Log(s);
+            //        }
+            //    });
         }
     }
 }

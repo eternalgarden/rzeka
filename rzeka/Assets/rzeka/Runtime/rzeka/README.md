@@ -55,6 +55,7 @@ void Pluck<T>(T thought) where T : ThoughtBase
 ```
 - or this could be altogether skipped by the useage of custom observables 
 provided to the Loom?
+- (+) avoiding plucking would mean staying in the monad
 
 ### 🌿 Using Matter as core data carrier and using only generic Thoughts
 - Thoughts are sealed classes that are not impelented themselves
@@ -69,8 +70,18 @@ provided to the Loom?
 - (+) that gives the possibility for time travel
 - (-) might be quite limiting in development
 
+### 🌿 Thoughts/Dreams (T/D) polymorphing as IObservables *03/08/22*
+- (+) containing information about other `circumstancial` thoughts/dreams (thus entire iobservable streams) should be rather easy
+  - (✨💧🧙🏻‍♀️) somehow following information about which specific `Matter` influenced generation of another withing each of those streams is an entirely different complication level
+
 ## Distant ideas
 ---
 
 ### 🌾 Having separate local-streams that the main river is knowledgeable of
 - might be too much, when all you've got is a hammer...
+
+Marek, od tego jest hydraulik, żeby to wiedzieć lub być może wiedział to mój tata, ponieważ całymi latami zajomwał się tym domem, nie wydaje mi się, żebyś był zaznajomiony z układem rur na zaczarowanym kole.
+
+Nie podoba mi się to co teraz do mnie w obecnej sytuacji piszesz, jakbyś próbował mnie zastraszyć stanem mojego własnego domu. Stać mnie na jego gruntowny remont, w szczególności gdybym otrzymała pieniądze, za działkę którą kupiłeś. Zupełnie nie spodziewałam się tego toku komunikacji i nie wiem czy jestem gotowa na tego typu dialogi przez następne półtorej roku waszej budowy i mieszkania w moim domu.
+
+Ponadto cały jestem zszkowoana tym jakie musiałeś mieć o mnie zdanie przez te ostatnie lata i teraz też, bo cały czas malujesz obraz mnie-żyjącej jak wróżka w bajkolandzie

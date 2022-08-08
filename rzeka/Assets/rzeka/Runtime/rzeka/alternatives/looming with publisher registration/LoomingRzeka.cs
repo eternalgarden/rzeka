@@ -7,10 +7,12 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 most of the code straight out copied from @neuecc UniRx project
 https://github.com/neuecc/UniRx
 */
+//using System;
+//using System.Collections;
+//using System.Collections.Generic;
+//using System.Linq;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Joins;
 using System.Reactive.Linq;
@@ -54,16 +56,21 @@ namespace Looming
             => Observable.Merge(sources);
     }
 
+    public interface IHasDefault<T> where T : IMatter
+    {
+        static T Default { get; }
+    }
+
     /*
      * Boith can be observable answer question or specific answer
      * overload to determine that all answers are interestinh
      **/
-    public interface IQuestion<T> where T : IMatter, IAnswer
+    public interface IQuestion<T> where T : IAnswer
     {
         bool IsItMyAnswer(T answer) => answer.QuestionSource == this;
     }
 
-    public interface IAnswer
+    public interface IAnswer : IMatter
     {
         public object QuestionSource { get; }
     }
@@ -73,14 +80,37 @@ namespace Looming
     //
     #region Thoughts
 
-    //public abstract class Matter
-    //{ 
-    //    public abstract string Description { get; }
-    //}
-
-    public abstract class ThoughtBase : IDisposable
+    public static class Circumstances
     {
-        protected ThoughtBase[] _circumstances;
+        public class CoreDream : DreamBase
+        {
+            public CoreDream()
+            {
+                base.Initialize(this, null);
+            }
+        }
+
+        private static DreamBase core;
+
+        public static DreamBase Core
+        {
+            get
+            {
+                if (core is null)
+                {
+                    core = new CoreDream();
+                }
+
+                return core;
+            }
+        }
+    }
+
+    public abstract class DreamBase : IDisposable
+    {
+
+        // TODO MOVE THIS OUT OF HERE
+        protected DreamBase[] _circumstances;
         protected object _who;
 
         //
@@ -102,7 +132,7 @@ namespace Looming
             }
         }
 
-        internal ThoughtBase[] Circumstances
+        internal DreamBase[] Circumstances
         {
             get
             {
@@ -119,7 +149,7 @@ namespace Looming
         #endregion // ---------------------------------- Properties -------------------------
 
 
-        protected void Initialize(object who, ThoughtBase[] circumstances)
+        protected void Initialize(object who, DreamBase[] circumstances)
         {
             Who = who;
             Circumstances = circumstances;
@@ -132,15 +162,28 @@ namespace Looming
         }
     }
 
-    public class Dream<M> : ThoughtBase, IObservable<M>
-        where M : struct, IMatter
+    public class Dream<M> : DreamBase, IObservable<M>
+    where M : struct, IMatter
     {
+        private List<IObservable<M>> _matters = new List<IObservable<M>>();
         private IObservable<M> _matter;
-        public IObservable<M> Matter => _matter;
+        //public IObservable<M> Matter => _matter;
 
-        public void Initialize(object who, IObservable<M> matter, params ThoughtBase[] circumstances)
+        public void Initialize(object who, IObservable<M> matter, params DreamBase[] circumstances)
         {
             base.Initialize(who, circumstances);
+
+            // ! this is interesting
+            //if (typeof(TAllowingMultipleSources<M>).IsAssignableFrom(typeof(M)))
+            //{
+            //    return TAllowingMultipleSources<M>.CombineSourcesPattern(_matters).Subscribe(observer);
+            //}
+            //else
+            //{
+            //    // ! thanks, thats cool but not applicable here
+            //    //return _matters.ToObservable().Subscribe(observer);
+            //    throw new Exception("oki");
+            //}
 
             _matter = matter;
         }
@@ -152,30 +195,57 @@ namespace Looming
 
         public IDisposable Subscribe(IObserver<M> observer)
         {
-            //return _matter.Subscribe(observer);
-            throw new NotImplementedException();
+            //if (_matters.Count == 0)
+            //{
+            //    throw new Exception("blrrrip!");
+            //}
+            //else if (_matters.Count == 1)
+            //{
+            //    return _matters[0].Subscribe(observer);
+            //}
+            //else
+            //{
+            //    if (typeof(TAllowingMultipleSources<M>).IsAssignableFrom(typeof(M)))
+            //    {
+            //        return TAllowingMultipleSources<M>.CombineSourcesPattern(_matters).Subscribe(observer);
+            //    }
+            //    else
+            //    {
+            //        // ! thanks, thats cool but not applicable here
+            //        //return _matters.ToObservable().Subscribe(observer);
+            //        throw new Exception("oki");
+            //    }
+            //}
+
+            // zis was the old simple ways
+            return _matter.Subscribe(observer);
         }
     }
 
-    public class Question<Q, A> : ThoughtBase
-        where Q : struct, IMatter
-        where A : struct, IMatter
+    public class Dream<Q, A> : DreamBase, IObservable<A>
+        where Q : struct, IQuestion<A>
+        where A : struct, IAnswer
     {
-        public Q question;
-        public A answer;
+        public Func<IObservable<Q>, IObservable<A>> resolver;
 
-        public void Initialize(object who, Q question, A answer, params ThoughtBase[] circumstances)
+        public void Initialize(object who, Func<IObservable<Q>, IObservable<A>> resolver, params DreamBase[] circumstances)
         {
             base.Initialize(who, circumstances);
 
-            this.question = question;
-            this.answer = answer;
+
+
+            this.resolver = resolver;
+        }
+
+        public IDisposable Subscribe(IObserver<A> observer)
+        {
+            throw new NotImplementedException();
         }
     }
 
     public class ThoughtFactory
     {
-        public Dream<M> Think<M>(object who, M matter, params ThoughtBase[] circumstances)
+        public Dream<M> Think<M>(object who, M matter, params DreamBase[] circumstances)
             where M : struct, IMatter
         {
             throw new NotImplementedException();
@@ -274,13 +344,15 @@ namespace Looming
         /* ⭐ ---- ---- */
 
         // * removal of a central stream 
-        [Obsolete] readonly Subject<ThoughtBase> _rzeka = new();
+        [Obsolete] readonly Subject<DreamBase> _rzeka = new();
 
         readonly Dictionary<Type, List<LoomBase>> _net = new();
 
         readonly Dictionary<Type, object> _web = new();
 
         readonly ThoughtFactory _factory = new();
+
+        public Dictionary<Type, object> Web => _web;
 
         IDisposable _riverWisp;
 
@@ -313,35 +385,37 @@ namespace Looming
         public IObservable<M> Weave<M>(object who)
             where M : struct, IMatter
         {
-            Type key = typeof(Dream<M>);
+            //Type key = typeof(Dream<M>);
 
-            IObservable<M> weave;
+            //IObservable<M> weave;
 
-            if (typeof(M) is TAllowingMultipleSources<M>)
-            {
-                IEnumerable<IObservable<M>> sources = _net[key]
-                    .Select(loom => loom.Observable as IObservable<M>);
+            //if (typeof(M) is TAllowingMultipleSources<M>)
+            //{
+            //    IEnumerable<IObservable<M>> sources = _net[key]
+            //        .Select(loom => loom.Observable as IObservable<M>);
 
-                weave = TAllowingMultipleSources<M>.CombineSourcesPattern(sources);
-            }
-            else
-            {
-                weave = _net[key][0].Observable as IObservable<M>;
-            }
+            //    weave = TAllowingMultipleSources<M>.CombineSourcesPattern(sources);
+            //}
+            //else
+            //{
+            //    weave = _net[key][0].Observable as IObservable<M>;
+            //}
 
-            return Observable
-                .Create<M>(subscribe: observer =>
-                {
-                    // TODO Who observer becomes unnecessary
-                    // I have access to who here
-                    // In this case weaveable also becomes redundant
-                    // WhoObserver<ThoughtBase> whoObserver = new(observer, who);
+            //return Observable
+            //    .Create<M>(subscribe: observer =>
+            //    {
+            //        // TODO Who observer becomes unnecessary
+            //        // I have access to who here
+            //        // In this case weaveable also becomes redundant
+            //        // WhoObserver<ThoughtBase> whoObserver = new(observer, who);
 
-                    // TODO 1. Publish an information on new subscriber
-                    // TODO 2. Wrap the returned disposable with unsubscribe information
+            //        // TODO 1. Publish an information on new subscriber
+            //        // TODO 2. Wrap the returned disposable with unsubscribe information
 
-                    return weave.Subscribe(observer);
-                });
+            //        return weave.Subscribe(observer);
+            //    });
+
+            return null;
         }
 
         public IObservable<A> Weave<Q, A>(object who, Q question)
@@ -354,9 +428,143 @@ namespace Looming
             return null;
         }
 
-        public Pattern<T, Y, U> Weave<T, Y, U>(object who)
+        // Overload to publish root dreams ( they are not interested in any other dreams ) 
+        public void Weave<Q>(object who, Func<IObservable<Q>> spell)
+            where Q : struct, IMatter
         {
-            return null;
+            Type keyQ = typeof(Dream<Q>);
+            Dream<Q> dream = new();
+
+            IObservable<Q> surge = spell.Invoke();
+
+            dream.Initialize(who, surge, Circumstances.Core); // null circumstances, this would be an origin weaving
+
+            _web.Add(keyQ, dream); // add a check if this type is already registered
+        }
+
+        // Overload to publish dreamws with one dependenc
+        public void Weave<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
+            where T : struct, IMatter
+            where Q : struct, IMatter
+        {
+            Type keyT = typeof(Dream<T>);
+            var dreamT = _web[keyT] as Dream<T>;
+
+            Type keyQ = typeof(Dream<Q>);
+            Dream<Q> dream = new();
+
+            IObservable<Q> surge = spell.Invoke(dreamT);
+
+            dream.Initialize(who, surge, dreamT); // ! dreamT as circumstance
+
+            _web.Add(keyQ, dream); // add a check if this type is already registered
+        }
+
+        public void Weave<T, Y, Q>(object who, Func<Pattern<T, Y>, IObservable<Q>> spell)
+            where T : struct, IMatter
+            where Y : struct, IMatter
+            where Q : struct, IMatter
+        {
+            Type keyT = typeof(Dream<T>);
+            var dreamT = _web[keyT] as Dream<T>;
+
+            Type keyY = typeof(Dream<Y>);
+            var dreamY = _web[keyY] as Dream<Y>;
+
+            Type keyQ = typeof(Dream<Q>);
+            Dream<Q> dream = new();
+
+            IObservable<Q> surge = spell.Invoke(dreamT.And(dreamY));
+
+            dream.Initialize(who, surge, dreamT, dreamY); // ! dreamT and dreamY as circumstance
+
+            _web.Add(keyQ, dream); // add a check if this type is already registered
+        }
+
+        // Overload to listen to the answers / dreams in general
+        public IDisposable Weave<T>(object who, Func<IObservable<T>, IDisposable> spell)
+            where T : struct, IMatter
+        {
+            Type key = typeof(Dream<T>);
+
+            // add nullcheck
+            var dream = _web[key] as Dream<T>;
+            var stream = _web[key] as IObservable<T>;
+
+            // https://stackoverflow.com/questions/43080505/c-sharp-7-0-switch-on-system-type
+            switch (typeof(T))
+            {
+                case IAnswer:
+                    {
+                        Debug.Log("answer");
+
+                        stream = stream
+                            .Where(a =>
+                            {
+                                if (a is IAnswer answer)
+                                {
+                                    if (answer.QuestionSource == who) return true;
+                                    else return false;
+                                }
+                                else
+                                {
+                                    throw new Exception("sopmthing wrng");
+                                }
+                            });
+                        break;
+                    }
+            }
+
+            return spell.Invoke(stream);
+        }
+
+        public void Weave<T, Q, A>(object who, Func<Pattern<T>, IObservable<Q>> question, Action<IObservable<A>> spell)
+            where Q : struct, IMatter, IQuestion<A>
+            where A : struct, IMatter, IAnswer
+            where T : struct, IMatter
+        {
+            // 
+        }
+
+        // * ASK
+        // ! variants for pattern use could be added like above
+        // ! sionce it does not have any input parameters it would be a rather rare used overload probs
+        // ! also in that case
+        public void Weave<Q, A>(object who, Func<IObservable<Q>> question, Action<IObservable<A>> answer)
+            where Q : struct, IMatter, IQuestion<A>
+            where A : struct, IMatter, IAnswer
+        {
+            Type keyQA = typeof(Dream<Q, A>);
+
+            // ! nullcheck; NOONE TO GIVE YOU ANSWERS
+            Dream<Q, A> provider = _web[keyQA] as Dream<Q, A>;
+
+            IObservable<Q> observableQuestion = question.Invoke();
+            Dream<Q> dreamQ = new();
+            dreamQ.Initialize(who, observableQuestion, Circumstances.Core); // null circumstances, this would be an origin weaving
+
+            IObservable<A> observableAnswer = provider.resolver(dreamQ); // ! passed in the dream instead of an observable, could this be useful for circumstance tracking
+
+            answer.Invoke(observableAnswer);
+        }
+
+        // Overload to generate answers
+        public void Answer<Q, A>(object who, Func<IObservable<Q>, IObservable<A>> spell)
+            where Q : struct, IMatter, IQuestion<A>
+            where A : struct, IMatter, IAnswer
+        {
+            Type keyQA = typeof(Dream<Q, A>);
+
+            if (!_web.ContainsKey(keyQA))
+            {
+                Dream<Q, A> dream = new();
+                dream.Initialize(who, spell, null); // ! missing circumstances
+                _web.Add(keyQA, dream); // add a check if this type is already registered
+            }
+            else
+            {
+                // ! provider-agreeing
+            }
         }
 
         public void Weave<Q, T, Y, U>(object who, Func<Pattern<T, Y, U>, IObservable<Q>> spell)
@@ -368,6 +576,10 @@ namespace Looming
             // where each of generics are Matter
             //  where each of them is wrapped in a Thought that is an IObservable itself
 
+
+            // ! what if one of them does not exist yet
+            // ! 1. check if type has default
+            // ! 2. if not, throw an error that that type has no observables yet
             Type keyT = typeof(Dream<T>);
             var oT = _web[keyT] as Dream<T>;
 
@@ -429,32 +641,32 @@ namespace Looming
             where A : struct, IMatter
             where Q : struct, IMatter
         {
-            Type key = typeof(Question<Q, A>);
+            //Type key = typeof(Question<Q, A>);
 
-            if (_net.ContainsKey(key))
-            {
-                // TODO allowing multiple producers of matter type
-            }
-            else
-            {
-                Q trickster = new();
+            //if (_net.ContainsKey(key))
+            //{
+            //    // TODO allowing multiple producers of matter type
+            //}
+            //else
+            //{
+            //    Q trickster = new();
 
-                observable = question => observable
-                    .Invoke(question)
-                    .Do(onNext: e =>
-                    {
-                        // TODO circumstances are skipped at the moment
-                        Question<Q, A> thought = new();
-                        thought.Initialize(who, question, e);
+            //    observable = question => observable
+            //        .Invoke(question)
+            //        .Do(onNext: e =>
+            //        {
+            //            // TODO circumstances are skipped at the moment
+            //            Question<Q, A> thought = new();
+            //            thought.Initialize(who, question, e);
 
-                        //TODO add an onNext receiver of debugger
-                        // use the above thought
-                    });
+            //            //TODO add an onNext receiver of debugger
+            //            // use the above thought
+            //        });
 
-                Loom<Q, A> loom = new(observable);
+            //    Loom<Q, A> loom = new(observable);
 
-                //_net.Add(key, loom);
-            }
+            //    //_net.Add(key, loom);
+            //}
         }
 
         /* ---- ---- 🌠 */
