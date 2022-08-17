@@ -1,56 +1,56 @@
-/*
-      |\      _,,,---,,_
-ZZZzz /,`.-'`'    -.  ;-;;,_
-     |,4-  ) )-,_. ,\ (  `'-'
-    '---''(_/--'  `-'\_)
+///*
+//      |\      _,,,---,,_
+//ZZZzz /,`.-'`'    -.  ;-;;,_
+//     |,4-  ) )-,_. ,\ (  `'-'
+//    '---''(_/--'  `-'\_)
 
-most of the code straight out copied from @neuecc UniRx project
-https://github.com/neuecc/UniRx
-*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Subjects;
-using Rzeka;
-using UnityEngine;
+//most of the code straight out copied from @neuecc UniRx project
+//https://github.com/neuecc/UniRx
+//*/
+//using System;
+//using System.Collections;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Reactive.Subjects;
+//using Rzeka;
+//using UnityEngine;
 
-namespace Examples.Fillory
-{
-    /* 🌊 ---- ---- */
+//namespace Examples.Fillory
+//{
+//    /* 🌊 ---- ---- */
 
-    class GameController : MonoBehaviour
-    {
-        [SerializeField] MonoRzeka rzeka;
+//    class GameController : MonoBehaviour
+//    {
+//        [SerializeField] MonoRzeka rzeka;
 
-        void Start()
-        {
-            // -------------
+//        void Start()
+//        {
+//            // -------------
 
-            // var strand = rzeka
-            //     .Weave<SpecialKeyPressed>(this)
-            //     .Subscribe(next =>
-            //     {
-            //         Debug.Log(next.Matter.Content.ToString());
-            //     });
+//            // var strand = rzeka
+//            //     .Weave<SpecialKeyPressed>(this)
+//            //     .Subscribe(next =>
+//            //     {
+//            //         Debug.Log(next.Matter.Content.ToString());
+//            //     });
 
-            // -------------
-        }
+//            // -------------
+//        }
 
-        void Update()
-        {
-            // -------------.
+//        void Update()
+//        {
+//            // -------------.
             
-            if (rzeka._strands[typeof(SpecialKeyPressed)] is Subject<ThoughtBase> skp)
-            {
-                Debug.Log($"<color=cyan>{skp.HasObservers}</color>");
-            }
+//            if (rzeka._strands[typeof(SpecialKeyPressed)] is Subject<ThoughtBase> skp)
+//            {
+//                Debug.Log($"<color=cyan>{skp.HasObservers}</color>");
+//            }
             
-            // -------------
-        }
-    }
+//            // -------------
+//        }
+//    }
 
-    /* ---- ---- ⛺ */
-}
-/* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
-/* 17 June 2022 🌊 */
+//    /* ---- ---- ⛺ */
+//}
+///* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
+///* 17 June 2022 🌊 */

@@ -149,7 +149,7 @@ namespace Looming
         private void SimpleTest1()
         {
             Rzeka
-                .Weave<CurrentUserMessageColor>(this, spell: () => Observable
+                .Cast<CurrentUserMessageColor>(this, spell: () => Observable
                     .FromEventPattern(
                         h => toggleColorButtonClicked += h,
                         h => toggleColorButtonClicked -= h)
@@ -162,7 +162,7 @@ namespace Looming
                     }));
 
             Rzeka
-                .Weave<NewUserMessage>(this, spell: () => Observable
+                .Cast<NewUserMessage>(this, spell: () => Observable
                     .FromEventPattern<string>(
                         h => newMessage += h,
                         h => newMessage -= h)
@@ -172,7 +172,7 @@ namespace Looming
                     }));
 
             Rzeka
-                .Weave<
+                .Cast<
                 CurrentUserMessageColor, // ! what if it's provider unregisters beofre this combination stops working/unregisters itself
                 NewUserMessage,
                 LastBlueishMessage>(this, spell: pattern =>
@@ -267,7 +267,7 @@ namespace Looming
             Rzeka.Answer<
                 RequestDataForIndexRangeV2,
                 RequestDataForIndexRangeV2.Answer>
-                (this, spell: question =>
+                (this, onQuestion: question =>
                 {
                     return question
                         .Select(q =>
@@ -287,25 +287,21 @@ namespace Looming
                         });
                 });
 
-            Rzeka.Weave<
+            Rzeka.Ask<
                 RequestDataForIndexRangeV2,
                 RequestDataForIndexRangeV2.Answer>
                 (this,
-                question: () =>
-                {
-                    return Observable.Return(new RequestDataForIndexRangeV2() { from = 2, to = 5 });
-                },
-                answer: answer =>
-                {
-                    answer
+                question: () => Observable
+                    .Return(new RequestDataForIndexRangeV2() { from = 2, to = 5 }),
+                onAnswer: answer => answer
                     .Subscribe(next =>
                     {
                         foreach (var x in next.stringsForIndices)
                         {
                             Debug.Log(x);
                         }
-                    });
-                });
+                    })
+                );
 
             //_rzeka.Loom<RequestDataForIndexRange, ProvideDataForThoseIndices>(
             //    this,

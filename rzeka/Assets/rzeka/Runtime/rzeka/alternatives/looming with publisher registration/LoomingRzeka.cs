@@ -429,7 +429,7 @@ namespace Looming
         }
 
         // Overload to publish root dreams ( they are not interested in any other dreams ) 
-        public void Weave<Q>(object who, Func<IObservable<Q>> spell)
+        public void Cast<Q>(object who, Func<IObservable<Q>> spell)
             where Q : struct, IMatter
         {
             Type keyQ = typeof(Dream<Q>);
@@ -443,7 +443,7 @@ namespace Looming
         }
 
         // Overload to publish dreamws with one dependenc
-        public void Weave<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
+        public void Cast<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
             where T : struct, IMatter
             where Q : struct, IMatter
         {
@@ -460,7 +460,7 @@ namespace Looming
             _web.Add(keyQ, dream); // add a check if this type is already registered
         }
 
-        public void Weave<T, Y, Q>(object who, Func<Pattern<T, Y>, IObservable<Q>> spell)
+        public void Cast<T, Y, Q>(object who, Func<Pattern<T, Y>, IObservable<Q>> spell)
             where T : struct, IMatter
             where Y : struct, IMatter
             where Q : struct, IMatter
@@ -530,7 +530,7 @@ namespace Looming
         // ! variants for pattern use could be added like above
         // ! sionce it does not have any input parameters it would be a rather rare used overload probs
         // ! also in that case
-        public void Weave<Q, A>(object who, Func<IObservable<Q>> question, Action<IObservable<A>> answer)
+        public void Ask<Q, A>(object who, Func<IObservable<Q>> question, Action<IObservable<A>> onAnswer)
             where Q : struct, IMatter, IQuestion<A>
             where A : struct, IMatter, IAnswer
         {
@@ -545,11 +545,11 @@ namespace Looming
 
             IObservable<A> observableAnswer = provider.resolver(dreamQ); // ! passed in the dream instead of an observable, could this be useful for circumstance tracking
 
-            answer.Invoke(observableAnswer);
+            onAnswer.Invoke(observableAnswer);
         }
 
         // Overload to generate answers
-        public void Answer<Q, A>(object who, Func<IObservable<Q>, IObservable<A>> spell)
+        public void Answer<Q, A>(object who, Func<IObservable<Q>, IObservable<A>> onQuestion)
             where Q : struct, IMatter, IQuestion<A>
             where A : struct, IMatter, IAnswer
         {
@@ -558,7 +558,7 @@ namespace Looming
             if (!_web.ContainsKey(keyQA))
             {
                 Dream<Q, A> dream = new();
-                dream.Initialize(who, spell, null); // ! missing circumstances
+                dream.Initialize(who, onQuestion, null); // ! missing circumstances
                 _web.Add(keyQA, dream); // add a check if this type is already registered
             }
             else

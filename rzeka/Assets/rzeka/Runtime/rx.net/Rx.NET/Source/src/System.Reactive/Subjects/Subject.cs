@@ -252,7 +252,7 @@ namespace System.Reactive.Subjects
             }
         }
 
-        private sealed class SubjectDisposable : IDisposable
+        public sealed class SubjectDisposable : IDisposable
         {
             private Subject<T> _subject;
             private volatile IObserver<T>? _observer;
