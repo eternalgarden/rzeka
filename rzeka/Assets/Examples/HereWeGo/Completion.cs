@@ -78,98 +78,149 @@ namespace Examples.Fillory
             public string WelcomingText { get; set; }
         }
 
-        public interface IBindingSpell
+        public interface IScrollBase : IDisposable
         {
+            bool IsCastable { get; }
+        }
+
+        public interface TBindingSpell : IScrollBase
+        {
+            Dictionary<Type, bool> AvailableIngredientsDictionary { get; }
             Type[] Requirements { get; }
-            bool this[Type type] { set; }
-        }
-
-        public interface IGivingSpell<T> where T : TMatter
-        {
-            IObservable<T> Cast(params object[] ingredients);
-        }
-
-        public abstract class ScrollBase : IDisposable
-        {
-            public abstract bool IsCastable { get; }
-            public abstract void Dispose();
-        }
-
-        public class Scroll<Q> : ScrollBase, IGivingSpell<Q> where Q : TMatter
-        {
-            public IObservable<Q> spell;
-
-            public override bool IsCastable => true;
-
-            public IObservable<Q> Cast(params object[] ingredients)
-            {
-                return spell;
-            }
-
-            public override void Dispose()
-            {
-                spell = null;
-            }
-        }
-
-        public class Scroll<T, Q> : ScrollBase, IBindingSpell, IGivingSpell<Q> where Q : TMatter where T : TMatter
-        {
-            public Func<IObservable<T>, IObservable<Q>> spell;
-            readonly Dictionary<Type, bool> _availableIngredients = new(1)
-            {
-                { typeof(T), false }
-            };
-            readonly Type[] _requirements = new[] { typeof(T) };
-
-            public Type[] Requirements => _requirements;
             public bool this[Type type]
             {
                 set
                 {
-                    if (_availableIngredients.ContainsKey(type) is false)
+                    if (AvailableIngredientsDictionary.ContainsKey(type) is false)
                     {
                         throw new Exception("wrong");
                     }
                     else
                     {
-                        _availableIngredients[type] = value;
+                        AvailableIngredientsDictionary[type] = value;
                     }
                 }
             }
 
-            public override bool IsCastable => _availableIngredients.All(kvp => kvp.Value == true);
+            bool IScrollBase.IsCastable => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
+        }
 
-            public IObservable<Q> Cast(params object[] ingredients)
+        public interface IGivingSpell<T> where T : TMatter
+        {
+            bool TryCast(out IObservable<T> givingSpell, Completion library);
+        }
+
+        public interface ITakingSpell : TBindingSpell
+        {
+            bool TryCast(out IDisposable disposable, Completion library);
+        }
+
+        public class Scroll<Q> : IScrollBase, IGivingSpell<Q> where Q : TMatter
+        {
+            public IObservable<Q> spell;
+
+            public bool IsCastable => true;
+
+            public bool TryCast(out IObservable<Q> givingSpell, Completion library)
             {
-                return spell.Invoke(ingredients[0] as IObservable<T>);
+                givingSpell = spell;
+                return true;
             }
 
-            public override void Dispose()
+            public void Dispose()
             {
                 spell = null;
             }
         }
 
-        public class TakerSpell<T> : ScrollBase, IBindingSpell where T : TMatter
+        public class Scroll<T, Q> : IScrollBase, TBindingSpell, IGivingSpell<Q> where Q : TMatter where T : TMatter
+        {
+            public Func<IObservable<T>, IObservable<Q>> spell;
+
+            public Type[] Requirements { get; } = new[] { typeof(T) };
+
+            public Dictionary<Type, bool> AvailableIngredientsDictionary { get; } = new(1)
+            {
+                { typeof(T), false }
+            };
+
+            public bool TryCast(out IObservable<Q> givingSpell, Completion library)
+            {
+                givingSpell = null;
+
+                if ((this as TBindingSpell).IsCastable)
+                {
+                    if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
+                    {
+                        givingSpell = spell.Invoke(ingredtient);
+                    }
+                    else
+                    {
+                        throw new Exception("messed up");
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            public void Dispose()
+            {
+                spell = null;
+            }
+        }
+
+        public class TakerSpell<T> : IScrollBase, ITakingSpell where T : TMatter
         {
             public Func<IObservable<T>, IDisposable> spell;
 
-            public bool this[Type type] => type == typeof(T);
+            public Type[] Requirements { get; } = new[] { typeof(T) };
 
-            public override void Dispose()
+            public Dictionary<Type, bool> AvailableIngredientsDictionary { get; } = new(1)
+            {
+                { typeof(T), false }
+            };
+
+            public void Dispose()
             {
                 spell = null;
             }
+
+            public bool TryCast(out IDisposable disposable, Completion library)
+            {
+                disposable = null;
+
+                if ((this as TBindingSpell).IsCastable)
+                {
+                    if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
+                    {
+                        disposable = spell.Invoke(ingredtient);
+                    }
+                    else
+                    {
+                        throw new Exception("messed up");
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
-        Dictionary<Type, object> _allSpells = new();
-        Dictionary<Type, object> _castableSpells = new(); // ! to contain IGivingSpell<T>
+        Dictionary<Type, object> _allKnownScrolls = new();
+        Dictionary<Type, object> _castableScrolls = new(); // ! to contain IGivingSpell<T><T>
 
         Dictionary<Type, List<object>> _spellsWaitingForIngredientOfType = new();
 
         //Dictionary<Type, object> _giverSpells = new();
         Dictionary<Type, List<object>> _takerSpells = new();
-        void DeactivateSpell(ScrollBase spell)
+        void DeactivateSpell(IScrollBase spell)
         {
 
         }
@@ -177,65 +228,116 @@ namespace Examples.Fillory
         IObservable<UserData> providerDD; // ! if was cold, providerS should be disconnected aswell, if it's type would keep last value it should be kept and not disconnected
         IObservable<string> providerS;
 
-        IDisposable MakeSpell(IObservable<UserData> spell)
+        void AddACastableSpell<T>(IGivingSpell<T> scroll) where T : TMatter
         {
-            Scroll<UserData> Spell = new() { spell = spell };
+            Type type = typeof(T);
+            _castableScrolls.Add(type, scroll);
 
-            _allSpells.Add(typeof(UserData), Spell);
+            // todo check potential waiters in _spellsWaitingForIngredientOfType
 
-            _castableSpells.Add(typeof(UserData), Spell);
+        }
+
+        bool AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
+        {
+            ingredient = null;
+            Type type = typeof(T);
+
+            if (_castableScrolls.ContainsKey(type))
+            {
+                var scroll = _castableScrolls[type] as IGivingSpell<T>;
+
+                if (scroll.TryCast(out IObservable<T> givingSpell, this))
+                {
+                    ingredient = givingSpell;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        IDisposable Pluck<T>(IObservable<T> spell) where T : TMatter
+        {
+            Scroll<T> Spell = new() { spell = spell };
+
+            Type type = typeof(T);
+            _allKnownScrolls.Add(type, Spell);
+
+            AddACastableSpell(Spell);
 
             return Disposable.Create(() => DeactivateSpell(Spell));
         }
 
-        IDisposable MakeSpell(Func<IObservable<UserData>, IObservable<UserWelcomingText>> spell)
+        IDisposable Loom<T, Q>(Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter
         {
-            Scroll<UserData, UserWelcomingText> Spell = new() { spell = spell };
+            Scroll<T, Q> Scroll = new() { spell = spell };
 
-            _allSpells.Add(typeof(UserWelcomingText), Spell);
+            _allKnownScrolls.Add(typeof(Q), Scroll);
 
-            if (_castableSpells.ContainsKey(typeof(UserData)))
+            TBindingSpell bindingSpell = Scroll as TBindingSpell;
+            foreach (var req in Scroll.Requirements)
             {
-                Spell[typeof(UserData)] = true;
+                if (_castableScrolls.ContainsKey(req))
+                {
+                    (bindingSpell)[req] = true;
+                }
+            }
 
+            if (bindingSpell.IsCastable)
+            {
+                AddACastableSpell(Scroll);
+            }
+            {
                 // ! so in most cases (?) you won't be able to stop a spell that has already been fully cast
                 // ! however they will be only cast on specific demand, otherwise they will be kept as Scrolls
-                IGivingSpell<UserData> ingredtientSpell = _castableSpells[typeof(UserData)] as IGivingSpell<UserData>;
-                IObservable<UserData> ingredient = ingredtientSpell.Cast();
-
+                // todo waitlist
             }
-            else
-            {
-                // TODO waitlist
-                _spellsWaitingForIngredientOfType[typeof(UserData)].Add(spell);
-            }
-
-            IObservable<UserWelcomingText> newGiver = Spell.Cast(ingredient);
 
             return Disposable.Create(() => providerS = null);
         }
 
-        IDisposable MakeSpell(Func<IObservable<UserWelcomingText>, IDisposable> spell)
+        IDisposable Weave<T>(Func<IObservable<T>, IDisposable> spell) where T : TMatter
         {
-            TakerSpell<UserWelcomingText> Spell = new() { spell = spell };
+            TakerSpell<T> Spell = new() { spell = spell };
 
-            //_takerSpells.Add(typeof(string), Spell);
+            foreach (var req in Spell.Requirements)
+            {
+                if (_castableScrolls.ContainsKey(req))
+                {
+                    (Spell as TBindingSpell)[req] = true;
+                }
+            }
 
-            return Disposable.Create(() => providerS = null);
+            if (Spell.TryCast(out IDisposable weaving, this))
+            {
+                Debug.Log("Yas Cast Weave!");
+                return weaving;
+            }
+            else
+            {
+                Debug.LogError("Failed Cast Weave!");
+                return Disposable.Empty;
+            }
         }
 
         void WeaveExperiments()
         {
-            IDisposable userData = MakeSpell(Observable
+            IDisposable userData = Pluck<UserData>(Observable
                 .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
 
-            IDisposable userWelcoming = MakeSpell(spell: userData =>
+            IDisposable userWelcoming = Loom<UserData, UserWelcomingText>(userData =>
             {
                 return userData
                     .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(DateTime.Now - dd.JoinedDate).TotalDays} days ago." });
             });
 
-            IDisposable welcomingPrinter = MakeSpell(welcomingText =>
+            IDisposable welcomingPrinter = Weave<UserWelcomingText>(welcomingText =>
             {
                 return welcomingText.Subscribe(welcoming => Debug.Log(welcoming.WelcomingText));
             });
