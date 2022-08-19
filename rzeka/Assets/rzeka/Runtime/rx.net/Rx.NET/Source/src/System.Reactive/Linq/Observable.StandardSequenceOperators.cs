@@ -949,6 +949,24 @@ namespace System.Reactive.Linq
             return s_impl.OfType<TResult>(source);
         }
 
+        /// <summary>
+        /// Filters the elements of an observable sequence based on the specified type.
+        /// </summary>
+        /// <typeparam name="TQuery">The bse type from which you want to filter out specific subtype.</typeparam>
+        /// <typeparam name="TResult">The type to filter the elements in the source sequence on.</typeparam>
+        /// <param name="source">The observable sequence that contains the elements to be filtered.</param>
+        /// <returns>An observable sequence that contains elements from the input sequence of type TResult.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
+        public static IObservable<TResult> OfType<TQuery, TResult>(this IObservable<TQuery> source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            return s_impl.OfType<TQuery,TResult>(source);
+        }
+
         #endregion
 
         #region + Select +

@@ -197,6 +197,11 @@ namespace System.Reactive.Linq
             return new OfType<object, TResult>(source);
         }
 
+        public virtual IObservable<TResult> OfType<TQuery,TResult>(IObservable<TQuery> source)
+        {
+            return new OfType<TQuery, TResult>(source);
+        }
+
         #endregion
 
         #region + Select +
