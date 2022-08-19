@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+//using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -83,7 +84,7 @@ namespace Examples.Fillory
             bool IsCastable { get; }
         }
 
-        public interface TBindingSpell : IScrollBase
+        public interface TBindingScroll : IScrollBase
         {
             Dictionary<Type, bool> AvailableIngredientsDictionary { get; }
             Type[] Requirements { get; }
@@ -91,31 +92,26 @@ namespace Examples.Fillory
             {
                 set
                 {
-                    if (AvailableIngredientsDictionary.ContainsKey(type) is false)
-                    {
-                        throw new Exception("wrong");
-                    }
-                    else
-                    {
-                        AvailableIngredientsDictionary[type] = value;
-                    }
+                    if (AvailableIngredientsDictionary.ContainsKey(type) is false) return;
+
+                    AvailableIngredientsDictionary[type] = value;
                 }
             }
 
             bool IScrollBase.IsCastable => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
         }
 
-        public interface IGivingSpell<T> where T : TMatter
+        public interface IConjuringScroll<T> where T : TMatter
         {
             bool TryCast(out IObservable<T> givingSpell, Completion library);
         }
 
-        public interface ITakingSpell : TBindingSpell
+        public interface IAlteringScroll : TBindingScroll
         {
             bool TryCast(out IDisposable disposable, Completion library);
         }
 
-        public class Scroll<Q> : IScrollBase, IGivingSpell<Q> where Q : TMatter
+        public class Scroll<Q> : IScrollBase, IConjuringScroll<Q> where Q : TMatter
         {
             public IObservable<Q> spell;
 
@@ -133,7 +129,7 @@ namespace Examples.Fillory
             }
         }
 
-        public class Scroll<T, Q> : IScrollBase, TBindingSpell, IGivingSpell<Q> where Q : TMatter where T : TMatter
+        public class Scroll<T, Q> : IScrollBase, TBindingScroll, IConjuringScroll<Q> where Q : TMatter where T : TMatter
         {
             public Func<IObservable<T>, IObservable<Q>> spell;
 
@@ -148,7 +144,7 @@ namespace Examples.Fillory
             {
                 givingSpell = null;
 
-                if ((this as TBindingSpell).IsCastable)
+                if ((this as TBindingScroll).IsCastable)
                 {
                     if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                     {
@@ -173,7 +169,7 @@ namespace Examples.Fillory
             }
         }
 
-        public class TakerSpell<T> : IScrollBase, ITakingSpell where T : TMatter
+        public class AlteringScroll<T> : IScrollBase, IAlteringScroll where T : TMatter
         {
             public Func<IObservable<T>, IDisposable> spell;
 
@@ -193,7 +189,7 @@ namespace Examples.Fillory
             {
                 disposable = null;
 
-                if ((this as TBindingSpell).IsCastable)
+                if ((this as TBindingScroll).IsCastable)
                 {
                     if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                     {
@@ -215,26 +211,74 @@ namespace Examples.Fillory
 
         Dictionary<Type, object> _allKnownScrolls = new();
         Dictionary<Type, object> _castableScrolls = new(); // ! to contain IGivingSpell<T><T>
-
-        Dictionary<Type, List<object>> _spellsWaitingForIngredientOfType = new();
+        Dictionary<Type, List<TBindingScroll>> _blockedScrolls = new();
 
         //Dictionary<Type, object> _giverSpells = new();
         Dictionary<Type, List<object>> _takerSpells = new();
-        void DeactivateSpell(IScrollBase spell)
-        {
-
-        }
 
         IObservable<UserData> providerDD; // ! if was cold, providerS should be disconnected aswell, if it's type would keep last value it should be kept and not disconnected
         IObservable<string> providerS;
 
-        void AddACastableSpell<T>(IGivingSpell<T> scroll) where T : TMatter
+
+        void AddAKnownScroll<T>(IScrollBase spell)
+        {
+            Type type = typeof(T);
+            _allKnownScrolls.Add(type, spell);
+        }
+
+        void AddACastableScroll<T>(IConjuringScroll<T> scroll) where T : TMatter
         {
             Type type = typeof(T);
             _castableScrolls.Add(type, scroll);
 
             // todo check potential waiters in _spellsWaitingForIngredientOfType
+        }
 
+        void AddABlockedScroll(Type type, TBindingScroll scroll)
+        {
+            if (_blockedScrolls.ContainsKey(type) is false)
+            {
+                _blockedScrolls[type] = new List<TBindingScroll>();
+            }
+
+            _blockedScrolls[type].Add(scroll);
+        }
+
+        void RemoveAKnownScroll<T>(IScrollBase scroll)
+        {
+            Type removedSpellType = typeof(T);
+
+            _allKnownScrolls.Remove(removedSpellType); // todo handling multiple of same type///
+
+            if (_castableScrolls.ContainsKey(removedSpellType))
+            {
+                RemoveFromCastableScrolls(removedSpellType, scroll);
+            }
+        }
+
+        void RemoveFromCastableScrolls(Type removedSpellType, IScrollBase scroll)
+        {
+            _castableScrolls.Remove(removedSpellType);
+
+            List<(Type key, TBindingScroll scroll)> newBlockedScrolls = new();
+
+            var thing = _castableScrolls
+                .ToObservable()
+                .Where(kvp => kvp.Value is TBindingScroll)
+                .Select(kvp => (key: kvp.Key, spell: kvp.Value as TBindingScroll))
+                .Where(o => o.spell.Requirements.Contains(removedSpellType))
+                .Subscribe(o =>
+                {
+                    o.spell[removedSpellType] = false;
+                    newBlockedScrolls.Add((o.key, o.spell));
+                });
+
+            foreach (var newBlockedScroll in newBlockedScrolls)
+            {
+                // TODO now add a check for existing blocked scrolls
+                AddABlockedScroll(newBlockedScroll.key, newBlockedScroll.scroll);
+                RemoveFromCastableScrolls(newBlockedScroll.key, newBlockedScroll.scroll); // ! recurse
+            }
         }
 
         bool AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
@@ -244,7 +288,7 @@ namespace Examples.Fillory
 
             if (_castableScrolls.ContainsKey(type))
             {
-                var scroll = _castableScrolls[type] as IGivingSpell<T>;
+                var scroll = _castableScrolls[type] as IConjuringScroll<T>;
 
                 if (scroll.TryCast(out IObservable<T> givingSpell, this))
                 {
@@ -267,20 +311,19 @@ namespace Examples.Fillory
             Scroll<T> Spell = new() { spell = spell };
 
             Type type = typeof(T);
-            _allKnownScrolls.Add(type, Spell);
+            AddAKnownScroll<T>(Spell);
+            AddACastableScroll(Spell);
 
-            AddACastableSpell(Spell);
-
-            return Disposable.Create(() => DeactivateSpell(Spell));
+            return Disposable.Create(() => RemoveAKnownScroll<T>(Spell));
         }
 
         IDisposable Loom<T, Q>(Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter
         {
             Scroll<T, Q> Scroll = new() { spell = spell };
 
-            _allKnownScrolls.Add(typeof(Q), Scroll);
+            AddAKnownScroll<Q>(Scroll); // TODO this will require handling multiple providers of same type of spell
 
-            TBindingSpell bindingSpell = Scroll as TBindingSpell;
+            TBindingScroll bindingSpell = Scroll as TBindingScroll;
             foreach (var req in Scroll.Requirements)
             {
                 if (_castableScrolls.ContainsKey(req))
@@ -291,26 +334,27 @@ namespace Examples.Fillory
 
             if (bindingSpell.IsCastable)
             {
-                AddACastableSpell(Scroll);
+                AddACastableScroll(Scroll);
             }
+            else
             {
                 // ! so in most cases (?) you won't be able to stop a spell that has already been fully cast
                 // ! however they will be only cast on specific demand, otherwise they will be kept as Scrolls
                 // todo waitlist
             }
 
-            return Disposable.Create(() => providerS = null);
+            return Disposable.Create(() => RemoveAKnownScroll<T>(Scroll));
         }
 
         IDisposable Weave<T>(Func<IObservable<T>, IDisposable> spell) where T : TMatter
         {
-            TakerSpell<T> Spell = new() { spell = spell };
+            AlteringScroll<T> Spell = new() { spell = spell };
 
             foreach (var req in Spell.Requirements)
             {
                 if (_castableScrolls.ContainsKey(req))
                 {
-                    (Spell as TBindingSpell)[req] = true;
+                    (Spell as TBindingScroll)[req] = true;
                 }
             }
 
@@ -338,6 +382,13 @@ namespace Examples.Fillory
             });
 
             IDisposable welcomingPrinter = Weave<UserWelcomingText>(welcomingText =>
+            {
+                return welcomingText.Subscribe(welcoming => Debug.Log(welcoming.WelcomingText));
+            });
+
+            userWelcoming.Dispose();
+
+            using var _ = Weave<UserWelcomingText>(welcomingText =>
             {
                 return welcomingText.Subscribe(welcoming => Debug.Log(welcoming.WelcomingText));
             });
