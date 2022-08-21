@@ -7,53 +7,77 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public class Rzeka : IRzeka
+    public class RzekaXOXO : IRzeka
     {
-        readonly Subject<TMatter> AllMatterStream = new();
-        readonly Dictionary<Type, object> ObservableStreams = new();
-            
-        public IDisposable Pluck<T>(object who, IObservable<T> observable) where T : TMatter
+        TheLibrary Library { get; } = new();
+
+        public IDisposable Pluck<T>(object who, IObservable<T> spell) 
+            where T : TMatter
         {
-            T value = default;
-            Type key = typeof(T);
-            Giver<T> provider = null;
+            // ! $ NEW_PLUCK<Q>
+            Scroll<T> Scroll = new() { spell = spell };
 
-            if (ObservableStreams.ContainsKey(key))
-            {
-                // TODO throw error or check for merging allowance
-            }
-            else
-            {
-                provider = new()
-                {
-                    Who = who,
-                    Observable = observable
-                };
+            Type type = typeof(T);
 
-                ObservableStreams.Add(key, provider);
-            }
+            Library.AddACastableScroll(type, Scroll);
 
-            return Disposable.Create(() => ObservableStreams.Remove(key));
+            return Disposable.Create(() => Library.RemoveFromConjuringScrolls(type, Scroll));
         }
-        
-        public IDisposable Weave<T>(object who, Func<IObservable<T>, IDisposable> takerSpell) where T : TMatter
-        {
-            T value = default;
-            Type key = typeof(T);
-            IDisposable weaving = null;
 
-            if (ObservableStreams.ContainsKey(key))
+        public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
+            where T : TMatter
+            where Q : TMatter
+        {
+            // ! $ NEW_LOOM<T,Q>
+            Scroll<T, Q> Scroll = new() { spell = spell };
+
+            var bindingScroll = Scroll as TBindingScroll;
+            Library.CheckBindingScrollRequirements(bindingScroll);
+
+            if (bindingScroll.IsCastable)
             {
-                Giver<T> giver = ObservableStreams[key] as Giver<T>;
-                IDisposable spellDisposable = takerSpell.Invoke(giver.Observable);
-                weaving = spellDisposable;
+                // ! $ NEW_LOOM<T,Q>.CASTABLE
+                Library.AddACastableScroll(Scroll);
             }
             else
             {
-                // TODO register as awaiting for a provider
+                // ! so in most cases (?) you won't be able to stop a spell that has already been fully cast
+                // ! however they will be only cast on specific demand, otherwise they will be kept as Scrolls
+
+                // ! $ NEW_LOOM<T,Q>.BLOCKED
+                Library.AddABlockedScroll(Scroll);
+
             }
 
-            return weaving;
+            return Disposable.Create(() => Library.RemoveAKnownScroll<Q>(Scroll));
+        }
+
+        public IDisposable Weave<T>(object who, Action<IObservable<T>> spell) where T : TMatter
+        {
+            // todo solve the missing concept of adding altering spells to _allKnownSpells as they cannot accept those at the moment
+            // todo otherwise consider renaming or altogether burning down the all known spells library
+            
+            // ! $ NEW_WEAVING<T>
+            Type type = typeof(T);
+            AlteringScroll<T> Scroll = new() { spell = spell };
+
+            Library.CheckBindingScrollRequirements(Scroll);
+
+            if ((Scroll as TBindingScroll).IsCastable)
+            {
+                // ! $ NEW_WEAVING<T>.CAST
+                Scroll.Cast(Library);
+                return Disposable.Empty;
+            }
+            else
+            {
+                // ! $ NEW_WEAVING<T>.BLOCKED
+                Debug.LogError("Blocked Cast Weave!");
+                Library.AddABlockedScroll(Scroll);
+
+                // todo below is wrong, should return a conditional check because by the time this is called the scroll may already be out of the blocked list
+                return Disposable.Create(() => Library.RemoveABlockedScroll(Scroll));
+            }
         }
     }
 }
