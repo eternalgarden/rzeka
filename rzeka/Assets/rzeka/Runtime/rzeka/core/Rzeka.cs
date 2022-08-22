@@ -9,17 +9,17 @@ namespace Rzeka
 {
     public class RzekaXOXO : IRzeka
     {
-        TheLibrary Library { get; } = new();
+        public TheLibrary Library { get; } = new();
 
         public IDisposable Pluck<T>(object who, IObservable<T> spell) 
             where T : TMatter
         {
             // ! $ NEW_PLUCK<Q>
-            Scroll<T> Scroll = new() { spell = spell };
+            ConjuringScroll<T> Scroll = new() { spell = spell };
 
             Type type = typeof(T);
 
-            Library.AddACastableScroll(type, Scroll);
+            Library.AddConjuringScroll(type, Scroll);
 
             return Disposable.Create(() => Library.RemoveFromConjuringScrolls(type, Scroll));
         }
@@ -29,7 +29,7 @@ namespace Rzeka
             where Q : TMatter
         {
             // ! $ NEW_LOOM<T,Q>
-            Scroll<T, Q> Scroll = new() { spell = spell };
+            BindingScroll<T, Q> Scroll = new() { spell = spell };
 
             var bindingScroll = Scroll as TBindingScroll;
             Library.CheckBindingScrollRequirements(bindingScroll);
@@ -37,7 +37,7 @@ namespace Rzeka
             if (bindingScroll.IsCastable)
             {
                 // ! $ NEW_LOOM<T,Q>.CASTABLE
-                Library.AddACastableScroll(Scroll);
+                Library.AddConjuringScroll(Scroll);
             }
             else
             {
@@ -49,7 +49,7 @@ namespace Rzeka
 
             }
 
-            return Disposable.Create(() => Library.RemoveAKnownScroll<Q>(Scroll));
+            return Disposable.Create(() => Library.ForgetScroll<Q>(Scroll));
         }
 
         public IDisposable Weave<T>(object who, Action<IObservable<T>> spell) where T : TMatter
@@ -66,17 +66,18 @@ namespace Rzeka
             if ((Scroll as TBindingScroll).IsCastable)
             {
                 // ! $ NEW_WEAVING<T>.CAST
+                //Debug.Log("damn");
                 Scroll.Cast(Library);
                 return Disposable.Empty;
             }
             else
             {
                 // ! $ NEW_WEAVING<T>.BLOCKED
-                Debug.LogError("Blocked Cast Weave!");
+                //Debug.LogError("Blocked Cast Weave!");
                 Library.AddABlockedScroll(Scroll);
 
                 // todo below is wrong, should return a conditional check because by the time this is called the scroll may already be out of the blocked list
-                return Disposable.Create(() => Library.RemoveABlockedScroll(Scroll));
+                return Disposable.Create(() => Library.RemoveFromBlockedScrollsCollection(Scroll));
             }
         }
     }

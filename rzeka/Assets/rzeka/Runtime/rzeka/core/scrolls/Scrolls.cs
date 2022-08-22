@@ -4,11 +4,11 @@ using System.Collections.Generic;
 namespace Rzeka
 {
 
-    public class Scroll<Q> : IScrollBase, TConjuringScroll<Q> where Q : TMatter
+    public class ConjuringScroll<Q> : TScrollBase, TConjuringScroll<Q> where Q : TMatter
     {
         public IObservable<Q> spell;
 
-        Guid _guid = new();
+        Guid _guid = TScrollBase.CreateNewGuid();
         public Guid Guid => _guid;
 
         public bool IsCastable => true;
@@ -33,7 +33,7 @@ namespace Rzeka
         }
     }
 
-    public class Scroll<T, Q> : IScrollBase, TBindingScroll, TConjuringScroll<Q> where Q : TMatter where T : TMatter
+    public class BindingScroll<T, Q> : TScrollBase, TBindingScroll, TConjuringScroll<Q> where Q : TMatter where T : TMatter
     {
         public Func<IObservable<T>, IObservable<Q>> spell;
 
@@ -46,7 +46,7 @@ namespace Rzeka
 
         public Type ConjuredType => typeof(Q);
 
-        Guid _guid = new();
+        Guid _guid = TScrollBase.CreateNewGuid();
         public Guid Guid => _guid;
 
         public bool TryCast(out object observableSpell, TheLibrary library)
@@ -85,11 +85,11 @@ namespace Rzeka
         }
     }
 
-    public class AlteringScroll<T> : IScrollBase, TAlteringScroll where T : TMatter
+    public class AlteringScroll<T> : TScrollBase, TAlteringScroll where T : TMatter
     {
         public Action<IObservable<T>> spell;
 
-        Guid _guid = new();
+        Guid _guid = TScrollBase.CreateNewGuid();
         public Guid Guid => _guid;
 
         public Type[] Requirements { get; } = new[] { typeof(T) };

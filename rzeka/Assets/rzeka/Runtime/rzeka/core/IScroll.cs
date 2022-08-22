@@ -4,13 +4,15 @@ using System.Linq;
 
 namespace Rzeka
 {
-    public interface IScrollBase : IDisposable
+    public interface TScrollBase : IDisposable
     {
         Guid Guid { get; }
         bool IsCastable { get; }
+
+        protected static Guid CreateNewGuid() => Guid.NewGuid();
     }
 
-    public interface TBindingScroll : IScrollBase
+    public interface TBindingScroll : TScrollBase
     {
         Dictionary<Type, bool> AvailableIngredientsDictionary { get; }
         Type[] Requirements { get; }
@@ -29,7 +31,7 @@ namespace Rzeka
             }
         }
 
-        bool IScrollBase.IsCastable => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
+        bool TScrollBase.IsCastable => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
     }
 
     public interface TAlteringScroll : TBindingScroll
@@ -38,7 +40,7 @@ namespace Rzeka
         void Cast(TheLibrary library);
     }
 
-    public interface IConjuringScroll : IScrollBase
+    public interface IConjuringScroll : TScrollBase
     {
         Type ConjuredType { get; }
         // todo remove try throw errr instgead
