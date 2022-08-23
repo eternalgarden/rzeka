@@ -10,6 +10,7 @@ namespace Rzeka
     public class RzekaXOXO : IRzeka
     {
         public TheLibrary Library { get; } = new();
+        public Eris Debugger { get; } = new();
 
         public IDisposable Pluck<T>(object who, IObservable<T> spell) 
             where T : TMatter
@@ -59,25 +60,27 @@ namespace Rzeka
             
             // ! $ NEW_WEAVING<T>
             Type type = typeof(T);
-            AlteringScroll<T> Scroll = new() { spell = spell };
+            AlteringScroll<T> Scroll = new(spell, Library, Debugger);
 
             Library.CheckBindingScrollRequirements(Scroll);
 
             if ((Scroll as TBindingScroll).IsCastable)
             {
-                // ! $ NEW_WEAVING<T>.CAST
+                // ! $ WEAVING<T>   .NEW.CAST - WHO..
                 //Debug.Log("damn");
                 Scroll.Cast(Library);
             }
             else
             {
-                // ! $ NEW_WEAVING<T>.BLOCKED
+                // ! $ WEAVING<T>   .NEW.BLOCKED
                 //Debug.LogError("Blocked Cast Weave!");
                 Library.AddABlockedScroll(Scroll);
             }
 
             return Disposable.Create(() =>
             {
+                // ! $ WEAVING<T>   .DISPOSED
+
                 if (Scroll.WasCast) Scroll.Dispose();
                 else Library.RemoveFromBlockedScrollsCollection(typeof(T),Scroll);
             });

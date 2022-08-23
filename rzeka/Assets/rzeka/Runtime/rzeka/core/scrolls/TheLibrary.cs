@@ -123,6 +123,17 @@ namespace Rzeka
             }
         }
 
+        public void RemoveFromAllBlockedScrollsCollections(TBindingScroll unblockedScroll)
+        {
+            foreach (var kvp in unblockedScroll.AvailableIngredientsDictionary)
+            {
+                if (kvp.Value == false)
+                {
+                    RemoveFromBlockedScrollsCollection(kvp.Key, unblockedScroll);
+                }
+            }
+        }
+
         public void RemoveFromBlockedScrollsCollection(Type blockingType, TBindingScroll unblockedScroll)
         {
             // ! this can be 0, it is slightly inefficient if the scroll was unblocked by a given type before
@@ -140,32 +151,21 @@ namespace Rzeka
 
         // todo rename this thing it is really misleading and doesnt seem to handle AlteringScrolls
         public void ForgetLoomScroll<Q>(TScrollBase scroll)
+            where Q : TMatter
         {
             // ! $ LIBRARY.FORGETTING_A_SCROLL<Q>
 
-            Type removedSpellType = typeof(Q);
+            Type removedSpellType = scroll.GetType();
 
-            switch (removedSpellType)
+            if (scroll is ILoomingScroll<Q> looming)
             {
-                case IConjuringScroll conjuring:
-                    if (conjuring.IsCastable) RemoveFromConjuringScrolls(conjuring);
-                    else goto TBindingScroll;
-                    break;
-                case TBindingScroll binding:
-                    break;
-            }
-
-            if (scroll.IsCastable && scroll is IConjuringScroll conjuringScroll)
-            {
-                
+                if (looming.IsCastable) RemoveFromConjuringScrolls(looming);
+                else RemoveFromAllBlockedScrollsCollections(looming);
+                looming.Dispose();
             }
             else
             {
-                if (scroll is TBindingScroll bindingScroll)
-                {
-                    if (bindingScroll.IsCastable) RemoveFromConjuringScrolls(scroll);
-
-                }
+                throw new NotImplementedException($"Typeof: {removedSpellType}");
             }
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 
 namespace Rzeka
 {
@@ -89,9 +90,19 @@ namespace Rzeka
 
     public class AlteringScroll<T> : TScrollBase, TAlteringScroll where T : TMatter
     {
-        public IObserver<T> spell;
+        private readonly IObserver<T> spell;
+        private readonly TheLibrary library;
+        private readonly Eris debugger;
+
         Guid _guid = TScrollBase.CreateNewGuid();
         IDisposable _subscriptionDisposable;
+
+        public AlteringScroll(IObserver<T> spell, TheLibrary library, Eris debugger)
+        {
+            this.spell = spell;
+            this.library = library;
+            this.debugger = debugger;
+        }
 
         public Guid Guid => _guid;
 
@@ -115,8 +126,6 @@ namespace Rzeka
 
         public void Dispose()
         {
-            spell = null;
-
             if (WasCast) _subscriptionDisposable.Dispose();
         }
 
@@ -126,7 +135,15 @@ namespace Rzeka
             {
                 if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                 {
-                    _subscriptionDisposable = ingredtient.Subscribe(spell);
+                    _subscriptionDisposable = ingredtient
+                        .Materialize()
+                        .Do( notification =>
+                        {
+                            notification.Accept(debugger.GetObserver<T>(this));
+                        })
+                        .Dematerialize()
+                        .Subscribe(spell);
+
                     WasCast = true;
                 }
                 else
