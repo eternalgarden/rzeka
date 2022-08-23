@@ -33,7 +33,7 @@ namespace Rzeka
         }
     }
 
-    public class BindingScroll<T, Q> : TScrollBase, TBindingScroll, TConjuringScroll<Q> where Q : TMatter where T : TMatter
+    public class LoomingScroll<T, Q> : TScrollBase, ILoomingScroll<Q> where Q : TMatter where T : TMatter
     {
         public Func<IObservable<T>, IObservable<Q>> spell;
 
@@ -48,6 +48,8 @@ namespace Rzeka
 
         Guid _guid = TScrollBase.CreateNewGuid();
         public Guid Guid => _guid;
+
+        public bool IsCastable => (this as TBindingScroll).AreAllIngredientsProvided;
 
         public bool TryCast(out object observableSpell, TheLibrary library)
         {
@@ -87,9 +89,10 @@ namespace Rzeka
 
     public class AlteringScroll<T> : TScrollBase, TAlteringScroll where T : TMatter
     {
-        public Action<IObservable<T>> spell;
-
+        public IObserver<T> spell;
         Guid _guid = TScrollBase.CreateNewGuid();
+        IDisposable _subscriptionDisposable;
+
         public Guid Guid => _guid;
 
         public Type[] Requirements { get; } = new[] { typeof(T) };
@@ -99,9 +102,22 @@ namespace Rzeka
                 { typeof(T), false }
             };
 
+        public bool WasCast { get; private set; }
+
+        public bool IsCastable
+        {
+            get
+            {
+                if (WasCast) return false;
+                else return (this as TBindingScroll).AreAllIngredientsProvided;
+            }
+        }
+
         public void Dispose()
         {
             spell = null;
+
+            if (WasCast) _subscriptionDisposable.Dispose();
         }
 
         public void Cast(TheLibrary library)
@@ -110,7 +126,8 @@ namespace Rzeka
             {
                 if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                 {
-                    spell.Invoke(ingredtient);
+                    _subscriptionDisposable = ingredtient.Subscribe(spell);
+                    WasCast = true;
                 }
                 else
                 {

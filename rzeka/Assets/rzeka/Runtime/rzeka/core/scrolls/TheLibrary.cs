@@ -73,13 +73,14 @@ namespace Rzeka
                 {
                     blockedScroll[newConjuringScrollType] = true;
 
+                    // todo at one time it might be better to differentiate between altering scrolls here who overload iscastable
                     if (blockedScroll.IsCastable) unblockedScrolls.Add(blockedScroll);
                 }
-                UnblockScrolls(unblockedScrolls.ToArray());
+                UnblockScrolls(newConjuringScrollType, unblockedScrolls.ToArray());
             }
         }
 
-        private void UnblockScrolls(TBindingScroll[] scrolls)
+        private void UnblockScrolls(Type unblockedType, TBindingScroll[] scrolls)
         {
             foreach (TBindingScroll unblockedScroll in scrolls)
             {
@@ -91,10 +92,18 @@ namespace Rzeka
                 else if (unblockedScroll is TAlteringScroll alteringScroll)
                 {
                     // ! just cast it
-                    alteringScroll.Cast(this);
+                    if (alteringScroll.IsCastable)
+                    {
+                        // todo this will be good to actually hold all scrolls reference to make sure there are no undisposed things
+                        alteringScroll.Cast(this);
+                    }
+                    else
+                    {
+                        throw new Exception("smth rlly wrong");
+                    }
                 }
 
-                RemoveFromBlockedScrollsCollection(unblockedScroll);
+                RemoveFromBlockedScrollsCollection(unblockedType, unblockedScroll);
             }
         }
 
@@ -114,55 +123,56 @@ namespace Rzeka
             }
         }
 
-        public void RemoveFromBlockedScrollsCollection(TBindingScroll unblockedScroll)
+        public void RemoveFromBlockedScrollsCollection(Type blockingType, TBindingScroll unblockedScroll)
         {
-            foreach (Type req in unblockedScroll.Requirements)
+            // ! this can be 0, it is slightly inefficient if the scroll was unblocked by a given type before
+            // todo guid check
+            int removeCount = _blockedScrollsByRequiredType[blockingType]
+                .RemoveAll(scroll => scroll.Guid == unblockedScroll.Guid);
+
+            if (removeCount > 1) throw new Exception("something weird happened");
+
+            if (_blockedScrollsByRequiredType[blockingType].Count == 0)
             {
-                if (unblockedScroll[req] == true && _blockedScrollsByRequiredType.ContainsKey(req))
-                {
-                    // ! this can be 0, it is slightly inefficient if the scroll was unblocked by a given type before
-                    // todo guid check
-                    int removeCount = _blockedScrollsByRequiredType[req]
-                        .RemoveAll(scroll => scroll.Guid == unblockedScroll.Guid);
-
-                    if (removeCount > 1) throw new Exception("something weird happened");
-
-                    if (_blockedScrollsByRequiredType[req].Count == 0)
-                    {
-                        _blockedScrollsByRequiredType.Remove(req);
-                    }
-                }
+                _blockedScrollsByRequiredType.Remove(blockingType);
             }
         }
 
-        public void ForgetScroll<Q>(TScrollBase scroll)
+        // todo rename this thing it is really misleading and doesnt seem to handle AlteringScrolls
+        public void ForgetLoomScroll<Q>(TScrollBase scroll)
         {
             // ! $ LIBRARY.FORGETTING_A_SCROLL<Q>
 
             Type removedSpellType = typeof(Q);
 
+            switch (removedSpellType)
+            {
+                case IConjuringScroll conjuring:
+                    if (conjuring.IsCastable) RemoveFromConjuringScrolls(conjuring);
+                    else goto TBindingScroll;
+                    break;
+                case TBindingScroll binding:
+                    break;
+            }
+
             if (scroll.IsCastable && scroll is IConjuringScroll conjuringScroll)
             {
-                RemoveFromConjuringScrolls(removedSpellType, conjuringScroll);
+                
             }
             else
             {
                 if (scroll is TBindingScroll bindingScroll)
                 {
-                    foreach (Type req in bindingScroll.Requirements)
-                    {
-                        if (bindingScroll[req] == false)
-                        {
-                            if (_blockedScrollsByRequiredType[req].Contains(bindingScroll) is false) throw new Exception("ummmm");
-                            _blockedScrollsByRequiredType[req].Remove(bindingScroll);
-                        }
-                    }
+                    if (bindingScroll.IsCastable) RemoveFromConjuringScrolls(scroll);
+
                 }
             }
         }
 
-        public void RemoveFromConjuringScrolls(Type removedSpellType, IConjuringScroll scroll)
+        public void RemoveFromConjuringScrolls(IConjuringScroll scroll)
         {
+            Type removedSpellType = scroll.ConjuredType;
+
             //if (_castableConjuringScrolls[removedSpellType].Contains(scroll) is false) throw new Exception("this is bad");
             if (_castableConjuringScrolls[removedSpellType].RemoveAll(x => x.Guid == scroll.Guid) == 0) throw new Exception("unexpected bewware");
 
@@ -193,7 +203,7 @@ namespace Rzeka
 
                 if (newBlockedScroll.scroll is IConjuringScroll conjuringScroll)
                 {
-                    RemoveFromConjuringScrolls(newBlockedScroll.key, conjuringScroll); // ! recurse
+                    RemoveFromConjuringScrolls(conjuringScroll); // ! recurse
                 }
             }
         }

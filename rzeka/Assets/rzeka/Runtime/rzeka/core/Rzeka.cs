@@ -21,7 +21,7 @@ namespace Rzeka
 
             Library.AddConjuringScroll(type, Scroll);
 
-            return Disposable.Create(() => Library.RemoveFromConjuringScrolls(type, Scroll));
+            return Disposable.Create(() => Library.RemoveFromConjuringScrolls(Scroll));
         }
 
         public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
@@ -29,7 +29,7 @@ namespace Rzeka
             where Q : TMatter
         {
             // ! $ NEW_LOOM<T,Q>
-            BindingScroll<T, Q> Scroll = new() { spell = spell };
+            LoomingScroll<T, Q> Scroll = new() { spell = spell };
 
             var bindingScroll = Scroll as TBindingScroll;
             Library.CheckBindingScrollRequirements(bindingScroll);
@@ -49,10 +49,10 @@ namespace Rzeka
 
             }
 
-            return Disposable.Create(() => Library.ForgetScroll<Q>(Scroll));
+            return Disposable.Create(() => Library.ForgetLoomScroll<Q>(Scroll));
         }
 
-        public IDisposable Weave<T>(object who, Action<IObservable<T>> spell) where T : TMatter
+        public IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter
         {
             // todo solve the missing concept of adding altering spells to _allKnownSpells as they cannot accept those at the moment
             // todo otherwise consider renaming or altogether burning down the all known spells library
@@ -68,17 +68,19 @@ namespace Rzeka
                 // ! $ NEW_WEAVING<T>.CAST
                 //Debug.Log("damn");
                 Scroll.Cast(Library);
-                return Disposable.Empty;
             }
             else
             {
                 // ! $ NEW_WEAVING<T>.BLOCKED
                 //Debug.LogError("Blocked Cast Weave!");
                 Library.AddABlockedScroll(Scroll);
-
-                // todo below is wrong, should return a conditional check because by the time this is called the scroll may already be out of the blocked list
-                return Disposable.Create(() => Library.RemoveFromBlockedScrollsCollection(Scroll));
             }
+
+            return Disposable.Create(() =>
+            {
+                if (Scroll.WasCast) Scroll.Dispose();
+                else Library.RemoveFromBlockedScrollsCollection(typeof(T),Scroll);
+            });
         }
     }
 }

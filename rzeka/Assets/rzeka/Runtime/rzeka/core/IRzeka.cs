@@ -10,7 +10,7 @@ namespace Rzeka
     {
         IDisposable Pluck<Q>(object who, IObservable<Q> spell) where Q : TMatter;
         IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter;
-        IDisposable Weave<T>(object who, Action<IObservable<T>> spell) where T : TMatter;
+        IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter;
     }
 
     public interface IRzekaProposals

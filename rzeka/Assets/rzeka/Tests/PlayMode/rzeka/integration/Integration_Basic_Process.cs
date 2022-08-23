@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Reactive;
 using System.Reactive.Linq;
 using UnityEngine.TestTools;
 
@@ -70,11 +71,7 @@ namespace Rzeka.Tests.Integration
 
             using var _ = Rzeka.Weave<UserWelcomingText>(
                 who: this,
-                spell: welcomingText =>
-                {
-                    using var meow = welcomingText
-                        .Subscribe(welcoming => received = true);
-                });
+                spell: Observer.Create<UserWelcomingText>(onNext: u => received = true));
 
             yield return null;
 
@@ -93,51 +90,15 @@ namespace Rzeka.Tests.Integration
 
             using var one = Rzeka.Weave<UserWelcomingText>(
                 who: this,
-                spell: welcomingText =>
-                {
-                    using var meow = welcomingText
-                        .Subscribe(welcoming => receivedOne = true);
-                });
+                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedOne = true));
 
             using var two = Rzeka.Weave<UserWelcomingText>(
                 who: this,
-                spell: welcomingText =>
-                {
-                    using var meow = welcomingText
-                        .Subscribe(welcoming => receivedTwo = true);
-                });
+                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedTwo = true));
 
             yield return null;
 
             Assert.IsTrue(receivedOne && receivedTwo);
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator c_Is_a_BindingScroll_properly_disposed()
-        {
-            // -------------
-
-            _userWelcomingTextMatter.Dispose();
-
-            yield return null;
-
-            Assert.IsFalse(Rzeka.Library.IsConjurable<UserWelcomingText>(out _));
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator c_Is_a_ConjuringScroll_properly_disposed()
-        {
-            // -------------
-            
-            _userDataMatter.Dispose();
-
-            yield return null;
-
-            Assert.IsFalse(Rzeka.Library.IsConjurable<UserData>(out _));
 
             // -------------
         }

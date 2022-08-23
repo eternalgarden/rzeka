@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 //using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -92,17 +93,15 @@ namespace Examples.Fillory
                     .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." });
             });
 
-            IDisposable welcomingPrinter = rzeka.Weave<UserWelcomingText>(this, welcomingText =>
-            {
-                welcomingText.Subscribe(welcoming => Debug.Log(welcoming.WelcomingText));
-            });
+            IDisposable welcomingPrinter = rzeka.Weave<UserWelcomingText>(
+                who: this,
+                spell: Observer.Create<UserWelcomingText>(onNext: u => Debug.Log(u.WelcomingText)));
 
             userWelcoming.Dispose();
 
-            using var anotherPrinter = rzeka.Weave<UserWelcomingText>(this, welcomingTextMatter =>
-            {
-                welcomingTextMatter.Subscribe(welcoming => Debug.Log($"<color=yellow>{welcoming.WelcomingText}</color>"));
-            });
+            using var anotherPrinter = rzeka.Weave<UserWelcomingText>(
+                who: this,
+                spell: Observer.Create<UserWelcomingText>(onNext: u => Debug.Log($"<color=yellow>{u.WelcomingText}</color>"))); 
 
             q += keyPressStreamA
                 .Subscribe(o =>

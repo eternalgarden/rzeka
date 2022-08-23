@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace Rzeka
 {
@@ -31,12 +32,18 @@ namespace Rzeka
             }
         }
 
-        bool TScrollBase.IsCastable => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
+        bool AreAllIngredientsProvided => AvailableIngredientsDictionary.All(kvp => kvp.Value == true);
+    }
+
+    public interface ILoomingScroll<Q> : TBindingScroll, TConjuringScroll<Q>
+        where Q : TMatter
+    {
+         
     }
 
     public interface TAlteringScroll : TBindingScroll
     {
-        // todo remove try throw errr instgead
+        bool WasCast { get; }
         void Cast(TheLibrary library);
     }
 

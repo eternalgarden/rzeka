@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections;
+using System.Reactive;
 using System.Reactive.Linq;
 using UnityEngine.TestTools;
 
@@ -48,11 +49,7 @@ namespace Rzeka.Tests.Integration
         {
             _userWelcomingTextWeaver = Rzeka.Weave<UserWelcomingText>(
                 who: this,
-                spell: welcomingText =>
-                {
-                    using var meow = welcomingText
-                        .Subscribe();
-                });
+                spell: Observer.Create<UserWelcomingText>(onNext: u => { }));
         }
 
         [UnityTest]
@@ -178,11 +175,7 @@ namespace Rzeka.Tests.Integration
 
             using var _ = Rzeka.Weave<UserWelcomingText>(
                 who: this,
-                spell: welcomingText =>
-                {
-                    using var meow = welcomingText
-                        .Subscribe(welcoming => received = true);
-                });
+                spell: Observer.Create<UserWelcomingText>(onNext: u => received = true));
 
             yield return null;
 
