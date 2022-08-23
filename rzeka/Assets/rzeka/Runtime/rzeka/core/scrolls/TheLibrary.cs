@@ -16,6 +16,13 @@ namespace Rzeka
         Dictionary<Type, List<IConjuringScroll>> _castableConjuringScrolls = new(); // ! to contain IGivingSpell<T><T>
         Dictionary<Type, List<TBindingScroll>> _blockedScrollsByRequiredType = new();
 
+        public Eris Eris { get; }
+
+        public TheLibrary(Eris eris)
+        {
+            Eris = eris;
+        }
+
         public bool IsConjurable<T>(out IConjuringScroll[] conjurers)
         {
             if (_castableConjuringScrolls.ContainsKey(typeof(T)))
@@ -94,6 +101,7 @@ namespace Rzeka
                     // ! just cast it
                     if (alteringScroll.IsCastable)
                     {
+                        Eris.ScrollWillBeCast(alteringScroll, isNew: false);
                         // todo this will be good to actually hold all scrolls reference to make sure there are no undisposed things
                         alteringScroll.Cast(this);
                     }
@@ -161,7 +169,6 @@ namespace Rzeka
             {
                 if (looming.IsCastable) RemoveFromConjuringScrolls(looming);
                 else RemoveFromAllBlockedScrollsCollections(looming);
-                looming.Dispose();
             }
             else
             {

@@ -7,7 +7,19 @@ namespace Rzeka
 
     public class ConjuringScroll<Q> : TScrollBase, TConjuringScroll<Q> where Q : TMatter
     {
-        public IObservable<Q> spell;
+        private readonly IObservable<Q> spell;
+        private readonly TheLibrary library;
+        private readonly Eris eris;
+        private readonly object who;
+        private readonly object wisp = new();
+
+        public ConjuringScroll(object who, IObservable<Q> spell, TheLibrary library, Eris debugger)
+        {
+            this.who = who;
+            this.spell = spell;
+            this.library = library;
+            this.eris = debugger;
+        }
 
         Guid _guid = TScrollBase.CreateNewGuid();
         public Guid Guid => _guid;
@@ -16,27 +28,65 @@ namespace Rzeka
 
         public Type ConjuredType => typeof(Q);
 
+        public object Who => who;
+
+        public bool WasDisposed { get; private set; }
+
         public bool TryCast(out IObservable<Q> givingSpell, TheLibrary library)
         {
-            givingSpell = spell;
+            givingSpell = spell
+                        .Materialize()
+                        .Do(notification =>
+                        {
+                            notification.Accept(eris.GetReleasesObserver<Q>(this));
+                        })
+                        .Dematerialize();
             return true;
         }
 
         public bool TryCast(out object observableSpell, TheLibrary library)
         {
-            observableSpell = spell;
+            observableSpell = spell
+                        .Materialize()
+                        .Do(notification =>
+                        {
+                            notification.Accept(eris.GetReleasesObserver<Q>(this));
+                        })
+                        .Dematerialize();
+
             return true;
         }
 
         public void Dispose()
         {
-            spell = null;
+            lock (wisp)
+            {
+                if (WasDisposed is false)
+                {
+                    eris.ScrollWillBeDisposed(this);
+                    library.RemoveFromConjuringScrolls(this);
+
+                    WasDisposed = true;
+                }
+            }
         }
     }
 
     public class LoomingScroll<T, Q> : TScrollBase, ILoomingScroll<Q> where Q : TMatter where T : TMatter
     {
-        public Func<IObservable<T>, IObservable<Q>> spell;
+        private readonly Func<IObservable<T>, IObservable<Q>> spell;
+        private readonly TheLibrary library;
+        private readonly Eris eris;
+        private readonly object who;
+        private readonly object wisp = new();
+
+        public LoomingScroll(object who, Func<IObservable<T>, IObservable<Q>> spell, TheLibrary library, Eris eris)
+        {
+            this.who = who;
+            this.spell = spell;
+            this.library = library;
+            this.eris = eris;
+        }
 
         public Type[] Requirements { get; } = new[] { typeof(T) };
 
@@ -51,6 +101,9 @@ namespace Rzeka
         public Guid Guid => _guid;
 
         public bool IsCastable => (this as TBindingScroll).AreAllIngredientsProvided;
+
+        public object Who => who;
+        public bool WasDisposed { get; private set; }
 
         public bool TryCast(out object observableSpell, TheLibrary library)
         {
@@ -67,7 +120,22 @@ namespace Rzeka
             {
                 if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                 {
-                    observableSpell = spell.Invoke(ingredtient);
+                    IObservable<T> erisTouchedIngredient = ingredtient
+                        .Materialize()
+                        .Do(notification =>
+                        {
+                            notification.Accept(eris.GetReceivalsObserver<T>(this));
+                        })
+                        .Dematerialize();
+
+                    observableSpell = spell
+                        .Invoke(erisTouchedIngredient)
+                        .Materialize()
+                        .Do(notification =>
+                        {
+                            notification.Accept(eris.GetReleasesObserver<Q>(this));
+                        })
+                        .Dematerialize();
                 }
                 else
                 {
@@ -84,7 +152,16 @@ namespace Rzeka
 
         public void Dispose()
         {
-            spell = null;
+            lock (wisp)
+            {
+                if (WasDisposed is false)
+                {
+                    eris.ScrollWillBeDisposed(this);
+                    library.ForgetLoomScroll<Q>(this);
+
+                    WasDisposed = true;
+                }
+            }
         }
     }
 
@@ -92,16 +169,19 @@ namespace Rzeka
     {
         private readonly IObserver<T> spell;
         private readonly TheLibrary library;
-        private readonly Eris debugger;
+        private readonly Eris eris;
+        private readonly object who;
+        private readonly object wisp = new();
 
         Guid _guid = TScrollBase.CreateNewGuid();
         IDisposable _subscriptionDisposable;
 
-        public AlteringScroll(IObserver<T> spell, TheLibrary library, Eris debugger)
+        public AlteringScroll(object who, IObserver<T> spell, TheLibrary library, Eris eris)
         {
+            this.who = who;
             this.spell = spell;
             this.library = library;
-            this.debugger = debugger;
+            this.eris = eris;
         }
 
         public Guid Guid => _guid;
@@ -124,9 +204,23 @@ namespace Rzeka
             }
         }
 
+        public object Who => who;
+        public bool WasDisposed { get; private set; }
+
         public void Dispose()
         {
-            if (WasCast) _subscriptionDisposable.Dispose();
+            lock (wisp)
+            {
+                if (WasDisposed is false)
+                {
+                    eris.ScrollWillBeDisposed(this);
+
+                    if (WasCast) _subscriptionDisposable.Dispose();
+                    else library.RemoveFromBlockedScrollsCollection(typeof(T), this);
+
+                    WasDisposed = true;
+                }
+            }
         }
 
         public void Cast(TheLibrary library)
@@ -135,13 +229,15 @@ namespace Rzeka
             {
                 if (library.AskForIngredient<T>(out IObservable<T> ingredtient))
                 {
-                    _subscriptionDisposable = ingredtient
+                    IObservable<T> erisTouchedIngredient = ingredtient
                         .Materialize()
-                        .Do( notification =>
+                        .Do(notification =>
                         {
-                            notification.Accept(debugger.GetObserver<T>(this));
+                            notification.Accept(eris.GetReceivalsObserver<T>(this));
                         })
-                        .Dematerialize()
+                        .Dematerialize();
+
+                    _subscriptionDisposable = erisTouchedIngredient
                         .Subscribe(spell);
 
                     WasCast = true;

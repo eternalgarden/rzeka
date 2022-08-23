@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface IRzeka
+    public interface IRzeka : IDisposable
     {
         IDisposable Pluck<Q>(object who, IObservable<Q> spell) where Q : TMatter;
         IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter;

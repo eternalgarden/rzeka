@@ -126,6 +126,7 @@ namespace Rzeka.Tests.Integration
             _userDataMatter?.Dispose();
             _userWelcomingTextMatter?.Dispose();
             _userWelcomingTextWeaver?.Dispose();
+            Rzeka.Dispose();
 
             yield return null;
 

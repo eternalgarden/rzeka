@@ -14,6 +14,30 @@ namespace Rzeka.Tests.Integration
         CollectibleDisposable _disposables;
         IDisposable _userDataMatter;
         IDisposable _userWelcomingTextMatter;
+        IDisposable _userWelcomingTextWeaver;
+
+        void PluckUserDataMatter()
+        {
+            _userDataMatter = Rzeka.Pluck<UserData>(
+                who: this,
+                spell: Observable
+                    .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
+        }
+
+        void LoomUserWelcomingText()
+        {
+            _userWelcomingTextMatter = Rzeka.Loom<UserData, UserWelcomingText>(
+                who: this,
+                spell: userData => userData
+                    .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." }));
+        }
+
+        void WeaveWithUserWelcomingText()
+        {
+            _userWelcomingTextWeaver = Rzeka.Weave<UserWelcomingText>(
+                who: this,
+                spell: Observer.Create<UserWelcomingText>(onNext: u => { }));
+        }
 
         [UnitySetUp]
         public IEnumerator Setup()
@@ -22,16 +46,6 @@ namespace Rzeka.Tests.Integration
 
             Rzeka = new RzekaXOXO();
             _disposables = new();
-
-            _userDataMatter = Rzeka.Pluck<UserData>(
-                who: this, 
-                spell: Observable
-                    .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-
-            _userWelcomingTextMatter = Rzeka.Loom<UserData, UserWelcomingText>(
-                who: this,
-                spell: userData => userData
-                    .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." }));
 
             yield return null;
             
@@ -43,6 +57,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
+            PluckUserDataMatter();
             Assert.IsTrue(Rzeka.Library.IsConjurable<UserData>(out _));
 
             yield return null;
@@ -55,6 +70,9 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
+            PluckUserDataMatter();
+            LoomUserWelcomingText();
+
             Assert.IsTrue(Rzeka.Library.IsConjurable<UserWelcomingText>(out _));
 
             yield return null;
@@ -66,6 +84,9 @@ namespace Rzeka.Tests.Integration
         public IEnumerator b_Is_Weave_UserWelcomingText_Received()
         {
             // -------------
+
+            PluckUserDataMatter();
+            LoomUserWelcomingText();
 
             bool received = false;
 
@@ -84,6 +105,9 @@ namespace Rzeka.Tests.Integration
         public IEnumerator b_Is_Weave_UserWelcomingText_Received_Twice()
         {
             // -------------
+
+            PluckUserDataMatter();
+            LoomUserWelcomingText();
 
             bool receivedOne = false;
             bool receivedTwo = false;
@@ -108,9 +132,11 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            _disposables.Dispose();
-            _userDataMatter.Dispose();
-            _userWelcomingTextMatter.Dispose();
+            _disposables?.Dispose();
+            _userDataMatter?.Dispose();
+            _userWelcomingTextMatter?.Dispose();
+            _userWelcomingTextWeaver?.Dispose();
+            Rzeka.Dispose();
 
             yield return null;
 

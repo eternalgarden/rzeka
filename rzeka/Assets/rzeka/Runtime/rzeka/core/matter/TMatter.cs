@@ -14,6 +14,8 @@ namespace Rzeka
         {
             Circumstances = circumstances.Select(x => x.Guid).ToArray();
         }
+
+        public void AssignNewGuid() => Guid = Guid.NewGuid();
     }
 
     public interface IRequest : TMatter { }

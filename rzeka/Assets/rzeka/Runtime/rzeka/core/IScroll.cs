@@ -9,6 +9,8 @@ namespace Rzeka
     {
         Guid Guid { get; }
         bool IsCastable { get; }
+        bool WasDisposed { get; }
+        object Who { get; }
 
         protected static Guid CreateNewGuid() => Guid.NewGuid();
     }
