@@ -4,7 +4,6 @@ using System.Reactive.Linq;
 
 namespace Rzeka
 {
-
     public class ConjuringScroll<Q> : TScrollBase, TConjuringScroll<Q> where Q : TMatter
     {
         private readonly IObservable<Q> spell;
