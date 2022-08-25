@@ -13,43 +13,59 @@ namespace Rzeka
     - new pluck, loom, weaving
      */
 
+    [Flags]
     public enum ScrollEventType
     {
-        Created,
-        Cast,
-        Blocked,
-        Forgotten
+        New         = 1,
+        Old         = 1 << 1,
+        Cast        = 1 << 2,
+        Blocked     = 1 << 3,
+        Requested   = 1 << 4,
+        Forgotten   = 1 << 5,
     }
 
     public enum MatterEventType
     {
         Shaped,
         Received,
-        Exception,
-        Finished
+        //Exception,
+        //Finished
     }
 
-    public interface IRealmEvent
+    public abstract class RealmEvent : IDisposable
     {
+        public readonly Guid Guid;
+
+        bool _wasDisposed = false;
+
+        protected RealmEvent()
+        {
+            Guid = Guid.NewGuid();
+        }
+
+        bool WasDisposed => _wasDisposed;
+
+        public void Dispose()
+        {
+            _wasDisposed = true;
+        }
     }
 
-    public struct ScrollEvent : IRealmEvent
+    public class ScrollEvent : RealmEvent
     {
-        public ScrollEvent(TScrollBase scroll, ScrollEventType eventType, bool wasJustCreated = false)
+        public ScrollEvent(TScrollBase scroll, ScrollEventType eventType) : base()
         {
             Scroll = scroll;
             EventType = eventType;
-            WasJustCreated = wasJustCreated;
         }
 
         public TScrollBase Scroll { get; }
         public ScrollEventType EventType { get; }
-        public bool WasJustCreated { get; }
     }
 
-    public struct MatterEvent : IRealmEvent
+    public class MatterEvent : RealmEvent
     {
-        public MatterEvent(TMatter matter, TScrollBase source, MatterEventType eventType)
+        public MatterEvent(TMatter matter, TScrollBase source, MatterEventType eventType) : base()
         {
             Matter = matter;
             Source = source;
@@ -70,11 +86,11 @@ namespace Rzeka
 
         EventHandler<TMatter> ReceivedMatter { get; set; }
 
-        EventHandler<IRealmEvent> OnRealmEvent { get; set; }
+        Action<RealmEvent> OnRealmEvent { get; set; }
 
         CollectibleDisposable _disposables;
 
-        IObservable<IRealmEvent> _realmEventStream;
+        public IObservable<RealmEvent> RealmEventStream;
 
         public Eris()
         {
@@ -86,6 +102,8 @@ namespace Rzeka
                 .Select(pattern => (scroll: pattern.Sender as TScrollBase, matter: pattern.EventArgs))
                 .Subscribe(o =>
                 {
+                    OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Shaped));
+
                     Print("cyan", $"RELEASE::{o.matter.GetType().Name} ", $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
 
@@ -95,13 +113,16 @@ namespace Rzeka
                 .Select(pattern => (scroll: pattern.Sender as TScrollBase, matter: pattern.EventArgs))
                 .Subscribe(o =>
                 {
+                    OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Received));
+
                     Print("green", $"RECEIVE::{o.matter.GetType().Name} ", $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
 
-            _realmEventStream = Observable.FromEventPattern<IRealmEvent>(
+            RealmEventStream = Observable.FromEvent<RealmEvent>(
                     h => OnRealmEvent += h,
                     h => OnRealmEvent -= h)
-                .de;
+                .Publish()
+                .RefCount();
         }
 
         public IObserver<T> GetReleasesObserver<T>(TScrollBase scroll) where T : TMatter
@@ -119,26 +140,47 @@ namespace Rzeka
                 onNext: val => ReceivedMatter.Invoke(scroll, val));
         }
 
-        public void ScrollWasCreated(TScrollBase scroll)
-        {
-            Print("white", $"CREATED::{FormatScroll(scroll)} ", $"by {scroll.Who.GetType().Name}");
-            //Debug.Log($"<color=green>A new scroll was just created by {scroll.Who}, its type is: {scroll.GetType()}</color>");
-        }
+        //public void ScrollWasCreated(TScrollBase scroll)
+        //{
+        //    OnRealmEvent(new ScrollEvent(scroll, ScrollEventType.New));
 
-        public void ScrollWillBeCast(TScrollBase scroll, bool isNew = true)
+        //    Print("white", $"CREATED::{FormatScroll(scroll)} ", $"by {scroll.Who.GetType().Name}");
+        //    //Debug.Log($"<color=green>A new scroll was just created by {scroll.Who}, its type is: {scroll.GetType()}</color>");
+        //}
+
+        public void ScrollWillBeCast(TScrollBase scroll, bool isNew)
         {
+            ScrollEventType flags = ScrollEventType.Cast;
+            if (isNew) flags |= ScrollEventType.New;
+            else flags |= ScrollEventType.Old;
+
+            OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
+
             string prefix = isNew ? "Just Created Scroll" : "Existing Scroll";
             Print("white", $"CAST::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
         }
 
         public void ScrollWillBeBlocked(TScrollBase scroll, bool isNew)
         {
+            ScrollEventType flags = ScrollEventType.Blocked;
+            if (isNew) flags |= ScrollEventType.New;
+            else flags |= ScrollEventType.Old;
+
+            OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
+
             string prefix = isNew ? "Just Created Scroll" : "Existing Scroll";
             Print("yellow", $"BLOCKED::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
         }
 
-        public void ScrollWillBeDisposed(TScrollBase scroll)
+        // ! could be forgotten new in case when the scroll is created but its introduction to rrzeka is rejected since it already has a provider of that type who doesnt accept multiple sources
+        public void ScrollWillBeDisposed(TScrollBase scroll, bool isNew)
         {
+            ScrollEventType flags = ScrollEventType.Blocked;
+            if (isNew) flags |= ScrollEventType.New;
+            else flags |= ScrollEventType.Old;
+
+            OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
+
             Print("red", $"FORGOTTEN::{FormatScroll(scroll)} ", $"created by {scroll.Who.GetType().Name}");
         }
 

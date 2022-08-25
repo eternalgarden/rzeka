@@ -61,7 +61,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] blockedScrolls))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] blockedScrolls))
             {
                 Assert.IsTrue(blockedScrolls.Length == 1);
             }
@@ -82,7 +82,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedScrolls))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedScrolls))
             {
                 Assert.IsTrue(blockedScrolls.Length == 1);
             }
@@ -107,7 +107,7 @@ namespace Rzeka.Tests.Integration
             bool oneUserWelcomingBlocked = false;
             bool oneUserDataBlocked = false;
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedScrolls))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedScrolls))
             {
                 oneUserDataBlocked = blockedScrolls.Length == 1;
             }
@@ -116,7 +116,7 @@ namespace Rzeka.Tests.Integration
                 Assert.Fail("No scrolls blocked by UserData type found");
             }
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] userDataBlocked))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] userDataBlocked))
             {
                 oneUserWelcomingBlocked = userDataBlocked.Length == 1;
             }
@@ -139,7 +139,7 @@ namespace Rzeka.Tests.Integration
             LoomUserWelcomingText();
             PluckUserDataMatter();
 
-            Assert.IsTrue(Rzeka.Library.IsConjurable<UserData>(out _));
+            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>(out _));
 
             yield return null;
 
@@ -155,7 +155,7 @@ namespace Rzeka.Tests.Integration
             LoomUserWelcomingText();
             PluckUserDataMatter();
 
-            Assert.IsTrue(Rzeka.Library.IsConjurable<UserWelcomingText>(out _));
+            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>(out _));
 
             yield return null;
 
@@ -195,7 +195,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedByUserData))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out TBindingScroll[] blockedByUserData))
             {
                 Assert.Fail("scrolls blocked by UserData type found, array length: {0}", blockedByUserData.Length);
             }
@@ -216,7 +216,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            if (Rzeka.Library.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] blockedByWelcoming))
+            if (Rzeka.TheLibrary.IsTypeBlockingSpells<UserWelcomingText>(out TBindingScroll[] blockedByWelcoming))
             {
                 Assert.Fail("scrolls blocked by UserWelcomingText type found, array length: {0}", blockedByWelcoming.Length);
             }

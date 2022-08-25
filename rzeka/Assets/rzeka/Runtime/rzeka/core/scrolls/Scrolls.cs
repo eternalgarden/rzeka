@@ -62,7 +62,7 @@ namespace Rzeka
             {
                 if (WasDisposed is false)
                 {
-                    eris.ScrollWillBeDisposed(this);
+                    eris.ScrollWillBeDisposed(this, isNew: false);
                     library.RemoveFromConjuringScrolls(this);
 
                     WasDisposed = true;
@@ -155,7 +155,7 @@ namespace Rzeka
             {
                 if (WasDisposed is false)
                 {
-                    eris.ScrollWillBeDisposed(this);
+                    eris.ScrollWillBeDisposed(this, isNew: false);
                     library.ForgetLoomScroll<Q>(this);
 
                     WasDisposed = true;
@@ -212,7 +212,7 @@ namespace Rzeka
             {
                 if (WasDisposed is false)
                 {
-                    eris.ScrollWillBeDisposed(this);
+                    eris.ScrollWillBeDisposed(this, isNew: false);
 
                     if (WasCast) _subscriptionDisposable.Dispose();
                     else library.RemoveFromBlockedScrollsCollection(typeof(T), this);

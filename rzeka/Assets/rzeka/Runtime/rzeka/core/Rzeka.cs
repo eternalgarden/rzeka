@@ -9,26 +9,25 @@ namespace Rzeka
 {
     public class RzekaXOXO : IRzeka
     {
-        public TheLibrary Library { get; }
-        public Eris Eris { get; }
+        public TheLibrary TheLibrary { get; set; }
+        public Eris Eris { get; set; }
 
         public RzekaXOXO()
         {
             Eris = new();
-            Library = new(Eris);
+            TheLibrary = new(Eris);
         }
 
         public IDisposable Pluck<T>(object who, IObservable<T> spell) 
             where T : TMatter
         {
             // ! $ NEW_PLUCK<Q>
-            ConjuringScroll<T> Scroll = new(who, spell, Library, Eris);
-            Eris.ScrollWasCreated(Scroll);
-            Eris.ScrollWillBeCast(Scroll);
+            ConjuringScroll<T> Scroll = new(who, spell, TheLibrary, Eris);
+            Eris.ScrollWillBeCast(Scroll, isNew: true);
 
             Type type = typeof(T);
 
-            Library.AddConjuringScroll(type, Scroll);
+            TheLibrary.AddConjuringScroll(type, Scroll);
 
             return Disposable.Create(() => Scroll.Dispose());
         }
@@ -38,18 +37,17 @@ namespace Rzeka
             where Q : TMatter
         {
             // ! $ NEW_LOOM<T,Q>
-            LoomingScroll<T, Q> Scroll = new(who, spell, Library, Eris);
-            Eris.ScrollWasCreated(Scroll);
+            LoomingScroll<T, Q> Scroll = new(who, spell, TheLibrary, Eris);
 
             var bindingScroll = Scroll as TBindingScroll;
-            Library.CheckBindingScrollRequirements(bindingScroll);
+            TheLibrary.CheckBindingScrollRequirements(bindingScroll);
 
             if (bindingScroll.IsCastable)
             {
                 // ! $ NEW_LOOM<T,Q>.CASTABLE
-                Eris.ScrollWillBeCast(Scroll);
+                Eris.ScrollWillBeCast(Scroll, isNew: true);
 
-                Library.AddConjuringScroll(Scroll);
+                TheLibrary.AddConjuringScroll(Scroll);
             }
             else
             {
@@ -59,7 +57,7 @@ namespace Rzeka
                 // ! $ NEW_LOOM<T,Q>.BLOCKED
                 Eris.ScrollWillBeBlocked(Scroll, isNew: true);
 
-                Library.AddABlockedScroll(Scroll);
+                TheLibrary.AddABlockedScroll(Scroll);
 
             }
 
@@ -73,24 +71,24 @@ namespace Rzeka
             
             // ! $ NEW_WEAVING<T>
             Type type = typeof(T);
-            AlteringScroll<T> Scroll = new(who, spell, Library, Eris);
+            AlteringScroll<T> Scroll = new(who, spell, TheLibrary, Eris);
 
-            Eris.ScrollWasCreated(Scroll);
-            Library.CheckBindingScrollRequirements(Scroll);
+            TheLibrary.CheckBindingScrollRequirements(Scroll);
 
             if ((Scroll as TBindingScroll).IsCastable)
             {
                 // ! $ WEAVING<T>   .NEW.CAST - WHO..
+                Eris.ScrollWillBeCast(Scroll, isNew: true);
+
                 //Debug.Log("damn");
-                Eris.ScrollWillBeCast(Scroll);
-                Scroll.Cast(Library);
+                Scroll.Cast(TheLibrary);
             }
             else
             {
                 // ! $ WEAVING<T>   .NEW.BLOCKED
                 //Debug.LogError("Blocked Cast Weave!");
                 Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-                Library.AddABlockedScroll(Scroll);
+                TheLibrary.AddABlockedScroll(Scroll);
             }
 
             return Disposable.Create(() => Scroll.Dispose());

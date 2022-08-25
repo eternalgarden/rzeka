@@ -63,7 +63,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.Library.IsConjurable<UserData>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserData>(out _));
 
             // -------------
         }
@@ -80,7 +80,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.Library.IsConjurable<UserWelcomingText>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>(out _));
 
             // -------------
         }
@@ -96,7 +96,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.Library.IsTypeBlockingSpells<UserWelcomingText>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsTypeBlockingSpells<UserWelcomingText>(out _));
 
             // -------------
         }
@@ -112,7 +112,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.Library.IsTypeBlockingSpells<UserData>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out _));
 
             // -------------
         }
