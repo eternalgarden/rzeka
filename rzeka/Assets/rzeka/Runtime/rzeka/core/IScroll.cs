@@ -11,8 +11,9 @@ namespace Rzeka
         string Title { get; }
         bool IsCastable { get; }
         object Who { get; }
-
+        
         protected static Guid CreateNewGuid() => Guid.NewGuid();
+        void Cast();
     }
 
     public interface TBindingScroll : TScrollBase
@@ -58,20 +59,29 @@ namespace Rzeka
         }
     }
 
-    public interface TAlteringScroll : TBindingScroll
+    public interface IAlteringScroll : TBindingScroll
     {
         bool WasCast { get; }
-        void Cast();
     }
 
-    public interface ILoomingScroll<Q> : TBindingScroll, TConjuringScroll<Q>
+    public interface ILoomingScroll : TBindingScroll, IConjuringScroll
+    {
+        
+    }
+
+    public interface ILoomingScroll<Q> : ILoomingScroll, TConjuringScroll<Q>
         where Q : TMatter
     {
     }
 
     public interface TConjuringScroll<T> : IConjuringScroll where T : TMatter
     {
-        bool TryGetConjuring(out IObservable<T> observableSpell);
+        /// <summary>
+        /// This hides an important architecture decision that the conjuring spells may only be cast once.
+        /// To re-cast one it's scroll would have to be disposed and summoned again, unless it has gotten out of mana and then it is be provided with it again.
+        /// TODO CONSIDER ADDING ReCast() INTERFACE METHOD
+        /// </summary>
+        IObservable<T> GetConjuring();
     }
 
     public interface IConjuringScroll : TScrollBase

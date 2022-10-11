@@ -139,7 +139,7 @@ namespace Rzeka.Tests.Integration
             LoomUserWelcomingText();
             PluckUserDataMatter();
 
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>(out _));
+            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>());
 
             yield return null;
 
@@ -155,7 +155,7 @@ namespace Rzeka.Tests.Integration
             LoomUserWelcomingText();
             PluckUserDataMatter();
 
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>(out _));
+            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
 
             yield return null;
 

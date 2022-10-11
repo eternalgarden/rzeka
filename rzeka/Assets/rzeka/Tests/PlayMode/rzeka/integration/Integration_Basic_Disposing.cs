@@ -63,7 +63,7 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserData>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserData>());
 
             // -------------
         }
@@ -73,14 +73,13 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            PluckUserDataMatter();
             LoomUserWelcomingText();
 
             _userWelcomingTextMatter.Dispose();
 
             yield return null;
 
-            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>(out _));
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>() || Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out _));
 
             // -------------
         }

@@ -164,7 +164,7 @@ namespace Rzeka
         {
             return scroll switch
             {
-                TAlteringScroll alteration =>
+                IAlteringScroll alteration =>
                     $"Alteration<{alteration.Requirements.Aggregate("", (text, type) => text + $"{type.Name},")}>",
                 TBindingScroll binding =>
                     $"Loom<{binding.Requirements.Aggregate("", (text, type) => text + $"{type.Name}")}>",

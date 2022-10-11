@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Basic_Process
+    public class Integration_NoMana
     {
         RzekaXOXO Rzeka;
         CollectibleDisposable _disposables;
@@ -46,83 +46,74 @@ namespace Rzeka.Tests.Integration
 
             Rzeka = new RzekaXOXO();
             _disposables = new();
-
-            yield return null;
             
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a_Is_conjurable_of_UserData()
-        {
-            // -------------
-
-            PluckUserDataMatter();
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>());
-
             yield return null;
 
             // -------------
         }
 
         [UnityTest]
-        public IEnumerator a_Is_conjurable_of_UserWelcomingText()
+        public IEnumerator a_Is_a_conjurable_ConjuringScroll_properly_disposed()
         {
             // -------------
 
             PluckUserDataMatter();
             LoomUserWelcomingText();
 
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
+            _userDataMatter.Dispose();
 
             yield return null;
+
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserData>());
 
             // -------------
         }
 
         [UnityTest]
-        public IEnumerator b_Is_Weave_UserWelcomingText_Received()
+        public IEnumerator a_Is_a_conjurable_BindingScroll_properly_disposed()
         {
             // -------------
 
             PluckUserDataMatter();
             LoomUserWelcomingText();
 
-            bool received = false;
-
-            using var _ = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => received = true));
+            _userWelcomingTextMatter.Dispose();
 
             yield return null;
 
-            Assert.IsTrue(received);
+            Assert.IsFalse(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
 
             // -------------
         }
 
         [UnityTest]
-        public IEnumerator b_Is_Weave_UserWelcomingText_Received_Twice()
+        public IEnumerator b_Is_a_blocked_AlteringScroll_properly_disposed()
         {
             // -------------
 
-            PluckUserDataMatter();
-            LoomUserWelcomingText();
+            WeaveWithUserWelcomingText();
 
-            bool receivedOne = false;
-            bool receivedTwo = false;
-
-            using var one = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedOne = true));
-
-            using var two = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedTwo = true));
+            _userWelcomingTextWeaver.Dispose();
 
             yield return null;
 
-            Assert.IsTrue(receivedOne && receivedTwo);
+            Assert.IsFalse(Rzeka.TheLibrary.IsTypeBlockingSpells<UserWelcomingText>(out _));
+
+            // -------------
+        }
+
+        [UnityTest]
+        public IEnumerator b_Is_a_blocked_BindingScroll_properly_disposed()
+        {
+            // -------------
+
+            LoomUserWelcomingText();
+
+            _userWelcomingTextMatter.Dispose();
+
+            yield return null;
+
+            Assert.IsFalse(Rzeka.TheLibrary.IsTypeBlockingSpells<UserData>(out _));
 
             // -------------
         }

@@ -19,6 +19,7 @@ namespace Rzeka
         readonly Eris eris;
         readonly object who;
         readonly Guid _guid = TScrollBase.CreateNewGuid();
+        IObservable<Q> _observableSpell;
 
         public ConjuringScroll(object who, IObservable<Q> spell, TheLibrary library, Eris debugger)
         {
@@ -33,25 +34,42 @@ namespace Rzeka
         public Type ConjuredType => typeof(Q);
         public bool IsCastable => true;
         public object Who => who;
+        public bool IsConjured => ObservableSpell is not null;
 
-        void Cast(out IObservable<Q> givingSpell)
+        IObservable<Q> ObservableSpell
         {
-            givingSpell = spell
+            get => _observableSpell;
+            set
+            {
+                if (_observableSpell is not null) throw new Exception("Was already cast");
+
+                _observableSpell = value;
+            }
+        }
+        
+        public void Cast()
+        {
+            if (IsConjured) return;
+            
+            ObservableSpell = spell
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
                 .Dematerialize();
         }
 
-        public bool TryGetConjuring(out IObservable<Q> observableSpell)
+        public IObservable<Q> GetConjuring()
         {
-            Cast(out observableSpell);
-            return true;
+            if (IsConjured is false)
+            {
+                Cast();
+            }
+
+            return ObservableSpell;
         }
 
         public void Dispose()
         {
-            eris.ScrollWillBeDisposed(this, isNew: false);
-            library.RemoveFromConjuringScrolls(this);
+            ObservableSpell = null;
         }
     }
 
@@ -75,7 +93,7 @@ namespace Rzeka
         public string Title => $"Looming of {typeof(Q).Name} from {(this as TBindingScroll).GetBindingScrollCode()}";
         public Type ConjuredType => typeof(Q);
         public bool IsCastable => (this as TBindingScroll).AreAllIngredientsProvided;
-        public bool WasCast => ObservableSpell is not null;
+        public bool IsConjured => ObservableSpell is not null;
         public Type[] Requirements { get; } = { typeof(T) };
         public BehaviorSubject<bool> HasMana { get; } = new(false);
 
@@ -91,6 +109,11 @@ namespace Rzeka
         
         
         // TODO WRITE TESTS FOR THIS
+        // THINKING HOW NOMANA WORKS IS ALSO NECESSARY
+        // POSSIBLY ADDITIONAL CALLS ON DISPOSE
+        
+        // TODO A NECESSARY RE-CAST ONCE MANA IS PROVIDED
+        // COULD THIS BE AUTOMATIC WITHOUT INPUT FROM THE LIBRARY THAT SPELLS CAST THEMSELVES ONCE PROVIDED WITH MANA
         IObservable<Q> ObservableSpell
         {
             get => _observableSpell;
@@ -99,6 +122,7 @@ namespace Rzeka
                 if (_observableSpell is not null) throw new Exception("Was already cast");
 
                 _observableSpell = value;
+                
                 _noManaObserverContract = value
                     .Subscribe(
                         onNext: _ => { },
@@ -117,17 +141,30 @@ namespace Rzeka
                         });
             }
         }
+        
+        public IObservable<Q> GetConjuring()
+        {
+            if (!IsConjured && !IsCastable)
+            {
+                throw new Exception("Cant be conjured");
+            }
+
+            if (!IsConjured)
+            {
+                Cast();
+            }
+
+            return ObservableSpell;
+        }
 
         // LOOMING SCROLL IS BASICALLY ONLY CAST FROM THE LIBRARY AS AskForIngredient 
         // WHEN IT WAS BLOCKED
         // IF IT WASNT BLOCKED IT WILL BE CAST IMMEDIATELY
         // TODO WHAT IF IT ISNT USED BY ANY WEAVING, WHY WOULD IT BE CAST THEN
         // TODO IT NEEDS CLEANING 
-        void Cast(out IObservable<Q> observableSpell)
+        public void Cast()
         {
-            observableSpell = null;
-
-            if (WasCast) throw new Exception("Was already cast!");
+            if (IsConjured) throw new Exception("Was already cast!");
             if ((this as TBindingScroll).IsCastable is false) throw new Exception("Not castable");
 
             library.AskForIngredient(out IObservable<T> ingredient);
@@ -138,7 +175,10 @@ namespace Rzeka
             // ALSO HANDLING SITUATION WHEN THE CHANNEL IS NO LONGER CLOSED WITH A WEAVING
             // DOES THAT HAVE TO MATTER?
             // ARE SCROLLS CAST IF THE CHANNEL ISNT CLOSED?
-
+            
+            // TODO OKI, SO FAR A CHANGE IN INGREDIENTS WILL BE PROPAGATED FURTHER
+            // BUT WHAT IF THIS SCROLL ITSELF IS BECOMING AN INACTIVE/DISPOSED COMPONENT
+            // WHERE DOES THE INGREDIENT WATERFALL BEGIN, IT'S NOT CLEAR
             var noManaNotifier = Observable.Create<Q>(subscribe: observer =>
             {
                 return HasMana
@@ -159,39 +199,17 @@ namespace Rzeka
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
                 .Dematerialize();
-
-             observableSpell = ObservableSpell;
-        }
-
-        public bool TryGetConjuring(out IObservable<Q> observableSpell)
-        {
-            observableSpell = null;
-
-            if (WasCast)
-            {
-                observableSpell = ObservableSpell;
-            }
-            else
-            {
-                if (IsCastable)
-                {
-                    Cast(out observableSpell);
-                }
-            }
-
-            return observableSpell != null;
         }
 
         public void Dispose()
         {
             _noManaObserverContract?.Dispose();
-            eris.ScrollWillBeDisposed(this, isNew: false);
-            library.ForgetLoomScroll<Q>(this);
+            ObservableSpell = null;
         }
     }
 
     [Serializable]
-    public class AlteringScroll<T> : TAlteringScroll where T : TMatter
+    public class AlteringScroll<T> : IAlteringScroll where T : TMatter
     {
         readonly IObserver<T> spell;
         readonly TheLibrary library;
@@ -236,7 +254,6 @@ namespace Rzeka
         public void Dispose()
         {
             eris.ScrollWillBeDisposed(this, isNew: false);
-
             if (WasCast) _subscriptionDisposable.Dispose();
             else library.RemoveFromBlockedScrollsCollection(typeof(T), this);
         }
@@ -246,7 +263,7 @@ namespace Rzeka
             if ((this as TBindingScroll).IsCastable is false) throw new Exception("messed up");
             library.AskForIngredient<T>(out IObservable<T> ingredtient);
 
-            IObservable<T> erisTouchedIngredient = ingredtient
+            var erisTouchedIngredient = ingredtient
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
                 .Dematerialize();

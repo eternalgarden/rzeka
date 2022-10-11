@@ -23,13 +23,17 @@ namespace Rzeka
         {
             // ! $ NEW_PLUCK<Q>
             ConjuringScroll<T> Scroll = new(who, spell, TheLibrary, Eris);
-            Eris.ScrollWillBeCast(Scroll, isNew: true);
 
             Type type = typeof(T);
+            Eris.ScrollWillBeCast(Scroll, isNew: true);
+            TheLibrary.CastConjuring(type, Scroll);
 
-            TheLibrary.AddConjuringScroll(type, Scroll);
-
-            return Disposable.Create(() => Scroll.Dispose());
+            return Disposable.Create(() =>
+            {
+                Eris.ScrollWillBeDisposed(Scroll, isNew: false);
+                TheLibrary.RemoveFromConjuringScrolls(Scroll);
+                Scroll.Dispose();
+            });
         }
 
         public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
@@ -45,10 +49,8 @@ namespace Rzeka
             if (bindingScroll.IsCastable)
             {
                 // ! $ NEW_LOOM<T,Q>.CASTABLE
-                // TODO AT THE MOMENT THIS ISN'T TRUE, IT WILL NOT BE IMMEDIATELY CAST
                 Eris.ScrollWillBeCast(Scroll, isNew: true);
-
-                TheLibrary.AddConjuringScroll(Scroll);
+                TheLibrary.CastConjuring(Scroll);
             }
             else
             {
@@ -57,12 +59,15 @@ namespace Rzeka
 
                 // ! $ NEW_LOOM<T,Q>.BLOCKED
                 Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-
                 TheLibrary.AddABlockedScroll(Scroll);
-
             }
 
-            return Disposable.Create(() => Scroll.Dispose());
+            return Disposable.Create(() =>
+            {
+                Eris.ScrollWillBeDisposed(Scroll, isNew: false);
+                TheLibrary.ForgetLoomScroll<Q>(Scroll);
+                Scroll.Dispose();
+            });
         }
 
         public IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter
@@ -80,9 +85,7 @@ namespace Rzeka
             {
                 // ! $ WEAVING<T>   .NEW.CAST - WHO..
                 Eris.ScrollWillBeCast(Scroll, isNew: true);
-
-                //Debug.Log("damn");
-                Scroll.Cast();
+                TheLibrary.CastWeaving(Scroll);
             }
             else
             {
@@ -92,7 +95,10 @@ namespace Rzeka
                 TheLibrary.AddABlockedScroll(Scroll);
             }
 
-            return Disposable.Create(() => Scroll.Dispose());
+            return Disposable.Create(() =>
+            {
+                Scroll.Dispose();
+            });
         }
 
         public void Dispose()
