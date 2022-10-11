@@ -6,11 +6,13 @@ namespace Rzeka
     {
         public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
-        public virtual string Description => throw new NotImplementedException();
+        public virtual string Description => "༼ つ ◕_◕ ༽つ description not set";
+        public Type Type => this.GetType();
 
-        public BaseMatter(params TMatter[] circumstances)
+        protected BaseMatter(params TMatter[] circumstances)
         {
             (this as TMatter).SetCircumstances(circumstances);
+            Guid = Guid.NewGuid();
         }
     }
 }

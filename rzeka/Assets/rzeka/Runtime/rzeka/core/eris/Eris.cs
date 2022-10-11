@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UnityEngine;
 
 namespace Rzeka
@@ -13,69 +16,7 @@ namespace Rzeka
     - new pluck, loom, weaving
      */
 
-    [Flags]
-    public enum ScrollEventType
-    {
-        New         = 1,
-        Old         = 1 << 1,
-        Cast        = 1 << 2,
-        Blocked     = 1 << 3,
-        Requested   = 1 << 4,
-        Forgotten   = 1 << 5,
-    }
-
-    public enum MatterEventType
-    {
-        Shaped,
-        Received,
-        //Exception,
-        //Finished
-    }
-
-    public abstract class RealmEvent : IDisposable
-    {
-        public readonly Guid Guid;
-
-        bool _wasDisposed = false;
-
-        protected RealmEvent()
-        {
-            Guid = Guid.NewGuid();
-        }
-
-        bool WasDisposed => _wasDisposed;
-
-        public void Dispose()
-        {
-            _wasDisposed = true;
-        }
-    }
-
-    public class ScrollEvent : RealmEvent
-    {
-        public ScrollEvent(TScrollBase scroll, ScrollEventType eventType) : base()
-        {
-            Scroll = scroll;
-            EventType = eventType;
-        }
-
-        public TScrollBase Scroll { get; }
-        public ScrollEventType EventType { get; }
-    }
-
-    public class MatterEvent : RealmEvent
-    {
-        public MatterEvent(TMatter matter, TScrollBase source, MatterEventType eventType) : base()
-        {
-            Matter = matter;
-            Source = source;
-            EventType = eventType;
-        }
-
-        public TMatter Matter { get; }
-        public TScrollBase Source { get; }
-        public MatterEventType EventType { get; }
-    }
+    
 
 
     public class Eris : IDisposable
@@ -90,12 +31,40 @@ namespace Rzeka
 
         CollectibleDisposable _disposables;
 
-        public IObservable<RealmEvent> RealmEventStream;
+        public readonly IObservable<RealmEvent> RealmEventStream;
 
         public Eris()
         {
-            _disposables = new();
+            _disposables = new CollectibleDisposable();
 
+            BindMatterEvents();
+
+            // RealmEventStream = Observable.FromEvent<RealmEvent>(
+            //         h => OnRealmEvent += h,
+            //         h => OnRealmEvent -= h)
+            //     .Publish()
+            //     .RefCount();
+            
+            // TODO CREATE "ANNOTATION" ATTRIBUTE
+            // FOR PLACES THAT ARE UNCLEAR, NEED EXPLANATION, ARE CRYPTIC, BUT AT THE MOMENT IT
+            // REALLY IS THE BEST SOLUTION WITHOUT OVERENGINEERING THINGS,
+            // I ACTUALLY KIND OF LIKE CAPS LOCK, IM NOT SHOUTING
+            // LIKE HERE ITS ABOUT .Replay(66)
+            // It's just to make sure everything from the start that goes through Rzeka
+            // can be recorded, 66 is a safe number for the amount of events that can
+            // happen before Eris gets fully initialized, but it is indeed a 
+            var connectableRealmEventStream = Observable
+                .FromEvent<RealmEvent>(
+                    h => OnRealmEvent += h,
+                    h => OnRealmEvent -= h)
+                .Replay(66);
+
+            _disposables += connectableRealmEventStream.Connect();
+            RealmEventStream = connectableRealmEventStream.AsObservable();
+        }
+
+        void BindMatterEvents()
+        {
             _disposables += Observable.FromEventPattern<TMatter>(
                     h => NextMatter += h,
                     h => NextMatter -= h)
@@ -104,7 +73,8 @@ namespace Rzeka
                 {
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Shaped));
 
-                    Print("cyan", $"RELEASE::{o.matter.GetType().Name} ", $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
+                    Print("cyan", $"RELEASE::{o.matter.GetType().Name} ",
+                        $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
 
             _disposables += Observable.FromEventPattern<TMatter>(
@@ -115,14 +85,9 @@ namespace Rzeka
                 {
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Received));
 
-                    Print("green", $"RECEIVE::{o.matter.GetType().Name} ", $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
+                    Print("green", $"RECEIVE::{o.matter.GetType().Name} ",
+                        $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
-
-            RealmEventStream = Observable.FromEvent<RealmEvent>(
-                    h => OnRealmEvent += h,
-                    h => OnRealmEvent -= h)
-                .Publish()
-                .RefCount();
         }
 
         public IObserver<T> GetReleasesObserver<T>(TScrollBase scroll) where T : TMatter
@@ -150,9 +115,9 @@ namespace Rzeka
 
         public void ScrollWillBeCast(TScrollBase scroll, bool isNew)
         {
-            ScrollEventType flags = ScrollEventType.Cast;
+            var flags = ScrollEventType.Cast;
             if (isNew) flags |= ScrollEventType.New;
-            else flags |= ScrollEventType.Old;
+            else flags |= ScrollEventType.Known;
 
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
@@ -164,7 +129,7 @@ namespace Rzeka
         {
             ScrollEventType flags = ScrollEventType.Blocked;
             if (isNew) flags |= ScrollEventType.New;
-            else flags |= ScrollEventType.Old;
+            else flags |= ScrollEventType.Known;
 
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
@@ -177,8 +142,8 @@ namespace Rzeka
         {
             ScrollEventType flags = ScrollEventType.Blocked;
             if (isNew) flags |= ScrollEventType.New;
-            else flags |= ScrollEventType.Old;
-
+            else flags |= ScrollEventType.Known;
+            
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
             Print("red", $"FORGOTTEN::{FormatScroll(scroll)} ", $"created by {scroll.Who.GetType().Name}");
@@ -195,24 +160,17 @@ namespace Rzeka
             Debug.Log($"<color={color}>{head}</color><color=white>{text}</color>");
         }
 
-        string FormatScroll(TScrollBase scroll)
+        static string FormatScroll(TScrollBase scroll)
         {
-            if (scroll is TAlteringScroll alteration)
+            return scroll switch
             {
-                return $"Alteration<{alteration.Requirements.Aggregate("", (text, type) => text + $"{type.Name},")}>";
-            }
-            else if (scroll is TBindingScroll binding)
-            {
-                return $"Loom<{binding.Requirements.Aggregate("", (text, type) => text + $"{type.Name}")}>";
-            }
-            else if (scroll is IConjuringScroll conjuring)
-            {
-                return $"Conjuring<{conjuring.ConjuredType.Name}>";
-            }
-            else
-            {
-                throw new Exception("ungangled scroll type");
-            }
+                TAlteringScroll alteration =>
+                    $"Alteration<{alteration.Requirements.Aggregate("", (text, type) => text + $"{type.Name},")}>",
+                TBindingScroll binding =>
+                    $"Loom<{binding.Requirements.Aggregate("", (text, type) => text + $"{type.Name}")}>",
+                IConjuringScroll conjuring => $"Conjuring<{conjuring.ConjuredType.Name}>",
+                _ => throw new Exception("ungangled scroll type")
+            };
         }
     }
 }

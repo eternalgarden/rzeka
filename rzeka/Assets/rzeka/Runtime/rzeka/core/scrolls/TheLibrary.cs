@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +15,7 @@ namespace Rzeka
         Dictionary<Type, List<IConjuringScroll>> _castableConjuringScrolls = new(); // ! to contain IGivingSpell<T><T>
         Dictionary<Type, List<TBindingScroll>> _blockedScrollsByRequiredType = new();
 
-        public Eris Eris { get; }
+        Eris Eris { get; }
 
         public TheLibrary(Eris eris)
         {
@@ -25,16 +24,14 @@ namespace Rzeka
 
         public bool IsConjurable<T>(out IConjuringScroll[] conjurers)
         {
-            if (_castableConjuringScrolls.ContainsKey(typeof(T)))
-            {
-                conjurers = _castableConjuringScrolls[typeof(T)].ToArray();
-                return true;
-            }
-            else
+            if (_castableConjuringScrolls.ContainsKey(typeof(T)) is false)
             {
                 conjurers = null;
                 return false;
             }
+
+            conjurers = _castableConjuringScrolls[typeof(T)].ToArray();
+            return true;
         }
 
         public bool IsTypeBlockingSpells<T>(out TBindingScroll[] blockedScrolls)
@@ -71,7 +68,7 @@ namespace Rzeka
             CheckIfNewConjuringScrollCouldBeOfUse(castableScrollType);
         }
 
-        private void CheckIfNewConjuringScrollCouldBeOfUse(Type newConjuringScrollType)
+        void CheckIfNewConjuringScrollCouldBeOfUse(Type newConjuringScrollType)
         {
             if (_blockedScrollsByRequiredType.ContainsKey(newConjuringScrollType))
             {
@@ -83,32 +80,29 @@ namespace Rzeka
                     // todo at one time it might be better to differentiate between altering scrolls here who overload iscastable
                     if (blockedScroll.IsCastable) unblockedScrolls.Add(blockedScroll);
                 }
+
                 UnblockScrolls(newConjuringScrollType, unblockedScrolls.ToArray());
             }
         }
 
-        private void UnblockScrolls(Type unblockedType, TBindingScroll[] scrolls)
+        void UnblockScrolls(Type unblockedType, TBindingScroll[] scrolls)
         {
             foreach (TBindingScroll unblockedScroll in scrolls)
             {
-                if (unblockedScroll is IConjuringScroll conjuringScroll)
+                switch (unblockedScroll)
                 {
-                    // ! recurse
-                    AddConjuringScroll(conjuringScroll.ConjuredType, conjuringScroll);
-                }
-                else if (unblockedScroll is TAlteringScroll alteringScroll)
-                {
+                    case IConjuringScroll conjuringScroll: // * These are the looming scrolls
+                        // ! recurse
+                        AddConjuringScroll(conjuringScroll.ConjuredType, conjuringScroll);
+                        break;
                     // ! just cast it
-                    if (alteringScroll.IsCastable)
-                    {
+                    case TAlteringScroll { IsCastable: true } alteringScroll:
                         Eris.ScrollWillBeCast(alteringScroll, isNew: false);
                         // todo this will be good to actually hold all scrolls reference to make sure there are no undisposed things
-                        alteringScroll.Cast(this);
-                    }
-                    else
-                    {
+                        alteringScroll.Cast();
+                        break;
+                    default:
                         throw new Exception("smth rlly wrong");
-                    }
                 }
 
                 RemoveFromBlockedScrollsCollection(unblockedType, unblockedScroll);
@@ -181,7 +175,8 @@ namespace Rzeka
             Type removedSpellType = scroll.ConjuredType;
 
             //if (_castableConjuringScrolls[removedSpellType].Contains(scroll) is false) throw new Exception("this is bad");
-            if (_castableConjuringScrolls[removedSpellType].RemoveAll(x => x.Guid == scroll.Guid) == 0) throw new Exception("unexpected bewware");
+            if (_castableConjuringScrolls[removedSpellType].RemoveAll(x => x.Guid == scroll.Guid) == 0)
+                throw new Exception("unexpected bewware");
 
             if (_castableConjuringScrolls[removedSpellType].Count == 0)
             {
@@ -215,32 +210,25 @@ namespace Rzeka
             }
         }
 
-        public bool AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
+        public void AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
         {
-            ingredient = null;
             Type type = typeof(T);
 
-            if (_castableConjuringScrolls.ContainsKey(type))
+            if (!_castableConjuringScrolls.ContainsKey(type))
+                throw new Exception("it shouldnt be possible since we checcked for iscastable");
+
+            List<IConjuringScroll> scrolls = _castableConjuringScrolls[type];
+
+            // TODO HANDLING MULTIPLE PROVIDERS OF A SAME MATTER TYPE
+            if (scrolls.Count > 1) throw new NotImplementedException("multiple castable scrolls of same type");
+            var conjuringScroll = scrolls[0] as TConjuringScroll<T>;
+
+            Eris.ScrollWillBeCast(conjuringScroll, isNew: false);
+
+            if (conjuringScroll.TryGetConjuring(out ingredient) is false)
             {
-                List<IConjuringScroll> scrolls = _castableConjuringScrolls[type];
-
-                // todo handling multiple providers
-                if (scrolls.Count > 1) throw new NotImplementedException("multiple castable scrolls of same type");
-
-                var conjuringScroll = scrolls[0] as TConjuringScroll<T>;
-
-                if (conjuringScroll.TryCast(out IObservable<T> givingSpell, this))
-                {
-                    ingredient = givingSpell;
-                    return true;
-                }
-                else return false;
-                //foreach (var scroll in scrolls)
-                //{
-
-                //}
+                throw new Exception("Failed to get a conjuring when one should become available");
             }
-            else return false;
         }
 
         public void CheckBindingScrollRequirements(TBindingScroll bindingScroll)

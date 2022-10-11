@@ -9,13 +9,13 @@ namespace Rzeka
 {
     public class RzekaXOXO : IRzeka
     {
-        public TheLibrary TheLibrary { get; set; }
-        public Eris Eris { get; set; }
+        public TheLibrary TheLibrary { get; }
+        public Eris Eris { get; }
 
         public RzekaXOXO()
         {
-            Eris = new();
-            TheLibrary = new(Eris);
+            Eris = new Eris();
+            TheLibrary = new TheLibrary(Eris);
         }
 
         public IDisposable Pluck<T>(object who, IObservable<T> spell) 
@@ -45,6 +45,7 @@ namespace Rzeka
             if (bindingScroll.IsCastable)
             {
                 // ! $ NEW_LOOM<T,Q>.CASTABLE
+                // TODO AT THE MOMENT THIS ISN'T TRUE, IT WILL NOT BE IMMEDIATELY CAST
                 Eris.ScrollWillBeCast(Scroll, isNew: true);
 
                 TheLibrary.AddConjuringScroll(Scroll);
@@ -81,7 +82,7 @@ namespace Rzeka
                 Eris.ScrollWillBeCast(Scroll, isNew: true);
 
                 //Debug.Log("damn");
-                Scroll.Cast(TheLibrary);
+                Scroll.Cast();
             }
             else
             {

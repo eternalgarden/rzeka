@@ -4,14 +4,15 @@
     "references": [
         "GUID:f3a868c2076f3b54293ce32562033880",
         "GUID:28a03ac96c0a5c24195fa757d5ccc7e2",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:63afb046c8423dd448ae7aba042ea63d"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
     "autoReferenced": true,
     "defineConstraints": [],
     "versionDefines": [],
