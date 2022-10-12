@@ -69,7 +69,6 @@ namespace Rzeka
 
         public void Dispose()
         {
-            ObservableSpell = null;
         }
     }
 
@@ -184,7 +183,8 @@ namespace Rzeka
                 return HasMana
                     .Subscribe(onNext: hasMana =>
                     {
-                        if (hasMana is false) observer.OnError(new NoManaException());
+                        // TODO COMPLETED INSTEAD OF ERROR
+                        if (hasMana is false) observer.OnCompleted();
                     });
             });
 
@@ -204,7 +204,6 @@ namespace Rzeka
         public void Dispose()
         {
             _noManaObserverContract?.Dispose();
-            ObservableSpell = null;
         }
     }
 
@@ -253,9 +252,7 @@ namespace Rzeka
 
         public void Dispose()
         {
-            eris.ScrollWillBeDisposed(this, isNew: false);
-            if (WasCast) _subscriptionDisposable.Dispose();
-            else library.RemoveFromBlockedScrollsCollection(typeof(T), this);
+            if (WasCast) _subscriptionDisposable.Dispose(); // TODO check this
         }
 
         public void Cast()

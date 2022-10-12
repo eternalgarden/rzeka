@@ -30,12 +30,9 @@ namespace Rzeka
             return _activeConjurings.ContainsKey(typeof(T));
         }
 
-        public void CastConjuring<T>(TConjuringScroll<T> scroll) where T : TMatter
-        {
-            CastConjuring(typeof(T), scroll);
-        }
+        #region Casting
 
-        public void CastConjuring(Type castableScrollType, IConjuringScroll scroll)
+        public void CastConjuring(IConjuringScroll scroll)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
 
@@ -44,17 +41,16 @@ namespace Rzeka
             // TODO add try catch
             scroll.Cast();
 
-            SaveActiveConjuring(castableScrollType, scroll);
-            UnblockScrolls(castableScrollType);
+            SaveActiveConjuring(scroll);
         }
 
-        public void CastLooming(Type conjuredType, ILoomingScroll scroll)
+        public void CastLooming(ILoomingScroll scroll)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
 
             scroll.Cast();
             
-            SaveActiveConjuring(conjuredType, scroll);
+            SaveActiveConjuring(scroll);
             SaveActiveBinding(scroll);
         }
         
@@ -71,9 +67,15 @@ namespace Rzeka
             SaveActiveBinding(scroll);
         }
 
-        void SaveActiveConjuring(Type conjuredType, IConjuringScroll scroll)
+        #endregion
+
+        #region Saving
+
+        void SaveActiveConjuring(IConjuringScroll scroll)
         {
             // TODO make sure reverse folding exist
+
+            Type conjuredType = scroll.ConjuredType;
 
             if (_activeConjurings.ContainsKey(conjuredType) is false)
             {
@@ -82,20 +84,66 @@ namespace Rzeka
             
             // TODO UMMMM HANDLE MULTIPLE PROVIDERS OF SAME CONJURIJNG
             _activeConjurings[conjuredType].Add(scroll);
+            
+            UnblockScrolls(conjuredType);
         }
 
         void SaveActiveBinding(TBindingScroll scroll)
         {
-            for (var index = 0; index < scroll.Requirements.Length; index++)
+            foreach (Type req in scroll.Requirements)
             {
-                var requirementType = scroll.Requirements[index];
-                if (_activeBindings.ContainsKey(requirementType) is false)
+                if (scroll[req])
                 {
-                    _activeBindings[requirementType] = new List<TBindingScroll>();
-                }
+                    if (_activeBindings.ContainsKey(req) is false)
+                    {
+                        _activeBindings[req] = new List<TBindingScroll>();
+                    }
 
-                _activeBindings[requirementType].Add(scroll);
+                    _activeBindings[req].Add(scroll);
+                }
+                else throw new Exception(
+                    "This scroll shouldn't be saved as an active binding since it has an inactive dependency.");
             }
+        }
+
+        public void SaveBlockedBinding(TBindingScroll scroll)
+        {
+            foreach (Type req in scroll.Requirements)
+            {
+                if (scroll[req] == false)
+                {
+                    if (_blockedBindings.ContainsKey(req) is false)
+                    {
+                        _blockedBindings[req] = new List<TBindingScroll>();
+                    }
+
+                    _blockedBindings[req].Add(scroll);
+                }
+            }
+        }
+
+        #endregion
+
+        #region (Un)blocking
+
+        public void CheckBindingScrollRequirements(TBindingScroll bindingScroll)
+        {
+            foreach (var req in bindingScroll.Requirements)
+            {
+                bindingScroll[req] = _activeConjurings.ContainsKey(req);
+            }
+        }
+
+        public bool IsTypeBlockingSpells<T>(out TBindingScroll[] blockedScrolls)
+        {
+            if (_blockedBindings.ContainsKey(typeof(T)))
+            {
+                blockedScrolls = _blockedBindings[typeof(T)].ToArray();
+                return true;
+            }
+
+            blockedScrolls = null;
+            return false;
         }
 
         void UnblockScrolls(Type unblockedType)
@@ -120,105 +168,78 @@ namespace Rzeka
             {
                 switch (unblockedScroll)
                 {
-                    case ILoomingScroll loomingScroll: // * These are the looming scrolls
-                        // ! recurse
+                    case ILoomingScroll loomingScroll: 
                         Eris.ScrollWillBeCast(loomingScroll, isNew: false);
-                        CastLooming(loomingScroll.ConjuredType, loomingScroll);
+                        CastLooming(loomingScroll); // ! recurse inside
                         break;
                     case IAlteringScroll alteringScroll:
                         Eris.ScrollWillBeCast(alteringScroll, isNew: false);
-                        // todo this will be good to actually hold all scrolls reference to make sure there are no undisposed things
                         CastWeaving(alteringScroll);
                         break;
                     default:
-                        throw new Exception("smth rlly wrong");
+                        throw new Exception("Unhandled new scroll type.");
                 }
 
-                RemoveFromBlockedScrollsCollection(unblockedType, unblockedScroll);
+                RemoveBlockedBinding(unblockedType, unblockedScroll);
             }
         }
 
-        void RemoveScrollFromBlockedCollections(TBindingScroll unblockedScroll)
+        #endregion
+
+        #region Removing
+        
+        void RemoveAllBlockedBindings(TBindingScroll unblockedScroll)
         {
             foreach (var kvp in unblockedScroll.AvailableIngredientsDictionary)
             {
                 if (kvp.Value == false)
                 {
-                    RemoveFromBlockedScrollsCollection(kvp.Key, unblockedScroll);
+                    RemoveBlockedBinding(kvp.Key, unblockedScroll);
+                }
+            }
+        }
+        
+        void RemoveAllActiveBindings(TBindingScroll scroll)
+        {
+            foreach (var kvp in scroll.AvailableIngredientsDictionary)
+            {
+                if (kvp.Value)
+                {
+                    RemoveActiveBinding(kvp.Key, scroll);
                 }
             }
         }
 
-        // TODO LOOK AT USAGE IN ALTERING SCROLL, DISPOSING ISN'T PROPERLY HANDLED YET
-        public void RemoveFromBlockedScrollsCollection(Type blockingType, TBindingScroll unblockedScroll)
+        // TODO LOOK AT USAGE dIN ALTERING SCROLL, DISPOSING ISN'T PROPERLY HANDLED YET
+        public void RemoveBlockedBinding(Type blockingType, TBindingScroll unblockedScroll)
         {
             // ! this can be 0, it is slightly inefficient if the scroll was unblocked by a given type before
             // todo guid check
             int removeCount = _blockedBindings[blockingType]
                 .RemoveAll(scroll => scroll.Guid == unblockedScroll.Guid);
 
-            if (removeCount > 1) throw new Exception("something weird happened");
+            if (removeCount > 1) throw new Exception("Something weird happened. A single scroll shouldn't have been saved more than once for a blocked binding by conjuring type.");
 
             if (_blockedBindings[blockingType].Count == 0)
             {
                 _blockedBindings.Remove(blockingType);
             }
         }
-
-        public bool IsTypeBlockingSpells<T>(out TBindingScroll[] blockedScrolls)
+        
+        public void RemoveActiveBinding(Type boundType, TBindingScroll boundScroll)
         {
-            if (_blockedBindings.ContainsKey(typeof(T)))
+            int removeCount = _activeBindings[boundType]
+                .RemoveAll(scroll => scroll.Guid == boundScroll.Guid);
+
+            if (removeCount > 1) throw new Exception("Something weird happened. A single scroll shouldn't have been saved more than once as an active binding for a conjuring type.");
+
+            if (_activeBindings[boundType].Count == 0)
             {
-                blockedScrolls = _blockedBindings[typeof(T)].ToArray();
-                return true;
-            }
-
-            blockedScrolls = null;
-            return false;
-        }
-
-        public void AddABlockedScroll(TBindingScroll scroll)
-        {
-            foreach (Type req in scroll.Requirements)
-            {
-                if (scroll[req] == false)
-                {
-                    if (_blockedBindings.ContainsKey(req) is false)
-                    {
-                        _blockedBindings[req] = new List<TBindingScroll>();
-                    }
-
-                    _blockedBindings[req].Add(scroll);
-                }
+                _activeBindings.Remove(boundType);
             }
         }
 
-        public void ForgetWeavingScroll(IAlteringScroll scroll)
-        {
-            
-        }
-
-        // todo rename this thing it is really misleading and doesnt seem to handle AlteringScrolls
-        public void ForgetLoomScroll<Q>(TScrollBase scroll)
-            where Q : TMatter
-        {
-            // ! $ LIBRARY.FORGETTING_A_SCROLL<Q>
-
-            Type removedSpellType = scroll.GetType();
-
-            if (scroll is ILoomingScroll<Q> looming)
-            {
-                // TODO THIS IS WRONG, SHOULD BE MORE LIKE WASCAST HERE
-                if (looming.IsCastable) RemoveFromConjuringScrolls(looming);
-                else RemoveScrollFromBlockedCollections(looming);
-            }
-            else
-            {
-                throw new NotImplementedException($"Typeof: {removedSpellType}");
-            }
-        }
-
-        public void RemoveFromConjuringScrolls(IConjuringScroll scroll)
+        public void RemoveActiveConjuring(IConjuringScroll scroll)
         {
             Type removedConjuring = scroll.ConjuredType;
 
@@ -230,29 +251,76 @@ namespace Rzeka
                 _activeConjurings.Remove(removedConjuring);
             }
 
+            CheckForActiveBindingsDependingOnLostConjuring(removedConjuring);
+        }
+
+        void CheckForActiveBindingsDependingOnLostConjuring(Type removedConjuring)
+        {
             if (_activeBindings.ContainsKey(removedConjuring))
             {
                 var newlyBlockedScrolls = _activeBindings[removedConjuring];
-                
+
                 foreach (TBindingScroll newlyBlocked in newlyBlockedScrolls)
                 {
                     CheckBindingScrollRequirements(newlyBlocked);
-                
+
                     // BUG!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     // TODO HANDLE NOMANA PROBLEMS
                     // LIKE YOU CANT JUST DISPOSE THEN SINCE IT WOULD DISPOSE ENTIRE SCROLL
                     // BUT THAT IS NOT WHAT IS WANTED
-                
+
                     // TODO now add a check for existing blocked scrolls
-                    AddABlockedScroll(newlyBlocked);
+                    SaveBlockedBinding(newlyBlocked);
 
                     if (newlyBlocked is ILoomingScroll loomingScroll)
                     {
-                        RemoveFromConjuringScrolls(loomingScroll); // ! recurse
+                        RemoveActiveConjuring(loomingScroll); // ! recurse
                     }
                 }
             }
         }
+
+        #endregion
+
+        #region Forgetting Scrolls
+
+        public void ForgetLoomScroll<Q>(TScrollBase scroll)
+            where Q : TMatter
+        {
+            Eris.ScrollWillBeForgotten(scroll, isNew: false);
+
+            Type removedSpellType = scroll.GetType();
+
+            if (scroll is ILoomingScroll<Q> looming)
+            {
+                // TODO THIS IS WRONG, SHOULD BE MORE LIKE WASCAST HERE
+                if (looming.IsCastable)
+                {
+                    RemoveActiveConjuring(looming);
+                    RemoveAllActiveBindings(looming);
+                }
+                else RemoveAllBlockedBindings(looming);
+            }
+            else
+            {
+                throw new NotImplementedException($"Typeof: {removedSpellType}");
+            }
+        }
+        
+        public void ForgetConjuringScroll(IConjuringScroll scroll)
+        {
+            Eris.ScrollWillBeForgotten(scroll, isNew: false);
+            RemoveActiveConjuring(scroll);
+        }
+        
+        public void ForgetWeavingScroll(IAlteringScroll scroll)
+        {
+            Eris.ScrollWillBeForgotten(scroll, isNew: false);
+            if (scroll.WasCast) RemoveAllActiveBindings(scroll);
+            else RemoveAllBlockedBindings(scroll);
+        }
+
+        #endregion
 
         public void AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
         {
@@ -270,14 +338,6 @@ namespace Rzeka
             Eris.ScrollWillBeCast(conjuringScroll, isNew: false);
 
             ingredient = conjuringScroll.GetConjuring();
-        }
-
-        public void CheckBindingScrollRequirements(TBindingScroll bindingScroll)
-        {
-            foreach (var req in bindingScroll.Requirements)
-            {
-                bindingScroll[req] = _activeConjurings.ContainsKey(req);
-            }
         }
     }
 }

@@ -26,12 +26,11 @@ namespace Rzeka
 
             Type type = typeof(T);
             Eris.ScrollWillBeCast(Scroll, isNew: true);
-            TheLibrary.CastConjuring(type, Scroll);
+            TheLibrary.CastConjuring(Scroll);
 
             return Disposable.Create(() =>
             {
-                Eris.ScrollWillBeDisposed(Scroll, isNew: false);
-                TheLibrary.RemoveFromConjuringScrolls(Scroll);
+                TheLibrary.ForgetConjuringScroll(Scroll);
                 Scroll.Dispose();
             });
         }
@@ -50,7 +49,7 @@ namespace Rzeka
             {
                 // ! $ NEW_LOOM<T,Q>.CASTABLE
                 Eris.ScrollWillBeCast(Scroll, isNew: true);
-                TheLibrary.CastConjuring(Scroll);
+                TheLibrary.CastLooming(Scroll);
             }
             else
             {
@@ -59,12 +58,11 @@ namespace Rzeka
 
                 // ! $ NEW_LOOM<T,Q>.BLOCKED
                 Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-                TheLibrary.AddABlockedScroll(Scroll);
+                TheLibrary.SaveBlockedBinding(Scroll);
             }
 
             return Disposable.Create(() =>
             {
-                Eris.ScrollWillBeDisposed(Scroll, isNew: false);
                 TheLibrary.ForgetLoomScroll<Q>(Scroll);
                 Scroll.Dispose();
             });
@@ -92,11 +90,12 @@ namespace Rzeka
                 // ! $ WEAVING<T>   .NEW.BLOCKED
                 //Debug.LogError("Blocked Cast Weave!");
                 Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-                TheLibrary.AddABlockedScroll(Scroll);
+                TheLibrary.SaveBlockedBinding(Scroll);
             }
 
             return Disposable.Create(() =>
             {
+                TheLibrary.ForgetWeavingScroll(Scroll);
                 Scroll.Dispose();
             });
         }

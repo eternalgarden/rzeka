@@ -138,7 +138,7 @@ namespace Rzeka
         }
 
         // ! could be forgotten new in case when the scroll is created but its introduction to rrzeka is rejected since it already has a provider of that type who doesnt accept multiple sources
-        public void ScrollWillBeDisposed(TScrollBase scroll, bool isNew)
+        public void ScrollWillBeForgotten(TScrollBase scroll, bool isNew)
         {
             ScrollEventType flags = ScrollEventType.Blocked;
             if (isNew) flags |= ScrollEventType.New;
