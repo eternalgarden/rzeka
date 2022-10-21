@@ -24,9 +24,7 @@ namespace Rzeka
             // ! $ NEW_PLUCK<Q>
             ConjuringScroll<T> Scroll = new(who, spell, TheLibrary, Eris);
 
-            Type type = typeof(T);
-            Eris.ScrollWillBeCast(Scroll, isNew: true);
-            TheLibrary.CastConjuring(Scroll);
+            TheLibrary.CastConjuring(Scroll, wasJustCreated: true);
 
             return Disposable.Create(() =>
             {
@@ -47,18 +45,14 @@ namespace Rzeka
 
             if (bindingScroll.IsCastable)
             {
-                // ! $ NEW_LOOM<T,Q>.CASTABLE
-                Eris.ScrollWillBeCast(Scroll, isNew: true);
-                TheLibrary.CastLooming(Scroll);
+                TheLibrary.CastLooming(Scroll, wasJustCreated: true);
             }
             else
             {
                 // ! so in most cases (?) you won't be able to stop a spell that has already been fully cast
                 // ! however they will be only cast on specific demand, otherwise they will be kept as Scrolls
 
-                // ! $ NEW_LOOM<T,Q>.BLOCKED
-                Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-                TheLibrary.SaveBlockedBinding(Scroll);
+                TheLibrary.SaveBlockedBinding(Scroll, wasJustCreated: true);
             }
 
             return Disposable.Create(() =>
@@ -73,24 +67,17 @@ namespace Rzeka
             // todo solve the missing concept of adding altering spells to _allKnownSpells as they cannot accept those at the moment
             // todo otherwise consider renaming or altogether burning down the all known spells library
             
-            // ! $ NEW_WEAVING<T>
-            Type type = typeof(T);
             AlteringScroll<T> Scroll = new(who, spell, TheLibrary, Eris);
 
             TheLibrary.CheckBindingScrollRequirements(Scroll);
 
             if ((Scroll as TBindingScroll).IsCastable)
             {
-                // ! $ WEAVING<T>   .NEW.CAST - WHO..
-                Eris.ScrollWillBeCast(Scroll, isNew: true);
                 TheLibrary.CastWeaving(Scroll);
             }
             else
             {
-                // ! $ WEAVING<T>   .NEW.BLOCKED
-                //Debug.LogError("Blocked Cast Weave!");
-                Eris.ScrollWillBeBlocked(Scroll, isNew: true);
-                TheLibrary.SaveBlockedBinding(Scroll);
+                TheLibrary.SaveBlockedBinding(Scroll, wasJustCreated: true);
             }
 
             return Disposable.Create(() =>

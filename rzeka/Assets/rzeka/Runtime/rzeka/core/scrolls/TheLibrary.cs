@@ -32,11 +32,11 @@ namespace Rzeka
 
         #region Casting
 
-        public void CastConjuring(IConjuringScroll scroll)
+        public void CastConjuring(IConjuringScroll scroll, bool wasJustCreated = false)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
 
-            // ! $ LIBRARY.NEW_CASTABLE_CONJURING<Q>
+            Eris.ScrollWillBeCast(scroll, isNew: wasJustCreated);
 
             // TODO add try catch
             scroll.Cast();
@@ -44,9 +44,11 @@ namespace Rzeka
             SaveActiveConjuring(scroll);
         }
 
-        public void CastLooming(ILoomingScroll scroll)
+        public void CastLooming(ILoomingScroll scroll, bool wasJustCreated = false)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
+            
+            Eris.ScrollWillBeCast(scroll, isNew: wasJustCreated);
 
             scroll.Cast();
             
@@ -54,11 +56,12 @@ namespace Rzeka
             SaveActiveBinding(scroll);
         }
         
-        public void CastWeaving(IAlteringScroll scroll)
+        public void CastWeaving(IAlteringScroll scroll, bool wasJustCreated = false)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
 
-            // ! $ LIBRARY.NEW_CASTABLE_CONJURING<Q>
+            Eris.ScrollWillBeCast(scroll, isNew: wasJustCreated);
+
             // TODO make sure reverse folding exist
             
             // TODO add try catch
@@ -106,19 +109,20 @@ namespace Rzeka
             }
         }
 
-        public void SaveBlockedBinding(TBindingScroll scroll)
+        public void SaveBlockedBinding(TBindingScroll scroll, bool wasJustCreated = false)
         {
-            foreach (Type req in scroll.Requirements)
-            {
-                if (scroll[req] == false)
-                {
-                    if (_blockedBindings.ContainsKey(req) is false)
-                    {
-                        _blockedBindings[req] = new List<TBindingScroll>();
-                    }
+            Eris.ScrollWillBeBlocked(scroll, isNew: wasJustCreated);
 
-                    _blockedBindings[req].Add(scroll);
+            foreach (Type requirement in scroll.Requirements)
+            {
+                if (scroll[requirement]) continue; // not blocked here, thats why indexers can suck
+                
+                if (_blockedBindings.ContainsKey(requirement) is false)
+                {
+                    _blockedBindings[requirement] = new List<TBindingScroll>();
                 }
+                
+                _blockedBindings[requirement].Add(scroll);
             }
         }
 
@@ -169,11 +173,9 @@ namespace Rzeka
                 switch (unblockedScroll)
                 {
                     case ILoomingScroll loomingScroll: 
-                        Eris.ScrollWillBeCast(loomingScroll, isNew: false);
                         CastLooming(loomingScroll); // ! recurse inside
                         break;
                     case IAlteringScroll alteringScroll:
-                        Eris.ScrollWillBeCast(alteringScroll, isNew: false);
                         CastWeaving(alteringScroll);
                         break;
                     default:
@@ -203,7 +205,8 @@ namespace Rzeka
         {
             foreach (var kvp in scroll.AvailableIngredientsDictionary)
             {
-                if (kvp.Value)
+                bool isAvailable = kvp.Value;
+                if (isAvailable)
                 {
                     RemoveActiveBinding(kvp.Key, scroll);
                 }
@@ -297,6 +300,9 @@ namespace Rzeka
                 if (looming.IsCastable)
                 {
                     RemoveActiveConjuring(looming);
+                    
+                    // TODO this is an unclear spelling, it means to remove all catalogues active
+                    // TODO binding for this scroll
                     RemoveAllActiveBindings(looming);
                 }
                 else RemoveAllBlockedBindings(looming);
@@ -334,8 +340,6 @@ namespace Rzeka
             // TODO HANDLING MULTIPLE PROVIDERS OF A SAME MATTER TYPE
             if (scrolls.Count > 1) throw new NotImplementedException("multiple castable scrolls of same type");
             var conjuringScroll = scrolls[0] as TConjuringScroll<T>;
-
-            Eris.ScrollWillBeCast(conjuringScroll, isNew: false);
 
             ingredient = conjuringScroll.GetConjuring();
         }

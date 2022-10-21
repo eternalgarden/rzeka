@@ -73,8 +73,8 @@ namespace Rzeka
                 {
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Shaped));
 
-                    Print("cyan", $"RELEASE::{o.matter.GetType().Name} ",
-                        $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
+                    // Print("cyan", $"RELEASE::{o.matter.GetType().Name} ",
+                        // $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
 
             _disposables += Observable.FromEventPattern<TMatter>(
@@ -85,8 +85,8 @@ namespace Rzeka
                 {
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Received));
 
-                    Print("green", $"RECEIVE::{o.matter.GetType().Name} ",
-                        $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
+                    // Print("green", $"RECEIVE::{o.matter.GetType().Name} ",
+                        // $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
         }
 
@@ -105,14 +105,6 @@ namespace Rzeka
                 onNext: val => ReceivedMatter.Invoke(scroll, val));
         }
 
-        //public void ScrollWasCreated(TScrollBase scroll)
-        //{
-        //    OnRealmEvent(new ScrollEvent(scroll, ScrollEventType.New));
-
-        //    Print("white", $"CREATED::{FormatScroll(scroll)} ", $"by {scroll.Who.GetType().Name}");
-        //    //Debug.Log($"<color=green>A new scroll was just created by {scroll.Who}, its type is: {scroll.GetType()}</color>");
-        //}
-
         public void ScrollWillBeCast(TScrollBase scroll, bool isNew)
         {
             var flags = ScrollEventType.Cast;
@@ -122,7 +114,7 @@ namespace Rzeka
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
             string prefix = isNew ? "Just Created Scroll" : "Existing Scroll";
-            Print("white", $"CAST::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
+            // Print("white", $"CAST::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
         }
 
         public void ScrollWillBeBlocked(TScrollBase scroll, bool isNew)
@@ -134,7 +126,7 @@ namespace Rzeka
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
             string prefix = isNew ? "Just Created Scroll" : "Existing Scroll";
-            Print("yellow", $"BLOCKED::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
+            // Print("yellow", $"BLOCKED::{FormatScroll(scroll)} ", $"::{prefix}:: created by {scroll.Who.GetType().Name}");
         }
 
         // ! could be forgotten new in case when the scroll is created but its introduction to rrzeka is rejected since it already has a provider of that type who doesnt accept multiple sources
@@ -146,7 +138,7 @@ namespace Rzeka
             
             OnRealmEvent?.Invoke(new ScrollEvent(scroll, flags));
 
-            Print("red", $"FORGOTTEN::{FormatScroll(scroll)} ", $"created by {scroll.Who.GetType().Name}");
+            // Print("red", $"FORGOTTEN::{FormatScroll(scroll)} ", $"created by {scroll.Who.GetType().Name}");
         }
 
         public void Dispose()
@@ -157,7 +149,7 @@ namespace Rzeka
         void Print(string color, string head, string msg, params object[] args)
         {
             string text = string.Format(msg, args);
-            Debug.Log($"<color={color}>{head}</color><color=white>{text}</color>");
+            // Debug.Log($"<color={color}>{head}</color><color=white>{text}</color>");
         }
 
         static string FormatScroll(TScrollBase scroll)

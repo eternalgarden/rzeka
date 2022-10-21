@@ -8,7 +8,7 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Basic_Blockades
+    public class Integration_Blockades_Basics
     {
         RzekaXOXO Rzeka;
         CollectibleDisposable _disposables;

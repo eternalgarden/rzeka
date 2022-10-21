@@ -33,7 +33,8 @@ namespace Rzeka
             }
             set
             {
-                if (AvailableIngredientsDictionary.ContainsKey(type) is false) return;
+                if (AvailableIngredientsDictionary.ContainsKey(type) is false) throw new Exception("process error");
+
 
                 AvailableIngredientsDictionary[type] = value;
                 
