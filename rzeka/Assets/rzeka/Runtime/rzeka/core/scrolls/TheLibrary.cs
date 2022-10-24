@@ -1,22 +1,42 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using UnityEngine;
 
 namespace Rzeka
 {
     public class TheLibrary
     {
         /*
-         * Conjuring Scrolls dictionary may contain ConjuringScrolls and BindingScrolls
-         * Blocked Scrolls dictionary may contain AlteringScrolls and BindingScrolls
+         * 
+         * 21.10.2022 CURRENT IMPLEMENTATION CONSIDERATIONS
+         *
+         * Current implementation aims at casting all scrolls ASAP.
+         *
+         * A scroll remains active as soon as it's requirements are met for as long as these
+         * requirements remain satisfied or the scroll is disposed by its caster.
+         *
+         * TODO Consideration: Lazy instantiation
+         * Non-weaving scrolls are not cast untill the are not required.
+         * When they become unrequired they deactivate themselves.
+         *
+         * TODO Future problem: Matter that allows for multiple sources
+         * How to handle a situation when a binding scrall that uses a certain source is already
+         * actively using one but an additional source appears.
+         * 
+         */
+
+
+        /*
+         * _activeConjurings dictionary contains    ConjuringScrolls and Active LoomingScrolls
+         * _activeBindings dictionary contains      Active AlteringScrolls and Active LoomingScrolls
+         * _blockedBindings dictionary contains      Blocked AlteringScrolls and Blocked LoomingScrolls
+         *
+         * This means <<an active>> Looming Scroll is at every time present doubly in two dictionaries.
+         *
+         * TODO Find a cleaner solution
          */
         readonly Dictionary<Type, List<IConjuringScroll>> _activeConjurings = new();
-        readonly Dictionary<Type, List<TBindingScroll>> _activeBindings = new(); 
+        readonly Dictionary<Type, List<TBindingScroll>> _activeBindings = new();
         readonly Dictionary<Type, List<TBindingScroll>> _blockedBindings = new();
-        
-        // TODO THIS ONE IS NEW REQUIRES TESTING
 
         Eris Eris { get; }
 
@@ -47,15 +67,15 @@ namespace Rzeka
         public void CastLooming(ILoomingScroll scroll, bool wasJustCreated = false)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
-            
+
             Eris.ScrollWillBeCast(scroll, isNew: wasJustCreated);
 
             scroll.Cast();
-            
+
             SaveActiveConjuring(scroll);
             SaveActiveBinding(scroll);
         }
-        
+
         public void CastWeaving(IAlteringScroll scroll, bool wasJustCreated = false)
         {
             if (scroll.IsCastable is false) throw new ArgumentException("scroll is not castable");
@@ -63,7 +83,7 @@ namespace Rzeka
             Eris.ScrollWillBeCast(scroll, isNew: wasJustCreated);
 
             // TODO make sure reverse folding exist
-            
+
             // TODO add try catch
             scroll.Cast();
 
@@ -84,10 +104,10 @@ namespace Rzeka
             {
                 _activeConjurings[conjuredType] = new List<IConjuringScroll>();
             }
-            
+
             // TODO UMMMM HANDLE MULTIPLE PROVIDERS OF SAME CONJURIJNG
             _activeConjurings[conjuredType].Add(scroll);
-            
+
             UnblockScrolls(conjuredType);
         }
 
@@ -104,8 +124,9 @@ namespace Rzeka
 
                     _activeBindings[req].Add(scroll);
                 }
-                else throw new Exception(
-                    "This scroll shouldn't be saved as an active binding since it has an inactive dependency.");
+                else
+                    throw new Exception(
+                        "This scroll shouldn't be saved as an active binding since it has an inactive dependency.");
             }
         }
 
@@ -116,12 +137,12 @@ namespace Rzeka
             foreach (Type requirement in scroll.Requirements)
             {
                 if (scroll[requirement]) continue; // not blocked here, thats why indexers can suck
-                
+
                 if (_blockedBindings.ContainsKey(requirement) is false)
                 {
                     _blockedBindings[requirement] = new List<TBindingScroll>();
                 }
-                
+
                 _blockedBindings[requirement].Add(scroll);
             }
         }
@@ -172,7 +193,7 @@ namespace Rzeka
             {
                 switch (unblockedScroll)
                 {
-                    case ILoomingScroll loomingScroll: 
+                    case ILoomingScroll loomingScroll:
                         CastLooming(loomingScroll); // ! recurse inside
                         break;
                     case IAlteringScroll alteringScroll:
@@ -189,7 +210,7 @@ namespace Rzeka
         #endregion
 
         #region Removing
-        
+
         void RemoveAllBlockedBindings(TBindingScroll unblockedScroll)
         {
             foreach (var kvp in unblockedScroll.AvailableIngredientsDictionary)
@@ -200,7 +221,7 @@ namespace Rzeka
                 }
             }
         }
-        
+
         void RemoveAllActiveBindings(TBindingScroll scroll)
         {
             foreach (var kvp in scroll.AvailableIngredientsDictionary)
@@ -221,20 +242,24 @@ namespace Rzeka
             int removeCount = _blockedBindings[blockingType]
                 .RemoveAll(scroll => scroll.Guid == unblockedScroll.Guid);
 
-            if (removeCount > 1) throw new Exception("Something weird happened. A single scroll shouldn't have been saved more than once for a blocked binding by conjuring type.");
+            if (removeCount > 1)
+                throw new Exception(
+                    "Something weird happened. A single scroll shouldn't have been saved more than once for a blocked binding by conjuring type.");
 
             if (_blockedBindings[blockingType].Count == 0)
             {
                 _blockedBindings.Remove(blockingType);
             }
         }
-        
+
         public void RemoveActiveBinding(Type boundType, TBindingScroll boundScroll)
         {
             int removeCount = _activeBindings[boundType]
                 .RemoveAll(scroll => scroll.Guid == boundScroll.Guid);
 
-            if (removeCount > 1) throw new Exception("Something weird happened. A single scroll shouldn't have been saved more than once as an active binding for a conjuring type.");
+            if (removeCount > 1)
+                throw new Exception(
+                    "Something weird happened. A single scroll shouldn't have been saved more than once as an active binding for a conjuring type.");
 
             if (_activeBindings[boundType].Count == 0)
             {
@@ -300,7 +325,7 @@ namespace Rzeka
                 if (looming.IsCastable)
                 {
                     RemoveActiveConjuring(looming);
-                    
+
                     // TODO this is an unclear spelling, it means to remove all catalogues active
                     // TODO binding for this scroll
                     RemoveAllActiveBindings(looming);
@@ -312,13 +337,13 @@ namespace Rzeka
                 throw new NotImplementedException($"Typeof: {removedSpellType}");
             }
         }
-        
+
         public void ForgetConjuringScroll(IConjuringScroll scroll)
         {
             Eris.ScrollWillBeForgotten(scroll, isNew: false);
             RemoveActiveConjuring(scroll);
         }
-        
+
         public void ForgetWeavingScroll(IAlteringScroll scroll)
         {
             Eris.ScrollWillBeForgotten(scroll, isNew: false);

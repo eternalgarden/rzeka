@@ -73,8 +73,12 @@ namespace Rzeka
                 {
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Shaped));
 
+                    // if (o.matter.Circumstances[0] != default)
+                    // {
+                    //     Print("cyan", $"{o.matter.GetType()} has circumstance!", $"guid: {o.matter.Circumstances[0]}");
+                    // }
                     // Print("cyan", $"RELEASE::{o.matter.GetType().Name} ",
-                        // $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
+                    // $"by {FormatScroll(o.scroll)} at {o.scroll.Who.GetType().Name}");
                 });
 
             _disposables += Observable.FromEventPattern<TMatter>(

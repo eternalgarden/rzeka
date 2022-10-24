@@ -51,7 +51,7 @@ namespace Rzeka
             }
         }
 
-        public void Cast()
+        public void Cast() 
         {
             if (IsConjured) return;
 
@@ -196,9 +196,13 @@ namespace Rzeka
                         observer.OnError(new NoManaException());
                     });
             });
+            
+            // TODO an attempt at circumstances
+            T lastCircumstance = default(T);
 
             var erisTouchedIngredient = ingredient
-                    // TODO couldn't the ingredient interruption be self-propagated here? instead of external psu to nomana subject
+                // TODO couldn't circumstances be intercepted here?
+                .Do(onNext: next => lastCircumstance = next)
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
                 .Dematerialize();
@@ -206,6 +210,9 @@ namespace Rzeka
             ObservableSpell = spell
                 .Invoke(erisTouchedIngredient)
                 .Merge(noManaNotifier)
+                // TODO So before I thought I had this perfect solution to handle circumstances but where is it
+                // .Do(onNext: matter => matter.SetCircumstances())
+                .Do(onNext: next => next.SetCircumstances(lastCircumstance))
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
                 .Dematerialize();

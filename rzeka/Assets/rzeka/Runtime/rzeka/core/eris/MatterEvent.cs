@@ -1,6 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 using Rzeka.Internal;
+using UnityEngine;
 
 namespace Rzeka
 {
@@ -25,6 +26,12 @@ namespace Rzeka
             Matter = matter;
             Scroll = scroll;
             EventType = eventType;
+
+            if (matter.Guid == default)
+            {
+                Debug.Log("HHHHHHHHHHHHUUUUUUUUUUUUUUUUUHHHHHHHHHHHHHHH");
+                Debug.Log(matter.GetType());
+            }
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Rzeka
     {
         Guid Guid { get; set; }
         Guid[] Circumstances { get; set; }
+        Type Type { get; set; } // * don't remove, it is used by Eris renderer
         string Description { get; }
 
         public void SetCircumstances(params TMatter[] circumstances)
