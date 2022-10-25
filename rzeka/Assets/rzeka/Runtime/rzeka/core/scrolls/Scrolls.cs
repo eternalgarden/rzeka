@@ -63,17 +63,7 @@ namespace Rzeka
             }
 
             ObservableSpell = spell
-                .Do(onNext: next =>
-                {
-                    eris.PushNextMatter(this, next);
-                });
-                // .Materialize()
-                // .Do(notification =>
-                // {
-                //     Debug.Log($"<color=yellow>accept release {GetType()}</color>");
-                //     notification.Accept();
-                // })
-                // .Dematerialize();
+                .Do(eris.GetReleasesObserver<Q>(this));
         }
 
         public IObservable<Q> GetConjuring()
@@ -129,7 +119,6 @@ namespace Rzeka
         IDisposable _noManaObserverContract;
         IObservable<Q> _observableSpell;
 
-
         // TODO WRITE TESTS FOR THIS
         // THINKING HOW NOMANA WORKS IS ALSO NECESSARY
         // POSSIBLY ADDITIONAL CALLS ON DISPOSE
@@ -145,24 +134,24 @@ namespace Rzeka
 
                 _observableSpell = value;
 
-                _noManaObserverContract = value
-                    .Subscribe(
-                        onNext: _ => { },
-                        onError: error =>
-                        {
-                            if (error is NoManaException)
-                            {
-                                Debug.Log("caught no mana in conjuring");
-
-                                _observableSpell = null;
-                            }
-                            else
-                            {
-                                Debug.LogError(error);
-                            }
-
-                            _noManaObserverContract.Dispose();
-                        });
+                // _noManaObserverContract = value
+                //     .Subscribe(
+                //         onNext: _ => { },
+                //         onError: error =>
+                //         {
+                //             if (error is NoManaException)
+                //             {
+                //                 Debug.Log("caught no mana in conjuring");
+                //
+                //                 _observableSpell = null;
+                //             }
+                //             else
+                //             {
+                //                 Debug.LogError(error);
+                //             }
+                //
+                //             _noManaObserverContract.Dispose();
+                //         });
             }
         }
 
@@ -218,29 +207,16 @@ namespace Rzeka
             T lastCircumstance = default(T);
 
             var erisTouchedIngredient = ingredient
-                .Do(onNext: next =>
-                {
-                    eris.PushReceivedMatter(this, next);
-                });
+                .Do(eris.GetReceivalsObserver<T>(this));
                 // TODO couldn't circumstances be intercepted here?
                 // .Do(onNext: next => lastCircumstance = next)
-                // .Materialize()
-                // .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
-                // .Dematerialize();
 
             ObservableSpell = spell
                 .Invoke(erisTouchedIngredient)
                 // .Merge(noManaNotifier) // TODO DISABLED
-                .Do(onNext: next =>
-                {
-                    eris.PushNextMatter(this, next);
-                });
+                .Do(eris.GetReleasesObserver<Q>(this));
                 // TODO So before I thought I had this perfect solution to handle circumstances but where is it
                 // .Do(onNext: matter => matter.SetCircumstances())
-                // // .Do(onNext: next => next.SetCircumstances(lastCircumstance))
-                // .Materialize()
-                // .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
-                // .Dematerialize();
         }
 
         public void Dispose()
