@@ -6,9 +6,9 @@ namespace Rzeka
 {
     public interface TMatter
     {
-        Guid Guid { get; set; }
+        Guid Guid { get; }
         Guid[] Circumstances { get; set; }
-        Type Type { get; set; } // * don't remove, it is used by Eris renderer
+        Type Type { get; } // * don't remove, it is used by Eris renderer
         string Description { get; }
 
         public void SetCircumstances(params TMatter[] circumstances)
@@ -16,7 +16,7 @@ namespace Rzeka
             Circumstances = circumstances.Select(x => x.Guid).ToArray();
         }
 
-        public void AssignNewGuid() => Guid = Guid.NewGuid();
+        // public void AssignNewGuid() => Guid = Guid.NewGuid();
     }
 
     public interface IRequest : TMatter { }

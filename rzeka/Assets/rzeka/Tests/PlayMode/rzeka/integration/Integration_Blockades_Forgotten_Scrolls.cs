@@ -7,27 +7,8 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Blockades_Forgotten_Scrolls
+    public class Integration_Blockades_Forgotten_Scrolls : IntegrationBase
     {
-        RzekaXOXO Rzeka;
-        CollectibleDisposable _disposables;
-        IDisposable _userDataMatter;
-        IDisposable _userWelcomingTextMatter;
-        IDisposable _userWelcomingTextWeaver;
-
-        [UnitySetUp]
-        public IEnumerator Setup()
-        {
-            // -------------
-
-            Rzeka = new RzekaXOXO();
-            _disposables = new();
-
-            yield return null;
-
-            // -------------
-        }
-        
         /*
          * TODO SO THIS IS ACTUALLY A GOOD IDEA TO USE ERIS EVENTS FOR ALL INTEGRATION TESTING IN RZEKA
          * This makes them less connected to the implementation of The Library and Scrolls themselves.
@@ -46,24 +27,16 @@ namespace Rzeka.Tests.Integration
 
             bool wasProperlyBlocked = false;
 
-            var singleDependency = Rzeka.Pluck<UserData>(
-                who: this,
-                spell: Observable
-                    .Interval(TimeSpan.FromSeconds(1))
-                    .Select(_ => new UserData
-                        { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-
-            _disposables += Rzeka.Weave<UserData>(
-                who: this,
-                spell: Observer.Create<UserData>(
-                    onNext: _ => { }));
-
-            _disposables += Rzeka.Eris.RealmEventStream.Subscribe(e =>
+            Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
                 if (e is not ScrollEvent { Scroll: AlteringScroll<UserData> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Blocked)) wasProperlyBlocked = true;
             });
+
+            var singleDependency = Pluck_UserDataInterval();
+
+            Q += Weave_UserData();
 
             singleDependency.Dispose();
 
@@ -83,29 +56,18 @@ namespace Rzeka.Tests.Integration
 
             bool wasProperlyBlocked = false;
 
-            _disposables += Rzeka.Pluck<UserData>(
-                who: this,
-                spell: Observable
-                    .Interval(TimeSpan.FromSeconds(1))
-                    .Select(_ => new UserData
-                        { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-            
-            var dependency = Rzeka.Loom<UserData, UserWelcomingText>(
-                who: this,
-                spell: userData => userData
-                    .Select(_ => new UserWelcomingText()));
-            
-            _disposables += Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(
-                    onNext: _ => { }));
-
-            _disposables += Rzeka.Eris.RealmEventStream.Subscribe(e =>
+            Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
                 if (e is not ScrollEvent { Scroll: AlteringScroll<UserWelcomingText> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Blocked)) wasProperlyBlocked = true;
             });
+
+            Q += Pluck_UserDataInterval();
+
+            var dependency = Loom_UserData_To_UserWelcomingText();
+
+            Q += Weave_UserWelcomingText();
 
             dependency.Dispose();
 
@@ -122,47 +84,23 @@ namespace Rzeka.Tests.Integration
             // -------------
 
             bool wasProperlyBlocked = false;
-
-            var dependency = Rzeka.Pluck<UserData>(
-                who: this,
-                spell: Observable
-                    .Interval(TimeSpan.FromSeconds(1))
-                    .Select(_ => new UserData
-                        { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
             
-            _disposables += Rzeka.Loom<UserData, UserWelcomingText>(
-                who: this,
-                spell: userData => userData
-                    .Select(_ => new UserWelcomingText()));
-            
-            _disposables += Rzeka.Eris.RealmEventStream.Subscribe(e =>
+            Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
                 if (e is not ScrollEvent { Scroll: LoomingScroll<UserData, UserWelcomingText> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Blocked)) wasProperlyBlocked = true;
             });
 
+            var dependency = Pluck_UserDataInterval();
+
+            Q += Loom_UserData_To_UserWelcomingText();
+
             dependency.Dispose();
 
             yield return null;
 
             Assert.IsTrue(wasProperlyBlocked);
-
-            // -------------
-        }
-        
-        [UnityTearDown]
-        public IEnumerator Teardown()
-        {
-            // -------------
-
-            _disposables?.Dispose();
-            _userDataMatter?.Dispose();
-            _userWelcomingTextMatter?.Dispose();
-            _userWelcomingTextWeaver?.Dispose();
-            Rzeka.Dispose();
-
-            yield return null;
 
             // -------------
         }

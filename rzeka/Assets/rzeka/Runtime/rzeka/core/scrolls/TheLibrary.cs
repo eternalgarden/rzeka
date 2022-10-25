@@ -353,7 +353,7 @@ namespace Rzeka
 
         #endregion
 
-        public void AskForIngredient<T>(out IObservable<T> ingredient) where T : TMatter
+        public IObservable<T> AskForIngredient<T>() where T : TMatter
         {
             Type type = typeof(T);
 
@@ -366,7 +366,10 @@ namespace Rzeka
             if (scrolls.Count > 1) throw new NotImplementedException("multiple castable scrolls of same type");
             var conjuringScroll = scrolls[0] as TConjuringScroll<T>;
 
-            ingredient = conjuringScroll.GetConjuring();
+            if (conjuringScroll == null)
+                throw new Exception("Failed to get an ingredient while it was registered as available.");
+            
+            return conjuringScroll.GetConjuring();
         }
     }
 }

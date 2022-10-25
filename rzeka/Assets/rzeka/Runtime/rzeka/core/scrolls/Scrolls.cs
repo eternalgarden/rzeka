@@ -55,10 +55,25 @@ namespace Rzeka
         {
             if (IsConjured) return;
 
+            Debug.Log($"<color=cyan>cast {GetType()}</color>");
+
+            if (spell is IConnectableObservable<Q>)
+            {
+                Debug.Log($"<color=yellow>ohh!</color>");
+            }
+
             ObservableSpell = spell
-                .Materialize()
-                .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
-                .Dematerialize();
+                .Do(onNext: next =>
+                {
+                    eris.PushNextMatter(this, next);
+                });
+                // .Materialize()
+                // .Do(notification =>
+                // {
+                //     Debug.Log($"<color=yellow>accept release {GetType()}</color>");
+                //     notification.Accept();
+                // })
+                // .Dematerialize();
         }
 
         public IObservable<Q> GetConjuring()
@@ -67,6 +82,8 @@ namespace Rzeka
             {
                 Cast();
             }
+
+            Debug.Log($"<color=cyan>getting conjurigng {GetType()}</color>");
 
             return ObservableSpell;
         }
@@ -174,7 +191,7 @@ namespace Rzeka
             if (IsConjured) throw new Exception("Was already cast!");
             if ((this as TBindingScroll).IsCastable is false) throw new Exception("Not castable");
 
-            library.AskForIngredient(out IObservable<T> ingredient);
+            IObservable<T> ingredient = library.AskForIngredient<T>();
 
             // TODO THIS IS A BIG CONSIDERATION TO MAKE
             // ARE SCROLLS CAST ONLY ONCE, ON LATER REQUESTS AN EXISTING 'CAST' IS PROVIDED
@@ -201,21 +218,29 @@ namespace Rzeka
             T lastCircumstance = default(T);
 
             var erisTouchedIngredient = ingredient
+                .Do(onNext: next =>
+                {
+                    eris.PushReceivedMatter(this, next);
+                });
                 // TODO couldn't circumstances be intercepted here?
-                .Do(onNext: next => lastCircumstance = next)
-                .Materialize()
-                .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
-                .Dematerialize();
+                // .Do(onNext: next => lastCircumstance = next)
+                // .Materialize()
+                // .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
+                // .Dematerialize();
 
             ObservableSpell = spell
                 .Invoke(erisTouchedIngredient)
-                .Merge(noManaNotifier)
+                // .Merge(noManaNotifier) // TODO DISABLED
+                .Do(onNext: next =>
+                {
+                    eris.PushNextMatter(this, next);
+                });
                 // TODO So before I thought I had this perfect solution to handle circumstances but where is it
                 // .Do(onNext: matter => matter.SetCircumstances())
-                .Do(onNext: next => next.SetCircumstances(lastCircumstance))
-                .Materialize()
-                .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
-                .Dematerialize();
+                // // .Do(onNext: next => next.SetCircumstances(lastCircumstance))
+                // .Materialize()
+                // .Do(notification => { notification.Accept(eris.GetReleasesObserver<Q>(this)); })
+                // .Dematerialize();
         }
 
         public void Dispose()
@@ -288,7 +313,8 @@ namespace Rzeka
                     });
             });
 
-            library.AskForIngredient<T>(out IObservable<T> ingredient);
+            IObservable<T> ingredient = library.AskForIngredient<T>();
+
             var erisTouchedIngredient = ingredient
                 .Materialize()
                 .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })

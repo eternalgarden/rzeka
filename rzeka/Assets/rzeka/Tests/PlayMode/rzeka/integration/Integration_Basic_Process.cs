@@ -8,56 +8,14 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Basic_Process
+    public class Integration_Basic_Process : IntegrationBase
     {
-        RzekaXOXO Rzeka;
-        CollectibleDisposable _disposables;
-        IDisposable _userDataMatter;
-        IDisposable _userWelcomingTextMatter;
-        IDisposable _userWelcomingTextWeaver;
-
-        void PluckUserDataMatter()
-        {
-            _userDataMatter = Rzeka.Pluck<UserData>(
-                who: this,
-                spell: Observable
-                    .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-        }
-
-        void LoomUserWelcomingText()
-        {
-            _userWelcomingTextMatter = Rzeka.Loom<UserData, UserWelcomingText>(
-                who: this,
-                spell: userData => userData
-                    .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." }));
-        }
-
-        void WeaveWithUserWelcomingText()
-        {
-            _userWelcomingTextWeaver = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => { }));
-        }
-
-        [UnitySetUp]
-        public IEnumerator Setup()
-        {
-            // -------------
-
-            Rzeka = new RzekaXOXO();
-            _disposables = new();
-
-            yield return null;
-            
-            // -------------
-        }
-
         [UnityTest]
         public IEnumerator a_Is_conjurable_of_UserData()
         {
             // -------------
 
-            PluckUserDataMatter();
+            Q += Pluck_UserData();
             Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>());
 
             yield return null;
@@ -70,8 +28,8 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            PluckUserDataMatter();
-            LoomUserWelcomingText();
+            Q += Pluck_UserData();
+            Q += Loom_UserData_To_UserWelcomingText();
 
             Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
 
@@ -85,14 +43,12 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            PluckUserDataMatter();
-            LoomUserWelcomingText();
+            Q += Pluck_UserData();
+            Q += Loom_UserData_To_UserWelcomingText();
 
             bool received = false;
-
-            using var _ = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => received = true));
+            
+            Q += Weave_UserWelcomingText(onNext: u => received = true);
 
             yield return null;
 
@@ -102,43 +58,22 @@ namespace Rzeka.Tests.Integration
         }
 
         [UnityTest]
-        public IEnumerator b_Is_Weave_UserWelcomingText_Received_Twice()
+        public IEnumerator b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings()
         {
             // -------------
 
-            PluckUserDataMatter();
-            LoomUserWelcomingText();
+            Q += Pluck_UserData();
+            Q += Loom_UserData_To_UserWelcomingText();
 
             bool receivedOne = false;
             bool receivedTwo = false;
 
-            using var one = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedOne = true));
-
-            using var two = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => receivedTwo = true));
+            Q += Weave_UserWelcomingText(onNext: u => receivedOne = true);
+            Q += Weave_UserWelcomingText(onNext: u => receivedTwo = true);
 
             yield return null;
 
             Assert.IsTrue(receivedOne && receivedTwo);
-
-            // -------------
-        }
-
-        [UnityTearDown]
-        public IEnumerator Teardown()
-        {
-            // -------------
-
-            _disposables?.Dispose();
-            _userDataMatter?.Dispose();
-            _userWelcomingTextMatter?.Dispose();
-            _userWelcomingTextWeaver?.Dispose();
-            Rzeka.Dispose();
-
-            yield return null;
 
             // -------------
         }

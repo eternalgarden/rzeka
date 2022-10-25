@@ -71,6 +71,7 @@ namespace Rzeka
                 .Select(pattern => (scroll: pattern.Sender as TScrollBase, matter: pattern.EventArgs))
                 .Subscribe(o =>
                 {
+                    Debug.Log($"<color=green>pushing next matter {o.matter.Type.Name}</color>");
                     OnRealmEvent?.Invoke(new MatterEvent(o.matter, o.scroll, MatterEventType.Shaped));
 
                     // if (o.matter.Circumstances[0] != default)
@@ -94,12 +95,22 @@ namespace Rzeka
                 });
         }
 
+        public void PushNextMatter(TScrollBase scroll, TMatter matter)
+        {
+            NextMatter?.Invoke(scroll, matter);
+        }
+
         public IObserver<T> GetReleasesObserver<T>(TScrollBase scroll) where T : TMatter
         {
             return Observer.Create<T>(
                 onNext: val => NextMatter?.Invoke(scroll, val),
                 onError: err => NextException?.Invoke(scroll, err),
                 onCompleted: () => NextCompletion?.Invoke(scroll, null));
+        }
+
+        public void PushReceivedMatter(TScrollBase scroll, TMatter matter)
+        {
+            ReceivedMatter?.Invoke(scroll, matter);
         }
 
         public IObserver<T> GetReceivalsObserver<T>(TScrollBase scroll) where T : TMatter

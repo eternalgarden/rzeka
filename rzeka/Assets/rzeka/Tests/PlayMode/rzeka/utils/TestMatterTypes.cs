@@ -2,26 +2,45 @@ using System;
 
 namespace Rzeka.Tests.Integration
 {
-    public class UserData : TMatter
+    public struct UserData : TMatter
     {
-
-        public string Name { get; set; }
-        public string Zodiac { get; set; }
-        public int FavNumber { get; set; }
-        public DateTime JoinedDate { get; set; }
-        public Guid Guid { get; set; }
+        public string Description => "Test matter of user data";
+        public Guid Guid { get; }
         public Guid[] Circumstances { get; set; }
-        public Type Type { get; set; }
-        public string Description { get; }
+        public Type Type { get; }
+        
+        public UserData(string name, string zodiac, int favNumber)
+        {
+            Guid = Guid.NewGuid();
+            Type = typeof(UserData);
+            Circumstances = new Guid[] { };
+            
+            Name = name;
+            Zodiac = zodiac;
+            FavNumber = favNumber;
+        }
+        
+        public string Name { get; }
+        public string Zodiac { get; }
+        public int FavNumber { get; }
     }
 
-    public class UserWelcomingText : TMatter
+    public struct UserWelcomingText : TMatter
     {
-        public Guid Guid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Guid[] Circumstances { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Type Type { get; set; }
-        public string Description => throw new NotImplementedException();
+        public string Description => "Test matter carrying hypothetical welcoming text";
+        public Guid Guid { get; }
+        public Guid[] Circumstances { get; set; }
+        public Type Type { get; }
+        
+        public UserWelcomingText(string welcomingText)
+        {
+            Guid = Guid.NewGuid();
+            Type = typeof(UserData);
+            Circumstances = new Guid[] { };
+            
+            WelcomingText = welcomingText;
+        }
 
-        public string WelcomingText { get; set; }
+        public string WelcomingText { get; }
     }
 }

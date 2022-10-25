@@ -8,56 +8,14 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Blockades_Basics
+    public class Integration_Blockades_Basics : IntegrationBase
     {
-        RzekaXOXO Rzeka;
-        CollectibleDisposable _disposables;
-        IDisposable _userDataMatter;
-        IDisposable _userWelcomingTextMatter;
-        IDisposable _userWelcomingTextWeaver;
-
-        [UnitySetUp]
-        public IEnumerator Setup()
-        {
-            // -------------
-
-            Rzeka = new RzekaXOXO();
-            _disposables = new();
-
-            yield return null;
-
-            // -------------
-        }
-
-        void PluckUserDataMatter()
-        {
-            _userDataMatter = Rzeka.Pluck<UserData>(
-                who: this,
-                spell: Observable
-                    .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-        }
-
-        void LoomUserWelcomingText()
-        {
-            _userWelcomingTextMatter = Rzeka.Loom<UserData, UserWelcomingText>(
-                who: this,
-                spell: userData => userData
-                    .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." }));
-        }
-
-        void WeaveWithUserWelcomingText()
-        {
-            _userWelcomingTextWeaver = Rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => { }));
-        }
-
         [UnityTest]
         public IEnumerator a_Is_AlteringScroll_properly_saved_as_blocked()
         {
             // -------------
 
-            WeaveWithUserWelcomingText();
+            Q += Weave_UserWelcomingText();
 
             yield return null;
 
@@ -78,7 +36,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            LoomUserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
 
             yield return null;
 
@@ -98,9 +56,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator b_Is_codependent_altering_binding_block_properly_registered()
         {
             // -------------
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
 
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
 
             yield return null;
 
@@ -134,10 +93,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator c_Is_conjurable_of_UserData_ReversedOrder()
         {
             // -------------
-
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
-            PluckUserDataMatter();
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
+            Q += Pluck_UserData();
 
             Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>());
 
@@ -150,10 +109,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator c_Is_conjurable_of_UserWelcomingText_ReversedOrder()
         {
             // -------------
-
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
-            PluckUserDataMatter();
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
+            Q += Pluck_UserData();
 
             Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
 
@@ -166,10 +125,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator c_Is_Weave_UserWelcomingText_Received_ReversedOrder()
         {
             // -------------
-
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
-            PluckUserDataMatter();
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
+            Q += Pluck_UserData();
 
             bool received = false;
 
@@ -188,10 +147,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection()
         {
             // -------------
-
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
-            PluckUserDataMatter();
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
+            Q += Pluck_UserData();
 
             yield return null;
 
@@ -209,10 +168,10 @@ namespace Rzeka.Tests.Integration
         public IEnumerator z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection()
         {
             // -------------
-
-            WeaveWithUserWelcomingText();
-            LoomUserWelcomingText();
-            PluckUserDataMatter();
+            
+            Q += Weave_UserWelcomingText();
+            Q += Loom_UserData_To_UserWelcomingText();
+            Q += Pluck_UserData();
 
             yield return null;
 
@@ -222,22 +181,6 @@ namespace Rzeka.Tests.Integration
             }
 
             Assert.True(true);
-
-            // -------------
-        }
-
-        [UnityTearDown]
-        public IEnumerator Teardown()
-        {
-            // -------------
-
-            _disposables?.Dispose();
-            _userDataMatter?.Dispose();
-            _userWelcomingTextMatter?.Dispose();
-            _userWelcomingTextWeaver?.Dispose();
-            Rzeka.Dispose();
-
-            yield return null;
 
             // -------------
         }

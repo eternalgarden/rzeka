@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reactive;
+using System.Reactive.Disposables;
 using System.Reactive.Linq;
-using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
@@ -12,6 +13,11 @@ namespace Rzeka.Tests.Integration
     {
         protected RzekaXOXO Rzeka;
         protected CollectibleDisposable Q;
+
+        protected static void AssertEqual<T>(T expected, T actual)
+        {
+            Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.");
+        }
 
         [UnitySetUp]
         public virtual IEnumerator Setup()
@@ -38,6 +44,24 @@ namespace Rzeka.Tests.Integration
 
             // -------------
         }
+        
+        protected IDisposable Pluck_UserData(int count = 1)
+        {
+            return Rzeka.Pluck<UserData>(
+                who: this,
+                spell: Observable
+                    .Create<UserData>(observer =>
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            observer.OnNext(new UserData("Ali", "Roofwalking Cat", i));
+                        }
+                        
+                        observer.OnCompleted();
+                        
+                        return Disposable.Empty;
+                    }));
+        }
 
         protected IDisposable Pluck_UserDataInterval()
         {
@@ -45,13 +69,7 @@ namespace Rzeka.Tests.Integration
                 who: this,
                 spell: Observable
                     .Interval(TimeSpan.FromSeconds(1))
-                    .Select(x => new UserData
-                    {
-                        Name = "Maria", 
-                        Zodiac = "Cancer", 
-                        FavNumber = (int)x, 
-                        JoinedDate = new DateTime(1992, 7, 3)
-                    }));
+                    .Select(x => new UserData("Ali", "Roofwalking Cat", (int)x)));
         }
 
         protected IDisposable Loom_UserData_To_UserWelcomingText()
@@ -59,10 +77,7 @@ namespace Rzeka.Tests.Integration
             return Rzeka.Loom<UserData, UserWelcomingText>(
                 who: this,
                 spell: userData => userData
-                    .Select(dd => new UserWelcomingText
-                    {
-                        WelcomingText = $"Hi Maria! Ur fav number is <<{dd.FavNumber}>> a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago."
-                    }));
+                    .Select(dd => new UserWelcomingText($"Hi {dd.Name}! Ur fav number is <<{dd.FavNumber}>>, a {dd.Zodiac}")));
         }
         
         protected IDisposable Weave_UserData(Action<UserData> onNext = null)
