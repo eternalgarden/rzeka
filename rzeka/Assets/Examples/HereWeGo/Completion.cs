@@ -42,7 +42,6 @@ namespace Examples.Fillory
                 .EveryUpdate()
                 .Where(_ => Input.GetKeyDown(KeyCode.D));
 
-            WeaveExperiments();
             //UpdateExperiments1();
             //CombineLatestCompletion();
             //AndThenCompletion();
@@ -57,65 +56,6 @@ namespace Examples.Fillory
             {
                 Debug.Log("halp");
             }
-        }
-
-        public class UserData : TMatter
-        {
-            public Guid Guid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public Guid[] Circumstances { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public string Description => throw new NotImplementedException();
-
-            public string Name { get; set; }
-            public string Zodiac { get; set; }
-            public int FavNumber { get; set; }
-            public DateTime JoinedDate { get; set; }
-        }
-
-        public class UserWelcomingText : TMatter
-        {
-            public Guid Guid { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public Guid[] Circumstances { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-            public string Description => throw new NotImplementedException();
-
-            public string WelcomingText { get; set; }
-        }
-
-        void WeaveExperiments()
-        {
-            IRzeka rzeka = new RzekaXOXO();
-
-            IDisposable userData = rzeka.Pluck<UserData>(this, Observable
-                .Return(new UserData { Name = "Maria", Zodiac = "Cancer", FavNumber = 7, JoinedDate = new DateTime(1992, 7, 3) }));
-
-            IDisposable userWelcoming = rzeka.Loom<UserData, UserWelcomingText>(this, userData =>
-            {
-                return userData
-                    .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(int)(DateTime.Now - dd.JoinedDate).TotalDays} days ago." });
-            });
-
-            IDisposable welcomingPrinter = rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => Debug.Log(u.WelcomingText)));
-
-            userWelcoming.Dispose();
-
-            using var anotherPrinter = rzeka.Weave<UserWelcomingText>(
-                who: this,
-                spell: Observer.Create<UserWelcomingText>(onNext: u => Debug.Log($"<color=yellow>{u.WelcomingText}</color>"))); 
-
-            q += keyPressStreamA
-                .Subscribe(o =>
-                {
-                    using var anotherWelcoming = rzeka.Loom<UserData, UserWelcomingText>(this, userData =>
-                    {
-                        return userData
-                            .Select(dd => new UserWelcomingText { WelcomingText = $"Hi Maria! Ur a {dd.Zodiac} who joined us {(DateTime.Now - dd.JoinedDate).TotalDays} days ago." });
-                    });
-                });
-
-            q += userData;
-            q += userWelcoming;
-            q += welcomingPrinter;
         }
 
         class Data

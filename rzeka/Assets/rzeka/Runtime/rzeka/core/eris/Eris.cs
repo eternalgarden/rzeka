@@ -99,7 +99,11 @@ namespace Rzeka
         {
             NextMatter?.Invoke(scroll, matter);
         }
-
+        
+        // Marked as obsolete and removed from usage due to bugs related with proper handling
+        // of matter realeased by hot vs cold observables.
+        // Received is just received, simpler to handle and rather enough.
+        [Obsolete]
         public IObserver<T> GetReleasesObserver<T>(TScrollBase scroll) where T : TMatter
         {
             return Observer.Create<T>(

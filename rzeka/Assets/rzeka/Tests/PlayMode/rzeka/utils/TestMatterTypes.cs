@@ -35,7 +35,7 @@ namespace Rzeka.Tests.Integration
         public UserWelcomingText(string welcomingText)
         {
             Guid = Guid.NewGuid();
-            Type = typeof(UserData);
+            Type = typeof(UserWelcomingText);
             Circumstances = new Guid[] { };
             
             WelcomingText = welcomingText;

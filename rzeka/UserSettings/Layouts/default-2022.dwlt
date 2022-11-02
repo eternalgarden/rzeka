@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Project
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 139
+  controlID: 141
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -192,8 +192,8 @@ MonoBehaviour:
     y: 485
     width: 889
     height: 454
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 110
+  controlID: 112
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,8 +325,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -31111
-    y: -31563
+    x: 889
+    y: 480
     width: 601
     height: 511
   m_ViewDataDictionary: {fileID: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 148
+    ID: 150
     splitterInitialOffset: 371
     currentActiveSplitter: -1
     realSizes:
@@ -491,464 +491,6 @@ MonoBehaviour:
       categories: []
       parentId: 1008
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
-    - id: 1004
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-      name: Integration_Basic_Blockades
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades
-      resultStatus: 1
-      duration: 0.9219795
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1017
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
-    - id: 1005
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.a_Is_AlteringScroll_properly_saved_as_blocked]
-      name: a_Is_AlteringScroll_properly_saved_as_blocked
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.a_Is_AlteringScroll_properly_saved_as_blocked
-      resultStatus: 1
-      duration: 0.0982969
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1006
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.a_Is_BindingScroll_properly_saved_as_blocked]
-      name: a_Is_BindingScroll_properly_saved_as_blocked
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.a_Is_BindingScroll_properly_saved_as_blocked
-      resultStatus: 1
-      duration: 0.1182246
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1007
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.b_Is_codependent_altering_binding_block_properly_registered]
-      name: b_Is_codependent_altering_binding_block_properly_registered
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.b_Is_codependent_altering_binding_block_properly_registered
-      resultStatus: 1
-      duration: 0.1156268
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1008
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_conjurable_of_UserData_ReversedOrder]
-      name: c_Is_conjurable_of_UserData_ReversedOrder
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_conjurable_of_UserData_ReversedOrder
-      resultStatus: 1
-      duration: 0.1337839
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Existing
-        Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades will
-        be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1009
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_conjurable_of_UserWelcomingText_ReversedOrder]
-      name: c_Is_conjurable_of_UserWelcomingText_ReversedOrder
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_conjurable_of_UserWelcomingText_ReversedOrder
-      resultStatus: 1
-      duration: 0.0987493
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Existing
-        Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades will
-        be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1010
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_Weave_UserWelcomingText_Received_ReversedOrder]
-      name: c_Is_Weave_UserWelcomingText_Received_ReversedOrder
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.c_Is_Weave_UserWelcomingText_Received_ReversedOrder
-      resultStatus: 1
-      duration: 0.1163825
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Existing
-        Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades will
-        be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1012
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection]
-      name: z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection
-      resultStatus: 1
-      duration: 0.1001049
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Existing
-        Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades will
-        be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
-    - id: 1011
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Blockades/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades.z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection]
-      name: z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Blockades.z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection
-      resultStatus: 1
-      duration: 0.1158055
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Blockades,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Existing
-        Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Blockades will
-        be cast now, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserData
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <<Rzeka.Tests.Integration.Integration_Basic_Blockades>>
-        received matter of type Rzeka.Tests.Integration.UserWelcomingText
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Blockades will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1004
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Blockades][suite]
     - id: 1013
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
       name: Integration_Basic_Disposing
@@ -965,46 +507,6 @@ MonoBehaviour:
       categories: []
       parentId: 1026
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
-    - id: 1014
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.a_Is_a_conjurable_BindingScroll_properly_disposed]
-      name: a_Is_a_conjurable_BindingScroll_properly_disposed
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.a_Is_a_conjurable_BindingScroll_properly_disposed
-      resultStatus: 1
-      duration: 0.0823701
-      messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Disposing,
-        its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Disposing
-        will be cast now, its type is: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-        <color=green>A
-        new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Disposing,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=yellow>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Disposing
-        will be cast now, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Disposing will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Disposing will be disposed,
-        its type was: Rzeka.ConjuringScroll`1[Rzeka.Tests.Integration.UserData]</color>
-
-'
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1013
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
     - id: 1015
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.a_Is_a_conjurable_ConjuringScroll_properly_disposed]
       name: a_Is_a_conjurable_ConjuringScroll_properly_disposed
@@ -1033,25 +535,14 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1013
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
-    - id: 1016
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_blocked_AlteringScroll_properly_disposed]
-      name: b_Is_a_blocked_AlteringScroll_properly_disposed
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_blocked_AlteringScroll_properly_disposed
-      resultStatus: 1
-      duration: 0.0996357
+    - id: 1006
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_conjurable_BindingScroll_properly_disposed]
+      name: b_Is_a_conjurable_BindingScroll_properly_disposed
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_conjurable_BindingScroll_properly_disposed
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Disposing,
-        its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Disposing
-        is blocked, its type is: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Disposing will be disposed,
-        its type was: Rzeka.AlteringScroll`1[Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1059,27 +550,16 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1013
+      parentId: 1004
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
-    - id: 1017
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_blocked_BindingScroll_properly_disposed]
-      name: b_Is_a_blocked_BindingScroll_properly_disposed
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.b_Is_a_blocked_BindingScroll_properly_disposed
-      resultStatus: 1
-      duration: 0.1318817
+    - id: 1007
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.c_Is_a_blocked_BindingScroll_properly_disposed]
+      name: c_Is_a_blocked_BindingScroll_properly_disposed
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.c_Is_a_blocked_BindingScroll_properly_disposed
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=green>A new scroll was just created by Rzeka.Tests.Integration.Integration_Basic_Disposing,
-        its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=blue>::Just
-        Created Scroll:: created by Rzeka.Tests.Integration.Integration_Basic_Disposing
-        is blocked, its type is: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-        <color=red>Scroll
-        created by Rzeka.Tests.Integration.Integration_Basic_Disposing will be disposed,
-        its type was: Rzeka.LoomingScroll`2[Rzeka.Tests.Integration.UserData,Rzeka.Tests.Integration.UserWelcomingText]</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1087,7 +567,24 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1013
+      parentId: 1004
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
+    - id: 1008
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Disposing/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing.d_Is_a_blocked_AlteringScroll_properly_disposed]
+      name: d_Is_a_blocked_AlteringScroll_properly_disposed
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Disposing.d_Is_a_blocked_AlteringScroll_properly_disposed
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1004
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Disposing][suite]
     - id: 1004
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
@@ -1237,74 +734,14 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1004
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
-    - id: 1008
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_Twice]
-      name: b_Is_Weave_UserWelcomingText_Received_Twice
-      fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_Twice
-      resultStatus: 1
-      duration: 0.105299
+    - id: 1013
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings]
+      name: b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: '<color=white>CREATED::Conjuring<UserData> </color><color=white>by
-        Integration_Basic_Process</color>
-
-        <color=white>CAST::Conjuring<UserData>
-        </color><color=white>::Just Created Scroll:: created by Integration_Basic_Process</color>
-
-        <color=white>CREATED::Loom<UserData>
-        </color><color=white>by Integration_Basic_Process</color>
-
-        <color=white>CAST::Loom<UserData>
-        </color><color=white>::Just Created Scroll:: created by Integration_Basic_Process</color>
-
-        <color=white>CREATED::Alteration<UserWelcomingText,>
-        </color><color=white>by Integration_Basic_Process</color>
-
-        <color=white>CAST::Alteration<UserWelcomingText,>
-        </color><color=white>::Just Created Scroll:: created by Integration_Basic_Process</color>
-
-        <color=cyan>RELEASE::UserData
-        </color><color=white>by Conjuring<UserData></color>
-
-        <color=green>RECEIVE::UserData
-        </color><color=white>by Loom<UserData></color>
-
-        <color=cyan>RELEASE::UserWelcomingText
-        </color><color=white>by Loom<UserData></color>
-
-        <color=green>RECEIVE::UserWelcomingText
-        </color><color=white>by Alteration<UserWelcomingText,></color>
-
-        <color=white>CREATED::Alteration<UserWelcomingText,>
-        </color><color=white>by Integration_Basic_Process</color>
-
-        <color=white>CAST::Alteration<UserWelcomingText,>
-        </color><color=white>::Just Created Scroll:: created by Integration_Basic_Process</color>
-
-        <color=cyan>RELEASE::UserData
-        </color><color=white>by Conjuring<UserData></color>
-
-        <color=green>RECEIVE::UserData
-        </color><color=white>by Loom<UserData></color>
-
-        <color=cyan>RELEASE::UserWelcomingText
-        </color><color=white>by Loom<UserData></color>
-
-        <color=green>RECEIVE::UserWelcomingText
-        </color><color=white>by Alteration<UserWelcomingText,></color>
-
-        <color=red>DISPOSE::Alteration<UserWelcomingText,>
-        </color><color=white>created by Integration_Basic_Process</color>
-
-        <color=red>DISPOSE::Alteration<UserWelcomingText,>
-        </color><color=white>created by Integration_Basic_Process</color>
-
-        <color=red>DISPOSE::Conjuring<UserData>
-        </color><color=white>created by Integration_Basic_Process</color>
-
-        <color=red>DISPOSE::Loom<UserData>
-        </color><color=white>created by Integration_Basic_Process</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1312,8 +749,767 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1004
+      parentId: 1009
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
+    - id: 1014
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+      name: Integration_Blockades_Basics
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1015
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.a_Is_AlteringScroll_properly_saved_as_blocked]
+      name: a_Is_AlteringScroll_properly_saved_as_blocked
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.a_Is_AlteringScroll_properly_saved_as_blocked
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1016
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.a_Is_BindingScroll_properly_saved_as_blocked]
+      name: a_Is_BindingScroll_properly_saved_as_blocked
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.a_Is_BindingScroll_properly_saved_as_blocked
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1017
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.b_Is_codependent_altering_binding_block_properly_registered]
+      name: b_Is_codependent_altering_binding_block_properly_registered
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.b_Is_codependent_altering_binding_block_properly_registered
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1018
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_conjurable_of_UserData_ReversedOrder]
+      name: c_Is_conjurable_of_UserData_ReversedOrder
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_conjurable_of_UserData_ReversedOrder
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1019
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_conjurable_of_UserWelcomingText_ReversedOrder]
+      name: c_Is_conjurable_of_UserWelcomingText_ReversedOrder
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_conjurable_of_UserWelcomingText_ReversedOrder
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1020
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_Weave_UserWelcomingText_Received_ReversedOrder]
+      name: c_Is_Weave_UserWelcomingText_Received_ReversedOrder
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.c_Is_Weave_UserWelcomingText_Received_ReversedOrder
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1022
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection]
+      name: z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.z_Is_unblocked_AlteringScroll_properly_removed_from_blocked_scrolls_collection
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1021
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Basics/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics.z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection]
+      name: z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Basics.z_Is_unblocked_BindingScroll_properly_removed_from_blocked_scrolls_collection
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1014
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Basics][suite]
+    - id: 1029
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+      name: Integration_Blockades_Forgotten_Scrolls
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1030
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency]
+      name: a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1029
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1031
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency]
+      name: b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1029
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1032
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency]
+      name: c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1029
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1033
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+      name: Integration_Eris_MatterLogging
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1034
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold]
+      name: a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1035
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold]
+      name: a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1036
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold]
+      name: b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1037
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold]
+      name: b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1038
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount]
+      name: d_PluckWithNoObservers_Hot_RefCount
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1039
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish]
+      name: e_PluckWithNoObservers_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1040
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish]
+      name: e1_PluckWeave_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1041
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1]
+      name: e1x_PluckWeave_Hot_Replay1
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1042
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish]
+      name: e2_PluckWeave_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1043
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub]
+      name: f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1044
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub]
+      name: f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1045
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub]
+      name: f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1046
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub]
+      name: f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1047
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold]
+      name: g_SanityCheck_Process_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1048
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Hot]
+      name: g_SanityCheck_Process_Hot
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Hot
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1033
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1023
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+      name: Integration_Eris_Spam_Verification
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1024
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Spam_Verification/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.a_IsNewBlocked_Loom_LoggedOnlyOnce]
+      name: a_IsNewBlocked_Loom_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.a_IsNewBlocked_Loom_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+    - id: 1025
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Spam_Verification/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.b_IsNewBlocked_Weave_LoggedOnlyOnce]
+      name: b_IsNewBlocked_Weave_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.b_IsNewBlocked_Weave_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+    - id: 1026
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Spam_Verification/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Conjure_LoggedOnlyOnce]
+      name: c_IsNewCast_Conjure_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Conjure_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+    - id: 1027
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Spam_Verification/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Loom_LoggedOnlyOnce]
+      name: c_IsNewCast_Loom_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Loom_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+    - id: 1028
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Spam_Verification/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Weave_LoggedOnlyOnce]
+      name: c_IsNewCast_Weave_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Spam_Verification.c_IsNewCast_Weave_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1023
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Spam_Verification][suite]
+    - id: 1062
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+      name: Rx
+      fullName: Rzeka.Tests.Rx
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1060
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
+    - id: 1049
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+      name: Rzeka_Rx_SanityChecks
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1062
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1050
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled1]
+      name: a_WhenDoGetsCalled1
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled1
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1051
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled2]
+      name: a_WhenDoGetsCalled2
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled2
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1052
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled3]
+      name: a_WhenDoGetsCalled3
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled3
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1053
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled4]
+      name: a_WhenDoGetsCalled4
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.a_WhenDoGetsCalled4
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1054
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.b_WhenDoGetsCalled4]
+      name: b_WhenDoGetsCalled4
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.b_WhenDoGetsCalled4
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1055
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c1_Ugh]
+      name: c1_Ugh
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c1_Ugh
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1056
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c2_Ugh]
+      name: c2_Ugh
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c2_Ugh
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
+    - id: 1057
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_SanityChecks/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c2a_Ugh]
+      name: c2a_Ugh
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks.c2a_Ugh
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_SanityChecks][suite]
     - id: 2646
       uniqueId: '[sanctuary.event-stream.tests.integration.dll][suite]'
       name: sanctuary.event-stream.tests.integration.dll
@@ -16496,8 +16692,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -32000
-    y: -31970
+    x: 0
+    y: 73
     width: 888
     height: 464
   m_ViewDataDictionary: {fileID: 0}
@@ -16595,8 +16791,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -32000
-    y: -31485
+    x: 0
+    y: 558
     width: 888
     height: 433
   m_ViewDataDictionary: {fileID: 0}
@@ -17738,8 +17934,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -31111
-    y: -31970
+    x: 889
+    y: 73
     width: 601
     height: 386
   m_ViewDataDictionary: {fileID: 0}
@@ -17758,7 +17954,8 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/Examples/Examples Really/xi. hot and cold observables
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -17772,7 +17969,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ae890000
     m_LastClickedID: 35246
-    m_ExpandedIDs: 0000000058640000bc640000be640000c0640000c2640000c4640000c6640000c8640000ca640000cc640000ce640000d0640000d2640000d4640000d6640000d8640000da640000dc640000de640000e0640000e2640000e4640000e6640000e8640000ea640000ec640000ee640000f0640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e6500002065000022650000
+    m_ExpandedIDs: 000000000c65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c6500009e650000a0650000a2650000a4650000a6650000a8650000aa650000ac650000ae650000b0650000b2650000b4650000b6650000b8650000ba650000bc650000be650000c0650000c2650000c4650000c6650000c8650000ca650000cc650000ce650000d0650000d2650000d4650000d6650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -17797,10 +17994,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 1758.002}
+    scrollPos: {x: 0, y: 21.998901}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000058640000bc640000be640000c0640000c2640000c4640000c6640000c8640000ca640000cc640000ce640000d0640000d2640000d4640000d6640000d8640000da640000dc640000de640000e0640000e2640000e4640000e6640000e8640000ea640000ec640000ee640000f0640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e6500002065000022650000
+    m_ExpandedIDs: ffffffff000000000c65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c6500009e650000a0650000a4650000a6650000a8650000aa650000ac650000ae650000b0650000b2650000b4650000b6650000b8650000ba650000bc650000be650000c0650000c2650000c4650000c6650000c8650000ca650000cc650000ce650000d0650000d2650000d4650000d6650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -17887,9 +18084,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
+      m_SelectedIDs: aa28000088240000da280000
       m_LastClickedID: 0
-      m_ExpandedIDs: a0e0ffffe0e0ffffaae1ffffd2e2ffff12e3ffffdae3ffff64e6ffffa4e6ffff5ee7ffff68e8ffffa8e8ffff5ce9ffffbce9fffffce9ffff2eebffff46ecffff86ecffffc6edffffa2eeffffe2eeffff96efffffd0efffff10f0ffff42f1ffff26f2ffff66f2ffffa0f3ffffe4f3ffff24f4ffffdef4fffff4f5ffff34f6fffffcf6ffff00f8ffff40f8ffff02f9ffff38f9ffff78f9ffff40faffff34fbffff
+      m_ExpandedIDs: f0faffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -17933,8 +18130,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -30508
-    y: -31970
+    x: 1492
+    y: 73
     width: 427
     height: 918
   m_ViewDataDictionary: {fileID: 0}

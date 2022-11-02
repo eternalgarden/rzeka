@@ -51,7 +51,7 @@ namespace Rzeka
             }
         }
 
-        public void Cast() 
+        public void Cast()
         {
             if (IsConjured) return;
 
@@ -62,8 +62,9 @@ namespace Rzeka
                 Debug.Log($"<color=yellow>ohh!</color>");
             }
 
-            ObservableSpell = spell
-                .Do(eris.GetReleasesObserver<Q>(this));
+            ObservableSpell = spell;
+            // .DistinctUntilChanged(keySelector: next => next.Guid)
+            // .Do(eris.GetReleasesObserver<Q>(this));
         }
 
         public IObservable<Q> GetConjuring()
@@ -192,31 +193,40 @@ namespace Rzeka
             // TODO OKI, SO FAR A CHANGE IN INGREDIENTS WILL BE PROPAGATED FURTHER
             // BUT WHAT IF THIS SCROLL ITSELF IS BECOMING AN INACTIVE/DISPOSED COMPONENT
             // WHERE DOES THE INGREDIENT WATERFALL BEGIN, IT'S NOT CLEAR
-            var noManaNotifier = Observable.Create<Q>(subscribe: observer =>
-            {
-                return HasMana
-                    .Where(hasMana => hasMana is false)
-                    .Subscribe(onNext: _ =>
-                    {
-                        Debug.Log("throwing no mana in loom");
-                        observer.OnError(new NoManaException());
-                    });
-            });
-            
+            // var noManaNotifier = Observable.Create<Q>(subscribe: observer =>
+            // {
+            //     return HasMana
+            //         .Where(hasMana => hasMana is false)
+            //         .Subscribe(onNext: _ =>
+            //         {
+            //             Debug.Log("throwing no mana in loom");
+            //             observer.OnError(new NoManaException());
+            //         });
+            // });
+
             // TODO an attempt at circumstances
             T lastCircumstance = default(T);
 
             var erisTouchedIngredient = ingredient
+                .DistinctUntilChanged(keySelector: next => next.Guid)
                 .Do(eris.GetReceivalsObserver<T>(this));
-                // TODO couldn't circumstances be intercepted here?
-                // .Do(onNext: next => lastCircumstance = next)
+            // TODO couldn't circumstances be intercepted here?
+            // .Do(onNext: next => lastCircumstance = next)
 
             ObservableSpell = spell
-                .Invoke(erisTouchedIngredient)
-                // .Merge(noManaNotifier) // TODO DISABLED
-                .Do(eris.GetReleasesObserver<Q>(this));
-                // TODO So before I thought I had this perfect solution to handle circumstances but where is it
-                // .Do(onNext: matter => matter.SetCircumstances())
+                .Invoke(erisTouchedIngredient);
+            // .Merge(noManaNotifier) // TODO DISABLED
+            // .DistinctUntilChanged(keySelector: next => next.Guid)
+            // .Do(onNext: next =>
+            // {
+            //     Debug.Log($"<color=yellow>{next.Type.Name}</color>");
+            //     Debug.Log($"<color=yellow>{next.GetType().Name}</color>");
+            //     Debug.Log($"<color=yellow>{typeof(T)}</color>");
+            //     Debug.Log($"<color=yellow>{typeof(Q)}</color>");
+            //     eris.GetReleasesObserver<Q>(this).OnNext(next);
+            // });
+            // TODO So before I thought I had this perfect solution to handle circumstances but where is it
+            // .Do(onNext: matter => matter.SetCircumstances())
         }
 
         public void Dispose()
@@ -278,38 +288,37 @@ namespace Rzeka
         {
             if ((this as TBindingScroll).IsCastable is false) throw new Exception("messed up");
 
-            var noManaNotifier = Observable.Create<T>(subscribe: observer =>
-            {
-                return HasMana
-                    .Where(hasMana => hasMana is false)
-                    .Subscribe(onNext: _ =>
-                    {
-                        Debug.Log("throwing no mana in weave");
-                        observer.OnError(new NoManaException());
-                    });
-            });
+            // var noManaNotifier = Observable.Create<T>(subscribe: observer =>
+            // {
+            //     return HasMana
+            //         .Where(hasMana => hasMana is false)
+            //         .Subscribe(onNext: _ =>
+            //         {
+            //             Debug.Log("throwing no mana in weave");
+            //             observer.OnError(new NoManaException());
+            //         });
+            // });
 
             IObservable<T> ingredient = library.AskForIngredient<T>();
 
             var erisTouchedIngredient = ingredient
-                .Materialize()
-                .Do(notification => { notification.Accept(eris.GetReceivalsObserver<T>(this)); })
-                .Dematerialize();
+                .Do(eris.GetReceivalsObserver<T>(this));
 
             _subscriptionDisposable = erisTouchedIngredient
-                .Merge(noManaNotifier)
-                .Subscribe(spell.OnNext, err =>
-                {
-                    if (err is NoManaException)
-                    {
-                        // THE SPELL BECOMES INACTIVE/BLOCKED
-                        _subscriptionDisposable.Dispose();
-                    }
-                    else
-                    {
-                        spell.OnError(err);
-                    }
-                }, spell.OnCompleted);
+                // .Merge(noManaNotifier)
+                // .Subscribe(spell.OnNext, err =>
+                // {
+                //     if (err is NoManaException)
+                //     {
+                //         // THE SPELL BECOMES INACTIVE/BLOCKED
+                //         _subscriptionDisposable.Dispose();
+                //     }
+                //     else
+                //     {
+                //         spell.OnError(err);
+                //     }
+                // }, spell.OnCompleted);
+                .Subscribe(spell);
 
             WasCast = true;
         }
