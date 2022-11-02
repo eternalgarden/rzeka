@@ -55,7 +55,7 @@ namespace Rzeka
         {
             if (IsConjured) return;
 
-            Debug.Log($"<color=cyan>cast {GetType()}</color>");
+            // Debug.Log($"<color=cyan>cast {GetType()}</color>");
 
             if (spell is IConnectableObservable<Q>)
             {
@@ -74,7 +74,7 @@ namespace Rzeka
                 Cast();
             }
 
-            Debug.Log($"<color=cyan>getting conjurigng {GetType()}</color>");
+            // Debug.Log($"<color=cyan>getting conjurigng {GetType()}</color>");
 
             return ObservableSpell;
         }
@@ -209,22 +209,25 @@ namespace Rzeka
 
             var erisTouchedIngredient = ingredient
                 .DistinctUntilChanged(keySelector: next => next.Guid)
-                .Do(eris.GetReceivalsObserver<T>(this));
-            // TODO couldn't circumstances be intercepted here?
-            // .Do(onNext: next => lastCircumstance = next)
+                .Do(onNext: next =>
+                {
+                    eris.PushReceivedMatter(this, next);
+                    
+                    // TODO couldn't circumstances be intercepted here?
+                    lastCircumstance = next;
+                });
 
             ObservableSpell = spell
-                .Invoke(erisTouchedIngredient);
-            // .Merge(noManaNotifier) // TODO DISABLED
-            // .DistinctUntilChanged(keySelector: next => next.Guid)
-            // .Do(onNext: next =>
-            // {
-            //     Debug.Log($"<color=yellow>{next.Type.Name}</color>");
-            //     Debug.Log($"<color=yellow>{next.GetType().Name}</color>");
-            //     Debug.Log($"<color=yellow>{typeof(T)}</color>");
-            //     Debug.Log($"<color=yellow>{typeof(Q)}</color>");
-            //     eris.GetReleasesObserver<Q>(this).OnNext(next);
-            // });
+                .Invoke(erisTouchedIngredient)
+                // .Merge(noManaNotifier) // TODO DISABLED
+                .Do(onNext: next =>
+                {
+                    // * So that circumstances are set automatically if not specified directly
+                    if (next.HasCircumstances() is false)
+                    {
+                        next.SetCircumstances(lastCircumstance);
+                    }
+                });
             // TODO So before I thought I had this perfect solution to handle circumstances but where is it
             // .Do(onNext: matter => matter.SetCircumstances())
         }

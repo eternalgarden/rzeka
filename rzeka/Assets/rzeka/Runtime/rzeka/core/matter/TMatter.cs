@@ -11,6 +11,8 @@ namespace Rzeka
         Type Type { get; } // * don't remove, it is used by Eris renderer
         string Description { get; }
 
+        public bool HasCircumstances() => Circumstances.Length > 0;
+
         public void SetCircumstances(params TMatter[] circumstances)
         {
             Circumstances = circumstances.Select(x => x.Guid).ToArray();
