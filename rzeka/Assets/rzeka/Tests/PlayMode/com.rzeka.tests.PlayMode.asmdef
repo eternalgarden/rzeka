@@ -8,7 +8,9 @@
         "GUID:2695429d419b7844daf8d3ee80d88bc3"
     ],
     "includePlatforms": [],
-    "excludePlatforms": [],
+    "excludePlatforms": [
+        "WindowsStandalone64"
+    ],
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [

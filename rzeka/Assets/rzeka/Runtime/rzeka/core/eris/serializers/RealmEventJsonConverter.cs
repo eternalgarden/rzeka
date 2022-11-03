@@ -4,6 +4,13 @@ using UnityEngine;
 
 namespace Rzeka.Internal
 {
+    /*
+
+    * BE MOST CAREFUL ABOUT CHANGES HERE
+    
+    TODO Write an automated test that would make sure an example scroll and matter event is serialized into an expected format
+
+    */
     internal class RealmEventJsonConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -17,21 +24,37 @@ namespace Rzeka.Internal
             switch (realmEvent)
             {
                 case ScrollEvent scrollEvent:
+
+                    /* ⭐ ---- ---- */
+                    
                     writer.WritePropertyName("Type");
-                    writer.WriteValue(scrollEvent.EventType.ToString());
+                    writer.WriteValue(scrollEvent.EventType.ToString()); // ScrollEventType
+
                     WriteCommonRealmEventProperties(writer, realmEvent);
+
                     writer.WritePropertyName("Scroll");
                     serializer.Serialize(writer, scrollEvent.Scroll);
                     break;
+                    
+                    /* ---- ---- 🌠 */
+
                 case MatterEvent matterEvent:
+
+                    /* ⭐ ---- ---- */
+                    
                     writer.WritePropertyName("Type");
-                    writer.WriteValue(matterEvent.EventType.ToString());
+                    writer.WriteValue(matterEvent.EventType.ToString()); // MatterEventType
+
                     WriteCommonRealmEventProperties(writer, realmEvent);
+
                     writer.WritePropertyName("Matter");
                     serializer.Serialize(writer, matterEvent.Matter);
-                    writer.WritePropertyName("Scroll");
+                    writer.WritePropertyName("Scroll"); // * scroll that this matter originates from
                     serializer.Serialize(writer, matterEvent.Scroll);
                     break;
+                    
+                    /* ---- ---- 🌠 */
+
                 default:
                     throw new ArgumentException();
             }

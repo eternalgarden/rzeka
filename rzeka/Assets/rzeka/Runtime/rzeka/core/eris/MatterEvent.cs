@@ -13,6 +13,7 @@ namespace Rzeka
         //Finished
     }
     
+    // TODO RENAME TO MATTERREALMEVENT
     [Serializable]
     [JsonConverter(typeof(RealmEventJsonConverter))]
     public class MatterEvent : RealmEvent
@@ -26,12 +27,6 @@ namespace Rzeka
             Matter = matter;
             Scroll = scroll;
             EventType = eventType;
-
-            if (matter.Guid == default)
-            {
-                Debug.Log("HHHHHHHHHHHHUUUUUUUUUUUUUUUUUHHHHHHHHHHHHHHH");
-                Debug.Log(matter.GetType());
-            }
         }
     }
 }

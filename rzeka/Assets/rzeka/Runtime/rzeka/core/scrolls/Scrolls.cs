@@ -209,10 +209,9 @@ namespace Rzeka
 
             var erisTouchedIngredient = ingredient
                 .DistinctUntilChanged(keySelector: next => next.Guid)
+                .Do(eris.GetReceivalsObserver<T>(this))
                 .Do(onNext: next =>
                 {
-                    eris.PushReceivedMatter(this, next);
-                    
                     // TODO couldn't circumstances be intercepted here?
                     lastCircumstance = next;
                 });
