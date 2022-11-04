@@ -55,13 +55,6 @@ namespace Rzeka
         {
             if (IsConjured) return;
 
-            // Debug.Log($"<color=cyan>cast {GetType()}</color>");
-
-            if (spell is IConnectableObservable<Q>)
-            {
-                Debug.Log($"<color=yellow>ohh!</color>");
-            }
-
             ObservableSpell = spell;
             // .DistinctUntilChanged(keySelector: next => next.Guid)
             // .Do(eris.GetReleasesObserver<Q>(this));
