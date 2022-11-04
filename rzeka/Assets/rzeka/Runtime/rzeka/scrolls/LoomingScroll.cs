@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
 namespace Rzeka
@@ -72,6 +73,14 @@ namespace Rzeka
         }
 
         protected abstract IObservable<Q> GetConjuring();
+
+        protected IObservable<X> GetIngredient<X>() where X : TMatter
+        {
+            IObservable<X> ingredient = library.AskForIngredient<X>();
+
+            return ingredient
+                .Do(eris.GetReceivalsObserver<X>(this));
+        }
 
         public virtual void Dispose()
         {

@@ -79,18 +79,34 @@ namespace Rzeka
                 });
 
             return spell
-                .Invoke(erisTouchedIngredient)
+                .Invoke(erisTouchedIngredient);
                 // .Merge(noManaNotifier) // TODO DISABLED
-                .Do(onNext: next =>
+                
+                // TODO So before I thought I had this perfect idea to handle circumstances
+                // TODO automatically here when the spell is being cast
+                // * however.. THE SAME PROBLEM AS WITH PUSHING, 
+                // * A HOT OBSERVABLE WILL BE FROZEN WITH such .DO
+                // ! For now circumstances will have to be assigned manually
+                // ? Could this be handled with an additonal interface/contract below IObservable?
+                /*
+
+                Seomthing like 
+                
+                IChanneling<T> : IObservable<Q>
                 {
-                    // * So that circumstances are set automatically if not specified directly
-                    if (next.HasCircumstances() is false)
-                    {
-                        next.SetCircumstances(lastCircumstance);
-                    }
-                });
-            // TODO So before I thought I had this perfect solution to handle circumstances but where is it
-            // .Do(onNext: matter => matter.SetCircumstances())
+                    last circumstances would be here
+                    then an extension handling circumstances would be possible
+                }
+
+                */
+                // .Do(onNext: next =>
+                // {
+                //     // * So that circumstances are set automatically if not specified directly
+                //     if (next.HasCircumstances() is false)
+                //     {
+                //         next.SetCircumstances(lastCircumstance);
+                //     }
+                // });
         }
 
         public override void Dispose()

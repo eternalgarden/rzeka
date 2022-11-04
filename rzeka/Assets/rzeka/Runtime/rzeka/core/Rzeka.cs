@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+using System.Reactive.Joins;
 using System.Reactive.Subjects;
 using UnityEngine;
 
@@ -33,34 +34,63 @@ namespace Rzeka
             });
         }
 
+        
+        //
+        // ⛺ ─── LOOMS ───────────────────────────────────────────────────
+        //
+        #region LOOMS
+        
         public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
             where T : TMatter
             where Q : TMatter
         {
-            // ! $ NEW_LOOM<T,Q>
-            LoomingScroll_1<T, Q> Scroll = new(who, spell, TheLibrary, Eris);
+            LoomingScroll_1<T, Q> newScroll = new(who, spell, TheLibrary, Eris);
 
-            var bindingScroll = Scroll as TBindingScroll;
-            TheLibrary.CheckBindingScrollRequirements(bindingScroll);
+            TheLibrary.CheckBindingScrollRequirements(newScroll);
 
-            if (bindingScroll.IsCastable)
+            if (newScroll.IsCastable)
             {
-                TheLibrary.CastLooming(Scroll, wasJustCreated: true);
+                TheLibrary.CastLooming(newScroll, wasJustCreated: true);
             }
             else
             {
-                // ! so in most cases (?) you won't be able to stop a spell that has already been fully cast
-                // ! however they will be only cast on specific demand, otherwise they will be kept as Scrolls
-
-                TheLibrary.SaveBlockedBinding(Scroll, wasJustCreated: true);
+                TheLibrary.SaveBlockedBinding(newScroll, wasJustCreated: true);
             }
 
             return Disposable.Create(() =>
             {
-                TheLibrary.ForgetLoomScroll<Q>(Scroll);
-                Scroll.Dispose();
+                TheLibrary.ForgetLoomScroll<Q>(newScroll);
+                newScroll.Dispose();
             });
         }
+
+        // TODO Write tests for Looms with multiple dependencies
+        public IDisposable Loom<T, Y, Q>(object who, Func<Pattern<T, Y>, IObservable<Q>> spell)
+            where T : TMatter
+            where Y : TMatter
+            where Q : TMatter
+        {
+            LoomingScroll_2<T, Y, Q> newScroll = new(who, spell, TheLibrary, Eris);
+
+            TheLibrary.CheckBindingScrollRequirements(newScroll);
+
+            if (newScroll.IsCastable)
+            {
+                TheLibrary.CastLooming(newScroll, wasJustCreated: true);
+            }
+            else
+            {
+                TheLibrary.SaveBlockedBinding(newScroll, wasJustCreated: true);
+            }
+
+            return Disposable.Create(() =>
+            {
+                TheLibrary.ForgetLoomScroll<Q>(newScroll);
+                newScroll.Dispose();
+            });
+        }
+        
+        #endregion // ---------------------------------- LOOMS -------------------------
 
         public IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter
         {

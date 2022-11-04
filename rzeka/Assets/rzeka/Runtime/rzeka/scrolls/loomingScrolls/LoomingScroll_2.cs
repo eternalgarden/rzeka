@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive.Joins;
 using System.Reactive.Linq;
 
 namespace Rzeka
@@ -10,11 +11,11 @@ namespace Rzeka
         where T : TMatter
         where Y : TMatter
     {
-        readonly Func<IObservable<T>, IObservable<Q>> spell;
+        readonly Func<Pattern<T,Y>, IObservable<Q>> spell;
 
         public LoomingScroll_2(
             object who,
-            Func<IObservable<T>, IObservable<Q>> spell,
+            Func<Pattern<T,Y>, IObservable<Q>> spell,
             TheLibrary library,
             Eris eris) : base(who, library, eris)
         {
@@ -36,28 +37,12 @@ namespace Rzeka
         IDisposable _noManaObserverContract;
         protected override IObservable<Q> GetConjuring()
         {
-            IObservable<T> ingredient = library.AskForIngredient<T>();
+            IObservable<T> ingredientT = library.AskForIngredient<T>();
+            IObservable<Y> ingredientY = library.AskForIngredient<Y>();
 
-            T lastCircumstance = default(T);
+            Pattern<T,Y> pattern = ingredientT.And(ingredientY);
 
-            var erisTouchedIngredient = ingredient
-                .DistinctUntilChanged(keySelector: next => next.Guid)
-                .Do(eris.GetReceivalsObserver<T>(this))
-                .Do(onNext: next =>
-                {
-                    lastCircumstance = next;
-                });
-
-            return spell
-                .Invoke(erisTouchedIngredient)
-                .Do(onNext: next =>
-                {
-                    // * So that circumstances are set automatically if not specified directly
-                    if (next.HasCircumstances() is false)
-                    {
-                        next.SetCircumstances(lastCircumstance);
-                    }
-                });
+            return spell.Invoke(pattern);
         }
 
         public override void Dispose() 

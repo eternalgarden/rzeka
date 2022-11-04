@@ -49,18 +49,6 @@ namespace Rzeka
             // .Do(eris.GetReleasesObserver<Q>(this));
         }
 
-        public IObservable<Q> GetConjuring()
-        {
-            if (IsConjured is false)
-            {
-                Cast();
-            }
-
-            // Debug.Log($"<color=cyan>getting conjurigng {GetType()}</color>");
-
-            return ConjuredSpell;
-        }
-
         public void Dispose()
         {
         }
