@@ -87,7 +87,7 @@ namespace Rzeka.Tests.Integration
             
             Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
-                if (e is not ScrollEvent { Scroll: LoomingScroll<UserData, UserWelcomingText> } scrollEvent) return;
+                if (e is not ScrollEvent { Scroll: LoomingScroll_1<UserData, UserWelcomingText> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Blocked)) wasProperlyBlocked = true;
             });

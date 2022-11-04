@@ -38,7 +38,7 @@ namespace Rzeka
             where Q : TMatter
         {
             // ! $ NEW_LOOM<T,Q>
-            LoomingScroll<T, Q> Scroll = new(who, spell, TheLibrary, Eris);
+            LoomingScroll_1<T, Q> Scroll = new(who, spell, TheLibrary, Eris);
 
             var bindingScroll = Scroll as TBindingScroll;
             TheLibrary.CheckBindingScrollRequirements(bindingScroll);

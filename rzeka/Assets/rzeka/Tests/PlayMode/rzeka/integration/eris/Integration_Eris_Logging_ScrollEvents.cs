@@ -5,7 +5,7 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Integration
 {
-    public class Integration_Eris_Spam_Verification : IntegrationBase
+    public class Integration_Eris_Logging_ScrollEvents : IntegrationBase
     {
         [UnityTest]
         public IEnumerator a_IsNewBlocked_Loom_LoggedOnlyOnce()
@@ -16,7 +16,7 @@ namespace Rzeka.Tests.Integration
 
             Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
-                if (e is not ScrollEvent { Scroll: LoomingScroll<UserData,UserWelcomingText> } scrollEvent) return;
+                if (e is not ScrollEvent { Scroll: LoomingScroll_1<UserData,UserWelcomingText> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Blocked)) count++;
             });
@@ -85,7 +85,7 @@ namespace Rzeka.Tests.Integration
 
             Q += Rzeka.Eris.RealmEventStream.Subscribe(e =>
             {
-                if (e is not ScrollEvent { Scroll: LoomingScroll<UserData,UserWelcomingText> } scrollEvent) return;
+                if (e is not ScrollEvent { Scroll: LoomingScroll_1<UserData,UserWelcomingText> } scrollEvent) return;
 
                 if (scrollEvent.EventType.HasFlag(ScrollEventType.Cast)) count++;
             });

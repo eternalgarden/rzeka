@@ -3,6 +3,33 @@ using System.Collections.Generic;
 
 namespace Rzeka
 {
+    public interface ILibrary
+    {
+        /* ---- ---- 🌠 */
+        
+        void CastConjuring(IConjuringScroll scroll, bool wasJustCreated = false);
+        void CastLooming(ILoomingScroll scroll, bool wasJustCreated = false);
+        void CastWeaving(IAlteringScroll scroll, bool wasJustCreated = false);
+        
+        /* ---- ---- 🌠 */
+        
+        bool IsConjurable<T>() where T : TMatter;
+        bool IsTypeBlockingSpells<T>(out TBindingScroll[] blockedScrolls);
+        void CheckBindingScrollRequirements(TBindingScroll bindingScroll);
+        
+        /* ---- ---- 🌠 */
+        
+        void ForgetLoomScroll<Q>(TScrollBase scroll) where Q : TMatter;
+        void ForgetConjuringScroll(IConjuringScroll scroll);
+        void ForgetWeavingScroll(IAlteringScroll scroll);
+        
+        /* ---- ---- 🌠 */
+
+        IObservable<T> AskForIngredient<T>() where T : TMatter;
+
+        /* ---- ---- 🌠 */
+    }
+
     public class TheLibrary
     {
         /*
@@ -130,6 +157,7 @@ namespace Rzeka
             }
         }
 
+        // TODO Is this necessarily public, does rzeka need to call it really?
         public void SaveBlockedBinding(TBindingScroll scroll, bool wasJustCreated = false)
         {
             Eris.ScrollWillBeBlocked(scroll, isNew: wasJustCreated);
@@ -235,7 +263,7 @@ namespace Rzeka
         }
 
         // TODO LOOK AT USAGE dIN ALTERING SCROLL, DISPOSING ISN'T PROPERLY HANDLED YET
-        public void RemoveBlockedBinding(Type blockingType, TBindingScroll unblockedScroll)
+        void RemoveBlockedBinding(Type blockingType, TBindingScroll unblockedScroll)
         {
             // ! this can be 0, it is slightly inefficient if the scroll was unblocked by a given type before
             // todo guid check
@@ -252,7 +280,7 @@ namespace Rzeka
             }
         }
 
-        public void RemoveActiveBinding(Type boundType, TBindingScroll boundScroll)
+        void RemoveActiveBinding(Type boundType, TBindingScroll boundScroll)
         {
             int removeCount = _activeBindings[boundType]
                 .RemoveAll(scroll => scroll.Guid == boundScroll.Guid);
@@ -267,7 +295,7 @@ namespace Rzeka
             }
         }
 
-        public void RemoveActiveConjuring(IConjuringScroll scroll)
+        void RemoveActiveConjuring(IConjuringScroll scroll)
         {
             Type removedConjuring = scroll.ConjuredType;
 
@@ -364,12 +392,13 @@ namespace Rzeka
 
             // TODO HANDLING MULTIPLE PROVIDERS OF A SAME MATTER TYPE
             if (scrolls.Count > 1) throw new NotImplementedException("multiple castable scrolls of same type");
+            
             var conjuringScroll = scrolls[0] as TConjuringScroll<T>;
 
             if (conjuringScroll == null)
                 throw new Exception("Failed to get an ingredient while it was registered as available.");
             
-            return conjuringScroll.GetConjuring();
+            return conjuringScroll.ConjuredSpell;
         }
     }
 }
