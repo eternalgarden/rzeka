@@ -3,7 +3,7 @@ using System;
 namespace Rzeka
 {
     [Serializable]
-    public class ConjuringScroll<Q> : TConjuringScroll<Q> where Q : TMatter
+    public sealed class ConjuringScroll<Q> : TConjuringScroll<Q> where Q : TMatter
     {
         readonly IObservable<Q> spell;
         readonly TheLibrary library;

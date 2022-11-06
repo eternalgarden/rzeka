@@ -11,11 +11,11 @@ namespace Rzeka
         where T : TMatter
         where Y : TMatter
     {
-        readonly Func<Pattern<T,Y>, IObservable<Q>> spell;
+        readonly Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell;
 
         public LoomingScroll_2(
             object who,
-            Func<Pattern<T,Y>, IObservable<Q>> spell,
+            Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell,
             TheLibrary library,
             Eris eris) : base(who, library, eris)
         {
@@ -37,12 +37,15 @@ namespace Rzeka
         IDisposable _noManaObserverContract;
         protected override IObservable<Q> GetConjuring()
         {
-            IObservable<T> ingredientT = library.AskForIngredient<T>();
-            IObservable<Y> ingredientY = library.AskForIngredient<Y>();
+            IObservable<T> ingredientT = GetIngredient<T>();
+            IObservable<Y> ingredientY = GetIngredient<Y>();
 
-            Pattern<T,Y> pattern = ingredientT.And(ingredientY);
+            IObservable<Glyph<T,Y>> observable = ingredientT
+                .CombineLatest(ingredientY)
+                .Skip(1)
+                .Select(anon => new Glyph<T, Y>() { one = anon.First, two = anon.Second });
 
-            return spell.Invoke(pattern);
+            return spell.Invoke(observable);
         }
 
         public override void Dispose() 

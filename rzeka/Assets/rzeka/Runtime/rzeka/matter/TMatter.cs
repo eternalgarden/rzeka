@@ -18,7 +18,13 @@ namespace Rzeka
             Circumstances = circumstances.Select(x => x.Guid).ToArray();
         }
 
-        // public void AssignNewGuid() => Guid = Guid.NewGuid();
+        public TMatter WithCircumstances<T,Y>(Glyph<T,Y> glyph)
+            where T : TMatter
+            where Y : TMatter
+        {
+            Circumstances = glyph.AsCircumstance();
+            return this;
+        }
     }
 
     public interface IRequest : TMatter { }

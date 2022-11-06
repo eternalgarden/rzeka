@@ -65,7 +65,7 @@ namespace Rzeka
         }
 
         // TODO Write tests for Looms with multiple dependencies
-        public IDisposable Loom<T, Y, Q>(object who, Func<Pattern<T, Y>, IObservable<Q>> spell)
+        public IDisposable Loom<T, Y, Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell)
             where T : TMatter
             where Y : TMatter
             where Q : TMatter

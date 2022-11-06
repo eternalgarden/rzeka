@@ -12,7 +12,7 @@ namespace Rzeka
         TheLibrary TheLibrary { get; }
         IDisposable Pluck<Q>(object who, IObservable<Q> spell) where Q : TMatter;
         IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where Q : TMatter where T : TMatter;
-        IDisposable Loom<T,Y,Q>(object who, Func<Pattern<T,Y>, IObservable<Q>> spell) where Q : TMatter where T : TMatter where Y : TMatter;
+        IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell) where Q : TMatter where T : TMatter where Y : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter; // TODO add overload that lets you first filter
     }
 

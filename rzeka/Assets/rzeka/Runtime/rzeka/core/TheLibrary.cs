@@ -77,6 +77,60 @@ namespace Rzeka
             return _activeConjurings.ContainsKey(typeof(T));
         }
 
+        public bool TryGetActiveConjurings<T>(out IConjuringScroll[] activeConjurings) where T : TMatter
+        {
+            if (_activeBindings.ContainsKey(typeof(T)))
+            {
+                activeConjurings = _activeConjurings[typeof(T)].ToArray();
+
+                if (activeConjurings is null || activeConjurings.Length < 1) throw new Exception("bip!");
+
+                return true;
+            }
+            else
+            {
+                activeConjurings = null;
+
+                return false;
+            }
+        }
+
+        public bool TryGetActiveBindings<T>(out TBindingScroll[] activeBindings) where T : TMatter
+        {
+            if (_activeBindings.ContainsKey(typeof(T)))
+            {
+                activeBindings = _activeBindings[typeof(T)].ToArray();
+
+                if (activeBindings is null || activeBindings.Length < 1) throw new Exception("bip!");
+
+                return true;
+            }
+            else
+            {
+                activeBindings = null;
+
+                return false;
+            }
+        }
+
+        public bool TryGetBlockedBindings<T>(out TBindingScroll[] blockedBindings) where T : TMatter
+        {
+            if (_blockedBindings.ContainsKey(typeof(T)))
+            {
+                blockedBindings = _blockedBindings[typeof(T)].ToArray();
+
+                if (blockedBindings is null || blockedBindings.Length < 1) throw new Exception("bip!");
+
+                return true;
+            }
+            else
+            {
+                blockedBindings = null;
+
+                return false;
+            }
+        }
+
         #region Casting
 
         public void CastConjuring(IConjuringScroll scroll, bool wasJustCreated = false)
@@ -203,7 +257,9 @@ namespace Rzeka
         {
             if (!_blockedBindings.ContainsKey(unblockedType)) return;
 
-            List<TBindingScroll> unblockedScrolls = new(_blockedBindings[unblockedType].Count);
+            int maxUnblockedScrollsCount = _blockedBindings[unblockedType].Count;
+            
+            List<TBindingScroll> unblockedScrolls = new(maxUnblockedScrollsCount); // just an unnecessary optimization
             foreach (TBindingScroll blockedScroll in _blockedBindings[unblockedType])
             {
                 blockedScroll[unblockedType] = true;
