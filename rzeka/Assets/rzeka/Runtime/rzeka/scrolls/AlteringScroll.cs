@@ -1,95 +1,107 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
-using System.Reactive.Subjects;
+    using System.Reactive.Subjects;
+using UnityEngine;
 
 namespace Rzeka
 {
     [Serializable]
-    public class AlteringScroll<T> : IAlteringScroll 
+    public class AlteringScroll<T> : TAlteringScroll
         where T : TMatter
     {
         readonly IObserver<T> spell;
-        readonly TheLibrary library;
-        readonly Eris eris;
-        readonly object who;
-        readonly Guid _guid = Guid.NewGuid();
         IDisposable _subscriptionDisposable;
 
-        public AlteringScroll(object who, IObserver<T> spell, TheLibrary library, Eris eris)
+        public Guid Guid { get; }
+        public CollectibleDisposable CollectionDisposable { get; set; }
+        public bool WasCast { get; private set; }
+        public object Who { get; }
+        public TScrollBase ThisAsBase  { get; }
+        public TBindingScroll ThisAsBinding { get; }
+        public ISubject<SpellOccurence> SpellStream { get; }
+        public ISubject<MatterOccurence> MatterStream { get; }
+        public SpellType SpellType => SpellType.Weaving;
+        public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T).Name}";
+
+        public Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
         {
-            this.who = who;
+            { typeof(T), new List<IConjuringScroll>() }
+        };
+
+
+        public AlteringScroll(object who, IObserver<T> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        {
             this.spell = spell;
-            this.library = library;
-            this.eris = eris;
+
+            Guid = Guid.NewGuid();
+            Who = who;
+            SpellStream = spellStream;
+            MatterStream = matterStream;
+            ThisAsBase = this;
+            ThisAsBinding = this;
+
+            ThisAsBinding.InitializeBindingSpell();
         }
 
-        public Guid Guid => _guid;
-        public string Title => $"Weaving of {(this as TBindingScroll).GetBindingScrollCode()}";
-
-        public bool IsCastable
+        
+        //
+        // ⛺ ─── Public ───────────────────────────────────────────────────
+        //
+        #region Public
+        
+        public void Cast()
         {
-            get
+            try
             {
-                // TODO So the strong concept here was that Altering scrolls once cast are uncastable
-                // TODO What happens if there appears a new or changed provider for the data they seek while they already opearate
-                if (WasCast) return false;
+                ExecuteCast();
 
-                return (this as TBindingScroll).AreAllIngredientsProvided;
+                ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
+            }
+            catch (Exception ex)
+            {
+                var wispd = new SpellOccurence
+                {
+                    SpellType = SpellType.Weaving,
+                    SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
+                    Scroll = this,
+                    Luggage = new ExceptionalLuggage() { Exception = ex }
+                };
+
+                // todo well well
+                Debug.LogError(ex.Message);
+                Debug.LogError(ex.StackTrace);
+
+                throw ex;
+
+                SpellStream.OnNext(wispd);
             }
         }
 
-        public Type[] Requirements { get; } = new[] { typeof(T) };
-        public BehaviorSubject<bool> HasMana { get; } = new(false);
-
-        public Dictionary<Type, bool> AvailableIngredientsDictionary { get; } = new(1)
+        void TBindingScroll.OnLostMana()
         {
-            { typeof(T), false }
-        };
-
-        public bool WasCast { get; private set; }
-        public object Who => who;
+             _subscriptionDisposable.Dispose();
+        }
 
         public void Dispose()
         {
             if (WasCast) _subscriptionDisposable.Dispose(); // TODO check this
+
+            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            CollectionDisposable.Dispose();
         }
+        
+        #endregion // ---------------------------------- Public -------------------------
 
-        public void Cast()
+        void ExecuteCast()
         {
-            if ((this as TBindingScroll).IsCastable is false) throw new Exception("messed up");
+            // todo add this check
+            // if (ThisAsBinding.IsCastable is false) throw new Exception("messed up");
 
-            // var noManaNotifier = Observable.Create<T>(subscribe: observer =>
-            // {
-            //     return HasMana
-            //         .Where(hasMana => hasMana is false)
-            //         .Subscribe(onNext: _ =>
-            //         {
-            //             Debug.Log("throwing no mana in weave");
-            //             observer.OnError(new NoManaException());
-            //         });
-            // });
+            var ingredient = ThisAsBinding.GetObservableIngredient<T>();
 
-            IObservable<T> ingredient = library.AskForIngredient<T>();
+            if (ingredient is null) throw new Exception($"Missing ingredient of type {typeof(T)}");
 
-            var erisTouchedIngredient = ingredient
-                .Do(eris.GetReceivalsObserver<T>(this));
-
-            _subscriptionDisposable = erisTouchedIngredient
-                // .Merge(noManaNotifier)
-                // .Subscribe(spell.OnNext, err =>
-                // {
-                //     if (err is NoManaException)
-                //     {
-                //         // THE SPELL BECOMES INACTIVE/BLOCKED
-                //         _subscriptionDisposable.Dispose();
-                //     }
-                //     else
-                //     {
-                //         spell.OnError(err);
-                //     }
-                // }, spell.OnCompleted);
-                .Subscribe(spell);
+            _subscriptionDisposable = ingredient.Subscribe(spell);
 
             WasCast = true;
         }

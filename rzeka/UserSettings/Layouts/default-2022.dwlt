@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 109
+  controlID: 137
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 110
+  controlID: 108
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -298,8 +298,8 @@ MonoBehaviour:
     y: 0
     width: 428
     height: 939
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -334,7 +334,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 148
+    ID: 146
     splitterInitialOffset: 371
     currentActiveSplitter: -1
     realSizes:
@@ -377,6 +377,1504 @@ MonoBehaviour:
       categories: []
       parentId: 
       parentUniqueId: 
+    - id: 1086
+      uniqueId: '[com.rzeka.unirx.tests][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll][suite]'
+      name: com.rzeka.unirx.tests.dll
+      fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1000
+      parentUniqueId: '[rzeka][suite]'
+    - id: 1002
+      uniqueId: com.rzeka.unirx.tests.dll/[com.rzeka.unirx.tests][DispatcherTests][suite]
+      name: DispatcherTests
+      fullName: DispatcherTests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1086
+      parentUniqueId: '[com.rzeka.unirx.tests][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll][suite]'
+    - id: 1004
+      uniqueId: com.rzeka.unirx.tests.dll/DispatcherTests/[com.rzeka.unirx.tests][DispatcherTests.DoesEveryUpdateTickCountAgreeWithFrames]
+      name: DoesEveryUpdateTickCountAgreeWithFrames
+      fullName: DispatcherTests.DoesEveryUpdateTickCountAgreeWithFrames
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1002
+      parentUniqueId: com.rzeka.unirx.tests.dll/[com.rzeka.unirx.tests][DispatcherTests][suite]
+    - id: 1003
+      uniqueId: com.rzeka.unirx.tests.dll/DispatcherTests/[com.rzeka.unirx.tests][DispatcherTests.EveryUpdateObservableWorks]
+      name: EveryUpdateObservableWorks
+      fullName: DispatcherTests.EveryUpdateObservableWorks
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1002
+      parentUniqueId: com.rzeka.unirx.tests.dll/[com.rzeka.unirx.tests][DispatcherTests][suite]
+    - id: 1087
+      uniqueId: com.rzeka.unirx.tests.dll/[Rzeka][suite]
+      name: Rzeka
+      fullName: Rzeka
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1086
+      parentUniqueId: '[com.rzeka.unirx.tests][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll][suite]'
+    - id: 1088
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
+      name: Tests
+      fullName: Rzeka.Tests
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1087
+      parentUniqueId: com.rzeka.unirx.tests.dll/[Rzeka][suite]
+    - id: 1089
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+      name: Integration
+      fullName: Rzeka.Tests.Integration
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1088
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
+    - id: 1005
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+      name: Blockades_Looms_Multiple_Ingredients
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1006
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.a_IsANumberAndAName_Properly_Blocked]
+      name: a_IsANumberAndAName_Properly_Blocked
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.a_IsANumberAndAName_Properly_Blocked
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1007
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.b_IsANumberAndAName_Blocked_NotConjurable]
+      name: b_IsANumberAndAName_Blocked_NotConjurable
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.b_IsANumberAndAName_Blocked_NotConjurable
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1008
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.c_IsANumberAndAName_Properly_Blocked_ByANumber]
+      name: c_IsANumberAndAName_Properly_Blocked_ByANumber
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.c_IsANumberAndAName_Properly_Blocked_ByANumber
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1009
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.d_IsANumberAndAName_Properly_UnBlocked_By_ANumber]
+      name: d_IsANumberAndAName_Properly_UnBlocked_By_ANumber
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.d_IsANumberAndAName_Properly_UnBlocked_By_ANumber
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1010
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.e_IsANumberAndAName_Properly_UnBlocked_ByANumber]
+      name: e_IsANumberAndAName_Properly_UnBlocked_ByANumber
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.e_IsANumberAndAName_Properly_UnBlocked_ByANumber
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1011
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName]
+      name: f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName
+      fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1005
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
+    - id: 1040
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
+      name: Integration_Basic_Process
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Process
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1041
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received]
+      name: b_Is_Weave_UserWelcomingText_Received
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
+    - id: 1042
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings]
+      name: b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
+      fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1040
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
+    - id: 1012
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+      name: Integration_Blockades_Forgotten_Scrolls
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1013
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency]
+      name: a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1014
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency]
+      name: b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1015
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency]
+      name: c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
+      fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1012
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
+    - id: 1016
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+      name: Integration_Eris_Logging_ScrollEvents
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1017
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.a_IsNewBlocked_Loom_LoggedOnlyOnce]
+      name: a_IsNewBlocked_Loom_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.a_IsNewBlocked_Loom_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+    - id: 1018
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.b_IsNewBlocked_Weave_LoggedOnlyOnce]
+      name: b_IsNewBlocked_Weave_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.b_IsNewBlocked_Weave_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+    - id: 1019
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Conjure_LoggedOnlyOnce]
+      name: c_IsNewCast_Conjure_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Conjure_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+    - id: 1020
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Loom_LoggedOnlyOnce]
+      name: c_IsNewCast_Loom_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Loom_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+    - id: 1021
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Weave_LoggedOnlyOnce]
+      name: c_IsNewCast_Weave_LoggedOnlyOnce
+      fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Weave_LoggedOnlyOnce
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1016
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
+    - id: 1022
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+      name: Integration_Eris_MatterLogging
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1023
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold]
+      name: a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1024
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold]
+      name: a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1025
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold]
+      name: b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1026
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold]
+      name: b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1027
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount]
+      name: d_PluckWithNoObservers_Hot_RefCount
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1028
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish]
+      name: e_PluckWithNoObservers_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1029
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish]
+      name: e1_PluckWeave_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1030
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1]
+      name: e1x_PluckWeave_Hot_Replay1
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1031
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish]
+      name: e2_PluckWeave_Hot_ConnectedPublish
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1032
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub]
+      name: f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1033
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub]
+      name: f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1034
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub]
+      name: f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1035
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub]
+      name: f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1036
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold]
+      name: g_SanityCheck_Process_Cold
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1037
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g1_SanityCheck_Process_Hot_PrePublishLogging]
+      name: g1_SanityCheck_Process_Hot_PrePublishLogging
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g1_SanityCheck_Process_Hot_PrePublishLogging
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1038
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g2_SanityCheck_Process_Hot_PostPublishLogging]
+      name: g2_SanityCheck_Process_Hot_PostPublishLogging
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g2_SanityCheck_Process_Hot_PostPublishLogging
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1039
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g3_SanityCheck_Process_Hot_JustReceivalsLogging]
+      name: g3_SanityCheck_Process_Hot_JustReceivalsLogging
+      fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g3_SanityCheck_Process_Hot_JustReceivalsLogging
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1022
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
+    - id: 1043
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+      name: Looms_Multiple_Ingredients
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1044
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a_]
+      name: a_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1045
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a1_]
+      name: a1_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a1_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1046
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a11_]
+      name: a11_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a11_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1047
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.b_]
+      name: b_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.b_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1048
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.c_]
+      name: c_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.c_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1049
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.d_]
+      name: d_
+      fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.d_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1043
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
+    - id: 1050
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+      name: New_Process
+      fullName: Rzeka.Tests.Integration.New_Process
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1089
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1051
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_Logged]
+      name: a1_Created_Pluck_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1052
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_NotNull]
+      name: a1_Created_Pluck_NotNull
+      fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_NotNull
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1053
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a2_Created_Loom_Logged]
+      name: a2_Created_Loom_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1054
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a2_Created_Loom_NotNull]
+      name: a2_Created_Loom_NotNull
+      fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_NotNull
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1055
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a3_Created_Weave_Logged]
+      name: a3_Created_Weave_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1056
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a3_Created_Weave_NotNull]
+      name: a3_Created_Weave_NotNull
+      fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_NotNull
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1057
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking]
+      name: b1_2_Cast_Plucking
+      fullName: Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1058
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking_Logged]
+      name: b1_2_Cast_Plucking_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1059
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_1_Cast_Looming]
+      name: b2_1_Cast_Looming
+      fullName: Rzeka.Tests.Integration.New_Process.b2_1_Cast_Looming
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1060
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_2_Cast_Looming_Logged]
+      name: b2_2_Cast_Looming_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.b2_2_Cast_Looming_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1061
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_3_Cast_Looming_FromAnotherLoom]
+      name: b2_3_Cast_Looming_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process.b2_3_Cast_Looming_FromAnotherLoom
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1062
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_4_Cast_Looming_Logged_FromAnotherLoom]
+      name: b2_4_Cast_Looming_Logged_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process.b2_4_Cast_Looming_Logged_FromAnotherLoom
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1063
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_1_Cast_Looming]
+      name: b2_Flipped_1_Cast_Looming
+      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_1_Cast_Looming
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1064
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_2_Cast_Looming_Logged]
+      name: b2_Flipped_2_Cast_Looming_Logged
+      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_2_Cast_Looming_Logged
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1065
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_3_Cast_Looming_FromAnotherLoom]
+      name: b2_Flipped_3_Cast_Looming_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_3_Cast_Looming_FromAnotherLoom
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1066
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom]
+      name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1067
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b3_Cast_Weave]
+      name: b3_Cast_Weave
+      fullName: Rzeka.Tests.Integration.New_Process.b3_Cast_Weave
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1068
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b3b_Cast_Weave_FlippedOrder]
+      name: b3b_Cast_Weave_FlippedOrder
+      fullName: Rzeka.Tests.Integration.New_Process.b3b_Cast_Weave_FlippedOrder
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1069
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.c1_NoMana_Created_Weave]
+      name: c1_NoMana_Created_Weave
+      fullName: Rzeka.Tests.Integration.New_Process.c1_NoMana_Created_Weave
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1070
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.c2_NoMana_Cast_Weave]
+      name: c2_NoMana_Cast_Weave
+      fullName: Rzeka.Tests.Integration.New_Process.c2_NoMana_Cast_Weave
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1071
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.d1_Forgotten_Plucking]
+      name: d1_Forgotten_Plucking
+      fullName: Rzeka.Tests.Integration.New_Process.d1_Forgotten_Plucking
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1072
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.d3_Forgotten_Weaving]
+      name: d3_Forgotten_Weaving
+      fullName: Rzeka.Tests.Integration.New_Process.d3_Forgotten_Weaving
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1074
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.x1_Weave_Got_Plucking]
+      name: x1_Weave_Got_Plucking
+      fullName: Rzeka.Tests.Integration.New_Process.x1_Weave_Got_Plucking
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1073
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.z3x_Cast_Weave_Has_Single_Ingredient]
+      name: z3x_Cast_Weave_Has_Single_Ingredient
+      fullName: Rzeka.Tests.Integration.New_Process.z3x_Cast_Weave_Has_Single_Ingredient
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1050
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1090
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+      name: Rx
+      fullName: Rzeka.Tests.Rx
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1088
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
+    - id: 1075
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+      name: Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1090
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1076
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable]
+      name: a_Do_NOT_getting_called_on_cold_observable
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1077
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_hot_observable]
+      name: b_Do_GETS_called_on_hot_observable
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_hot_observable
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1078
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable]
+      name: c_Do_transforms_HOT_observable_to_a_COLD_observable
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1079
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber]
+      name: d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1080
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer]
+      name: e_HotToCold_stacked_observable_with_ONE_observer
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1081
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers]
+      name: f_HotToCold_stacked_observable_with_TWO_observers
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1082
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers]
+      name: g_HotToHot_stacked_observable_with_TWO_observers
+      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1075
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1083
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+      name: Understanding_AndThenWhen
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1090
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1084
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.a_]
+      name: a_
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.a_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1083
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1085
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.b_]
+      name: b_
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.b_
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1083
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
     - id: 2646
       uniqueId: '[sanctuary.event-stream.tests.integration.dll][suite]'
       name: sanctuary.event-stream.tests.integration.dll
@@ -16779,7 +18277,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ae890000
     m_LastClickedID: 35246
-    m_ExpandedIDs: 00000000d86400003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c6500009e650000
+    m_ExpandedIDs: 000000008e640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e650000506500005265000054650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -16807,7 +18305,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 1676}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000d86400003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000926500009465000096650000986500009a6500009c6500009e650000
+    m_ExpandedIDs: ffffffff000000008e640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e650000506500005265000054650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -16894,9 +18392,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b2660000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 24fbffff
+      m_ExpandedIDs: 32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

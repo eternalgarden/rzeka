@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 
 namespace Rzeka
 {
+
     /*
 
     ? Looming Scrolls Considerations
@@ -13,29 +14,27 @@ namespace Rzeka
                     and always producing *one* type of matter.
 
     * Hot vs Cold looms
-
+    * 
+    TODO basically all t
     */
-    public abstract class LoomingScroll<Q> : ILoomingScroll<Q>
+    public abstract class LoomingScroll<Q> : TLoomingScroll<Q>
         where Q : TMatter
     {
-        protected TheLibrary library;
-        protected Eris eris;
-        protected object who;
-
         IObservable<Q> _observableSpell;
 
         public Guid Guid { get; }
-        public object Who => who;
-        public string Title => $"Looming of {typeof(Q).Name}";
+        public object Who { get; }
+        public SpellType SpellType => SpellType.Looming;
+        public string Title => $"{Who.GetType().Name}'s Looming of {typeof(Q).Name}";
+        public TScrollBase ThisAsBase  { get; }
+        public TBindingScroll ThisAsBinding { get; }
+        public TConjuringScroll<Q> ThisAsConjuring { get; }
+        public ISubject<SpellOccurence> SpellStream { get; }
+        public ISubject<MatterOccurence> MatterStream { get; }
+        public CollectibleDisposable CollectionDisposable { get; set; }
+
         public Type ConjuredType => typeof(Q);
-        public bool IsCastable => (this as TBindingScroll).AreAllIngredientsProvided;
         public bool WasCast => ConjuredSpell is not null;
-
-        public abstract Type[] Requirements { get; }
-        public abstract Dictionary<Type, bool> AvailableIngredientsDictionary { get; }
-
-        // TODO hide those shouldnt be public
-        public virtual BehaviorSubject<bool> HasMana { get; }= new(false);
 
         // TODO A NECESSARY RE-CAST ONCE MANA IS PROVIDED
         // COULD THIS BE AUTOMATIC WITHOUT INPUT FROM THE LIBRARY THAT SPELLS CAST THEMSELVES ONCE PROVIDED WITH MANA
@@ -47,47 +46,51 @@ namespace Rzeka
             }
             private set
             {
-                if (_observableSpell is not null) throw new Exception("Was already cast, oik!");
-
                 _observableSpell = value;
             }
         }
 
+        public abstract Dictionary<Type, List<IConjuringScroll>> Ingredients { get; }
+
         public LoomingScroll(
-            object who,
-            TheLibrary library,
-            Eris eris)
+            object who, 
+            ISubject<SpellOccurence> spellStream, 
+            ISubject<MatterOccurence> matterStream)
         {
+            Who = who;
             Guid = Guid.NewGuid();
-            this.who = who;
-            this.library = library;
-            this.eris = eris;
-        }
 
-        public void Cast()
-        {
-            if (WasCast is true) throw new Exception("Was already cast 🦇");
-            if (IsCastable is false) throw new Exception("Not castable 😼");
+            SpellStream = spellStream;
+            MatterStream = matterStream;
 
-            ConjuredSpell = GetConjuring();
+            ThisAsBase = this;
+            ThisAsBinding = this;
+            ThisAsConjuring = this;
         }
 
         protected abstract IObservable<Q> GetConjuring();
 
-        protected IObservable<X> GetIngredient<X>() where X : TMatter
+        public void Cast()
         {
-            IObservable<X> ingredient = library.AskForIngredient<X>();
+            if (WasCast is true) throw new Exception("Was already cast 🦇");
+            if (ThisAsBinding.HasMana is false) throw new Exception("No mana to cast 😼");
 
-            return ingredient
-                .Do(eris.GetReceivalsObserver<X>(this));
+            ConjuredSpell = GetConjuring();
+
+            ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
         }
 
         public virtual void Dispose()
         {
-            library = null;
-            eris = null;
-            who = null;
             _observableSpell = null;
+
+            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            CollectionDisposable.Dispose();
+        }
+
+        void TBindingScroll.OnLostMana()
+        {
+            ConjuredSpell = null;
         }
     }
 }

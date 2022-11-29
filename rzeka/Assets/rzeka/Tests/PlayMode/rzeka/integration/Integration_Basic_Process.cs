@@ -10,33 +10,6 @@ namespace Rzeka.Tests.Integration
 {
     public class Integration_Basic_Process : IntegrationBase
     {
-        [UnityTest]
-        public IEnumerator a_Is_conjurable_of_UserData()
-        {
-            // -------------
-
-            Q += Pluck_UserData();
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserData>());
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a_Is_conjurable_of_UserWelcomingText()
-        {
-            // -------------
-
-            Q += Pluck_UserData();
-            Q += Loom_UserData_To_UserWelcomingText();
-
-            Assert.IsTrue(Rzeka.TheLibrary.IsConjurable<UserWelcomingText>());
-
-            yield return null;
-
-            // -------------
-        }
 
         [UnityTest]
         public IEnumerator b_Is_Weave_UserWelcomingText_Received()

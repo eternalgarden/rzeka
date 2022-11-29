@@ -1,0 +1,61 @@
+using System;
+using System.Reactive.Subjects;
+
+namespace Rzeka
+{
+    public interface ISerializableSpell
+    {
+        Guid Guid { get; set; }
+        string Title { set; get; }
+        SpellType SpellType { get; set; }
+        object Who { get; set; }
+        bool WasCast { get; set; }
+    }
+
+    public interface TScrollBase : IDisposable
+    {
+        public const float POST_CREATION_MANA_CHECK_DELAY = .3f; // in seconds
+
+        /// <summary>
+        /// This is because unity implemented default interfaces in a non-flat way ugh.
+        /// And otherwise any time you would like to refer to it's defined methods you would have to cast it.
+        /// </summary>
+        TScrollBase ThisAsBase { get; } 
+        SpellType SpellType { get; }
+        Guid Guid { get; }
+        object Who { get; }
+        bool WasCast { get; }
+        ISubject<SpellOccurence> SpellStream { get; }
+        ISubject<MatterOccurence> MatterStream { get; }
+        CollectibleDisposable CollectionDisposable { get; set; }
+
+        void Cast();
+
+        // TODO centralize occurence creation
+        void SendOccurence(SpellOccurenceCategory occurenceCategory)
+        {
+            /* ⭐ ---- ---- */
+            
+            var occurence = new SpellOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.UtcNow,
+                SpellType = this.SpellType,
+                SpellOccurenceCategory = occurenceCategory,
+                Scroll = this
+            };
+
+            SpellStream.OnNext(occurence);
+            
+            /* ---- ---- 🌠 */
+        }
+
+        void InitializeSpellBase()
+        {
+            if (CollectionDisposable is not null) return;
+
+            CollectionDisposable = new();
+            SendOccurence(SpellOccurenceCategory.Created);
+        }
+    }
+}

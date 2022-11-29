@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Joins;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Rzeka
 {
@@ -16,29 +17,25 @@ namespace Rzeka
         public LoomingScroll_2(
             object who,
             Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell,
-            TheLibrary library,
-            Eris eris) : base(who, library, eris)
+            ISubject<SpellOccurence> spellStream, 
+            ISubject<MatterOccurence> matterStream) : base(who, spellStream, matterStream)
         {
             this.spell = spell;
+
+            ThisAsBinding.InitializeBindingSpell();
+            ThisAsConjuring.InitializeConjuringSpell();
         }
 
-        public override Type[] Requirements { get; } =
+        public override Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
         {
-            typeof(T),
-            typeof(Y)
+            { typeof(T), new List<IConjuringScroll>() },
+            { typeof(Y), new List<IConjuringScroll>() }
         };
 
-        public override Dictionary<Type, bool> AvailableIngredientsDictionary { get; } = new(1)
-        {
-            { typeof(T), false },
-            { typeof(Y), false }
-        };
-
-        IDisposable _noManaObserverContract;
         protected override IObservable<Q> GetConjuring()
         {
-            IObservable<T> ingredientT = GetIngredient<T>();
-            IObservable<Y> ingredientY = GetIngredient<Y>();
+            IObservable<T> ingredientT = ThisAsBinding.GetObservableIngredient<T>();
+            IObservable<Y> ingredientY = ThisAsBinding.GetObservableIngredient<Y>();
 
             IObservable<Glyph<T,Y>> observable = ingredientT
                 .CombineLatest(ingredientY)
@@ -46,13 +43,6 @@ namespace Rzeka
                 .Select(anon => new Glyph<T, Y>() { one = anon.First, two = anon.Second });
 
             return spell.Invoke(observable);
-        }
-
-        public override void Dispose() 
-        {
-            base.Dispose();
-
-            _noManaObserverContract?.Dispose();
         }
     }
 }

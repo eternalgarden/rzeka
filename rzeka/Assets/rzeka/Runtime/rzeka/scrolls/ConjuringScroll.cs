@@ -1,56 +1,78 @@
 using System;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using UnityEngine;
 
 namespace Rzeka
 {
-    [Serializable]
+
+    [Serializable] // TODO remove serializable marks
     public sealed class ConjuringScroll<Q> : TConjuringScroll<Q> where Q : TMatter
     {
         readonly IObservable<Q> spell;
-        readonly TheLibrary library;
-        readonly Eris eris;
-        readonly object who;
-        readonly Guid _guid = Guid.NewGuid();
-        IObservable<Q> _observableSpell;
 
-        public ConjuringScroll(object who, IObservable<Q> spell, TheLibrary library, Eris debugger)
-        {
-            this.who = who;
-            this.spell = spell;
-            this.library = library;
-            this.eris = debugger;
-        }
-
-        public Guid Guid => _guid;
+        public Guid Guid { get; }
+        public object Who { get; }
+        public SpellType SpellType => SpellType.Stranding;
         public string Title => $"Conjuring of {typeof(Q).Name}";
+        public TScrollBase ThisAsBase { get; }
+        public TConjuringScroll<Q> ThisAsConjuring { get; }
+
+        public ISubject<SpellOccurence> SpellStream { get; }
+        public ISubject<MatterOccurence> MatterStream { get; }        
+        public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(Q);
-        public bool IsCastable => true;
-        public object Who => who;
-        public bool IsConjured => _observableSpell is not null;
+        public IObservable<Q> ConjuredSpell { get; private set; }
 
-        public IObservable<Q> ConjuredSpell
+        public ConjuringScroll(object who, IObservable<Q> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
         {
-            get => _observableSpell;
-            set
-            {
-                if (_observableSpell is not null) throw new Exception("Was already cast");
+            this.spell = spell;
+            
+            Guid = Guid.NewGuid();
+            Who = who;
 
-                _observableSpell = value;
-            }
+            SpellStream = spellStream;
+            MatterStream = matterStream;
+            ThisAsBase = this;
+            ThisAsConjuring = this;
+
+            ThisAsConjuring.InitializeConjuringSpell();
+
+            Cast();
         }
-
-        public bool WasCast => ConjuredSpell is not null;
 
         public void Cast()
         {
-            if (IsConjured is true) throw new Exception("Was already cast 🦇");
+            /* ⭐ ---- ---- */
 
-            ConjuredSpell = spell;
-            // .DistinctUntilChanged(keySelector: next => next.Guid)
-            // .Do(eris.GetReleasesObserver<Q>(this));
+            if (ThisAsBase.WasCast is true) throw new Exception("Was already cast 🦇");
+
+            try
+            {
+                ConjuredSpell = spell;
+
+                ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
+            }
+            catch (Exception ex)
+            {
+                var wispd = new SpellOccurence
+                {
+                    SpellType = SpellType.Stranding,
+                    SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
+                    Scroll = this,
+                    Luggage = new ExceptionalLuggage() { Exception = ex }
+                };
+
+                SpellStream.OnNext(wispd);
+            }
+
+            /* ---- ---- 🌠 */
         }
 
         public void Dispose()
         {
+            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            CollectionDisposable.Dispose();
         }
     }
 }

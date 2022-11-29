@@ -17,7 +17,7 @@ namespace Rzeka.Tests
 {
     public abstract class TestBase
     {
-        protected RzekaXOXO Rzeka;
+        protected IRzeka Rzeka;
         protected CollectibleDisposable Q; // TODO Remove references to this its bugged as fukkkkkkk
         
         [UnitySetUp]
@@ -25,7 +25,7 @@ namespace Rzeka.Tests
         {
             // -------------
 
-            Rzeka = new RzekaXOXO();
+            Rzeka = new SpringRiver();
             Q = new();
 
             yield return null;
