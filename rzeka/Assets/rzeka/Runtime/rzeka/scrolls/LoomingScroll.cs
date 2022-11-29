@@ -77,14 +77,14 @@ namespace Rzeka
 
             ConjuredSpell = GetConjuring();
 
-            ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
         }
 
         public virtual void Dispose()
         {
             _observableSpell = null;
 
-            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
         }
 

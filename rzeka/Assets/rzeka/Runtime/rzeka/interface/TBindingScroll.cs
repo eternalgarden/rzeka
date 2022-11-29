@@ -7,16 +7,10 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public struct SerializableIngredient
-    {
-        public bool IsSatisfied;
-        public ISerializableConjuringSpell[] Ingredients;
-    }
-
     public interface ISerlializableBindingSpell : ISerializableSpell
     {
         bool HasMana { get; set; }
-        Dictionary<string, SerializableIngredient> Ingredients { get; set; }
+        Dictionary<string, SerializableStranding[]> Ingredients { get; set; }
     }
 
     public interface TBindingScroll : TScrollBase
@@ -58,9 +52,6 @@ namespace Rzeka
 
             Ingredients[typeof(X)].Add(ingredient);
 
-            Debug.Log($"<color=cyan>{ingredient}</color>");
-            
-
             if (WasCast)
             {
                 throw new NotImplementedException("proovide multiple ingredients");
@@ -88,9 +79,6 @@ namespace Rzeka
             {
                 if ((ingredientsT[0] as TConjuringScroll<T>) is null) throw new Exception("wtf");
                 ingredient = (ingredientsT[0] as TConjuringScroll<T>).ConjuredSpell;
-                Debug.Log($"<color=yellow>ughhhh {ingredientsT[0] is null} {ingredientsT[0].GetType()}</color>");
-                Debug.Log($"<color=yellow>ughhhh {ingredient is null}</color>");
-                Debug.Log($"<color=yellow>ughhhh {(ingredientsT[0] as TConjuringScroll<T>).WasCast}</color>");
             }
             else
             {
@@ -100,7 +88,7 @@ namespace Rzeka
             if (ingredient is null) throw new Exception($"Something went wrong for Conjurer {ingredientsT[0].GetType()} of type {typeof(T)}.");
 
             var erisTouchedIngredient = ingredient
-                .Do(i => MatterStream.OnNext(new MatterOccurence { MatterOccurenceCategory = MatterOccurenceCategory.Received, Matter = i }));
+                .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received));
 
             return erisTouchedIngredient;
         }
@@ -134,7 +122,7 @@ namespace Rzeka
                     {
                         if (HasMana) throw new Exception("Spell should have already been cast in that case");
 
-                        ThisAsBase.SendOccurence(SpellOccurenceCategory.NoMana);
+                        ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
                     }
 
                     postCreationManaCheck.Dispose();
@@ -152,9 +140,6 @@ namespace Rzeka
                     IConjuringScroll conjurableScroll = i.Scroll as IConjuringScroll;
                     Type conjuredType = conjurableScroll.ConjuredType;
                     Ingredients[conjuredType].Add(conjurableScroll);
-
-                    Debug.Log($"<color=cyan>{conjurableScroll}</color>");
-                    
 
                     if (WasCast)
                     {
@@ -186,7 +171,7 @@ namespace Rzeka
                         {
                             OnLostMana();
 
-                            ThisAsBase.SendOccurence(SpellOccurenceCategory.NoMana);
+                            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
                         }
                     }
                 });

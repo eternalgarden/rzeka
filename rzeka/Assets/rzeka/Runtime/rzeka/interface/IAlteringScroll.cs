@@ -9,10 +9,10 @@ namespace Rzeka
         public Guid Guid { get; set; }
         public string Title { get; set; }
         public SpellType SpellType { get; set; }
-        public object Who { get; set; }
+        public string Who { get; set; }
         public bool WasCast { get; set; }
         public bool HasMana { get; set; }
-        public Dictionary<string, SerializableIngredient> Ingredients { get; set; }
+        public Dictionary<string, SerializableStranding[]> Ingredients { get; set; }
     }
 
     public interface TAlteringScroll : TBindingScroll

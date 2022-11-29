@@ -51,19 +51,23 @@ namespace Rzeka
             {
                 ConjuredSpell = spell;
 
-                ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }
             catch (Exception ex)
             {
-                var wispd = new SpellOccurence
-                {
-                    SpellType = SpellType.Stranding,
-                    SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
-                    Scroll = this,
-                    Luggage = new ExceptionalLuggage() { Exception = ex }
-                };
+                // todo send luggage
+                
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
+                // 
+                // var wispd = new SpellOccurence
+                // {
+                //     SpellType = SpellType.Stranding,
+                //     SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
+                //     Scroll = this,
+                //     Luggage = new ExceptionalLuggage() { Exception = ex }
+                // };
 
-                SpellStream.OnNext(wispd);
+                // SpellStream.OnNext(wispd);
             }
 
             /* ---- ---- 🌠 */
@@ -71,7 +75,7 @@ namespace Rzeka
 
         public void Dispose()
         {
-            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
         }
     }

@@ -55,17 +55,19 @@ namespace Rzeka
             {
                 ExecuteCast();
 
-                ThisAsBase.SendOccurence(SpellOccurenceCategory.Cast);
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }
             catch (Exception ex)
             {
-                var wispd = new SpellOccurence
-                {
-                    SpellType = SpellType.Weaving,
-                    SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
-                    Scroll = this,
-                    Luggage = new ExceptionalLuggage() { Exception = ex }
-                };
+                // var wispd = new SpellOccurence
+                // {
+                //     SpellType = SpellType.Weaving,
+                //     SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
+                //     Scroll = this,
+                //     Luggage = new ExceptionalLuggage() { Exception = ex }
+                // };
+                
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
 
                 // todo well well
                 Debug.LogError(ex.Message);
@@ -73,7 +75,6 @@ namespace Rzeka
 
                 throw ex;
 
-                SpellStream.OnNext(wispd);
             }
         }
 
@@ -86,7 +87,7 @@ namespace Rzeka
         {
             if (WasCast) _subscriptionDisposable.Dispose(); // TODO check this
 
-            ThisAsBase.SendOccurence(SpellOccurenceCategory.Forgotten);
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
         }
         

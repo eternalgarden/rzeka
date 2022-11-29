@@ -11,13 +11,13 @@ namespace Rzeka
     }
 
     [Serializable]
-    public struct SerializableConjuring : ISerializableConjuringSpell
+    public struct SerializableStranding : ISerializableConjuringSpell
     {
         public string ConjuredType { get; set; }
         public Guid Guid { get; set; }
         public string Title { get; set; }
         public SpellType SpellType { get; set; }
-        public object Who { get; set; }
+        public string Who { get; set; }
         public bool WasCast { get; set; }
     }
 
@@ -62,8 +62,6 @@ namespace Rzeka
                 .Select(i => i.Scroll as TBindingScroll)
                 .Where(scroll => scroll.WouldPossiblyLike<Q>())
                 .Subscribe(scroll => {
-                    Debug.Log($"provided");
-                    
                     scroll.ProvideIngredient<Q>(this);
                 });
             

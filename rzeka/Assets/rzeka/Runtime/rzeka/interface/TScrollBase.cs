@@ -8,7 +8,7 @@ namespace Rzeka
         Guid Guid { get; set; }
         string Title { set; get; }
         SpellType SpellType { get; set; }
-        object Who { get; set; }
+        string Who { get; set; }
         bool WasCast { get; set; }
     }
 
@@ -25,6 +25,7 @@ namespace Rzeka
         Guid Guid { get; }
         object Who { get; }
         bool WasCast { get; }
+        string Title { get; }
         ISubject<SpellOccurence> SpellStream { get; }
         ISubject<MatterOccurence> MatterStream { get; }
         CollectibleDisposable CollectionDisposable { get; set; }
@@ -32,7 +33,7 @@ namespace Rzeka
         void Cast();
 
         // TODO centralize occurence creation
-        void SendOccurence(SpellOccurenceCategory occurenceCategory)
+        void SendSpellOccurence(SpellOccurenceCategory occurenceCategory)
         {
             /* ⭐ ---- ---- */
             
@@ -50,12 +51,30 @@ namespace Rzeka
             /* ---- ---- 🌠 */
         }
 
+        void SendMatterOccurence(TMatter matter, MatterOccurenceCategory occurenceCategory)
+        {
+            /* ⭐ ---- ---- */
+            
+            var occurence = new MatterOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.UtcNow,
+                Matter = matter,
+                MatterOccurenceCategory = occurenceCategory,
+                Scroll = this
+            };
+
+            MatterStream.OnNext(occurence);
+            
+            /* ---- ---- 🌠 */
+        }
+
         void InitializeSpellBase()
         {
             if (CollectionDisposable is not null) return;
 
             CollectionDisposable = new();
-            SendOccurence(SpellOccurenceCategory.Created);
+            SendSpellOccurence(SpellOccurenceCategory.Created);
         }
     }
 }
