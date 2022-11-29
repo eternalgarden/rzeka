@@ -16,8 +16,8 @@ namespace Rzeka
         public string ConjuredType { get; set; }
         public Guid Guid { get; set; }
         public string Title { get; set; }
-        public SpellType SpellType { get; set; }
-        public string Who { get; set; }
+        public SpellSchool SpellSchool { get; set; }
+        public string WhosName { get; set; }
         public bool WasCast { get; set; }
     }
 
@@ -57,9 +57,9 @@ namespace Rzeka
 
             CollectionDisposable += SpellStream
                 .Where(_ => this.WasCast)
-                .Where(i => i.SpellType is SpellType.Looming or SpellType.Weaving)
+                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving)
                 .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Created)
-                .Select(i => i.Scroll as TBindingScroll)
+                .Select(i => i.Source as TBindingScroll)
                 .Where(scroll => scroll.WouldPossiblyLike<Q>())
                 .Subscribe(scroll => {
                     scroll.ProvideIngredient<Q>(this);

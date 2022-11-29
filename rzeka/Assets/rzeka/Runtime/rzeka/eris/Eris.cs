@@ -38,8 +38,7 @@ namespace Rzeka
                 var serializableOcc = new SerializableSpellOccurence() {
                     Guid = occ.Guid,
                     Timestamp = occ.Timestamp,
-                    Spell = GetSerializableSpell(occ.Scroll),
-                    SpellType = occ.SpellType,
+                    Source = GetSerializableSpell(occ.Source),
                     SpellOccurenceCategory = occ.SpellOccurenceCategory
                 };
 
@@ -64,8 +63,9 @@ namespace Rzeka
                 var serializableOcc = new SerializableMatterOccurence() {
                     Guid = occ.Guid,
                     Timestamp = occ.Timestamp,
-                    Spell = GetSerializableSpell(occ.Scroll),
+                    Source = GetSerializableSpell(occ.Source),
                     Matter = occ.Matter,
+                    MatterTypeName = occ.Matter.GetType().Name,
                     MatterOccurenceCategory = occ.MatterOccurenceCategory
                 };
 
@@ -91,11 +91,11 @@ namespace Rzeka
         {
             ISerializableSpell spell;
 
-            if (source.SpellType is SpellType.Looming)
+            if (source.SpellSchool is SpellSchool.Looming)
             {
                 spell = GetSerializableLooming(source);
             }
-            else if (source.SpellType is SpellType.Stranding)
+            else if (source.SpellSchool is SpellSchool.Stranding)
             {
                 spell = GetSerializableStranding(source);
             }
@@ -106,7 +106,7 @@ namespace Rzeka
 
             spell.Guid = source.Guid;
             spell.Title = source.Title;
-            spell.Who = source.Who is MonoBehaviour 
+            spell.WhosName = source.Who is MonoBehaviour 
                 ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
                 : source.Who.GetType().Name;
             spell.WasCast = source.WasCast;
@@ -119,7 +119,7 @@ namespace Rzeka
             IConjuringScroll conjuring = source as IConjuringScroll;
 
             SerializableStranding stranding = new SerializableStranding() {
-                SpellType = SpellType.Stranding,
+                SpellSchool = SpellSchool.Stranding,
                 ConjuredType = conjuring.ConjuredType.Name
             };
 
@@ -133,10 +133,11 @@ namespace Rzeka
 
             SerializableLooming looming = new SerializableLooming()
             {
-                SpellType = SpellType.Looming,
+                SpellSchool = SpellSchool.Looming,
                 Ingredients = GetSerializableIngredients(binding),
                 WasCast = binding.WasCast,
-                ConjuredType = conjuring.ConjuredType.Name
+                ConjuredType = conjuring.ConjuredType.Name,
+                HasMana = binding.HasMana
             };
 
             return looming;
@@ -145,13 +146,13 @@ namespace Rzeka
         private SerializableWeaving GetSerializableWeaving(TScrollBase source)
         {
             TBindingScroll binding = source as TBindingScroll;
-            IConjuringScroll conjuring = source as IConjuringScroll;
 
             SerializableWeaving weaving = new SerializableWeaving()
             {
-                SpellType = SpellType.Weaving,
+                SpellSchool = SpellSchool.Weaving,
                 Ingredients = GetSerializableIngredients(binding),
                 WasCast = binding.WasCast,
+                HasMana = binding.HasMana
             };
 
             return weaving;

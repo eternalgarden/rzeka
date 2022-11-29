@@ -9,11 +9,17 @@ using System;
 
 namespace Rzeka
 {
-    public enum SpellType 
+    public enum SpellSchool 
     { 
         Stranding, // todo big renaming work after this
         Looming, 
         Weaving 
+    }
+
+    public enum OccurenceType
+    {
+        Spell,
+        Matter
     }
 
     public enum MatterOccurenceCategory 
@@ -44,7 +50,7 @@ namespace Rzeka
     {
         Guid Guid { get; set; }
         DateTimeOffset Timestamp  { get; set; }
-        TScrollBase Scroll { get; set; }
+        TScrollBase Source { get; set; }
         Luggage Luggage { get; set; }
     }
 
@@ -52,18 +58,17 @@ namespace Rzeka
     {
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp { get; set; }
-        public TScrollBase Scroll { get; set; }
+        public TScrollBase Source { get; set; }
         public Luggage Luggage { get; set; }
 
         public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
-        public SpellType SpellType { get; set; }
     }
 
     public struct MatterOccurence : Occurence
     {
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp { get; set; }
-        public TScrollBase Scroll { get; set; }
+        public TScrollBase Source { get; set; }
         public Luggage Luggage { get; set; }
 
         public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
@@ -78,21 +83,23 @@ namespace Rzeka
     
     public struct SerializableSpellOccurence
     {
+        public OccurenceType OccurenceType => OccurenceType.Spell;
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp  { get; set; }
-        public ISerializableSpell Spell { get; set; }
+        public ISerializableSpell Source { get; set; }
         
         public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
-        public SpellType SpellType { get; set; }
     }
 
     public struct SerializableMatterOccurence
     {
+        public OccurenceType OccurenceType => OccurenceType.Matter;
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp  { get; set; }
-        public ISerializableSpell Spell { get; set; }
+        public ISerializableSpell Source { get; set; }
 
         public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
+        public string MatterTypeName { get; set; }
         public TMatter Matter { get; set; }
     }
     

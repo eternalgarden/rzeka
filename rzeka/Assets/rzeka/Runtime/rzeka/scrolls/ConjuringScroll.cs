@@ -13,7 +13,7 @@ namespace Rzeka
 
         public Guid Guid { get; }
         public object Who { get; }
-        public SpellType SpellType => SpellType.Stranding;
+        public SpellSchool SpellSchool => SpellSchool.Stranding;
         public string Title => $"Conjuring of {typeof(Q).Name}";
         public TScrollBase ThisAsBase { get; }
         public TConjuringScroll<Q> ThisAsConjuring { get; }

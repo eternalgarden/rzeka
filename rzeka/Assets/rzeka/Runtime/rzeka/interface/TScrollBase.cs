@@ -7,8 +7,8 @@ namespace Rzeka
     {
         Guid Guid { get; set; }
         string Title { set; get; }
-        SpellType SpellType { get; set; }
-        string Who { get; set; }
+        SpellSchool SpellSchool { get; set; }
+        string WhosName { get; set; }
         bool WasCast { get; set; }
     }
 
@@ -21,7 +21,7 @@ namespace Rzeka
         /// And otherwise any time you would like to refer to it's defined methods you would have to cast it.
         /// </summary>
         TScrollBase ThisAsBase { get; } 
-        SpellType SpellType { get; }
+        SpellSchool SpellSchool { get; }
         Guid Guid { get; }
         object Who { get; }
         bool WasCast { get; }
@@ -41,9 +41,8 @@ namespace Rzeka
             {
                 Guid = Guid.NewGuid(),
                 Timestamp = DateTimeOffset.UtcNow,
-                SpellType = this.SpellType,
                 SpellOccurenceCategory = occurenceCategory,
-                Scroll = this
+                Source = this
             };
 
             SpellStream.OnNext(occurence);
@@ -61,7 +60,7 @@ namespace Rzeka
                 Timestamp = DateTimeOffset.UtcNow,
                 Matter = matter,
                 MatterOccurenceCategory = occurenceCategory,
-                Scroll = this
+                Source = this
             };
 
             MatterStream.OnNext(occurence);

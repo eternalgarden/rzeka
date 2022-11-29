@@ -132,12 +132,12 @@ namespace Rzeka
         private void CastListen()
         {
             CollectionDisposable += SpellStream
-                .Where(i => i.SpellType is SpellType.Looming or SpellType.Stranding)
-                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Scroll as IConjuringScroll).ConjuredType))
+                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding)
+                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Source as IConjuringScroll).ConjuredType))
                 .Where(i => i.SpellOccurenceCategory == SpellOccurenceCategory.Cast)
                 .Subscribe(i =>
                 {
-                    IConjuringScroll conjurableScroll = i.Scroll as IConjuringScroll;
+                    IConjuringScroll conjurableScroll = i.Source as IConjuringScroll;
                     Type conjuredType = conjurableScroll.ConjuredType;
                     Ingredients[conjuredType].Add(conjurableScroll);
 
@@ -156,12 +156,12 @@ namespace Rzeka
         private void ForgottenListen()
         {
             CollectionDisposable += SpellStream
-                .Where(i => i.SpellType is SpellType.Looming or SpellType.Stranding)
-                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Scroll as IConjuringScroll).ConjuredType))
+                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding)
+                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Source as IConjuringScroll).ConjuredType))
                 .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Forgotten or SpellOccurenceCategory.NoMana)
                 .Subscribe(i =>
                 {
-                    IConjuringScroll conjurableScroll = i.Scroll as IConjuringScroll;
+                    IConjuringScroll conjurableScroll = i.Source as IConjuringScroll;
                     Type conjuredType = conjurableScroll.ConjuredType;
                     Ingredients[conjuredType].Remove(conjurableScroll);
 

@@ -20,7 +20,7 @@ namespace Rzeka
         public TBindingScroll ThisAsBinding { get; }
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }
-        public SpellType SpellType => SpellType.Weaving;
+        public SpellSchool SpellSchool => SpellSchool.Weaving;
         public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T).Name}";
 
         public Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
@@ -61,7 +61,7 @@ namespace Rzeka
             {
                 // var wispd = new SpellOccurence
                 // {
-                //     SpellType = SpellType.Weaving,
+                //     SpSchoolype = SpellType.Weaving,
                 //     SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
                 //     Scroll = this,
                 //     Luggage = new ExceptionalLuggage() { Exception = ex }

@@ -24,7 +24,7 @@ namespace Rzeka
 
         public Guid Guid { get; }
         public object Who { get; }
-        public SpellType SpellType => SpellType.Looming;
+        public SpellSchool SpellSchool => SpellSchool.Looming;
         public string Title => $"{Who.GetType().Name}'s Looming of {typeof(Q).Name}";
         public TScrollBase ThisAsBase  { get; }
         public TBindingScroll ThisAsBinding { get; }

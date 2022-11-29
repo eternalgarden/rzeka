@@ -8,7 +8,7 @@ namespace Rzeka
     {
         Guid Guid { get; }
         Guid[] Circumstances { get; set; }
-        Type Type { get; } // * don't remove, it is used by Eris renderer
+        [Obsolete] Type Type { get; } // todo REMOVE NO LONGER USED, THIS WAS A BAD IDEA
         string Description { get; }
 
         public bool HasCircumstances() => Circumstances.Length > 0;

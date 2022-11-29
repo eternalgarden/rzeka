@@ -9,8 +9,8 @@ namespace Rzeka
     {
         public Guid Guid { get; set; }
         public string Title { get; set; }
-        public SpellType SpellType { get; set; }
-        public string Who { get; set; }
+        public SpellSchool SpellSchool { get; set; }
+        public string WhosName { get; set; }
         public bool WasCast { get; set; }
 
         public string ConjuredType { get; set; }

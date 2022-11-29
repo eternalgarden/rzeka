@@ -74,7 +74,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Stranding)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Pluck_ANumber(1);
@@ -110,7 +110,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Looming)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Pluck_AName("Agent Cooper");
@@ -148,7 +148,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Looming)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
             using var d2 = tools.Pluck_ANumber(1);
@@ -192,7 +192,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Looming)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Loom_AName_To_UserData(out _);
@@ -230,7 +230,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Looming)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
@@ -270,7 +270,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Looming)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
             // notice just d3 and d4 are flipped here
@@ -302,7 +302,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Weaving)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Pluck_ANumber(1);
@@ -324,7 +324,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Weaving)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Weave_ANumber();
@@ -346,7 +346,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Weaving)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Pluck_ANumber(1);
@@ -369,7 +369,7 @@ namespace Rzeka.Tests.Integration
 
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.SpellType is SpellType.Weaving)
+                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Weave_AName();
