@@ -49,7 +49,10 @@ namespace Rzeka
 
             try
             {
-                ConjuredSpell = spell;
+                ConjuredSpell = spell
+                    .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
+                    .Publish() // TODO PROVIDE ALTERNATIVES
+                    .RefCount();
 
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }

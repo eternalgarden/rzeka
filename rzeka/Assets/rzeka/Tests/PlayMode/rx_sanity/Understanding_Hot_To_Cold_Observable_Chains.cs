@@ -9,10 +9,10 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests.Rx
 {
-    public class Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains : TestBase
+    public class Understanding_Hot_To_Cold_Observable_Chains : TestBase
     {
         [UnityTest]
-        public IEnumerator a_Do_NOT_getting_called_on_cold_observable()
+        public IEnumerator a_Do_NOT_getting_called_on_cold_observable_without_observers()
         {
             // -------------
 
@@ -32,7 +32,7 @@ namespace Rzeka.Tests.Rx
 
         
         [UnityTest]
-        public IEnumerator b_Do_GETS_called_on_hot_observable()
+        public IEnumerator b_Do_GETS_called_on_connected_hot_observable_without_observers()
         {
             // -------------
 
@@ -95,7 +95,7 @@ namespace Rzeka.Tests.Rx
 
             using var connection = connectableObservable.Connect();
 
-            using var lateObserver = anotherObservable.Subscribe();
+            using var lateObserver = anotherObservable.Subscribe(_ => count++); // neither will this
 
             yield return null;
 
@@ -116,7 +116,7 @@ namespace Rzeka.Tests.Rx
 
             IConnectableObservable<int> connectableObservable = Observable
                 .Return(1)
-                .Replay(1); // * This time with replay instead
+                .Replay(); // * This time with replay instead
 
             IObservable<int> anotherObservable = connectableObservable
                 .Do(onNext: _ => count++);
@@ -127,7 +127,7 @@ namespace Rzeka.Tests.Rx
 
             yield return null;
 
-            AssertEqual(1, count);
+            AssertEqual(1, count); // * We are getting the expected 1
 
             // -------------
         }
@@ -141,7 +141,7 @@ namespace Rzeka.Tests.Rx
 
             IConnectableObservable<int> connectableObservable = Observable
                 .Return(1)
-                .Replay(1); // * This time with replay instead
+                .Replay(); // ! Nothing changed here, it's as in test above
 
             IObservable<int> anotherObservable = connectableObservable
                 .Do(onNext: _ => count++);
@@ -149,11 +149,45 @@ namespace Rzeka.Tests.Rx
             using var connection = connectableObservable.Connect();
 
             using var lateObserver1 = anotherObservable.Subscribe();
-            using var lateObserver2 = anotherObservable.Subscribe();
+            using var lateObserver2 = anotherObservable.Subscribe(); // ! one additional observer
 
             yield return null;
 
-            AssertEqual(2, count);
+            // * imortant
+            // Since .Do was stacked after .Multicast of .Replay it will also get called twice
+            // Thus if you stack a Cold operator after a Hot one 
+            // And then stack some more oparators or observers
+            // It is more like that .Do is PREPENDED to the following operators
+            // And not appended as it seems visually in code to the hot operator
+            AssertEqual(2, count); // * NOTICE NOW .DO GOT TRIGGERED TWICE NOW
+
+            // -------------
+        }
+
+        [UnityTest]
+        public IEnumerator g_the_dangers_of_such_misunderstanding()
+        {
+            // -------------
+
+
+            IConnectableObservable<int> connectableObservable = Observable
+                .Range(0,4)
+                .Replay();
+
+            int emission = 0;
+            IObservable<int> anotherObservable = connectableObservable
+                .Do(onNext: _ => emission++); // * you could be mistaken to think it will trigger 4 times only
+
+            using var connection = connectableObservable.Connect();
+
+            int receivals = 0;
+            using var lateObserver1 = anotherObservable.Subscribe(_ => receivals++);
+            using var lateObserver2 = anotherObservable.Subscribe(_ => receivals++);
+
+            yield return null;
+
+            // * But there's 8 times, exactly as many as receivals
+            AssertEqual((emission: 8, receivals: 8), (emission, receivals));
 
             // -------------
         }
@@ -168,7 +202,7 @@ namespace Rzeka.Tests.Rx
 
             IConnectableObservable<int> connectableObservable = Observable
                 .Return(1)
-                .Replay(1); // * This time with replay instead
+                .Replay();
 
             IConnectableObservable<int> anotherObservable = connectableObservable
                 .Do(onNext: _ => count++)

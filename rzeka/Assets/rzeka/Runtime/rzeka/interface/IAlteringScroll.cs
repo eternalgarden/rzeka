@@ -5,13 +5,13 @@ namespace Rzeka
 {
     public struct SerializableWeaving : ISerlializableBindingSpell
     {
-        public Guid Guid { get; set; }
-        public string Title { get; set; }
-        public SpellSchool SpellSchool { get; set; }
-        public string WhosName { get; set; }
-        public bool WasCast { get; set; }
-        public bool HasMana { get; set; }
-        public Dictionary<string, SerializableStranding[]> Ingredients { get; set; }
+        public Guid guid { get; set; }
+        public string title { get; set; }
+        public SpellSchool spellSchool { get; set; }
+        public string whosName { get; set; }
+        public bool wasCast { get; set; }
+        public bool hasMana { get; set; }
+        public Dictionary<string, SerializableStranding[]> ingredients { get; set; }
     }
 
     public interface TAlteringScroll : TBindingScroll

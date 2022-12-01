@@ -16,7 +16,7 @@ namespace Rzeka
         Weaving 
     }
 
-    public enum OccurenceType
+    public enum OccurenceCategory
     {
         Spell,
         Matter
@@ -43,7 +43,12 @@ namespace Rzeka
 
     public class ExceptionalLuggage : Luggage
     {
-        public Exception Exception { get; set; }
+        public Exception Exception { get; }
+
+        public ExceptionalLuggage(Exception exception)
+        {
+            Exception = exception ?? throw new ArgumentNullException(nameof(exception));
+        }
     }
 
     public interface Occurence
@@ -83,24 +88,24 @@ namespace Rzeka
     
     public struct SerializableSpellOccurence
     {
-        public OccurenceType OccurenceType => OccurenceType.Spell;
-        public Guid Guid { get; set; }
-        public DateTimeOffset Timestamp  { get; set; }
-        public ISerializableSpell Source { get; set; }
+        public OccurenceCategory occurenceCategory => OccurenceCategory.Spell;
+        public Guid guid { get; set; }
+        public DateTimeOffset timestamp  { get; set; }
+        public ISerializableSpell spell { get; set; }
         
-        public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
+        public SpellOccurenceCategory spellOccurenceCategory { get; set; }
     }
 
     public struct SerializableMatterOccurence
     {
-        public OccurenceType OccurenceType => OccurenceType.Matter;
-        public Guid Guid { get; set; }
-        public DateTimeOffset Timestamp  { get; set; }
-        public ISerializableSpell Source { get; set; }
+        public OccurenceCategory occurenceCategory => OccurenceCategory.Matter;
+        public Guid guid { get; set; }
+        public DateTimeOffset timestamp  { get; set; }
+        public ISerializableSpell spell { get; set; }
 
-        public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
-        public string MatterTypeName { get; set; }
-        public TMatter Matter { get; set; }
+        public MatterOccurenceCategory matterOccurenceCategory { get; set; }
+        public Type matterType { get; set; } // * we use a custom serializer for Type
+        public TMatter matter { get; set; }
     }
     
     #endregion // ---------------------------------- Serializable Occurences -------------------------

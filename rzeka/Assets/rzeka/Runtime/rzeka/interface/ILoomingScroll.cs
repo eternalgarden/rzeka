@@ -7,15 +7,15 @@ namespace Rzeka
     [Serializable]
     public struct SerializableLooming : ISerializableConjuringSpell, ISerlializableBindingSpell
     {
-        public Guid Guid { get; set; }
-        public string Title { get; set; }
-        public SpellSchool SpellSchool { get; set; }
-        public string WhosName { get; set; }
-        public bool WasCast { get; set; }
+        public Guid guid { get; set; }
+        public string title { get; set; }
+        public SpellSchool spellSchool { get; set; }
+        public string whosName { get; set; }
+        public bool wasCast { get; set; }
 
-        public string ConjuredType { get; set; }
-        public bool HasMana { get; set; }
-        public Dictionary<string, SerializableStranding[]> Ingredients { get; set; }
+        public string conjuredType { get; set; }
+        public bool hasMana { get; set; }
+        public Dictionary<string, SerializableStranding[]> ingredients { get; set; }
     }
 
     public interface TLoomingScroll<Q> : TBindingScroll, TConjuringScroll<Q> 

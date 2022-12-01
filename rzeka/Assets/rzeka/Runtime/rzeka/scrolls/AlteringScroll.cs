@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
-    using System.Reactive.Subjects;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using UnityEngine;
 
 namespace Rzeka
@@ -101,8 +102,9 @@ namespace Rzeka
             var ingredient = ThisAsBinding.GetObservableIngredient<T>();
 
             if (ingredient is null) throw new Exception($"Missing ingredient of type {typeof(T)}");
-
-            _subscriptionDisposable = ingredient.Subscribe(spell);
+            
+            _subscriptionDisposable = ingredient
+                .Subscribe(spell);
 
             WasCast = true;
         }

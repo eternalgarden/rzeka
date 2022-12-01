@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -42,10 +43,20 @@ namespace Rzeka
             // * A HOT OBSERVABLE WILL BE FROZEN WITH such .DO
             // ! For now circumstances will have to be assigned manually
             // ? Could this be handled with an additonal interface/contract below IObservable?
+            
+            T lastT = default(T);
+            IObserver<T> observerT = Observer.Create<T>(onNext: nextT => lastT = nextT);
+            IObservable<T> ingredientT = ThisAsBinding.GetObservableIngredient<T>(observerT);
 
-            IObservable<T> ingredientT = ThisAsBinding.GetObservableIngredient<T>();
+            IObservable<Q> conjuring = spell.Invoke(ingredientT)
+                .Do(matter => {
+                    matter.SetCircumstances(lastT); // ? will this workkkkkk
+                    ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
+                })
+                .Publish() // TODO PROVIDE ALTERNATIVES
+                .RefCount();
 
-            return spell.Invoke(ingredientT);
+            return conjuring;
         }
     }
 }

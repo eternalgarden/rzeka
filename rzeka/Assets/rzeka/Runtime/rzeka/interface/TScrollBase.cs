@@ -5,11 +5,11 @@ namespace Rzeka
 {
     public interface ISerializableSpell
     {
-        Guid Guid { get; set; }
-        string Title { set; get; }
-        SpellSchool SpellSchool { get; set; }
-        string WhosName { get; set; }
-        bool WasCast { get; set; }
+        Guid guid { get; set; }
+        string title { set; get; }
+        SpellSchool spellSchool { get; set; }
+        string whosName { get; set; }
+        bool wasCast { get; set; }
     }
 
     public interface TScrollBase : IDisposable
@@ -68,9 +68,27 @@ namespace Rzeka
             /* ---- ---- 🌠 */
         }
 
+        void SendMatterExceptionOccurence(Exception ex)
+        {
+            /* ⭐ ---- ---- */
+            
+            var occurence = new MatterOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.UtcNow,
+                MatterOccurenceCategory = MatterOccurenceCategory.Error,
+                Source = this,
+                Luggage = new ExceptionalLuggage(ex)
+            };
+
+            MatterStream.OnNext(occurence);
+            
+            /* ---- ---- 🌠 */
+        }
+
         void InitializeSpellBase()
         {
-            if (CollectionDisposable is not null) return;
+            if (CollectionDisposable is not null) return; // * hehe, this means it's already initialized
 
             CollectionDisposable = new();
             SendSpellOccurence(SpellOccurenceCategory.Created);

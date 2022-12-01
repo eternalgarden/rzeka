@@ -9,8 +9,8 @@ namespace Rzeka
 {
     public interface ISerlializableBindingSpell : ISerializableSpell
     {
-        bool HasMana { get; set; }
-        Dictionary<string, SerializableStranding[]> Ingredients { get; set; }
+        bool hasMana { get; set; }
+        Dictionary<string, SerializableStranding[]> ingredients { get; set; }
     }
 
     public interface TBindingScroll : TScrollBase
@@ -65,8 +65,9 @@ namespace Rzeka
             }
         }
 
-        IObservable<T> GetObservableIngredient<T>() where T : TMatter
+        IObservable<T> GetObservableIngredient<T>(IObserver<T> observerT = null) where T : TMatter
         {
+
             var ingredientsT = Ingredients[typeof(T)];
             IObservable<T> ingredient = null;
 
@@ -87,8 +88,18 @@ namespace Rzeka
 
             if (ingredient is null) throw new Exception($"Something went wrong for Conjurer {ingredientsT[0].GetType()} of type {typeof(T)}.");
 
+            var behaviour = new BehaviorSubject<T>(default(T));
+
             var erisTouchedIngredient = ingredient
-                .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received));
+                .Do( // TODO Maybe add on completed for any reason?
+                    onNext: matter => {
+                        // behaviour.OnNext(matter);
+                        observerT?.OnNext(matter);
+                        ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received);
+                    },
+                    onError: err => ThisAsBase.SendMatterExceptionOccurence(err));
+
+            // lastValueObservable = behaviour.AsObservable();
 
             return erisTouchedIngredient;
         }

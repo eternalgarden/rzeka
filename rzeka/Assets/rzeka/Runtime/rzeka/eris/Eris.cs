@@ -36,10 +36,10 @@ namespace Rzeka
             _disposables += SpellOccurences.Subscribe(occ => {
 
                 var serializableOcc = new SerializableSpellOccurence() {
-                    Guid = occ.Guid,
-                    Timestamp = occ.Timestamp,
-                    Source = GetSerializableSpell(occ.Source),
-                    SpellOccurenceCategory = occ.SpellOccurenceCategory
+                    guid = occ.Guid,
+                    timestamp = occ.Timestamp,
+                    spell = GetSerializableSpell(occ.Source),
+                    spellOccurenceCategory = occ.SpellOccurenceCategory
                 };
 
                 if (Emanation is null)
@@ -61,12 +61,12 @@ namespace Rzeka
             _disposables += MatterOccurences.Subscribe(occ => {
 
                 var serializableOcc = new SerializableMatterOccurence() {
-                    Guid = occ.Guid,
-                    Timestamp = occ.Timestamp,
-                    Source = GetSerializableSpell(occ.Source),
-                    Matter = occ.Matter,
-                    MatterTypeName = occ.Matter.GetType().Name,
-                    MatterOccurenceCategory = occ.MatterOccurenceCategory
+                    guid = occ.Guid,
+                    timestamp = occ.Timestamp,
+                    spell = GetSerializableSpell(occ.Source),
+                    matter = occ.Matter,
+                    matterType = occ.Matter.GetType(), // * custom serializer
+                    matterOccurenceCategory = occ.MatterOccurenceCategory
                 };
 
                 if (Emanation is null)
@@ -104,12 +104,12 @@ namespace Rzeka
                 spell = GetSerializableWeaving(source);
             }
 
-            spell.Guid = source.Guid;
-            spell.Title = source.Title;
-            spell.WhosName = source.Who is MonoBehaviour 
+            spell.guid = source.Guid;
+            spell.title = source.Title;
+            spell.whosName = source.Who is MonoBehaviour 
                 ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
                 : source.Who.GetType().Name;
-            spell.WasCast = source.WasCast;
+            spell.wasCast = source.WasCast;
 
             return spell;
         }
@@ -119,8 +119,8 @@ namespace Rzeka
             IConjuringScroll conjuring = source as IConjuringScroll;
 
             SerializableStranding stranding = new SerializableStranding() {
-                SpellSchool = SpellSchool.Stranding,
-                ConjuredType = conjuring.ConjuredType.Name
+                spellSchool = SpellSchool.Stranding,
+                conjuredType = conjuring.ConjuredType.Name
             };
 
             return stranding;
@@ -133,11 +133,11 @@ namespace Rzeka
 
             SerializableLooming looming = new SerializableLooming()
             {
-                SpellSchool = SpellSchool.Looming,
-                Ingredients = GetSerializableIngredients(binding),
-                WasCast = binding.WasCast,
-                ConjuredType = conjuring.ConjuredType.Name,
-                HasMana = binding.HasMana
+                spellSchool = SpellSchool.Looming,
+                ingredients = GetSerializableIngredients(binding),
+                wasCast = binding.WasCast,
+                conjuredType = conjuring.ConjuredType.Name,
+                hasMana = binding.HasMana
             };
 
             return looming;
@@ -149,10 +149,10 @@ namespace Rzeka
 
             SerializableWeaving weaving = new SerializableWeaving()
             {
-                SpellSchool = SpellSchool.Weaving,
-                Ingredients = GetSerializableIngredients(binding),
-                WasCast = binding.WasCast,
-                HasMana = binding.HasMana
+                spellSchool = SpellSchool.Weaving,
+                ingredients = GetSerializableIngredients(binding),
+                wasCast = binding.WasCast,
+                hasMana = binding.HasMana
             };
 
             return weaving;
