@@ -1,21 +1,27 @@
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using UnityEngine;
 
 namespace Rzeka
 {
-    public interface TMatter
+    public interface TMatter : IEquatable<TMatter>
     {
-        Guid Guid { get; }
+        Guid Guid { get; set; }
         Guid[] Circumstances { get; set; }
         [Obsolete] Type Type { get; } // todo REMOVE NO LONGER USED, THIS WAS A BAD IDEA
         string Description { get; }
 
         public bool HasCircumstances() => Circumstances.Length > 0;
 
-        public void SetCircumstances(params TMatter[] circumstances)
+        public T WithCircumstances<T>(params TMatter[] circumstances) where T : TMatter
         {
-            Circumstances = circumstances.Select(x => x.Guid).ToArray();
+            T newMatter = (T)this; // intentionally quick exception
+
+            Guid[] newCircumstances = circumstances.Select(x => x.Guid).ToArray();
+            newMatter.Circumstances = newCircumstances;
+
+            return newMatter;
         }
 
         public TMatter WithCircumstances<T,Y>(Glyph<T,Y> glyph)
@@ -24,6 +30,11 @@ namespace Rzeka
         {
             Circumstances = glyph.AsCircumstance();
             return this;
+        }
+
+        bool IEquatable<TMatter>.Equals(TMatter other)
+        {
+            return this.Guid == other.Guid;
         }
     }
 

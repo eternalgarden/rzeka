@@ -96,7 +96,7 @@ namespace Rzeka.Tests.Rx
             // * example setup is exactly the same as b_ above
 
             var obs1 = Observable.Return(1);
-            var obs2 = Observable.Interval(TimeSpan.FromSeconds(0.1)); // 0.1 tick
+            var obs2 = Observable.Interval(TimeSpan.FromSeconds(0.1)); // 0.1 tick, interval emits consecutive long values starting wiht 0
 
             var combine = obs1.CombineLatest(obs2);
 

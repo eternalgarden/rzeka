@@ -65,9 +65,10 @@ namespace Rzeka
             }
         }
 
-        IObservable<T> GetObservableIngredient<T>(IObserver<T> observerT = null) where T : TMatter
+        IObservable<T> GetObservableIngredient<T>() where T : TMatter
         {
-
+           /* ⭐ ---- ---- */
+           
             var ingredientsT = Ingredients[typeof(T)];
             IObservable<T> ingredient = null;
 
@@ -88,20 +89,19 @@ namespace Rzeka
 
             if (ingredient is null) throw new Exception($"Something went wrong for Conjurer {ingredientsT[0].GetType()} of type {typeof(T)}.");
 
-            var behaviour = new BehaviorSubject<T>(default(T));
-
             var erisTouchedIngredient = ingredient
+                // .Where(matter => matter.Equals(default(T)) is false) // TODO understand why does it make a difference in case of behaviour subvjects
                 .Do( // TODO Maybe add on completed for any reason?
-                    onNext: matter => {
-                        // behaviour.OnNext(matter);
-                        observerT?.OnNext(matter);
-                        ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received);
-                    },
+                    // * It's safe to use .Do modifier here since besically the ingredient given here
+                    // * will be prepended to whatever following sequence of operators
+                    // * Reminder, appending is dangerous (since it can cool a hot observable), prepending isnt
+                    onNext: matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received),
                     onError: err => ThisAsBase.SendMatterExceptionOccurence(err));
 
-            // lastValueObservable = behaviour.AsObservable();
-
-            return erisTouchedIngredient;
+            // return erisTouchedIngredient;
+            return ingredient;
+           
+           /* ---- ---- 🌠 */
         }
 
         #endregion // ---------------------------------- Default Imlementation -------------------------

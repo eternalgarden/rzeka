@@ -49,9 +49,13 @@ namespace Rzeka
 
             try
             {
+                
+                // TODO provide alternatives to the behaviour subject below
+                // ? it will take some consideration to use replay properly considering how it's
+                // ? array could be later passed as ingredient to a loom -> ie. how to treat them as circumstances
                 ConjuredSpell = spell
                     .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
-                    .Publish() // TODO PROVIDE ALTERNATIVES
+                    .Multicast(new ReplaySubject<Q>(bufferSize: 1))
                     .RefCount();
 
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);

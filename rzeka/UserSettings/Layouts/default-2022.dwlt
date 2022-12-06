@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Inspector
+  m_Title: Test Runner
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 137
+  controlID: 138
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 20
+  controlID: 41
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,8 +165,8 @@ MonoBehaviour:
     y: 0
     width: 889
     height: 485
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
@@ -225,7 +225,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 108
+  controlID: 109
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -271,8 +271,8 @@ MonoBehaviour:
     y: 407
     width: 603
     height: 532
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 20}
@@ -325,8 +325,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 889
-    y: 480
+    x: -31111
+    y: -31563
     width: 601
     height: 511
   m_ViewDataDictionary: {fileID: 0}
@@ -334,7 +334,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 146
+    ID: 147
     splitterInitialOffset: 371
     currentActiveSplitter: -1
     realSizes:
@@ -365,9 +365,9 @@ MonoBehaviour:
       uniqueId: '[rzeka][suite]'
       name: rzeka
       fullName: rzeka
-      resultStatus: 1
-      duration: 0.5809817
-      messages: 
+      resultStatus: 2
+      duration: 0.1337831
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -381,9 +381,9 @@ MonoBehaviour:
       uniqueId: '[com.rzeka.unirx.tests][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll][suite]'
       name: com.rzeka.unirx.tests.dll
       fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1241595
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -447,9 +447,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/[Rzeka][suite]
       name: Rzeka
       fullName: Rzeka
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1164033
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -463,9 +463,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
       name: Tests
       fullName: Rzeka.Tests
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1131221
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -479,9 +479,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
       name: Integration
       fullName: Rzeka.Tests.Integration
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1099538
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -495,9 +495,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients][suite]
       name: Blockades_Looms_Multiple_Ingredients
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1764634
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -511,11 +511,28 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.a_IsANumberAndAName_Properly_Blocked]
       name: a_IsANumberAndAName_Properly_Blocked
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.a_IsANumberAndAName_Properly_Blocked
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0641757
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: (True, True)
+        while actual: (False, False).
+
+        Assertion failure. Values are not
+        equal.
+
+        Expected: (False, False) == (True, True)'
       output: 
-      stacktrace: 
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestBase.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestBase.cs:51
+        \r\n  at Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients+<a_IsANumberAndAName_Properly_Blocked>d__0.MoveNext
+        () [0x00090] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Blockades_Looms_Multiple_Ingredients.cs:39
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -528,8 +545,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.b_IsANumberAndAName_Blocked_NotConjurable]
       name: b_IsANumberAndAName_Blocked_NotConjurable
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.b_IsANumberAndAName_Blocked_NotConjurable
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0146877
       messages: 
       output: 
       stacktrace: 
@@ -545,11 +562,28 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.c_IsANumberAndAName_Properly_Blocked_ByANumber]
       name: c_IsANumberAndAName_Properly_Blocked_ByANumber
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.c_IsANumberAndAName_Properly_Blocked_ByANumber
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0206904
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: (True, False)
+        while actual: (False, False).
+
+        Assertion failure. Values are not
+        equal.
+
+        Expected: (False, False) == (True, False)'
       output: 
-      stacktrace: 
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestBase.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestBase.cs:51
+        \r\n  at Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients+<c_IsANumberAndAName_Properly_Blocked_ByANumber>d__2.MoveNext
+        () [0x000ba] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Blockades_Looms_Multiple_Ingredients.cs:90
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -562,10 +596,20 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.d_IsANumberAndAName_Properly_UnBlocked_By_ANumber]
       name: d_IsANumberAndAName_Properly_UnBlocked_By_ANumber
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.d_IsANumberAndAName_Properly_UnBlocked_By_ANumber
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0238874
       messages: 
-      output: 
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.ANumber]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.AName]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -579,11 +623,28 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.e_IsANumberAndAName_Properly_UnBlocked_ByANumber]
       name: e_IsANumberAndAName_Properly_UnBlocked_ByANumber
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.e_IsANumberAndAName_Properly_UnBlocked_ByANumber
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0165275
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: (False, True)
+        while actual: (False, False).
+
+        Assertion failure. Values are not
+        equal.
+
+        Expected: (False, False) == (False, True)'
       output: 
-      stacktrace: 
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestBase.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestBase.cs:51
+        \r\n  at Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients+<e_IsANumberAndAName_Properly_UnBlocked_ByANumber>d__4.MoveNext
+        () [0x000b6] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Blockades_Looms_Multiple_Ingredients.cs:158
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -596,10 +657,20 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Blockades_Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName]
       name: f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName
       fullName: Rzeka.Tests.Integration.Blockades_Looms_Multiple_Ingredients.f_IsANumberAndAName_Properly_UnBlocked_ByANumber_And_AName
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0151001
       messages: 
-      output: 
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.ANumber]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.AName]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -613,8 +684,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process][suite]
       name: Integration_Basic_Process
       fullName: Rzeka.Tests.Integration.Integration_Basic_Process
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0483817
       messages: 
       output: 
       stacktrace: 
@@ -629,10 +700,20 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received]
       name: b_Is_Weave_UserWelcomingText_Received
       fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.027275
       messages: 
-      output: 
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.UserData]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.LoomingScroll_1`2[Rzeka.Tests.UserData,Rzeka.Tests.UserWelcomingText]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -646,10 +727,25 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Basic_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings]
       name: b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
       fullName: Rzeka.Tests.Integration.Integration_Basic_Process.b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0154347
       messages: 
-      output: 
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.UserData]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.LoomingScroll_1`2[Rzeka.Tests.UserData,Rzeka.Tests.UserWelcomingText]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.LoomingScroll_1`2[Rzeka.Tests.UserData,Rzeka.Tests.UserWelcomingText]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -663,9 +759,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls][suite]
       name: Integration_Blockades_Forgotten_Scrolls
       fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0536072
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -679,11 +775,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency]
       name: a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
       fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0087766
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls+<a_IsAnActive_Alteration_ProperlyBlockedOnLost_Conjuring_Dependency>d__0.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Integration_Blockades_Forgotten_Scrolls.cs:30
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -696,11 +800,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency]
       name: b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
       fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0278607
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls+<b_IsAnActive_Alteration_ProperlyBlockedOnLost_Looming_Dependency>d__1.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Integration_Blockades_Forgotten_Scrolls.cs:59
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -713,11 +825,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Blockades_Forgotten_Scrolls/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency]
       name: c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
       fullName: Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls.c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.010935
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Blockades_Forgotten_Scrolls+<c_IsAnActive_Looming_ProperlyBlockedOnLost_Conjuring_Dependency>d__2.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\blockades\\Integration_Blockades_Forgotten_Scrolls.cs:88
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -730,9 +850,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents][suite]
       name: Integration_Eris_Logging_ScrollEvents
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0679774
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -746,11 +866,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.a_IsNewBlocked_Loom_LoggedOnlyOnce]
       name: a_IsNewBlocked_Loom_LoggedOnlyOnce
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.a_IsNewBlocked_Loom_LoggedOnlyOnce
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0140326
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents+<a_IsNewBlocked_Loom_LoggedOnlyOnce>d__0.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_Logging_ScrollEvents.cs:17
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -763,11 +891,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.b_IsNewBlocked_Weave_LoggedOnlyOnce]
       name: b_IsNewBlocked_Weave_LoggedOnlyOnce
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.b_IsNewBlocked_Weave_LoggedOnlyOnce
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0129388
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents+<b_IsNewBlocked_Weave_LoggedOnlyOnce>d__1.MoveNext
+        () [0x00061] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_Logging_ScrollEvents.cs:42
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -780,11 +916,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Conjure_LoggedOnlyOnce]
       name: c_IsNewCast_Conjure_LoggedOnlyOnce
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Conjure_LoggedOnlyOnce
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0107464
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents+<c_IsNewCast_Conjure_LoggedOnlyOnce>d__2.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_Logging_ScrollEvents.cs:63
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -797,11 +941,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Loom_LoggedOnlyOnce]
       name: c_IsNewCast_Loom_LoggedOnlyOnce
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Loom_LoggedOnlyOnce
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0119485
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents+<c_IsNewCast_Loom_LoggedOnlyOnce>d__3.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_Logging_ScrollEvents.cs:86
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -814,11 +966,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_Logging_ScrollEvents/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Weave_LoggedOnlyOnce]
       name: c_IsNewCast_Weave_LoggedOnlyOnce
       fullName: Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents.c_IsNewCast_Weave_LoggedOnlyOnce
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0119032
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_Logging_ScrollEvents+<c_IsNewCast_Weave_LoggedOnlyOnce>d__4.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_Logging_ScrollEvents.cs:110
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -831,9 +991,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging][suite]
       name: Integration_Eris_MatterLogging
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 3.6625364
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -847,11 +1007,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold]
       name: a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0080612
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<a0_Expected_0_MatterShaped_Pluc_NoObserver_Cold>d__0.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:22
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -864,11 +1032,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold]
       name: a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.011945
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<a1_Expected_0_MtterShaped_PluckWithALoom_NoObserver_Cold>d__1.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:47
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -881,11 +1057,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold]
       name: b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b1_Expected_1_MatterShaped_PlucDirectWeave_Cold
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0104073
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<b1_Expected_1_MatterShaped_PlucDirectWeave_Cold>d__2.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:73
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -898,11 +1082,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold]
       name: b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.b2_Expected_1_MatterShaped_PlucLoomWeave_Cold
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0104311
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<b2_Expected_1_MatterShaped_PlucLoomWeave_Cold>d__3.MoveNext
+        () [0x00046] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:99
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -915,11 +1107,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount]
       name: d_PluckWithNoObservers_Hot_RefCount
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.d_PluckWithNoObservers_Hot_RefCount
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0119856
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<d_PluckWithNoObservers_Hot_RefCount>d__4.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:127
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -932,11 +1132,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish]
       name: e_PluckWithNoObservers_Hot_ConnectedPublish
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e_PluckWithNoObservers_Hot_ConnectedPublish
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.011247
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<e_PluckWithNoObservers_Hot_ConnectedPublish>d__5.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:156
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -949,11 +1157,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish]
       name: e1_PluckWeave_Hot_ConnectedPublish
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1_PluckWeave_Hot_ConnectedPublish
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0107178
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<e1_PluckWeave_Hot_ConnectedPublish>d__6.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:188
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -966,11 +1182,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1]
       name: e1x_PluckWeave_Hot_Replay1
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e1x_PluckWeave_Hot_Replay1
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0110566
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<e1x_PluckWeave_Hot_Replay1>d__7.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:220
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -983,11 +1207,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish]
       name: e2_PluckWeave_Hot_ConnectedPublish
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.e2_PluckWeave_Hot_ConnectedPublish
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0125556
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<e2_PluckWeave_Hot_ConnectedPublish>d__8.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:252
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1000,11 +1232,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub]
       name: f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0106628
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<f1a_Hot_Replay_Pluck_2Weave_Yield_BeforeSub>d__9.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:283
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1017,11 +1257,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub]
       name: f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0115964
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<f1b_Hot_Replay_Pluck_2Weave_Yield_AfterSub>d__10.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:316
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1034,11 +1282,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub]
       name: f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0120601
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<f3a_Hot_Publish_Pluck_2Weave_Yield_BeforeSub>d__11.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:349
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1051,11 +1307,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub]
       name: f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0113131
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Integration_Eris_MatterLogging+<f3b_Hot_Publish_Pluck_2Weave_Yield_AfterSub>d__12.MoveNext
+        () [0x0003a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\eris\\Integration_Eris_MatterLogging.cs:382
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1068,8 +1332,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold]
       name: g_SanityCheck_Process_Cold
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g_SanityCheck_Process_Cold
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0160167
       messages: 
       output: 
       stacktrace: 
@@ -1085,8 +1349,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g1_SanityCheck_Process_Hot_PrePublishLogging]
       name: g1_SanityCheck_Process_Hot_PrePublishLogging
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g1_SanityCheck_Process_Hot_PrePublishLogging
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.1641895
       messages: 
       output: 
       stacktrace: 
@@ -1102,8 +1366,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g2_SanityCheck_Process_Hot_PostPublishLogging]
       name: g2_SanityCheck_Process_Hot_PostPublishLogging
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g2_SanityCheck_Process_Hot_PostPublishLogging
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.1636641
       messages: 
       output: 
       stacktrace: 
@@ -1119,8 +1383,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Integration_Eris_MatterLogging/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g3_SanityCheck_Process_Hot_JustReceivalsLogging]
       name: g3_SanityCheck_Process_Hot_JustReceivalsLogging
       fullName: Rzeka.Tests.Integration.Integration_Eris_MatterLogging.g3_SanityCheck_Process_Hot_JustReceivalsLogging
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.1647685
       messages: 
       output: 
       stacktrace: 
@@ -1136,9 +1400,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients][suite]
       name: Looms_Multiple_Ingredients
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.1946861
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1152,11 +1416,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a_]
       name: a_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a_
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0088087
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Looms_Multiple_Ingredients+<a_>d__0.MoveNext
+        () [0x0007c] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\matter\\Looms_Multiple_Ingredients.cs:53
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1169,11 +1441,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a1_]
       name: a1_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a1_
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0150161
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Looms_Multiple_Ingredients+<a1_>d__1.MoveNext
+        () [0x00089] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\matter\\Looms_Multiple_Ingredients.cs:87
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1186,11 +1466,43 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a11_]
       name: a11_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.a11_
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.1139317
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: 2 while actual:
+        0.
+
+        Assertion failure. Values are not equal.
+
+        Expected: 0
+        == 2'
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.ANumber]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.AName]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.LoomingScroll_2`3[Rzeka.Tests.ANumber,Rzeka.Tests.AName,Rzeka.Tests.UserWelcomingText]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestBase.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestBase.cs:51
+        \r\n  at Rzeka.Tests.Integration.Looms_Multiple_Ingredients+<a11_>d__2.MoveNext
+        () [0x00119] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\matter\\Looms_Multiple_Ingredients.cs:134
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1203,11 +1515,61 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.b_]
       name: b_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.b_
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0166067
+      messages: 'Unhandled log message: ''[Error] Value cannot be null.
+
+        Parameter
+        name: source''. Use UnityEngine.TestTools.LogAssert.Expect'
+      output: "<color=yellow>ughhhh False Rzeka.LoomingScroll_2`3[Rzeka.Tests.ANumber,Rzeka.Tests.UserData,Rzeka.Tests.UserWelcomingText]</color>\r\n<color=yellow>ughhhh
+        True</color>\r\nValue cannot be null.\r\nParameter name: source\r\n  at System.Reactive.Linq.Observable.Do[TSource]
+        (System.IObservable`1[T] source, System.Action`1[T] onNext) [0x0000a] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable.Single.cs:271
+        \r\n  at Rzeka.TBindingScroll.GetObservableIngredient[T] () [0x000b6] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingScroll.cs:84
+        \r\n  at Rzeka.AlteringScroll`1[T].ExecuteCast () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\AlteringScroll.cs:100
+        \r\n  at Rzeka.AlteringScroll`1[T].Cast () [0x00002] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\AlteringScroll.cs:56
+        \r\n"
+      stacktrace: 'Rzeka.AlteringScroll`1<Rzeka.Tests.UserWelcomingText>:Cast ()
+        (at Assets/rzeka/Runtime/rzeka/scrolls/AlteringScroll.cs:71)
+
+        Rzeka.TBindingScroll:ProvideIngredient<Rzeka.Tests.UserWelcomingText>
+        (Rzeka.IConjuringScroll) (at Assets/rzeka/Runtime/rzeka/interface/TBindingScroll.cs:58)
+
+        Rzeka.TConjuringScroll`1<Rzeka.Tests.UserWelcomingText>:<ListenForIntroductions>b__7_4
+        (Rzeka.TBindingScroll) (at Assets/rzeka/Runtime/rzeka/interface/TConjuringScroll.cs:48)
+
+        System.Reactive.Subjects.Subject`1<Rzeka.SpellOccurence>:OnNext
+        (Rzeka.SpellOccurence)
+
+        Rzeka.TScrollBase:SendOccurence (Rzeka.SpellOccurenceCategory)
+        (at Assets/rzeka/Runtime/rzeka/interface/TScrollBase.cs:37)
+
+        Rzeka.TScrollBase:InitializeSpellBase
+        () (at Assets/rzeka/Runtime/rzeka/interface/TScrollBase.cs:47)
+
+        Rzeka.TBindingScroll:InitializeBindingSpell
+        () (at Assets/rzeka/Runtime/rzeka/interface/TBindingScroll.cs:100)
+
+        Rzeka.AlteringScroll`1<Rzeka.Tests.UserWelcomingText>:.ctor
+        (object,System.IObserver`1<Rzeka.Tests.UserWelcomingText>,System.Reactive.Subjects.ISubject`1<Rzeka.SpellOccurence>,System.Reactive.Subjects.ISubject`1<Rzeka.MatterOccurence>)
+        (at Assets/rzeka/Runtime/rzeka/scrolls/AlteringScroll.cs:43)
+
+        Rzeka.SpringRiver:Weave<Rzeka.Tests.UserWelcomingText>
+        (object,System.IObserver`1<Rzeka.Tests.UserWelcomingText>) (at Assets/rzeka/Runtime/rzeka/core/SpringRiver.cs:44)
+
+        Rzeka.Tests.TestBase:Weave_UserWelcomingText
+        (System.Action`1<Rzeka.Tests.UserWelcomingText>) (at Assets/rzeka/Tests/PlayMode/rzeka/utils/TestBase.cs:157)
+
+        Rzeka.Tests.Integration.Looms_Multiple_Ingredients/<b_>d__3:MoveNext
+        () (at Assets/rzeka/Tests/PlayMode/rzeka/integration/matter/Looms_Multiple_Ingredients.cs:157)
+
+        UnityEngine.SetupCoroutine:InvokeMoveNext
+        (System.Collections.IEnumerator,intptr)
+
+
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1220,11 +1582,19 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.c_]
       name: c_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.c_
-      resultStatus: 0
-      duration: 0
-      messages: 
+      resultStatus: 2
+      duration: 0.0109838
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: source'
       output: 
-      stacktrace: 
+      stacktrace: "  at System.ObservableExtensions.Subscribe[T] (System.IObservable`1[T]
+        source, System.Action`1[T] onNext) [0x0000a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Observable.Extensions.cs:52
+        \r\n  at Rzeka.Tests.Integration.Looms_Multiple_Ingredients+<c_>d__4.MoveNext
+        () [0x0004b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\matter\\Looms_Multiple_Ingredients.cs:175
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1237,11 +1607,43 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/Looms_Multiple_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.Looms_Multiple_Ingredients.d_]
       name: d_
       fullName: Rzeka.Tests.Integration.Looms_Multiple_Ingredients.d_
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0221485
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: (1, Alicja)
+        while actual: (0, ).
+
+        Assertion failure. Values are not equal.
+
+        Expected:
+        (0, ) == (1, Alicja)'
+      output: '<color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.ANumber]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.ConjuringScroll`1[Rzeka.Tests.AName]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+        <color=yellow>ughhhh False Rzeka.LoomingScroll_2`3[Rzeka.Tests.ANumber,Rzeka.Tests.AName,Rzeka.Tests.ANumberAndName]</color>
+
+        <color=yellow>ughhhh
+        False</color>
+
+'
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestBase.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestBase.cs:51
+        \r\n  at Rzeka.Tests.Integration.Looms_Multiple_Ingredients+<d_>d__5.MoveNext
+        () [0x00130] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\matter\\Looms_Multiple_Ingredients.cs:232
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1254,8 +1656,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
       name: New_Process
       fullName: Rzeka.Tests.Integration.New_Process
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.6700045
       messages: 
       output: 
       stacktrace: 
@@ -1270,8 +1672,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_Logged]
       name: a1_Created_Pluck_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_Logged
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0755625
       messages: 
       output: 
       stacktrace: 
@@ -1287,8 +1689,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_NotNull]
       name: a1_Created_Pluck_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_NotNull
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0172049
       messages: 
       output: 
       stacktrace: 
@@ -1304,8 +1706,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a2_Created_Loom_Logged]
       name: a2_Created_Loom_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_Logged
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0279741
       messages: 
       output: 
       stacktrace: 
@@ -1321,8 +1723,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a2_Created_Loom_NotNull]
       name: a2_Created_Loom_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_NotNull
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0144497
       messages: 
       output: 
       stacktrace: 
@@ -1338,8 +1740,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a3_Created_Weave_Logged]
       name: a3_Created_Weave_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_Logged
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0164239
       messages: 
       output: 
       stacktrace: 
@@ -1355,212 +1757,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.a3_Created_Weave_NotNull]
       name: a3_Created_Weave_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_NotNull
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1057
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking]
-      name: b1_2_Cast_Plucking
-      fullName: Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1058
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking_Logged]
-      name: b1_2_Cast_Plucking_Logged
-      fullName: Rzeka.Tests.Integration.New_Process.b1_2_Cast_Plucking_Logged
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1059
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_1_Cast_Looming]
-      name: b2_1_Cast_Looming
-      fullName: Rzeka.Tests.Integration.New_Process.b2_1_Cast_Looming
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1060
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_2_Cast_Looming_Logged]
-      name: b2_2_Cast_Looming_Logged
-      fullName: Rzeka.Tests.Integration.New_Process.b2_2_Cast_Looming_Logged
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1061
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_3_Cast_Looming_FromAnotherLoom]
-      name: b2_3_Cast_Looming_FromAnotherLoom
-      fullName: Rzeka.Tests.Integration.New_Process.b2_3_Cast_Looming_FromAnotherLoom
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1062
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_4_Cast_Looming_Logged_FromAnotherLoom]
-      name: b2_4_Cast_Looming_Logged_FromAnotherLoom
-      fullName: Rzeka.Tests.Integration.New_Process.b2_4_Cast_Looming_Logged_FromAnotherLoom
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1063
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_1_Cast_Looming]
-      name: b2_Flipped_1_Cast_Looming
-      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_1_Cast_Looming
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1064
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_2_Cast_Looming_Logged]
-      name: b2_Flipped_2_Cast_Looming_Logged
-      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_2_Cast_Looming_Logged
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1065
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_3_Cast_Looming_FromAnotherLoom]
-      name: b2_Flipped_3_Cast_Looming_FromAnotherLoom
-      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_3_Cast_Looming_FromAnotherLoom
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1066
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom]
-      name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
-      fullName: Rzeka.Tests.Integration.New_Process.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1067
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b3_Cast_Weave]
-      name: b3_Cast_Weave
-      fullName: Rzeka.Tests.Integration.New_Process.b3_Cast_Weave
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
-    - id: 1068
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.b3b_Cast_Weave_FlippedOrder]
-      name: b3b_Cast_Weave_FlippedOrder
-      fullName: Rzeka.Tests.Integration.New_Process.b3b_Cast_Weave_FlippedOrder
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0149242
       messages: 
       output: 
       stacktrace: 
@@ -1576,8 +1774,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.c1_NoMana_Created_Weave]
       name: c1_NoMana_Created_Weave
       fullName: Rzeka.Tests.Integration.New_Process.c1_NoMana_Created_Weave
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.4150601
       messages: 
       output: 
       stacktrace: 
@@ -1593,8 +1791,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.c2_NoMana_Cast_Weave]
       name: c2_NoMana_Cast_Weave
       fullName: Rzeka.Tests.Integration.New_Process.c2_NoMana_Cast_Weave
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0380432
       messages: 
       output: 
       stacktrace: 
@@ -1610,8 +1808,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.d1_Forgotten_Plucking]
       name: d1_Forgotten_Plucking
       fullName: Rzeka.Tests.Integration.New_Process.d1_Forgotten_Plucking
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0162892
       messages: 
       output: 
       stacktrace: 
@@ -1627,8 +1825,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.d3_Forgotten_Weaving]
       name: d3_Forgotten_Weaving
       fullName: Rzeka.Tests.Integration.New_Process.d3_Forgotten_Weaving
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.0165241
       messages: 
       output: 
       stacktrace: 
@@ -1640,12 +1838,216 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1050
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+    - id: 1061
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
+      name: New_Process_Circumstances
+      fullName: Rzeka.Tests.Integration.New_Process_Circumstances
+      resultStatus: 2
+      duration: 0.1071043
+      messages: One or more child tests had errors
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1118
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1062
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.a_are_any_circumstances_set]
+      name: a_are_any_circumstances_set
+      fullName: Rzeka.Tests.Integration.New_Process_Circumstances.a_are_any_circumstances_set
+      resultStatus: 2
+      duration: 0.0940443
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: True while
+        actual: False.
+
+        Assertion failure. Values are not equal.
+
+        Expected:
+        False == True'
+      output: '<color=magenta>oik</color>
+
+'
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:29
+        \r\n  at Rzeka.Tests.Integration.New_Process_Circumstances+<a_are_any_circumstances_set>d__4.MoveNext
+        () [0x000d0] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\New_Process_Circumstances.cs:64
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
+    - id: 1063
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.b_are_two_different_weavings_receiving_same_conjurring]
+      name: b_are_two_different_weavings_receiving_same_conjurring
+      fullName: Rzeka.Tests.Integration.New_Process_Circumstances.b_are_two_different_weavings_receiving_same_conjurring
+      resultStatus: 1
+      duration: 0.0256288
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
+    - id: 1064
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.c_]
+      name: c_
+      fullName: Rzeka.Tests.Integration.New_Process_Circumstances.c_
+      resultStatus: 2
+      duration: 0.0182444
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: 44f55c61-4da1-44c1-a9f7-6d763b7e18dc
+        while actual: ed13754e-d664-4bb7-a477-ae0d55f170dc.
+
+        Assertion failure.
+        Values are not equal.
+
+        Expected: ed13754e-d664-4bb7-a477-ae0d55f170dc
+        == 44f55c61-4da1-44c1-a9f7-6d763b7e18dc'
+      output: 
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
+        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:29
+        \r\n  at Rzeka.Tests.Integration.New_Process_Circumstances+<c_>d__6.MoveNext
+        () [0x00113] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\New_Process_Circumstances.cs:98
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
+    - id: 1062
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients][suite]
+      name: New_Process_Ingredients
+      fullName: Rzeka.Tests.Integration.New_Process_Ingredients
+      resultStatus: 1
+      duration: 0.0695899
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1102
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1063
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients.a1_Cast_Weave_Has_Single_Ingredient]
+      name: a1_Cast_Weave_Has_Single_Ingredient
+      fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a1_Cast_Weave_Has_Single_Ingredient
+      resultStatus: 1
+      duration: 0.0135863
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients][suite]
+    - id: 1063
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients.a11_Cast_Weave_Has_Single_Ingredient_Flipped]
+      name: a11_Cast_Weave_Has_Single_Ingredient_Flipped
+      fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a11_Cast_Weave_Has_Single_Ingredient_Flipped
+      resultStatus: 1
+      duration: 0.0144426
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1061
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients][suite]
+    - id: 1064
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients.a2_Cast_Weave_Has_Expected_Ingredient]
+      name: a2_Cast_Weave_Has_Expected_Ingredient
+      fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a2_Cast_Weave_Has_Expected_Ingredient
+      resultStatus: 1
+      duration: 0.0164179
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients][suite]
+    - id: 1065
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Ingredients/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients.b1_Blocked_Loom_Does_Not_Count_As_Ingredient]
+      name: b1_Blocked_Loom_Does_Not_Count_As_Ingredient
+      fullName: Rzeka.Tests.Integration.New_Process_Ingredients.b1_Blocked_Loom_Does_Not_Count_As_Ingredient
+      resultStatus: 1
+      duration: 0.017737
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1062
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Ingredients][suite]
     - id: 1074
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.x1_Weave_Got_Plucking]
-      name: x1_Weave_Got_Plucking
-      fullName: Rzeka.Tests.Integration.New_Process.x1_Weave_Got_Plucking
-      resultStatus: 0
-      duration: 0
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals][suite]
+      name: New_Process_Receivals
+      fullName: Rzeka.Tests.Integration.New_Process_Receivals
+      resultStatus: 1
+      duration: 0.098623
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1091
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1075
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Receivals/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals.a1_Weave_Got_Plucking]
+      name: a1_Weave_Got_Plucking
+      fullName: Rzeka.Tests.Integration.New_Process_Receivals.a1_Weave_Got_Plucking
+      resultStatus: 1
+      duration: 0.0128577
       messages: 
       output: 
       stacktrace: 
@@ -1655,14 +2057,149 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+      parentId: 1074
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals][suite]
+    - id: 1076
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Receivals/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals.a2_Weave_Got_Plucking_Multiple]
+      name: a2_Weave_Got_Plucking_Multiple
+      fullName: Rzeka.Tests.Integration.New_Process_Receivals.a2_Weave_Got_Plucking_Multiple
+      resultStatus: 1
+      duration: 0.0151175
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1074
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals][suite]
+    - id: 1077
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Receivals/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals.a3_Weave_Got_Looming]
+      name: a3_Weave_Got_Looming
+      fullName: Rzeka.Tests.Integration.New_Process_Receivals.a3_Weave_Got_Looming
+      resultStatus: 1
+      duration: 0.0309717
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1074
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals][suite]
+    - id: 1078
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Receivals/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals.a4_Weave_Got_Double_Looming]
+      name: a4_Weave_Got_Double_Looming
+      fullName: Rzeka.Tests.Integration.New_Process_Receivals.a4_Weave_Got_Double_Looming
+      resultStatus: 1
+      duration: 0.0321915
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1074
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Receivals][suite]
+    - id: 1068
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+      name: New_Process_Spell_Casting
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting
+      resultStatus: 1
+      duration: 0.2512976
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1099
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
+    - id: 1069
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking]
+      name: b1_2_Cast_Plucking
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking
+      resultStatus: 1
+      duration: 0.0117675
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1070
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking_Logged]
+      name: b1_2_Cast_Plucking_Logged
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking_Logged
+      resultStatus: 1
+      duration: 0.0151253
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1071
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_1_Cast_Looming]
+      name: b2_1_Cast_Looming
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_1_Cast_Looming
+      resultStatus: 1
+      duration: 0.0161732
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1072
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_2_Cast_Looming_Logged]
+      name: b2_2_Cast_Looming_Logged
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_2_Cast_Looming_Logged
+      resultStatus: 1
+      duration: 0.0154813
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
     - id: 1073
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process.z3x_Cast_Weave_Has_Single_Ingredient]
-      name: z3x_Cast_Weave_Has_Single_Ingredient
-      fullName: Rzeka.Tests.Integration.New_Process.z3x_Cast_Weave_Has_Single_Ingredient
-      resultStatus: 0
-      duration: 0
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_3_Cast_Looming_FromAnotherLoom]
+      name: b2_3_Cast_Looming_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_3_Cast_Looming_FromAnotherLoom
+      resultStatus: 1
+      duration: 0.0159617
       messages: 
       output: 
       stacktrace: 
@@ -1672,14 +2209,201 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1050
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process][suite]
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1074
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_4_Cast_Looming_Logged_FromAnotherLoom]
+      name: b2_4_Cast_Looming_Logged_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_4_Cast_Looming_Logged_FromAnotherLoom
+      resultStatus: 1
+      duration: 0.0157041
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1075
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_1_Cast_Looming]
+      name: b2_Flipped_1_Cast_Looming
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_1_Cast_Looming
+      resultStatus: 1
+      duration: 0.0150857
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1076
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_2_Cast_Looming_Logged]
+      name: b2_Flipped_2_Cast_Looming_Logged
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_2_Cast_Looming_Logged
+      resultStatus: 1
+      duration: 0.0145465
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1077
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom]
+      name: b2_Flipped_3_Cast_Looming_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom
+      resultStatus: 1
+      duration: 0.0163045
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1079
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2]
+      name: b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
+      resultStatus: 1
+      duration: 0.0141303
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1078
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom]
+      name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
+      resultStatus: 1
+      duration: 0.0141601
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1080
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2]
+      name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
+      resultStatus: 1
+      duration: 0.0149054
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1081
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b3_Cast_Weave]
+      name: b3_Cast_Weave
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b3_Cast_Weave
+      resultStatus: 1
+      duration: 0.014236
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1082
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b3b_Cast_Weave_FlippedOrder]
+      name: b3b_Cast_Weave_FlippedOrder
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b3b_Cast_Weave_FlippedOrder
+      resultStatus: 1
+      duration: 0.0138909
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1083
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b4_Cast_Weave_Logged_FromLoom]
+      name: b4_Cast_Weave_Logged_FromLoom
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b4_Cast_Weave_Logged_FromLoom
+      resultStatus: 1
+      duration: 0.0153788
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1068
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
+    - id: 1087
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Spell_Casting/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting.b4b_Cast_Weave_Logged_FromLoom_FlippedOrder]
+      name: b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
+      fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
+      resultStatus: 1
+      duration: 0.0158439
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1071
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Spell_Casting][suite]
     - id: 1090
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
       name: Rx
       fullName: Rzeka.Tests.Rx
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 0.39509
       messages: 
       output: 
       stacktrace: 
@@ -1690,147 +2414,12 @@ MonoBehaviour:
       categories: []
       parentId: 1088
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
-    - id: 1075
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-      name: Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1090
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
-    - id: 1076
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable]
-      name: a_Do_NOT_getting_called_on_cold_observable
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1077
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_hot_observable]
-      name: b_Do_GETS_called_on_hot_observable
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_hot_observable
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1078
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable]
-      name: c_Do_transforms_HOT_observable_to_a_COLD_observable
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1079
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber]
-      name: d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1080
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer]
-      name: e_HotToCold_stacked_observable_with_ONE_observer
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1081
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers]
-      name: f_HotToCold_stacked_observable_with_TWO_observers
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
-    - id: 1082
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers]
-      name: g_HotToHot_stacked_observable_with_TWO_observers
-      fullName: Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers
-      resultStatus: 0
-      duration: 0
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1075
-      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Rzeka_Rx_Understanding_Hot_To_Cold_Observable_Chains][suite]
     - id: 1083
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
       name: Understanding_AndThenWhen
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen
-      resultStatus: 0
-      duration: 0
+      resultStatus: 1
+      duration: 1.860166
       messages: 
       output: 
       stacktrace: 
@@ -1841,12 +2430,12 @@ MonoBehaviour:
       categories: []
       parentId: 1090
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
-    - id: 1084
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.a_]
-      name: a_
-      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.a_
-      resultStatus: 0
-      duration: 0
+    - id: 1097
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.a_andthenwhen_has_a_ziplike_blocking_behaviour]
+      name: a_andthenwhen_has_a_ziplike_blocking_behaviour
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.a_andthenwhen_has_a_ziplike_blocking_behaviour
+      resultStatus: 1
+      duration: 0.4588671
       messages: 
       output: 
       stacktrace: 
@@ -1856,14 +2445,14 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1083
+      parentId: 1096
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
-    - id: 1085
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.b_]
-      name: b_
-      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.b_
-      resultStatus: 0
-      duration: 0
+    - id: 1098
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.b_andthenwhen_has_a_ziplike_blocking_behaviour_proof_possibly]
+      name: b_andthenwhen_has_a_ziplike_blocking_behaviour_proof_possibly
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.b_andthenwhen_has_a_ziplike_blocking_behaviour_proof_possibly
+      resultStatus: 1
+      duration: 0.4611616
       messages: 
       output: 
       stacktrace: 
@@ -1873,8 +2462,379 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1083
+      parentId: 1096
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1099
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.c_andthenwhen_has_a_ziplike_blocking_behaviour_proof_definitely]
+      name: c_andthenwhen_has_a_ziplike_blocking_behaviour_proof_definitely
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.c_andthenwhen_has_a_ziplike_blocking_behaviour_proof_definitely
+      resultStatus: 1
+      duration: 0.4494688
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1096
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1092
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.d_andthenwhen_throws_error_when_one_of_its_observables_throws_it]
+      name: d_andthenwhen_throws_error_when_one_of_its_observables_throws_it
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.d_andthenwhen_throws_error_when_one_of_its_observables_throws_it
+      resultStatus: 1
+      duration: 0.0997468
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1088
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1093
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.e_andthenwhen_does_NOT_complete_untill_ALL_of_its_observables_complete]
+      name: e_andthenwhen_does_NOT_complete_untill_ALL_of_its_observables_complete
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.e_andthenwhen_does_NOT_complete_untill_ALL_of_its_observables_complete
+      resultStatus: 1
+      duration: 0.1003461
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1088
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1094
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_AndThenWhen/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen.f_andthenwhen_DOES_complete_WHEN_ALL_of_its_observables_complete]
+      name: f_andthenwhen_DOES_complete_WHEN_ALL_of_its_observables_complete
+      fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.f_andthenwhen_DOES_complete_WHEN_ALL_of_its_observables_complete
+      resultStatus: 1
+      duration: 0.2654867
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1088
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_AndThenWhen][suite]
+    - id: 1095
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest][suite]
+      name: Understanding_CombineLatest
+      fullName: Rzeka.Tests.Rx.Understanding_CombineLatest
+      resultStatus: 1
+      duration: 1.6435946
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1118
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1096
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_CombineLatest/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest.a_will_need_all_of_observables_to_emit_at_least_once]
+      name: a_will_need_all_of_observables_to_emit_at_least_once
+      fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.a_will_need_all_of_observables_to_emit_at_least_once
+      resultStatus: 1
+      duration: 0.2596968
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1095
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest][suite]
+    - id: 1097
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_CombineLatest/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest.b_will_emit_each_time_one_of_the_observables_emit]
+      name: b_will_emit_each_time_one_of_the_observables_emit
+      fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.b_will_emit_each_time_one_of_the_observables_emit
+      resultStatus: 1
+      duration: 0.4440054
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1095
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest][suite]
+    - id: 1098
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_CombineLatest/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest.c_buffered_last_observable_will_keep_same_value]
+      name: c_buffered_last_observable_will_keep_same_value
+      fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.c_buffered_last_observable_will_keep_same_value
+      resultStatus: 1
+      duration: 0.4501224
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1095
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest][suite]
+    - id: 1099
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_CombineLatest/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest.d_consecutive_values_of_active_observable_will_create_new_combinations]
+      name: d_consecutive_values_of_active_observable_will_create_new_combinations
+      fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.d_consecutive_values_of_active_observable_will_create_new_combinations
+      resultStatus: 1
+      duration: 0.4659911
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1095
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_CombineLatest][suite]
+    - id: 1092
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+      name: Understanding_Hot_To_Cold_Observable_Chains
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains
+      resultStatus: 1
+      duration: 0.8334741
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1107
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1093
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable_without_observers]
+      name: a_Do_NOT_getting_called_on_cold_observable_without_observers
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable_without_observers
+      resultStatus: 1
+      duration: 0.0994549
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1094
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_connected_hot_observable_without_observers]
+      name: b_Do_GETS_called_on_connected_hot_observable_without_observers
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_connected_hot_observable_without_observers
+      resultStatus: 1
+      duration: 0.0943142
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1095
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable]
+      name: c_Do_transforms_HOT_observable_to_a_COLD_observable
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable
+      resultStatus: 1
+      duration: 0.0997271
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1096
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber]
+      name: d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
+      resultStatus: 1
+      duration: 0.1001171
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1097
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer]
+      name: e_HotToCold_stacked_observable_with_ONE_observer
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer
+      resultStatus: 1
+      duration: 0.0988402
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1099
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers]
+      name: f_HotToCold_stacked_observable_with_TWO_observers
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers
+      resultStatus: 1
+      duration: 0.0999528
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1093
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1099
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers]
+      name: g_HotToHot_stacked_observable_with_TWO_observers
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers
+      resultStatus: 1
+      duration: 0.0998146
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1092
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1100
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Hot_To_Cold_Observable_Chains/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_the_dangers_of_such_misunderstanding]
+      name: g_the_dangers_of_such_misunderstanding
+      fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_the_dangers_of_such_misunderstanding
+      resultStatus: 1
+      duration: 0.0991912
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1093
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains][suite]
+    - id: 1099
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish][suite]
+      name: Understanding_Publish
+      fullName: Rzeka.Tests.Rx.Understanding_Publish
+      resultStatus: 1
+      duration: 0.3917801
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1105
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1100
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish.a_shared_subscription_through_publish]
+      name: a_shared_subscription_through_publish
+      fullName: Rzeka.Tests.Rx.Understanding_Publish.a_shared_subscription_through_publish
+      resultStatus: 1
+      duration: 0.1770911
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1099
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish][suite]
+    - id: 1101
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish.b_without_publish_side_effects_triggers_twice]
+      name: b_without_publish_side_effects_triggers_twice
+      fullName: Rzeka.Tests.Rx.Understanding_Publish.b_without_publish_side_effects_triggers_twice
+      resultStatus: 1
+      duration: 0.1607581
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1099
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish][suite]
+    - id: 1112
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish.c_weird_behaviour_of_publish_selector_overload_not_sure_of_its_use]
+      name: c_weird_behaviour_of_publish_selector_overload_not_sure_of_its_use
+      fullName: Rzeka.Tests.Rx.Understanding_Publish.c_weird_behaviour_of_publish_selector_overload_not_sure_of_its_use
+      resultStatus: 1
+      duration: 0.0391974
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1109
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish][suite]
     - id: 2646
       uniqueId: '[sanctuary.event-stream.tests.integration.dll][suite]'
       name: sanctuary.event-stream.tests.integration.dll
@@ -7387,18 +8347,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 2655
       parentUniqueId: Zenject-IntegrationTests-Editor.dll/Zenject/Tests/[Zenject-IntegrationTests-Editor][Zenject.Tests.TestSceneContextEvents][suite]
-    m_ResultText: 'sanctuary.event-stream.tests.integration.dll (0.862s)
-
-      ---
-
-      One
-      or more child tests had errors'
+    m_ResultText: b_are_two_different_weavings_receiving_same_conjurring (0.026s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ba2f3720
-      m_LastClickedID: 540487610
-      m_ExpandedIDs: 310d8f85ce91fd8519c3ef87344c948cd6646895be95c895dc8898983f9caf9a629ff99a791b40a527c860a7c30c7aa7247a0bad8cb207b3f5a5b2b4460e04b5217fcfba67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3fa7a43c6d37426d04ba1e5d1ebab89ec78794def5a2b91f01cb0fef1c1a216f3233320f343d00af43d10e8f5330266fb8394defe820e000083b30c0affedab17c7b8231ad451aa1eba2f37209ed8dc247f7585273ee43930bc2de3344d0df4361a4a753d87be6e3e1300753f0e5fc841d261b64604bb4b4fb38490510e7900546b79745b733fd067c4403768d9746071c2d06778fa14837dffffff7f
+      scrollPos: {x: 0, y: 164.50073}
+      m_SelectedIDs: b880294c
+      m_LastClickedID: 1277788344
+      m_ExpandedIDs: 310d8f85ce91fd8519c3ef87344c948c5297c78fd6646895be95c895dc8898983f9caf9a629ff99aff06869e791b40a527c860a7c30c7aa7247a0bad8cb207b3f5a5b2b4460e04b5217fcfbac8d93abb67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3fa7a43c6d37426d0b9c3ecd04ba1e5d1ebab89ecce3ee3ed78794def5a2b91f01cb0fef1c1a216f3233320f343d00af4fb2041f53d10e8f5330266fb8394defe820e000083b30c0affedab17d14fb419c7b8231ad451aa1eba2f37209ed8dc247f7585273ee43930bc2de3344d0df4361d6c2f3d1a4a753d87be6e3e1300753f0e5fc84199010043d261b64604bb4b4fb38490510e7900546b79745b733fd067c4403768d9746071c2d06778fa14837dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -17000,8 +17955,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 73
+    x: -32000
+    y: -31970
     width: 888
     height: 464
   m_ViewDataDictionary: {fileID: 0}
@@ -17099,8 +18054,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 558
+    x: -32000
+    y: -31485
     width: 888
     height: 433
   m_ViewDataDictionary: {fileID: 0}
@@ -18242,8 +19197,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 889
-    y: 73
+    x: -31111
+    y: -31970
     width: 601
     height: 386
   m_ViewDataDictionary: {fileID: 0}
@@ -18262,8 +19217,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders:
-    - Assets/rzeka/Tests/PlayMode
+    m_Folders: []
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 0
@@ -18277,7 +19231,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ae890000
     m_LastClickedID: 35246
-    m_ExpandedIDs: 000000008e640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e650000506500005265000054650000
+    m_ExpandedIDs: 0000000096640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -18302,10 +19256,10 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 1676}
+    scrollPos: {x: 0, y: 751.001}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000008e640000f2640000f4640000f6640000f8640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e650000506500005265000054650000
+    m_ExpandedIDs: ffffffff0000000096640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -18394,7 +19348,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 32fbffff
+      m_ExpandedIDs: 96f3ffffd8f3ffff96f4ffff7cf5ffffbef5ffff7cf6ffff62f7ffffa4f7ffff62f8ffff48f9ffff8af9ffff56faffff36fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -18438,8 +19392,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1492
-    y: 73
+    x: -30508
+    y: -31970
     width: 427
     height: 918
   m_ViewDataDictionary: {fileID: 0}
@@ -18453,7 +19407,7 @@ MonoBehaviour:
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
   m_LastInspectedObjectInstanceID: -1
-  m_LastVerticalScrollValue: 353
+  m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
   m_LockTracker:

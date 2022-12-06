@@ -5,7 +5,7 @@ namespace Rzeka.Tests
     public struct ANumber : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
         public Type Type { get; }
         
@@ -24,7 +24,7 @@ namespace Rzeka.Tests
     public struct AName : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
         public Type Type { get; }
         
@@ -43,7 +43,7 @@ namespace Rzeka.Tests
     public struct ANumberAndName : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
         public Type Type { get; }
         
@@ -65,7 +65,7 @@ namespace Rzeka.Tests
     public struct UserData : TMatter
     {
         public string Description => "Test matter of user data";
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
         public Type Type { get; }
         
@@ -88,7 +88,7 @@ namespace Rzeka.Tests
     public struct UserWelcomingText : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; }
+        public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
         public Type Type { get; }
         

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using UnityEngine;
 
 namespace Rzeka
 {
@@ -16,8 +17,8 @@ namespace Rzeka
         public LoomingScroll_1(
             object who,
             Func<IObservable<T>, IObservable<Q>> spell,
-            ISubject<SpellOccurence> spellStream, 
-            ISubject<MatterOccurence> matterStream) : base(who, spellStream, matterStream) 
+            ISubject<SpellOccurence> spellStream,
+            ISubject<MatterOccurence> matterStream) : base(who, spellStream, matterStream)
         {
             this.spell = spell;
 
@@ -30,33 +31,44 @@ namespace Rzeka
             { typeof(T), new List<IConjuringScroll>() },
         };
 
-        // LOOMING SCROLL IS BASICALLY ONLY CAST FROM THE LIBRARY AS AskForIngredient 
-        // WHEN IT WAS BLOCKED
-        // IF IT WASNT BLOCKED IT WILL BE CAST IMMEDIATELY
-        // TODO WHAT IF IT ISNT USED BY ANY WEAVING, WHY WOULD IT BE CAST THEN
-        // TODO IT NEEDS CLEANING 
         protected override IObservable<Q> GetConjuring()
         {
-            // TODO So before I thought I had this perfect idea to handle circumstances
-            // TODO automatically here when the spell is being cast
-            // * however.. THE SAME PROBLEM AS WITH PUSHING, 
-            // * A HOT OBSERVABLE WILL BE FROZEN WITH such .DO
-            // ! For now circumstances will have to be assigned manually
-            // ? Could this be handled with an additonal interface/contract below IObservable?
-            
+            /* ⭐ ---- ---- */
+
             T lastT = default(T);
-            IObserver<T> observerT = Observer.Create<T>(onNext: nextT => lastT = nextT);
-            IObservable<T> ingredientT = ThisAsBinding.GetObservableIngredient<T>(observerT);
+            IObservable<T> ingredientT = ThisAsBinding
+                .GetObservableIngredient<T>()
+                .Do(nextT =>
+                {
+                    lastT = nextT;
+                });
 
             IObservable<Q> conjuring = spell.Invoke(ingredientT)
-                .Do(matter => {
-                    matter.SetCircumstances(lastT); // ? will this workkkkkk
+                .Select(matter =>
+                {
+
+                    /* ⭐ ---- ---- */
+
+                    matter = matter.WithCircumstances<Q>(lastT);
+
                     ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
+
+                    return matter;
+
+                    /* ---- ---- 🌠 */
+
                 })
-                .Publish() // TODO PROVIDE ALTERNATIVES
+                .Multicast(new ReplaySubject<Q>(bufferSize: 1)) // ? provide alternatives
                 .RefCount();
 
             return conjuring;
+
+            /* ---- ---- 🌠 */
+        }
+
+        public override void Dispose()
+        {
+            base.Dispose();
         }
     }
 }

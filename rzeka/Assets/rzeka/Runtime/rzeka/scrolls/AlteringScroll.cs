@@ -72,7 +72,7 @@ namespace Rzeka
 
                 // todo well well
                 Debug.LogError(ex.Message);
-                Debug.LogError(ex.StackTrace);
+                // Debug.LogError(ex.StackTrace);
 
                 throw ex;
 
