@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 350}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 138
+  controlID: 108
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -140,7 +140,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 889
+    width: 860
     height: 939
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
@@ -163,10 +163,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 889
+    width: 860
     height: 485
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 14}
@@ -190,7 +190,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 485
-    width: 889
+    width: 860
     height: 454
   m_MinSize: {x: 101, y: 121}
   m_MaxSize: {x: 4001, y: 4021}
@@ -218,9 +218,9 @@ MonoBehaviour:
   - {fileID: 11}
   m_Position:
     serializedVersion: 2
-    x: 889
+    x: 860
     y: 0
-    width: 603
+    width: 632
     height: 939
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
@@ -243,7 +243,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 603
+    width: 632
     height: 407
   m_MinSize: {x: 232, y: 271}
   m_MaxSize: {x: 10002, y: 10021}
@@ -269,10 +269,10 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
     y: 407
-    width: 603
+    width: 632
     height: 532
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 102, y: 121}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 20}
@@ -325,9 +325,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -31111
-    y: -31563
-    width: 601
+    x: 860
+    y: 480
+    width: 630
     height: 511
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -365,9 +365,9 @@ MonoBehaviour:
       uniqueId: '[rzeka][suite]'
       name: rzeka
       fullName: rzeka
-      resultStatus: 2
-      duration: 0.1337831
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.3990907
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -381,9 +381,9 @@ MonoBehaviour:
       uniqueId: '[com.rzeka.unirx.tests][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll][suite]'
       name: com.rzeka.unirx.tests.dll
       fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.unirx.tests.dll
-      resultStatus: 2
-      duration: 0.1241595
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.3883278
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -447,9 +447,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/[Rzeka][suite]
       name: Rzeka
       fullName: Rzeka
-      resultStatus: 2
-      duration: 0.1164033
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.3829859
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -463,9 +463,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/[Tests][suite]
       name: Tests
       fullName: Rzeka.Tests
-      resultStatus: 2
-      duration: 0.1131221
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.38064
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -479,9 +479,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Integration][suite]
       name: Integration
       fullName: Rzeka.Tests.Integration
-      resultStatus: 2
-      duration: 0.1099538
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 1.0942185
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1657,7 +1657,7 @@ MonoBehaviour:
       name: New_Process
       fullName: Rzeka.Tests.Integration.New_Process
       resultStatus: 1
-      duration: 0.6700045
+      duration: 0.6468529
       messages: 
       output: 
       stacktrace: 
@@ -1673,7 +1673,7 @@ MonoBehaviour:
       name: a1_Created_Pluck_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_Logged
       resultStatus: 1
-      duration: 0.0755625
+      duration: 0.0725273
       messages: 
       output: 
       stacktrace: 
@@ -1690,7 +1690,7 @@ MonoBehaviour:
       name: a1_Created_Pluck_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a1_Created_Pluck_NotNull
       resultStatus: 1
-      duration: 0.0172049
+      duration: 0.0160165
       messages: 
       output: 
       stacktrace: 
@@ -1707,7 +1707,7 @@ MonoBehaviour:
       name: a2_Created_Loom_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_Logged
       resultStatus: 1
-      duration: 0.0279741
+      duration: 0.0268436
       messages: 
       output: 
       stacktrace: 
@@ -1724,7 +1724,7 @@ MonoBehaviour:
       name: a2_Created_Loom_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a2_Created_Loom_NotNull
       resultStatus: 1
-      duration: 0.0144497
+      duration: 0.0134773
       messages: 
       output: 
       stacktrace: 
@@ -1741,7 +1741,7 @@ MonoBehaviour:
       name: a3_Created_Weave_Logged
       fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_Logged
       resultStatus: 1
-      duration: 0.0164239
+      duration: 0.0170886
       messages: 
       output: 
       stacktrace: 
@@ -1758,7 +1758,7 @@ MonoBehaviour:
       name: a3_Created_Weave_NotNull
       fullName: Rzeka.Tests.Integration.New_Process.a3_Created_Weave_NotNull
       resultStatus: 1
-      duration: 0.0149242
+      duration: 0.0140965
       messages: 
       output: 
       stacktrace: 
@@ -1775,7 +1775,7 @@ MonoBehaviour:
       name: c1_NoMana_Created_Weave
       fullName: Rzeka.Tests.Integration.New_Process.c1_NoMana_Created_Weave
       resultStatus: 1
-      duration: 0.4150601
+      duration: 0.4134914
       messages: 
       output: 
       stacktrace: 
@@ -1792,7 +1792,7 @@ MonoBehaviour:
       name: c2_NoMana_Cast_Weave
       fullName: Rzeka.Tests.Integration.New_Process.c2_NoMana_Cast_Weave
       resultStatus: 1
-      duration: 0.0380432
+      duration: 0.0279168
       messages: 
       output: 
       stacktrace: 
@@ -1809,7 +1809,7 @@ MonoBehaviour:
       name: d1_Forgotten_Plucking
       fullName: Rzeka.Tests.Integration.New_Process.d1_Forgotten_Plucking
       resultStatus: 1
-      duration: 0.0162892
+      duration: 0.0139889
       messages: 
       output: 
       stacktrace: 
@@ -1826,7 +1826,7 @@ MonoBehaviour:
       name: d3_Forgotten_Weaving
       fullName: Rzeka.Tests.Integration.New_Process.d3_Forgotten_Weaving
       resultStatus: 1
-      duration: 0.0165241
+      duration: 0.0143841
       messages: 
       output: 
       stacktrace: 
@@ -1842,9 +1842,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
       name: New_Process_Circumstances
       fullName: Rzeka.Tests.Integration.New_Process_Circumstances
-      resultStatus: 2
-      duration: 0.1071043
-      messages: One or more child tests had errors
+      resultStatus: 1
+      duration: 0.0631905
+      messages: 
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1858,30 +1858,11 @@ MonoBehaviour:
       uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.a_are_any_circumstances_set]
       name: a_are_any_circumstances_set
       fullName: Rzeka.Tests.Integration.New_Process_Circumstances.a_are_any_circumstances_set
-      resultStatus: 2
-      duration: 0.0940443
-      messages: 'UnityEngine.Assertions.AssertionException : Expected: True while
-        actual: False.
-
-        Assertion failure. Values are not equal.
-
-        Expected:
-        False == True'
-      output: '<color=magenta>oik</color>
-
-'
-      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
-        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
-        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
-        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:29
-        \r\n  at Rzeka.Tests.Integration.New_Process_Circumstances+<a_are_any_circumstances_set>d__4.MoveNext
-        () [0x000d0] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\New_Process_Circumstances.cs:64
-        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      resultStatus: 1
+      duration: 0.0265427
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1895,7 +1876,7 @@ MonoBehaviour:
       name: b_are_two_different_weavings_receiving_same_conjurring
       fullName: Rzeka.Tests.Integration.New_Process_Circumstances.b_are_two_different_weavings_receiving_same_conjurring
       resultStatus: 1
-      duration: 0.0256288
+      duration: 0.0153751
       messages: 
       output: 
       stacktrace: 
@@ -1908,32 +1889,14 @@ MonoBehaviour:
       parentId: 1061
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances][suite]
     - id: 1064
-      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.c_]
-      name: c_
-      fullName: Rzeka.Tests.Integration.New_Process_Circumstances.c_
-      resultStatus: 2
-      duration: 0.0182444
-      messages: 'UnityEngine.Assertions.AssertionException : Expected: 44f55c61-4da1-44c1-a9f7-6d763b7e18dc
-        while actual: ed13754e-d664-4bb7-a477-ae0d55f170dc.
-
-        Assertion failure.
-        Values are not equal.
-
-        Expected: ed13754e-d664-4bb7-a477-ae0d55f170dc
-        == 44f55c61-4da1-44c1-a9f7-6d763b7e18dc'
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Integration/New_Process_Circumstances/[com.rzeka.unirx.tests][Rzeka.Tests.Integration.New_Process_Circumstances.c_are_guids_same_for_matter_received_and_also_used_as_circumstance]
+      name: c_are_guids_same_for_matter_received_and_also_used_as_circumstance
+      fullName: Rzeka.Tests.Integration.New_Process_Circumstances.c_are_guids_same_for_matter_received_and_also_used_as_circumstance
+      resultStatus: 1
+      duration: 0.0147342
+      messages: 
       output: 
-      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-        System.String userMessage) [0x00043] in <eba5c5b2c6de4af992b2cc99354e483e>:0
-        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
-        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-        comparer) [0x0005f] in <eba5c5b2c6de4af992b2cc99354e483e>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-        (T expected, T actual, System.String message) [0x00009] in <eba5c5b2c6de4af992b2cc99354e483e>:0
-        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:29
-        \r\n  at Rzeka.Tests.Integration.New_Process_Circumstances+<c_>d__6.MoveNext
-        () [0x00113] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\integration\\New_Process_Circumstances.cs:98
-        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.31\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -1947,7 +1910,7 @@ MonoBehaviour:
       name: New_Process_Ingredients
       fullName: Rzeka.Tests.Integration.New_Process_Ingredients
       resultStatus: 1
-      duration: 0.0695899
+      duration: 0.0637452
       messages: 
       output: 
       stacktrace: 
@@ -1963,7 +1926,7 @@ MonoBehaviour:
       name: a1_Cast_Weave_Has_Single_Ingredient
       fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a1_Cast_Weave_Has_Single_Ingredient
       resultStatus: 1
-      duration: 0.0135863
+      duration: 0.0125504
       messages: 
       output: 
       stacktrace: 
@@ -1980,7 +1943,7 @@ MonoBehaviour:
       name: a11_Cast_Weave_Has_Single_Ingredient_Flipped
       fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a11_Cast_Weave_Has_Single_Ingredient_Flipped
       resultStatus: 1
-      duration: 0.0144426
+      duration: 0.0138137
       messages: 
       output: 
       stacktrace: 
@@ -1997,7 +1960,7 @@ MonoBehaviour:
       name: a2_Cast_Weave_Has_Expected_Ingredient
       fullName: Rzeka.Tests.Integration.New_Process_Ingredients.a2_Cast_Weave_Has_Expected_Ingredient
       resultStatus: 1
-      duration: 0.0164179
+      duration: 0.0166511
       messages: 
       output: 
       stacktrace: 
@@ -2014,7 +1977,7 @@ MonoBehaviour:
       name: b1_Blocked_Loom_Does_Not_Count_As_Ingredient
       fullName: Rzeka.Tests.Integration.New_Process_Ingredients.b1_Blocked_Loom_Does_Not_Count_As_Ingredient
       resultStatus: 1
-      duration: 0.017737
+      duration: 0.0140734
       messages: 
       output: 
       stacktrace: 
@@ -2031,7 +1994,7 @@ MonoBehaviour:
       name: New_Process_Receivals
       fullName: Rzeka.Tests.Integration.New_Process_Receivals
       resultStatus: 1
-      duration: 0.098623
+      duration: 0.0736997
       messages: 
       output: 
       stacktrace: 
@@ -2047,7 +2010,7 @@ MonoBehaviour:
       name: a1_Weave_Got_Plucking
       fullName: Rzeka.Tests.Integration.New_Process_Receivals.a1_Weave_Got_Plucking
       resultStatus: 1
-      duration: 0.0128577
+      duration: 0.0112247
       messages: 
       output: 
       stacktrace: 
@@ -2064,7 +2027,7 @@ MonoBehaviour:
       name: a2_Weave_Got_Plucking_Multiple
       fullName: Rzeka.Tests.Integration.New_Process_Receivals.a2_Weave_Got_Plucking_Multiple
       resultStatus: 1
-      duration: 0.0151175
+      duration: 0.0137841
       messages: 
       output: 
       stacktrace: 
@@ -2081,7 +2044,7 @@ MonoBehaviour:
       name: a3_Weave_Got_Looming
       fullName: Rzeka.Tests.Integration.New_Process_Receivals.a3_Weave_Got_Looming
       resultStatus: 1
-      duration: 0.0309717
+      duration: 0.0143486
       messages: 
       output: 
       stacktrace: 
@@ -2098,7 +2061,7 @@ MonoBehaviour:
       name: a4_Weave_Got_Double_Looming
       fullName: Rzeka.Tests.Integration.New_Process_Receivals.a4_Weave_Got_Double_Looming
       resultStatus: 1
-      duration: 0.0321915
+      duration: 0.0274801
       messages: 
       output: 
       stacktrace: 
@@ -2115,7 +2078,7 @@ MonoBehaviour:
       name: New_Process_Spell_Casting
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting
       resultStatus: 1
-      duration: 0.2512976
+      duration: 0.2407997
       messages: 
       output: 
       stacktrace: 
@@ -2131,7 +2094,7 @@ MonoBehaviour:
       name: b1_2_Cast_Plucking
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking
       resultStatus: 1
-      duration: 0.0117675
+      duration: 0.0108253
       messages: 
       output: 
       stacktrace: 
@@ -2148,7 +2111,7 @@ MonoBehaviour:
       name: b1_2_Cast_Plucking_Logged
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b1_2_Cast_Plucking_Logged
       resultStatus: 1
-      duration: 0.0151253
+      duration: 0.014076
       messages: 
       output: 
       stacktrace: 
@@ -2165,7 +2128,7 @@ MonoBehaviour:
       name: b2_1_Cast_Looming
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_1_Cast_Looming
       resultStatus: 1
-      duration: 0.0161732
+      duration: 0.0149649
       messages: 
       output: 
       stacktrace: 
@@ -2182,7 +2145,7 @@ MonoBehaviour:
       name: b2_2_Cast_Looming_Logged
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_2_Cast_Looming_Logged
       resultStatus: 1
-      duration: 0.0154813
+      duration: 0.0142459
       messages: 
       output: 
       stacktrace: 
@@ -2199,7 +2162,7 @@ MonoBehaviour:
       name: b2_3_Cast_Looming_FromAnotherLoom
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_3_Cast_Looming_FromAnotherLoom
       resultStatus: 1
-      duration: 0.0159617
+      duration: 0.0139295
       messages: 
       output: 
       stacktrace: 
@@ -2216,7 +2179,7 @@ MonoBehaviour:
       name: b2_4_Cast_Looming_Logged_FromAnotherLoom
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_4_Cast_Looming_Logged_FromAnotherLoom
       resultStatus: 1
-      duration: 0.0157041
+      duration: 0.0140187
       messages: 
       output: 
       stacktrace: 
@@ -2233,7 +2196,7 @@ MonoBehaviour:
       name: b2_Flipped_1_Cast_Looming
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_1_Cast_Looming
       resultStatus: 1
-      duration: 0.0150857
+      duration: 0.0137816
       messages: 
       output: 
       stacktrace: 
@@ -2250,7 +2213,7 @@ MonoBehaviour:
       name: b2_Flipped_2_Cast_Looming_Logged
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_2_Cast_Looming_Logged
       resultStatus: 1
-      duration: 0.0145465
+      duration: 0.0141603
       messages: 
       output: 
       stacktrace: 
@@ -2267,7 +2230,7 @@ MonoBehaviour:
       name: b2_Flipped_3_Cast_Looming_FromAnotherLoom
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom
       resultStatus: 1
-      duration: 0.0163045
+      duration: 0.013869
       messages: 
       output: 
       stacktrace: 
@@ -2284,7 +2247,7 @@ MonoBehaviour:
       name: b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
       resultStatus: 1
-      duration: 0.0141303
+      duration: 0.0132955
       messages: 
       output: 
       stacktrace: 
@@ -2301,7 +2264,7 @@ MonoBehaviour:
       name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
       resultStatus: 1
-      duration: 0.0141601
+      duration: 0.0142045
       messages: 
       output: 
       stacktrace: 
@@ -2318,7 +2281,7 @@ MonoBehaviour:
       name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
       resultStatus: 1
-      duration: 0.0149054
+      duration: 0.0139828
       messages: 
       output: 
       stacktrace: 
@@ -2335,7 +2298,7 @@ MonoBehaviour:
       name: b3_Cast_Weave
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b3_Cast_Weave
       resultStatus: 1
-      duration: 0.014236
+      duration: 0.0142862
       messages: 
       output: 
       stacktrace: 
@@ -2352,7 +2315,7 @@ MonoBehaviour:
       name: b3b_Cast_Weave_FlippedOrder
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b3b_Cast_Weave_FlippedOrder
       resultStatus: 1
-      duration: 0.0138909
+      duration: 0.0213204
       messages: 
       output: 
       stacktrace: 
@@ -2369,7 +2332,7 @@ MonoBehaviour:
       name: b4_Cast_Weave_Logged_FromLoom
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b4_Cast_Weave_Logged_FromLoom
       resultStatus: 1
-      duration: 0.0153788
+      duration: 0.0140041
       messages: 
       output: 
       stacktrace: 
@@ -2386,7 +2349,7 @@ MonoBehaviour:
       name: b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
       fullName: Rzeka.Tests.Integration.New_Process_Spell_Casting.b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
       resultStatus: 1
-      duration: 0.0158439
+      duration: 0.0142432
       messages: 
       output: 
       stacktrace: 
@@ -2403,7 +2366,7 @@ MonoBehaviour:
       name: Rx
       fullName: Rzeka.Tests.Rx
       resultStatus: 1
-      duration: 0.39509
+      duration: 0.378475
       messages: 
       output: 
       stacktrace: 
@@ -2419,7 +2382,7 @@ MonoBehaviour:
       name: Understanding_AndThenWhen
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen
       resultStatus: 1
-      duration: 1.860166
+      duration: 1.3188848
       messages: 
       output: 
       stacktrace: 
@@ -2435,7 +2398,7 @@ MonoBehaviour:
       name: a_andthenwhen_has_a_ziplike_blocking_behaviour
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.a_andthenwhen_has_a_ziplike_blocking_behaviour
       resultStatus: 1
-      duration: 0.4588671
+      duration: 0.363111
       messages: 
       output: 
       stacktrace: 
@@ -2452,7 +2415,7 @@ MonoBehaviour:
       name: b_andthenwhen_has_a_ziplike_blocking_behaviour_proof_possibly
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.b_andthenwhen_has_a_ziplike_blocking_behaviour_proof_possibly
       resultStatus: 1
-      duration: 0.4611616
+      duration: 0.3644853
       messages: 
       output: 
       stacktrace: 
@@ -2469,7 +2432,7 @@ MonoBehaviour:
       name: c_andthenwhen_has_a_ziplike_blocking_behaviour_proof_definitely
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.c_andthenwhen_has_a_ziplike_blocking_behaviour_proof_definitely
       resultStatus: 1
-      duration: 0.4494688
+      duration: 0.3644043
       messages: 
       output: 
       stacktrace: 
@@ -2486,7 +2449,7 @@ MonoBehaviour:
       name: d_andthenwhen_throws_error_when_one_of_its_observables_throws_it
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.d_andthenwhen_throws_error_when_one_of_its_observables_throws_it
       resultStatus: 1
-      duration: 0.0997468
+      duration: 0.0303373
       messages: 
       output: 
       stacktrace: 
@@ -2503,7 +2466,7 @@ MonoBehaviour:
       name: e_andthenwhen_does_NOT_complete_untill_ALL_of_its_observables_complete
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.e_andthenwhen_does_NOT_complete_untill_ALL_of_its_observables_complete
       resultStatus: 1
-      duration: 0.1003461
+      duration: 0.0188962
       messages: 
       output: 
       stacktrace: 
@@ -2520,7 +2483,7 @@ MonoBehaviour:
       name: f_andthenwhen_DOES_complete_WHEN_ALL_of_its_observables_complete
       fullName: Rzeka.Tests.Rx.Understanding_AndThenWhen.f_andthenwhen_DOES_complete_WHEN_ALL_of_its_observables_complete
       resultStatus: 1
-      duration: 0.2654867
+      duration: 0.1660113
       messages: 
       output: 
       stacktrace: 
@@ -2537,7 +2500,7 @@ MonoBehaviour:
       name: Understanding_CombineLatest
       fullName: Rzeka.Tests.Rx.Understanding_CombineLatest
       resultStatus: 1
-      duration: 1.6435946
+      duration: 1.2662841
       messages: 
       output: 
       stacktrace: 
@@ -2553,7 +2516,7 @@ MonoBehaviour:
       name: a_will_need_all_of_observables_to_emit_at_least_once
       fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.a_will_need_all_of_observables_to_emit_at_least_once
       resultStatus: 1
-      duration: 0.2596968
+      duration: 0.1639118
       messages: 
       output: 
       stacktrace: 
@@ -2570,7 +2533,7 @@ MonoBehaviour:
       name: b_will_emit_each_time_one_of_the_observables_emit
       fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.b_will_emit_each_time_one_of_the_observables_emit
       resultStatus: 1
-      duration: 0.4440054
+      duration: 0.365363
       messages: 
       output: 
       stacktrace: 
@@ -2587,7 +2550,7 @@ MonoBehaviour:
       name: c_buffered_last_observable_will_keep_same_value
       fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.c_buffered_last_observable_will_keep_same_value
       resultStatus: 1
-      duration: 0.4501224
+      duration: 0.3638481
       messages: 
       output: 
       stacktrace: 
@@ -2604,7 +2567,7 @@ MonoBehaviour:
       name: d_consecutive_values_of_active_observable_will_create_new_combinations
       fullName: Rzeka.Tests.Rx.Understanding_CombineLatest.d_consecutive_values_of_active_observable_will_create_new_combinations
       resultStatus: 1
-      duration: 0.4659911
+      duration: 0.3649499
       messages: 
       output: 
       stacktrace: 
@@ -2621,7 +2584,7 @@ MonoBehaviour:
       name: Understanding_Hot_To_Cold_Observable_Chains
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains
       resultStatus: 1
-      duration: 0.8334741
+      duration: 0.1236761
       messages: 
       output: 
       stacktrace: 
@@ -2637,7 +2600,7 @@ MonoBehaviour:
       name: a_Do_NOT_getting_called_on_cold_observable_without_observers
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.a_Do_NOT_getting_called_on_cold_observable_without_observers
       resultStatus: 1
-      duration: 0.0994549
+      duration: 0.0104364
       messages: 
       output: 
       stacktrace: 
@@ -2654,7 +2617,7 @@ MonoBehaviour:
       name: b_Do_GETS_called_on_connected_hot_observable_without_observers
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.b_Do_GETS_called_on_connected_hot_observable_without_observers
       resultStatus: 1
-      duration: 0.0943142
+      duration: 0.0166101
       messages: 
       output: 
       stacktrace: 
@@ -2671,7 +2634,7 @@ MonoBehaviour:
       name: c_Do_transforms_HOT_observable_to_a_COLD_observable
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.c_Do_transforms_HOT_observable_to_a_COLD_observable
       resultStatus: 1
-      duration: 0.0997271
+      duration: 0.0132087
       messages: 
       output: 
       stacktrace: 
@@ -2688,7 +2651,7 @@ MonoBehaviour:
       name: d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.d_Do_transforms_HOT_observable_to_a_COLD_observable_with_late_subscriber
       resultStatus: 1
-      duration: 0.1001171
+      duration: 0.0146276
       messages: 
       output: 
       stacktrace: 
@@ -2705,7 +2668,7 @@ MonoBehaviour:
       name: e_HotToCold_stacked_observable_with_ONE_observer
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.e_HotToCold_stacked_observable_with_ONE_observer
       resultStatus: 1
-      duration: 0.0988402
+      duration: 0.0169034
       messages: 
       output: 
       stacktrace: 
@@ -2722,7 +2685,7 @@ MonoBehaviour:
       name: f_HotToCold_stacked_observable_with_TWO_observers
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.f_HotToCold_stacked_observable_with_TWO_observers
       resultStatus: 1
-      duration: 0.0999528
+      duration: 0.0132539
       messages: 
       output: 
       stacktrace: 
@@ -2739,7 +2702,7 @@ MonoBehaviour:
       name: g_HotToHot_stacked_observable_with_TWO_observers
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_HotToHot_stacked_observable_with_TWO_observers
       resultStatus: 1
-      duration: 0.0998146
+      duration: 0.0157114
       messages: 
       output: 
       stacktrace: 
@@ -2756,7 +2719,7 @@ MonoBehaviour:
       name: g_the_dangers_of_such_misunderstanding
       fullName: Rzeka.Tests.Rx.Understanding_Hot_To_Cold_Observable_Chains.g_the_dangers_of_such_misunderstanding
       resultStatus: 1
-      duration: 0.0991912
+      duration: 0.0137188
       messages: 
       output: 
       stacktrace: 
@@ -2773,7 +2736,7 @@ MonoBehaviour:
       name: Understanding_Publish
       fullName: Rzeka.Tests.Rx.Understanding_Publish
       resultStatus: 1
-      duration: 0.3917801
+      duration: 0.3755313
       messages: 
       output: 
       stacktrace: 
@@ -2789,7 +2752,7 @@ MonoBehaviour:
       name: a_shared_subscription_through_publish
       fullName: Rzeka.Tests.Rx.Understanding_Publish.a_shared_subscription_through_publish
       resultStatus: 1
-      duration: 0.1770911
+      duration: 0.1751116
       messages: 
       output: 
       stacktrace: 
@@ -2806,7 +2769,7 @@ MonoBehaviour:
       name: b_without_publish_side_effects_triggers_twice
       fullName: Rzeka.Tests.Rx.Understanding_Publish.b_without_publish_side_effects_triggers_twice
       resultStatus: 1
-      duration: 0.1607581
+      duration: 0.159643
       messages: 
       output: 
       stacktrace: 
@@ -2823,7 +2786,7 @@ MonoBehaviour:
       name: c_weird_behaviour_of_publish_selector_overload_not_sure_of_its_use
       fullName: Rzeka.Tests.Rx.Understanding_Publish.c_weird_behaviour_of_publish_selector_overload_not_sure_of_its_use
       resultStatus: 1
-      duration: 0.0391974
+      duration: 0.0260933
       messages: 
       output: 
       stacktrace: 
@@ -2835,6 +2798,124 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1109
       parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish][suite]
+    - id: 1123
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+      name: Understanding_Publish_Behaviour_IS_BROKEN
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN
+      resultStatus: 1
+      duration: 0.0693854
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1134
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/[com.rzeka.unirx.tests][Rzeka.Tests.Rx][suite]
+    - id: 1124
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.a_behaviour_publish_is_BROKEN_it_doesnt_provide]
+      name: a_behaviour_publish_is_BROKEN_it_doesnt_provide
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.a_behaviour_publish_is_BROKEN_it_doesnt_provide
+      resultStatus: 1
+      duration: 0.005989
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+    - id: 1125
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.b_behaviour_multicast_is_BROKEN_aswell]
+      name: b_behaviour_multicast_is_BROKEN_aswell
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.b_behaviour_multicast_is_BROKEN_aswell
+      resultStatus: 1
+      duration: 0.0092833
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+    - id: 1126
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.c_use_replay_multicast_with_buffer_size_of_one_instead]
+      name: c_use_replay_multicast_with_buffer_size_of_one_instead
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.c_use_replay_multicast_with_buffer_size_of_one_instead
+      resultStatus: 1
+      duration: 0.0091154
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+    - id: 1127
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.d_use_replay_multicast_with_buffer_size_of_one_instead_verified]
+      name: d_use_replay_multicast_with_buffer_size_of_one_instead_verified
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.d_use_replay_multicast_with_buffer_size_of_one_instead_verified
+      resultStatus: 1
+      duration: 0.009108
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+    - id: 1128
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.e_use_replay_multicast_with_buffer_size_of_one_instead_verified_refcount]
+      name: e_use_replay_multicast_with_buffer_size_of_one_instead_verified_refcount
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.e_use_replay_multicast_with_buffer_size_of_one_instead_verified_refcount
+      resultStatus: 1
+      duration: 0.009722
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
+    - id: 1129
+      uniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/Understanding_Publish_Behaviour_IS_BROKEN/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.f_use_replay_multicast_with_buffer_size_of_one_instead_verified_autoconnect]
+      name: f_use_replay_multicast_with_buffer_size_of_one_instead_verified_autoconnect
+      fullName: Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN.f_use_replay_multicast_with_buffer_size_of_one_instead_verified_autoconnect
+      resultStatus: 1
+      duration: 0.0155588
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1123
+      parentUniqueId: com.rzeka.unirx.tests.dll/Rzeka/Tests/Rx/[com.rzeka.unirx.tests][Rzeka.Tests.Rx.Understanding_Publish_Behaviour_IS_BROKEN][suite]
     - id: 2646
       uniqueId: '[sanctuary.event-stream.tests.integration.dll][suite]'
       name: sanctuary.event-stream.tests.integration.dll
@@ -8347,13 +8428,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 2655
       parentUniqueId: Zenject-IntegrationTests-Editor.dll/Zenject/Tests/[Zenject-IntegrationTests-Editor][Zenject.Tests.TestSceneContextEvents][suite]
-    m_ResultText: b_are_two_different_weavings_receiving_same_conjurring (0.026s)
+    m_ResultText: Understanding_Publish (0.376s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 164.50073}
-      m_SelectedIDs: b880294c
-      m_LastClickedID: 1277788344
-      m_ExpandedIDs: 310d8f85ce91fd8519c3ef87344c948c5297c78fd6646895be95c895dc8898983f9caf9a629ff99aff06869e791b40a527c860a7c30c7aa7247a0bad8cb207b3f5a5b2b4460e04b5217fcfbac8d93abb67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3fa7a43c6d37426d0b9c3ecd04ba1e5d1ebab89ecce3ee3ed78794def5a2b91f01cb0fef1c1a216f3233320f343d00af4fb2041f53d10e8f5330266fb8394defe820e000083b30c0affedab17d14fb419c7b8231ad451aa1eba2f37209ed8dc247f7585273ee43930bc2de3344d0df4361d6c2f3d1a4a753d87be6e3e1300753f0e5fc84199010043d261b64604bb4b4fb38490510e7900546b79745b733fd067c4403768d9746071c2d06778fa14837dffffff7f
+      scrollPos: {x: 0, y: 21.996582}
+      m_SelectedIDs: ce3ee3ed
+      m_LastClickedID: -303874354
+      m_ExpandedIDs: 310d8f85ce91fd8519c3ef87344c948c8972a592d6646895be95c895dc889898629ff99aff06869e791b40a527c860a7c30c7aa7247a0bad8cb207b3f5a5b2b4460e04b5217fcfbac8d93abb67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3fa7a43c6d37426d04ba1e5d1ebab89ec78794def5a2b91f01cb0fef1c1a216f3233320f343d00af43d10e8f5330266fb8394defe820e000083b30c0affedab17c7b8231ad451aa1eba2f37209ed8dc247f7585273ee43930bc2de3344d0df4361d6c2f3d1a4a753d87be6e3e1300753f0e5fc841d261b64604bb4b4fb38490510e7900546b79745b733fd067c4403768d9746071c2d06778fa14837dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -17955,9 +18036,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -32000
-    y: -31970
-    width: 888
+    x: 0
+    y: 73
+    width: 859
     height: 464
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -18010,23 +18091,23 @@ MonoBehaviour:
       serializedVersion: 2
       x: 0
       y: 21
-      width: 888
+      width: 859
       height: 443
     m_Scale: {x: 1, y: 1}
-    m_Translation: {x: 444, y: 221.5}
+    m_Translation: {x: 429.5, y: 221.5}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -444
+      x: -429.5
       y: -221.5
-      width: 888
+      width: 859
       height: 443
     m_MinimalGUI: 1
   m_defaultScale: 1
-  m_LastWindowPixelSize: {x: 888, y: 464}
+  m_LastWindowPixelSize: {x: 859, y: 464}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
@@ -18054,9 +18135,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -32000
-    y: -31485
-    width: 888
+    x: 0
+    y: 558
+    width: 859
     height: 433
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -19197,9 +19278,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -31111
-    y: -31970
-    width: 601
+    x: 860
+    y: 73
+    width: 630
     height: 386
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -19231,7 +19312,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ae890000
     m_LastClickedID: 35246
-    m_ExpandedIDs: 0000000096640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000
+    m_ExpandedIDs: 0000000098640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e6500005065000052650000546500005665000058650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -19259,21 +19340,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 751.001}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000096640000fa640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000
+    m_ExpandedIDs: ffffffff0000000098640000fc640000fe64000000650000026500000465000006650000086500000a6500000c6500000e65000010650000126500001465000016650000186500001a6500001c6500001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e6500005065000052650000546500005665000058650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Understanding_Publis_Behaviour_IS_BROKEN
+      m_OriginalName: Understanding_Publis_Behaviour_IS_BROKEN
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 31180
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 10}
     m_SearchString: 
@@ -19348,7 +19429,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 96f3ffffd8f3ffff96f4ffff7cf5ffffbef5ffff7cf6ffff62f7ffffa4f7ffff62f8ffff48f9ffff8af9ffff56faffff36fbffff
+      m_ExpandedIDs: e252ffff2453fffff253ffffd654ffff1855ffffc056fffffc56ffff3e57ffff1c59ffff0c5affff4e5affff1c5bffff0a5cffff4c5cffff3a5effff505fffff925fffff7860ffff5e61ffffa061ffff8662ffff6863ffffaa63ffff6864ffff4665ffff8865ffff5e66ffff4067ffff8267ffff5868ffff3669ffff7869ffff466affff206bffff626bffff306cffff926effffd46effff9a6fffff7c70ffffbe70ffff7671ffffb271fffff471ffffb272ffff9073ffffd273ffffa074ffff7a75ffffbc75ffff8a76ffff6c77ffffae77ffff7478ffff5679ffff9879ffff587affff987affffda7affff987bffff8a7cffffcc7cffff8a7dffff6c7effffae7effff747fffff5a80ffff9c80ffff5a81ffff3c82ffff7e82ffff3c83ffff2284ffff6484ffff2285ffff0486ffff4686ffff1487fffff087ffff3288ffff0089ffffe489ffff268afffff48affffda8bffff1c8cffffd48cffff148dffff568dffff1c8effff108fffff528fffff1890fffff890ffff3a91ffff0092ffffe292ffff2493ffffea93ffffd094ffff1295ffffd095ffffb896fffffa96ffffb897ffff9e98ffffe098ffff9899ffffd899ffff1a9affffd89affffbc9bfffffe9bffffbc9cffff4c9effff8e9effff4c9fffff3aa0ffff7ca0ffff3aa1ffff24a2ffff66a2ffff24a3ffff12a4ffff54a4ffff12a5ffffc8acffff0aadffffc8adffffaaaeffffecaeffffaaafffffa6b0ffffe8b0ffffa6b1ffff86b2ffffc8b2ffff86b3ffff84b4ffffc6b4ffff84b5ffff74b6ffffb6b6ffff74b7ffff56b8ffff98b8ffff56b9ffff40baffff82baffff40bbffff3abcffff7cbcffff3abdffff1cbeffff5ebeffff1cbfffff0cc0ffff4ec0ffff0cc1fffff2c1ffff34c2fffff2c2ffffe8c3ffff2ac4ffffe8c4ffffeec5ffff30c6ffffeec6ffffd0c7ffff12c8ffffd0c8ffffb4c9fffff6c9ffffb4caffff48ccffff8accffff48cdffff54ceffff96ceffff54cfffff42d0ffff84d0ffff42d1ffff24d2ffff66d2ffff24d3ffff0cd4ffff4ed4ffff0cd5fffff2d5ffff34d6fffff2d6ffffd8d7ffff1ad8ffffd8d8ffffbad9fffffcd9ffffbadaffffa0dbffffe2dbffffa0dcffff86ddffffc8ddffff86deffff6cdfffffaedfffff6ce0ffff52e1ffff94e1ffff4ce2ffff8ce2ffffcee2ffff8ce3ffff72e4ffffb4e4ffff6ae5ffff4ae6ffff8ce6ffff44e7ffff88e7ffffcae7ffff88e8ffff92e9ffffd4e9ffff92eaffff76ebffffb8ebffff76ecffff5cedffff9eedffff56eeffff92eeffffd4eeffff2cf0ffff82f0ffffc4f0ffff9cf2ffffe8f2ffff2af3ffffe8f3ffffcef4ffff10f5ffffcef5ffffb4f6fffff6f6ffffb4f7ffff46f9ffff88f9ffff54faffff34fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -19392,8 +19473,8 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: -30508
-    y: -31970
+    x: 1492
+    y: 73
     width: 427
     height: 918
   m_ViewDataDictionary: {fileID: 0}

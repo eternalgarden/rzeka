@@ -5,23 +5,8 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface ISerializableConjuringSpell : ISerializableSpell
-    {
-        string conjuredType { get; set; }
-    }
 
-    [Serializable]
-    public struct SerializableStranding : ISerializableConjuringSpell
-    {
-        public string conjuredType { get; set; }
-        public Guid guid { get; set; }
-        public string title { get; set; }
-        public SpellSchool spellSchool { get; set; }
-        public string whosName { get; set; }
-        public bool wasCast { get; set; }
-    }
-
-    public interface IConjuringScroll : TScrollBase
+  public interface IConjuringScroll : TScrollBase
     {
         Type ConjuredType { get; }
     }

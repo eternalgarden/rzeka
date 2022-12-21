@@ -40,7 +40,7 @@ namespace Rzeka
             var occurence = new SpellOccurence
             {
                 Guid = Guid.NewGuid(),
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTimeOffset.Now,
                 SpellOccurenceCategory = occurenceCategory,
                 Source = this
             };
@@ -57,7 +57,7 @@ namespace Rzeka
             var occurence = new MatterOccurence
             {
                 Guid = Guid.NewGuid(),
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTimeOffset.Now,
                 Matter = matter,
                 MatterOccurenceCategory = occurenceCategory,
                 Source = this
@@ -75,7 +75,7 @@ namespace Rzeka
             var occurence = new MatterOccurence
             {
                 Guid = Guid.NewGuid(),
-                Timestamp = DateTimeOffset.UtcNow,
+                Timestamp = DateTimeOffset.Now,
                 MatterOccurenceCategory = MatterOccurenceCategory.Error,
                 Source = this,
                 Luggage = new ExceptionalLuggage(ex)

@@ -37,7 +37,7 @@ namespace Rzeka
 
                 var serializableOcc = new SerializableSpellOccurence() {
                     guid = occ.Guid,
-                    timestamp = occ.Timestamp,
+                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
                     spell = GetSerializableSpell(occ.Source),
                     spellOccurenceCategory = occ.SpellOccurenceCategory
                 };
@@ -62,7 +62,7 @@ namespace Rzeka
 
                 var serializableOcc = new SerializableMatterOccurence() {
                     guid = occ.Guid,
-                    timestamp = occ.Timestamp,
+                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
                     spell = GetSerializableSpell(occ.Source),
                     matter = occ.Matter,
                     matterType = occ.Matter.GetType(), // * custom serializer
@@ -120,7 +120,7 @@ namespace Rzeka
 
             SerializableStranding stranding = new SerializableStranding() {
                 spellSchool = SpellSchool.Stranding,
-                conjuredType = conjuring.ConjuredType.Name
+                conjuredType = conjuring.ConjuredType
             };
 
             return stranding;
@@ -136,7 +136,7 @@ namespace Rzeka
                 spellSchool = SpellSchool.Looming,
                 ingredients = GetSerializableIngredients(binding),
                 wasCast = binding.WasCast,
-                conjuredType = conjuring.ConjuredType.Name,
+                conjuredType = conjuring.ConjuredType,
                 hasMana = binding.HasMana
             };
 

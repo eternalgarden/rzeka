@@ -7,13 +7,8 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface ISerlializableBindingSpell : ISerializableSpell
-    {
-        bool hasMana { get; set; }
-        Dictionary<string, SerializableStranding[]> ingredients { get; set; }
-    }
 
-    public interface TBindingScroll : TScrollBase
+  public interface TBindingScroll : TScrollBase
     {
         Dictionary<Type, List<IConjuringScroll>> Ingredients { get; }
         TBindingScroll ThisAsBinding { get; }
@@ -90,7 +85,6 @@ namespace Rzeka
             if (ingredient is null) throw new Exception($"Something went wrong for Conjurer {ingredientsT[0].GetType()} of type {typeof(T)}.");
 
             var erisTouchedIngredient = ingredient
-                // .Where(matter => matter.Equals(default(T)) is false) // TODO understand why does it make a difference in case of behaviour subvjects
                 .Do( // TODO Maybe add on completed for any reason?
                     // * It's safe to use .Do modifier here since besically the ingredient given here
                     // * will be prepended to whatever following sequence of operators
@@ -98,8 +92,7 @@ namespace Rzeka
                     onNext: matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received),
                     onError: err => ThisAsBase.SendMatterExceptionOccurence(err));
 
-            // return erisTouchedIngredient;
-            return ingredient;
+            return erisTouchedIngredient;
            
            /* ---- ---- 🌠 */
         }

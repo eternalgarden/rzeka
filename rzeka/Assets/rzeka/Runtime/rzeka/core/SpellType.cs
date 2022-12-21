@@ -90,7 +90,7 @@ namespace Rzeka
     {
         public OccurenceCategory occurenceCategory => OccurenceCategory.Spell;
         public Guid guid { get; set; }
-        public DateTimeOffset timestamp  { get; set; }
+        public long timestamp  { get; set; } // in unix milliseconds
         public ISerializableSpell spell { get; set; }
         
         public SpellOccurenceCategory spellOccurenceCategory { get; set; }
@@ -100,7 +100,7 @@ namespace Rzeka
     {
         public OccurenceCategory occurenceCategory => OccurenceCategory.Matter;
         public Guid guid { get; set; }
-        public DateTimeOffset timestamp  { get; set; }
+        public long timestamp  { get; set; } // in unix seconds
         public ISerializableSpell spell { get; set; }
 
         public MatterOccurenceCategory matterOccurenceCategory { get; set; }
