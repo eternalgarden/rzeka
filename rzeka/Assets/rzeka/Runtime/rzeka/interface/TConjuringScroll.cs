@@ -31,9 +31,12 @@ namespace Rzeka
 
         void InitializeConjuringSpell()
         {
+            /* ⭐ ---- ---- */
+            
             InitializeSpellBase();
-
             ListenForIntroductions();
+            
+            /* ---- ---- 🌠 */
         }
         
         private void ListenForIntroductions()
@@ -42,8 +45,8 @@ namespace Rzeka
 
             CollectionDisposable += SpellStream
                 .Where(_ => this.WasCast)
-                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving)
                 .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Created)
+                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving)
                 .Select(i => i.Source as TBindingScroll)
                 .Where(scroll => scroll.WouldPossiblyLike<Q>())
                 .Subscribe(scroll => {

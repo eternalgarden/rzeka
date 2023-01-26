@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Rzeka
 {
 
-    [Serializable] // TODO remove serializable marks
+    [Serializable] // TODO remove serializable marks ... maybe?
     public sealed class ConjuringScroll<Q> : TConjuringScroll<Q> where Q : TMatter
     {
         readonly IObservable<Q> spell;
@@ -65,16 +65,6 @@ namespace Rzeka
                 // todo send luggage
                 
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
-                // 
-                // var wispd = new SpellOccurence
-                // {
-                //     SpellType = SpellType.Stranding,
-                //     SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
-                //     Scroll = this,
-                //     Luggage = new ExceptionalLuggage() { Exception = ex }
-                // };
-
-                // SpellStream.OnNext(wispd);
             }
 
             /* ---- ---- 🌠 */

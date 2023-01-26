@@ -34,7 +34,7 @@ namespace Rzeka
         public CollectibleDisposable CollectionDisposable { get; set; }
 
         public Type ConjuredType => typeof(Q);
-        public bool WasCast => ConjuredSpell is not null;
+        public bool WasCast => ConjuredSpell is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
 
         // TODO A NECESSARY RE-CAST ONCE MANA IS PROVIDED
         // COULD THIS BE AUTOMATIC WITHOUT INPUT FROM THE LIBRARY THAT SPELLS CAST THEMSELVES ONCE PROVIDED WITH MANA

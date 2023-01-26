@@ -12,8 +12,9 @@ namespace Rzeka
         bool wasCast { get; set; }
     }
 
-    public interface TScrollBase : IDisposable
+    public interface TScrollBase : IDisposable // TODO Rename to TSpell
     {
+        // TODO this is rather unsafe
         public const float POST_CREATION_MANA_CHECK_DELAY = .3f; // in seconds
 
         /// <summary>
@@ -32,7 +33,6 @@ namespace Rzeka
 
         void Cast();
 
-        // TODO centralize occurence creation
         void SendSpellOccurence(SpellOccurenceCategory occurenceCategory)
         {
             /* ⭐ ---- ---- */
@@ -88,10 +88,13 @@ namespace Rzeka
 
         void InitializeSpellBase()
         {
+            /* ⭐ ---- ---- */
+            
             if (CollectionDisposable is not null) return; // * hehe, this means it's already initialized
-
             CollectionDisposable = new();
             SendSpellOccurence(SpellOccurenceCategory.Created);
+            
+            /* ---- ---- 🌠 */
         }
     }
 }

@@ -13,12 +13,14 @@ namespace Rzeka
         Dictionary<Type, List<IConjuringScroll>> Ingredients { get; }
         TBindingScroll ThisAsBinding { get; }
 
-        protected void OnLostMana();
+        protected void OnLostMana(); // TODO
 
         //
         // ⛺ ─── Default Imlementation ───────────────────────────────────────────────────
         //
         #region Default Imlementation
+
+        bool HasMana => Ingredients.All(x => x.Value.Count > 0);
 
         bool WouldPossiblyLike<T>() where T : TMatter
         {
@@ -29,8 +31,6 @@ namespace Rzeka
         {
             return Ingredients.ContainsKey(type);
         }
-
-        bool HasMana => Ingredients.All(x => x.Value.Count > 0);
 
         // * this will be useful in testing
         IConjuringScroll[] GetIngredients<X>() where X : TMatter
@@ -107,13 +107,22 @@ namespace Rzeka
 
         void InitializeBindingSpell()
         {
+            /* ⭐ ---- ---- */
+            
             InitializeSpellBase();
 
+            // * Binding Spell Registrations
             RegisterPostCreationManaCheck();
-            CastListen();
-            ForgottenListen();
+            ListenForAppearingIngredients();
+            ListenForFadingIngredients();
+            
+            /* ---- ---- 🌠 */
         }
-
+        
+        /// <summary>
+        /// AFter being created, check after a designated time whether the spell (this one)
+        /// has been provided "mana" / necessary ingredients.
+        /// </summary>
         private void RegisterPostCreationManaCheck()
         {
             IDisposable postCreationManaCheck = null;
@@ -133,17 +142,20 @@ namespace Rzeka
                 });
         }
 
-        private void CastListen()
+        /// <summary>
+        /// Listen for relevant (providing ingredients of necessary type) conjurers cast.
+        /// </summary>
+        private void ListenForAppearingIngredients()
         {
             CollectionDisposable += SpellStream
-                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding)
-                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Source as IConjuringScroll).ConjuredType))
+                .Where(i => i.Source.IsConjuring())
                 .Where(i => i.SpellOccurenceCategory == SpellOccurenceCategory.Cast)
+                .Select(i => i.Source as IConjuringScroll)
+                .Where(i => ThisAsBinding.WouldPossiblyLike(i.ConjuredType))
                 .Subscribe(i =>
                 {
-                    IConjuringScroll conjurableScroll = i.Source as IConjuringScroll;
-                    Type conjuredType = conjurableScroll.ConjuredType;
-                    Ingredients[conjuredType].Add(conjurableScroll);
+                    Type conjuredType = i.ConjuredType;
+                    Ingredients[conjuredType].Add(i);
 
                     if (WasCast)
                     {
@@ -157,20 +169,24 @@ namespace Rzeka
                 });
         }
 
-        private void ForgottenListen()
+        /// <summary>
+        /// Listen for relevant conjurers being forgotten or knocked out of mana.
+        /// </summary>
+        private void ListenForFadingIngredients()
         {
             CollectionDisposable += SpellStream
-                .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding)
-                .Where(i => ThisAsBinding.WouldPossiblyLike((i.Source as IConjuringScroll).ConjuredType))
+                .Where(i => i.Source.IsConjuring())
                 .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Forgotten or SpellOccurenceCategory.NoMana)
+                .Select(i => i.Source as IConjuringScroll)
+                .Where(i => ThisAsBinding.WouldPossiblyLike(i.ConjuredType))
                 .Subscribe(i =>
                 {
-                    IConjuringScroll conjurableScroll = i.Source as IConjuringScroll;
-                    Type conjuredType = conjurableScroll.ConjuredType;
-                    Ingredients[conjuredType].Remove(conjurableScroll);
+                    Type conjuredType = i.ConjuredType;
+                    Ingredients[conjuredType].Remove(i);
 
                     if (WasCast)
                     {
+                        // TODO this needs to be validated for multiple providers
                         if (ThisAsBinding.HasMana is false)
                         {
                             OnLostMana();
