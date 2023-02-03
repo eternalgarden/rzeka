@@ -7,24 +7,25 @@ namespace Rzeka
 {
 
     [Serializable] // TODO remove serializable marks ... maybe?
-    public sealed class ConjuringScroll<Q> : TConjuringScroll<Q> where Q : TMatter
+    public sealed class ConjuringScroll<TOut> : TConjuringSpell<TOut> where TOut : TMatter
     {
-        readonly IObservable<Q> spell;
-
         public Guid Guid { get; }
         public object Who { get; }
         public SpellSchool SpellSchool => SpellSchool.Stranding;
-        public string Title => $"Conjuring of {typeof(Q).Name}";
-        public TScrollBase ThisAsBase { get; }
-        public TConjuringScroll<Q> ThisAsConjuring { get; }
+        public string Title => $"Conjuring of {typeof(TOut).Name}";
+        public TSpell ThisAsBase { get; }
+        public TConjuringSpell<TOut> ThisAsConjuring { get; }
 
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }        
         public CollectibleDisposable CollectionDisposable { get; set; }
-        public Type ConjuredType => typeof(Q);
-        public IObservable<Q> ConjuredSpell { get; private set; }
+        public Type ConjuredType => typeof(TOut);
+        public Library Library { get; set; }
+        public IObservable<TOut> ConjuredSpell { get; private set; }
+        
+        readonly IObservable<TOut> spell;
 
-        public ConjuringScroll(object who, IObservable<Q> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        public ConjuringScroll(object who, IObservable<TOut> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
         {
             this.spell = spell;
             
@@ -37,8 +38,6 @@ namespace Rzeka
             ThisAsConjuring = this;
 
             ThisAsConjuring.InitializeConjuringSpell();
-
-            Cast();
         }
 
         public void Cast()
@@ -49,15 +48,23 @@ namespace Rzeka
 
             try
             {
-                
-                // TODO provide alternatives to the behaviour subject below
-                // ? it will take some consideration to use replay properly considering how it's
-                // ? array could be later passed as ingredient to a loom -> ie. how to treat them as circumstances
-                ConjuredSpell = spell
-                    .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
-                    .Multicast(new ReplaySubject<Q>(bufferSize: 1))
-                    .RefCount();
+                // ConjuredSpell = spell
+                //     .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
+                //     .Multicast(new ReplaySubject<Q>(bufferSize: 1))
+                //     .RefCount();
 
+                var notifyingSpell = spell
+                    .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
+
+                IDisposable token = Library.RegisterConjurer(
+                    notifyingSpell, 
+                    out var observable);
+
+                ConjuredSpell = observable;
+                
+                // A pure conjurer can only get inactive on its own disposal
+                CollectionDisposable.Add(token);
+                
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }
             catch (Exception ex)

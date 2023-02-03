@@ -61,7 +61,7 @@ namespace Rzeka.Tests.Integration
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
-                .Where(occ => (occ.Source as IConjuringScroll).ConjuredType == typeof(ANumber))
+                .Where(occ => (occ.Source as IConjuringSpell).ConjuredType == typeof(ANumber))
                 .Subscribe(_ => createdOccurenceNoted++);
 
             using var d2 = tools.Pluck_ANumber(1);
@@ -97,7 +97,7 @@ namespace Rzeka.Tests.Integration
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
-                .Where(occ => (occ.Source as IConjuringScroll).ConjuredType == typeof(UserData))
+                .Where(occ => (occ.Source as IConjuringSpell).ConjuredType == typeof(UserData))
                 .Subscribe(_ => createdOccurenceNoted++);
 
             using var d2 = tools.Loom_AName_To_UserData(out _);
@@ -133,7 +133,7 @@ namespace Rzeka.Tests.Integration
             using var d1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
-                .Where(occ => (occ.Source as TAlteringScroll).WouldPossiblyLike<ANumber>())
+                .Where(occ => (occ.Source as TWeavingSpell).WouldPossiblyLike<ANumber>())
                 .Subscribe(_ => createdOccurenceNoted++);
 
             using var d2 = tools.Weave_ANumber();

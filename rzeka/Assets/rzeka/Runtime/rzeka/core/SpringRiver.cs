@@ -14,9 +14,11 @@ namespace Rzeka
 {
     public class SpringRiver : IRzeka, ITestableRzeka
     {
-        public LibrarianMonkey LibrarianMonkey { get; }
         public Eris Eris { get; }
-
+        
+        public Library Library { get; }
+        
+        // TODO could these two and actually Library aswell be moved to eris
         Subject<SpellOccurence> SpellStream { get; }
         Subject<MatterOccurence> MatterStream { get; }
 
@@ -26,6 +28,7 @@ namespace Rzeka
             MatterStream = new Subject<MatterOccurence>();
 
             Eris = new Eris(SpellStream.AsObservable(), MatterStream.AsObservable());
+            Library = new();
         }
 
         public IDisposable Pluck<Q>(object who, IObservable<Q> spell)
@@ -33,6 +36,9 @@ namespace Rzeka
         {
             ConjuringScroll<Q> newScroll = new ConjuringScroll<Q>(who, spell, SpellStream, MatterStream);
 
+            newScroll.Library = Library;
+            newScroll.Cast();
+            
             return Disposable.Create(() => newScroll.Dispose());
 
         }
@@ -48,7 +54,7 @@ namespace Rzeka
             where T : TMatter
             where Q : TMatter
         {
-            LoomingScroll_1<T, Q> newScroll = new LoomingScroll_1<T, Q>(who, spell, SpellStream, MatterStream);
+            LoomingScroll_1<T, Q> newScroll = new LoomingScroll_1<T, Q>(who, Library, spell, SpellStream, MatterStream);
 
             return Disposable.Create(() => newScroll.Dispose());
         }
@@ -58,7 +64,7 @@ namespace Rzeka
             where Y : TMatter
             where Q : TMatter
         {
-            LoomingScroll_2<T, Y, Q> newScroll = new LoomingScroll_2<T, Y, Q>(who, spell, SpellStream, MatterStream);
+            LoomingScroll_2<T, Y, Q> newScroll = new LoomingScroll_2<T, Y, Q>(who, Library, spell, SpellStream, MatterStream);
 
             return Disposable.Create(() => newScroll.Dispose());
         }

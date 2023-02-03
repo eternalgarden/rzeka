@@ -87,7 +87,7 @@ namespace Rzeka
         }
 
         // ? move this to the scroll so it wont have to be created each time if that makes sense
-        ISerializableSpell GetSerializableSpell(TScrollBase source)
+        ISerializableSpell GetSerializableSpell(TSpell source)
         {
             ISerializableSpell spell;
 
@@ -114,9 +114,9 @@ namespace Rzeka
             return spell;
         }
 
-        private SerializableStranding GetSerializableStranding(TScrollBase source)
+        private SerializableStranding GetSerializableStranding(TSpell source)
         {
-            IConjuringScroll conjuring = source as IConjuringScroll;
+            IConjuringSpell conjuring = source as IConjuringSpell;
 
             SerializableStranding stranding = new SerializableStranding() {
                 spellSchool = SpellSchool.Stranding,
@@ -126,10 +126,10 @@ namespace Rzeka
             return stranding;
         }
 
-        private SerializableLooming GetSerializableLooming(TScrollBase source)
+        private SerializableLooming GetSerializableLooming(TSpell source)
         {
-            TBindingScroll binding = source as TBindingScroll;
-            IConjuringScroll conjuring = source as IConjuringScroll;
+            TBindingSpell binding = source as TBindingSpell;
+            IConjuringSpell conjuring = source as IConjuringSpell;
 
             SerializableLooming looming = new SerializableLooming()
             {
@@ -143,9 +143,9 @@ namespace Rzeka
             return looming;
         }
 
-        private SerializableWeaving GetSerializableWeaving(TScrollBase source)
+        private SerializableWeaving GetSerializableWeaving(TSpell source)
         {
-            TBindingScroll binding = source as TBindingScroll;
+            TBindingSpell binding = source as TBindingSpell;
 
             SerializableWeaving weaving = new SerializableWeaving()
             {
@@ -158,7 +158,7 @@ namespace Rzeka
             return weaving;
         }
 
-        private Dictionary<string, SerializableStranding[]> GetSerializableIngredients(TBindingScroll binding)
+        private Dictionary<string, SerializableStranding[]> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
                 .Ingredients

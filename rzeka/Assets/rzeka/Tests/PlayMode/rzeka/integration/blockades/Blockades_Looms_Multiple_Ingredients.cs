@@ -26,12 +26,12 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingScroll[] blockedbynumber))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingSpell[] blockedbynumber))
             // {
             //     blockedByNumber = blockedbynumber.Length == 1;
             // }
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingScroll[] blockedbyname))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingSpell[] blockedbyname))
             // {
             //     blockedByName = blockedbyname.Length == 1;
             // }
@@ -77,12 +77,12 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingScroll[] blockedbynumber))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingSpell[] blockedbynumber))
             // {
             //     blockedByNumber = blockedbynumber.Length == 1;
             // }
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingScroll[] blockedbyname))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingSpell[] blockedbyname))
             // {
             //     blockedByName = blockedbyname.Length == 1;
             // }
@@ -112,12 +112,12 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingScroll[] blockedbynumber))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingSpell[] blockedbynumber))
             // {
             //     blockedByNumber = blockedbynumber.Length == 1;
             // }
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingScroll[] blockedbyname))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingSpell[] blockedbyname))
             // {
             //     blockedByName = blockedbyname.Length == 1;
             // }
@@ -145,12 +145,12 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingScroll[] blockedbynumber))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingSpell[] blockedbynumber))
             // {
             //     blockedByNumber = blockedbynumber.Length == 1;
             // }
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingScroll[] blockedbyname))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingSpell[] blockedbyname))
             // {
             //     blockedByName = blockedbyname.Length == 1;
             // }
@@ -179,12 +179,12 @@ namespace Rzeka.Tests.Integration
 
             yield return null;
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingScroll[] blockedbynumber))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<ANumber>(out TBindingSpell[] blockedbynumber))
             // {
             //     blockedByNumber = blockedbynumber.Length == 1;
             // }
 
-            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingScroll[] blockedbyname))
+            // if (Rzeka.TheLibrary.IsTypeBlockingSpells<AName>(out TBindingSpell[] blockedbyname))
             // {
             //     blockedByName = blockedbyname.Length == 1;
             // }

@@ -58,7 +58,7 @@ namespace Rzeka.Tests.Integration
             
             using var d2 = tools.Pluck_ANumber(out ConjuringScroll<ANumber> scroll);
 
-            Assert.AreEqual(true, (scroll as TScrollBase).WasCast);
+            Assert.AreEqual(true, (scroll as TSpell).WasCast);
 
             yield return null;
 

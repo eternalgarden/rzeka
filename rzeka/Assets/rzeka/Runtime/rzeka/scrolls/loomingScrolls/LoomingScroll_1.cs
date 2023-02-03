@@ -8,48 +8,51 @@ using UnityEngine;
 namespace Rzeka
 {
     [Serializable]
-    public class LoomingScroll_1<T, Q> : LoomingScroll<Q>
-        where Q : TMatter
-        where T : TMatter
+    public class LoomingScroll_1<T1, TOut> : LoomingScroll<TOut>
+        where TOut : TMatter
+        where T1 : TMatter
     {
-        readonly Func<IObservable<T>, IObservable<Q>> spell;
+        readonly Func<IObservable<T1>, IObservable<TOut>> _spell;
 
         public LoomingScroll_1(
             object who,
-            Func<IObservable<T>, IObservable<Q>> spell,
+            Library library,
+            Func<IObservable<T1>, IObservable<TOut>> spell,
             ISubject<SpellOccurence> spellStream,
-            ISubject<MatterOccurence> matterStream) : base(who, spellStream, matterStream)
+            ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
         {
-            this.spell = spell;
+            _spell = spell;
 
             ThisAsBinding.InitializeBindingSpell();
             ThisAsConjuring.InitializeConjuringSpell();
         }
 
-        public override Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
+        public override Dictionary<Type, List<IConjuringSpell>> Ingredients { get; } = new(1)
         {
-            { typeof(T), new List<IConjuringScroll>() },
+            { typeof(T1), new List<IConjuringSpell>() },
         };
 
-        protected override IObservable<Q> GetConjuring()
+        protected override IObservable<TOut> GetConjuring()
         {
             /* ⭐ ---- ---- */
 
-            T lastT = default(T);
-            IObservable<T> ingredientT = ThisAsBinding
-                .GetObservableIngredient<T>()
+            T1 lastT = default(T1); // * attach last matter grabber
+            IObservable<T1> ingredientT = ThisAsBinding
+                .GetObservableIngredient<T1>()
                 .Do(nextT =>
                 {
                     lastT = nextT;
                 });
 
-            IObservable<Q> conjuring = spell.Invoke(ingredientT)
+            IObservable<TOut> conjuring = _spell.Invoke(ingredientT)
                 .Select(matter =>
                 {
 
                     /* ⭐ ---- ---- */
-
-                    matter = matter.WithCircumstances<Q>(lastT);
+                    
+                    // * Set circumstances to the last grabbed 
+                    // ! This means multithreading or async operators can't be used in rzeka communication
+                    matter = matter.WithCircumstances<TOut>(lastT);
 
                     ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
 
@@ -58,7 +61,8 @@ namespace Rzeka
                     /* ---- ---- 🌠 */
 
                 })
-                .Multicast(new ReplaySubject<Q>(bufferSize: 1)) // ? provide alternatives
+                // TODO this will be deleted since Library will handle that
+                .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives
                 .RefCount();
 
             return conjuring;

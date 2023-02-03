@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Rzeka
 {
     [Serializable]
-    public class AlteringScroll<T> : TAlteringScroll
+    public class AlteringScroll<T> : TWeavingSpell
         where T : TMatter
     {
         readonly IObserver<T> spell;
@@ -17,16 +17,16 @@ namespace Rzeka
         public CollectibleDisposable CollectionDisposable { get; set; }
         public bool WasCast { get; private set; }
         public object Who { get; }
-        public TScrollBase ThisAsBase  { get; }
-        public TBindingScroll ThisAsBinding { get; }
+        public TSpell ThisAsBase  { get; }
+        public TBindingSpell ThisAsBinding { get; }
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }
         public SpellSchool SpellSchool => SpellSchool.Weaving;
         public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T).Name}";
 
-        public Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
+        public Dictionary<Type, List<IConjuringSpell>> Ingredients { get; } = new(1)
         {
-            { typeof(T), new List<IConjuringScroll>() }
+            { typeof(T), new List<IConjuringSpell>() }
         };
 
 
@@ -79,7 +79,7 @@ namespace Rzeka
             }
         }
 
-        void TBindingScroll.OnLostMana()
+        void TBindingSpell.OnLostMana()
         {
              _subscriptionDisposable.Dispose();
         }

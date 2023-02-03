@@ -16,9 +16,10 @@ namespace Rzeka
 
         public LoomingScroll_2(
             object who,
+            Library library,
             Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell,
             ISubject<SpellOccurence> spellStream, 
-            ISubject<MatterOccurence> matterStream) : base(who, spellStream, matterStream)
+            ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
         {
             this.spell = spell;
 
@@ -26,10 +27,10 @@ namespace Rzeka
             ThisAsConjuring.InitializeConjuringSpell();
         }
 
-        public override Dictionary<Type, List<IConjuringScroll>> Ingredients { get; } = new(1)
+        public override Dictionary<Type, List<IConjuringSpell>> Ingredients { get; } = new(1)
         {
-            { typeof(T), new List<IConjuringScroll>() },
-            { typeof(Y), new List<IConjuringScroll>() }
+            { typeof(T), new List<IConjuringSpell>() },
+            { typeof(Y), new List<IConjuringSpell>() }
         };
 
         protected override IObservable<Q> GetConjuring()

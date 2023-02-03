@@ -5,24 +5,18 @@ using UnityEngine;
 
 namespace Rzeka
 {
-
-  public interface IConjuringScroll : TScrollBase
+    public interface TConjuringSpell<TOut> : IConjuringSpell where TOut : TMatter
     {
-        Type ConjuredType { get; }
-    }
-
-    public interface TConjuringScroll<Q> : IConjuringScroll where Q : TMatter
-    {
-        TConjuringScroll<Q> ThisAsConjuring { get; }
+        TConjuringSpell<TOut> ThisAsConjuring { get; }
 
         /// <summary>
         /// This hides an important architecture decision that the conjuring spells may only be cast once.
         /// To re-cast one it's scroll would have to be disposed and summoned again, unless it has gotten out of mana and then it is be provided with it again.
         /// TODO CONSIDER ADDING ReCast() INTERFACE METHOD
         /// </summary>
-        IObservable<Q> ConjuredSpell { get; }
+        IObservable<TOut> ConjuredSpell { get; }
 
-        bool TScrollBase.WasCast => ConjuredSpell is not null;
+        bool TSpell.WasCast => ConjuredSpell is not null;
         
         //
         // ⛺ ─── Conjurer Registrations ───────────────────────────────────────────────────
@@ -42,15 +36,16 @@ namespace Rzeka
         private void ListenForIntroductions()
         {
             /* ⭐ ---- ---- */
-
+            
+            // since provide ingredient will be killed this is obsolete
             CollectionDisposable += SpellStream
                 .Where(_ => this.WasCast)
                 .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving)
-                .Select(i => i.Source as TBindingScroll)
-                .Where(scroll => scroll.WouldPossiblyLike<Q>())
+                .Select(i => i.Source as TBindingSpell)
+                .Where(scroll => scroll.WouldPossiblyLike<TOut>())
                 .Subscribe(scroll => {
-                    scroll.ProvideIngredient<Q>(this);
+                    scroll.ProvideIngredient<TOut>(this);
                 });
             
             /* ---- ---- 🌠 */

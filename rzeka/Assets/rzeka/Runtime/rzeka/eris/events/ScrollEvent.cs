@@ -21,10 +21,10 @@ namespace Rzeka
     [JsonConverter(typeof(RealmEventJsonConverter))]
     public class ScrollEvent : RealmEvent
     {
-        public readonly TScrollBase Scroll;
+        public readonly TSpell Scroll;
         public readonly ScrollEventType EventType;
         
-        public ScrollEvent(TScrollBase scroll, ScrollEventType eventType) : base()
+        public ScrollEvent(TSpell scroll, ScrollEventType eventType) : base()
         {
             Scroll = scroll;
             EventType = eventType;

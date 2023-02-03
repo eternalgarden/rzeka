@@ -18,11 +18,11 @@ namespace Rzeka
     [JsonConverter(typeof(RealmEventJsonConverter))]
     public class MatterEvent : RealmEvent
     {
-        public readonly TScrollBase Scroll;
+        public readonly TSpell Scroll;
         public readonly TMatter Matter;
         public readonly MatterEventType EventType;
         
-        public MatterEvent(TMatter matter, TScrollBase scroll, MatterEventType eventType) : base()
+        public MatterEvent(TMatter matter, TSpell scroll, MatterEventType eventType) : base()
         {
             Matter = matter;
             Scroll = scroll;

@@ -55,7 +55,7 @@ namespace Rzeka
     {
         Guid Guid { get; set; }
         DateTimeOffset Timestamp  { get; set; }
-        TScrollBase Source { get; set; }
+        TSpell Source { get; set; }
         Luggage Luggage { get; set; }
     }
 
@@ -63,7 +63,7 @@ namespace Rzeka
     {
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp { get; set; }
-        public TScrollBase Source { get; set; }
+        public TSpell Source { get; set; }
         public Luggage Luggage { get; set; }
 
         public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
@@ -73,7 +73,7 @@ namespace Rzeka
     {
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp { get; set; }
-        public TScrollBase Source { get; set; }
+        public TSpell Source { get; set; }
         public Luggage Luggage { get; set; }
 
         public MatterOccurenceCategory MatterOccurenceCategory { get; set; }

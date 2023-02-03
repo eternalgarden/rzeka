@@ -20,15 +20,14 @@ namespace Rzeka
     public abstract class LoomingScroll<Q> : TLoomingScroll<Q>
         where Q : TMatter
     {
-        IObservable<Q> _observableSpell;
-
         public Guid Guid { get; }
         public object Who { get; }
+        public Library Library { get; }
         public SpellSchool SpellSchool => SpellSchool.Looming;
         public string Title => $"{Who.GetType().Name}'s Looming of {typeof(Q).Name}";
-        public TScrollBase ThisAsBase  { get; }
-        public TBindingScroll ThisAsBinding { get; }
-        public TConjuringScroll<Q> ThisAsConjuring { get; }
+        public TSpell ThisAsBase  { get; }
+        public TBindingSpell ThisAsBinding { get; }
+        public TConjuringSpell<Q> ThisAsConjuring { get; }
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }
         public CollectibleDisposable CollectionDisposable { get; set; }
@@ -49,15 +48,19 @@ namespace Rzeka
                 _observableSpell = value;
             }
         }
-
-        public abstract Dictionary<Type, List<IConjuringScroll>> Ingredients { get; }
+        public abstract HashSet<Type> NewIngredients { get; }
+        public abstract Dictionary<Type, List<IConjuringSpell>> Ingredients { get; }
+        
+        IObservable<Q> _observableSpell;
 
         public LoomingScroll(
-            object who, 
+            object who,
+            Library library,
             ISubject<SpellOccurence> spellStream, 
             ISubject<MatterOccurence> matterStream)
         {
             Who = who;
+            Library = library;
             Guid = Guid.NewGuid();
 
             SpellStream = spellStream;
@@ -74,7 +77,8 @@ namespace Rzeka
         {
             if (WasCast is true) throw new Exception("Was already cast 🦇");
             if (ThisAsBinding.HasMana is false) throw new Exception("No mana to cast 😼");
-
+            
+            // replace that with a registration to the library
             ConjuredSpell = GetConjuring();
 
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
@@ -88,7 +92,7 @@ namespace Rzeka
             CollectionDisposable.Dispose();
         }
 
-        void TBindingScroll.OnLostMana()
+        void TBindingSpell.OnLostMana()
         {
             ConjuredSpell = null;
         }

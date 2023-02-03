@@ -59,7 +59,7 @@ namespace Rzeka.Tests.Integration
             using var d2 = tools.Pluck_ANumber(1);
             using var d3 = tools.Weave_ANumber(out AlteringScroll<ANumber> scroll);
 
-            TBindingScroll binding = scroll as TBindingScroll;
+            TBindingSpell binding = scroll as TBindingSpell;
 
             Assert.AreEqual(1, 
                 binding.GetIngredients<ANumber>().Length);
@@ -77,7 +77,7 @@ namespace Rzeka.Tests.Integration
             using var d3 = tools.Weave_ANumber(out AlteringScroll<ANumber> scroll);
             using var d2 = tools.Pluck_ANumber(1);
 
-            TBindingScroll binding = scroll as TBindingScroll;
+            TBindingSpell binding = scroll as TBindingSpell;
 
             Assert.AreEqual(1, 
                 binding.GetIngredients<ANumber>().Length);
@@ -95,7 +95,7 @@ namespace Rzeka.Tests.Integration
             using var d2 = tools.Pluck_ANumber(out ConjuringScroll<ANumber> conjuring, 1);
             using var d3 = tools.Weave_ANumber(out AlteringScroll<ANumber> scroll);
 
-            TBindingScroll binding = scroll as TBindingScroll;
+            TBindingSpell binding = scroll as TBindingSpell;
 
             Assert.AreEqual(true, 
                 binding.GetIngredients<ANumber>()[0] == conjuring);
@@ -113,7 +113,7 @@ namespace Rzeka.Tests.Integration
             using var d2 = tools.Loom_ANumber_To_AName(out _);
             using var d3 = tools.Weave_AName(out AlteringScroll<AName> scroll);
 
-            TBindingScroll binding = scroll as TBindingScroll;
+            TBindingSpell binding = scroll as TBindingSpell;
 
             Assert.AreEqual(0, binding.GetIngredients<AName>().Length);
 

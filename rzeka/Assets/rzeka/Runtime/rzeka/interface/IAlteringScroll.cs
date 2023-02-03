@@ -1,7 +1,7 @@
 namespace Rzeka
 {
 
-  public interface TAlteringScroll : TBindingScroll
+    public interface TWeavingSpell : TBindingSpell
     {
 
     }
