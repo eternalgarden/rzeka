@@ -12,9 +12,9 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.Integration
+namespace Rzeka.Tests.SpellOccurences
 {
-    public class New_Process_Spell_Casting
+    public class Rzeka_03_SpellOccurences_Cast
     {
         // -------------
         
@@ -56,7 +56,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
             
-            using var d2 = tools.Pluck_ANumber(out ConjuringScroll<ANumber> scroll);
+            using var d2 = tools.Strand_ANumber(out ConjuringScroll<ANumber> scroll);
 
             Assert.AreEqual(true, (scroll as TSpell).WasCast);
 
@@ -77,7 +77,7 @@ namespace Rzeka.Tests.Integration
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(1, occurence);
 
@@ -91,7 +91,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
             
-            using var d2 = tools.Pluck_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
             Assert.AreEqual(true, scroll.WasCast);
@@ -113,7 +113,7 @@ namespace Rzeka.Tests.Integration
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Pluck_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out _);
 
             Assert.AreEqual(1, occurence);
@@ -128,7 +128,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
             
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
@@ -151,7 +151,7 @@ namespace Rzeka.Tests.Integration
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
@@ -174,7 +174,7 @@ namespace Rzeka.Tests.Integration
             // -------------
             
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Pluck_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName("Agent Cooper");
 
             Assert.AreEqual(true, scroll.WasCast);
 
@@ -196,7 +196,7 @@ namespace Rzeka.Tests.Integration
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Loom_AName_To_UserData(out _);
-            using var d2 = tools.Pluck_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName("Agent Cooper");
 
             Assert.AreEqual(1, occurence);
 
@@ -212,7 +212,7 @@ namespace Rzeka.Tests.Integration
             
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(true, scroll.WasCast);
 
@@ -235,7 +235,7 @@ namespace Rzeka.Tests.Integration
             
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(2, occurence);
 
@@ -252,7 +252,7 @@ namespace Rzeka.Tests.Integration
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(true, scroll.WasCast);
 
@@ -276,7 +276,7 @@ namespace Rzeka.Tests.Integration
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(2, occurence);
 
@@ -305,7 +305,7 @@ namespace Rzeka.Tests.Integration
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
             using var d3 = tools.Weave_ANumber();
 
             Assert.AreEqual(1, occurence);
@@ -328,7 +328,7 @@ namespace Rzeka.Tests.Integration
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Weave_ANumber();
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(1, occurence);
 
@@ -349,7 +349,7 @@ namespace Rzeka.Tests.Integration
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
             using var d3 = tools.Weave_AName();
             using var d4 = tools.Loom_ANumber_To_AName(out _);
 
@@ -374,7 +374,7 @@ namespace Rzeka.Tests.Integration
 
             using var d3 = tools.Weave_AName();
             using var d4 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Pluck_ANumber(1);
+            using var d2 = tools.Strand_ANumber(1);
 
             Assert.AreEqual(1, occurence);
 

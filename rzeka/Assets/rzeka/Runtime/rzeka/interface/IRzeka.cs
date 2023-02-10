@@ -2,22 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Joins;
+using System.Runtime.CompilerServices;
 using UnityEngine;
+
+[assembly:InternalsVisibleTo("com.rzeka.tests.playmode")]
 
 namespace Rzeka
 {
     public interface IRzeka : IDisposable
     {
-        Eris Eris { get; } // todo not here
-        IDisposable Pluck<Q>(object who, IObservable<Q> spell) where Q : TMatter;
-        IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where Q : TMatter where T : TMatter;
-        IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell) where Q : TMatter where T : TMatter where Y : TMatter;
+        Eris Eris { get; } // TODO make Eris internal
+        IDisposable Strand<TOut>(object who, IObservable<TOut> spell) where TOut : TMatter;
+        IDisposable Loom<T1,TOut>(object who, Func<IObservable<T1>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter;
+        IDisposable Loom<T1,T2,TOut>(object who, Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter;
+        IDisposable Loom<T1,T2,T3,TOut>(object who, Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter where T3 : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter; // TODO add overload that lets you first filter
     }
 
-    public interface ITestableRzeka : IRzeka
+    internal interface ITestableRzeka : IRzeka
     {
-        IDisposable Pluck<Q>(object who, IObservable<Q> spell, out ConjuringScroll<Q> scroll) where Q : TMatter;
+        Library Library { get; }
+        IDisposable Strand<Q>(object who, IObservable<Q> spell, out ConjuringScroll<Q> scroll) where Q : TMatter;
         IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingScroll_1<T,Q> scroll) where Q : TMatter where T : TMatter;
         IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell, out LoomingScroll_2<T,Y,Q> scroll) where Q : TMatter where T : TMatter where Y : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter; // TODO add overload that lets you first filter

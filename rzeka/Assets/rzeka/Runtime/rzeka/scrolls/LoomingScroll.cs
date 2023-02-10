@@ -33,25 +33,11 @@ namespace Rzeka
         public CollectibleDisposable CollectionDisposable { get; set; }
 
         public Type ConjuredType => typeof(Q);
-        public bool WasCast => ConjuredSpell is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
+        public bool WasCast => _libraryToken is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
 
-        // TODO A NECESSARY RE-CAST ONCE MANA IS PROVIDED
-        // COULD THIS BE AUTOMATIC WITHOUT INPUT FROM THE LIBRARY THAT SPELLS CAST THEMSELVES ONCE PROVIDED WITH MANA
-        public IObservable<Q> ConjuredSpell
-        {
-            get
-            {
-                return _observableSpell;
-            }
-            private set
-            {
-                _observableSpell = value;
-            }
-        }
-        public abstract HashSet<Type> NewIngredients { get; }
-        public abstract Dictionary<Type, List<IConjuringSpell>> Ingredients { get; }
+        public abstract Dictionary<Type, bool> SatisfiedRequirements { get; }
         
-        IObservable<Q> _observableSpell;
+        IDisposable _libraryToken;
 
         public LoomingScroll(
             object who,
@@ -71,7 +57,7 @@ namespace Rzeka
             ThisAsConjuring = this;
         }
 
-        protected abstract IObservable<Q> GetConjuring();
+        protected abstract IDisposable CastSpell();
 
         public void Cast()
         {
@@ -79,22 +65,22 @@ namespace Rzeka
             if (ThisAsBinding.HasMana is false) throw new Exception("No mana to cast 😼");
             
             // replace that with a registration to the library
-            ConjuredSpell = GetConjuring();
+            _libraryToken = CastSpell();
 
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
         }
 
         public virtual void Dispose()
         {
-            _observableSpell = null;
-
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
+            _libraryToken?.Dispose();
             CollectionDisposable.Dispose();
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
 
         void TBindingSpell.OnLostMana()
         {
-            ConjuredSpell = null;
+            _libraryToken.Dispose();
+            _libraryToken = null;
         }
     }
 }

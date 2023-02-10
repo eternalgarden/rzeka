@@ -1,5 +1,5 @@
 {
-    "name": "com.rzeka.unirx.tests",
+    "name": "com.rzeka.tests.playmode",
     "rootNamespace": "",
     "references": [
         "GUID:27619889b8ba8c24980f49ee34dbb44a",

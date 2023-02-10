@@ -20,17 +20,21 @@ namespace Rzeka
         public ISubject<MatterOccurence> MatterStream { get; }        
         public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(TOut);
-        public Library Library { get; set; }
-        public IObservable<TOut> ConjuredSpell { get; private set; }
-        
-        readonly IObservable<TOut> spell;
+        public Library Library { get; }
+        public IObservable<TOut> ConjuredSpell { get; private set; } // ND
 
-        public ConjuringScroll(object who, IObservable<TOut> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        IDisposable _libraryToken;
+        public bool WasCast => _libraryToken is not null;
+        
+        readonly IObservable<TOut> _spell;
+
+        public ConjuringScroll(object who, Library library, IObservable<TOut> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
         {
-            this.spell = spell;
+            _spell = spell;
             
             Guid = Guid.NewGuid();
             Who = who;
+            Library = library;
 
             SpellStream = spellStream;
             MatterStream = matterStream;
@@ -38,6 +42,8 @@ namespace Rzeka
             ThisAsConjuring = this;
 
             ThisAsConjuring.InitializeConjuringSpell();
+
+            Cast();
         }
 
         public void Cast()
@@ -45,6 +51,7 @@ namespace Rzeka
             /* ⭐ ---- ---- */
 
             if (ThisAsBase.WasCast is true) throw new Exception("Was already cast 🦇");
+            
 
             try
             {
@@ -53,17 +60,15 @@ namespace Rzeka
                 //     .Multicast(new ReplaySubject<Q>(bufferSize: 1))
                 //     .RefCount();
 
-                var notifyingSpell = spell
+                var notifyingSpell = _spell
                     .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
 
-                IDisposable token = Library.RegisterConjurer(
-                    notifyingSpell, 
-                    out var observable);
+                // IDisposable token = Library.RegisterConjurer(
+                //     notifyingSpell, 
+                //     out var observable);
+                //
 
-                ConjuredSpell = observable;
-                
-                // A pure conjurer can only get inactive on its own disposal
-                CollectionDisposable.Add(token);
+                _libraryToken = Library.RegisterConjurer(notifyingSpell);
                 
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }
@@ -79,6 +84,7 @@ namespace Rzeka
 
         public void Dispose()
         {
+            _libraryToken.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
         }

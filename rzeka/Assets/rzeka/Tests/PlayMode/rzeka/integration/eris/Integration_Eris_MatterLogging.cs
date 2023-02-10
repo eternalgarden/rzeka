@@ -132,7 +132,7 @@ namespace Rzeka.Tests.Integration
                     shapedMatterEventCount++;
             });
 
-            Q += Rzeka.Pluck<UserData>(this, spell: Observable
+            Q += Rzeka.Strand<UserData>(this, spell: Observable
                 .Timer(TimeSpan.FromSeconds(0.1))
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish()
@@ -166,7 +166,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish();
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             yield return new WaitForSeconds(0.2f);
@@ -198,7 +198,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish();
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             yield return new WaitForSeconds(0.2f);
@@ -230,7 +230,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Replay(1);
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             yield return new WaitForSeconds(0.2f);
@@ -262,7 +262,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish();
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
             Q += Weave_UserData();
 
@@ -293,7 +293,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Replay(1);
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             yield return new WaitForSeconds(0.2f);
@@ -326,7 +326,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Replay(1);
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             Q += Weave_UserData();
@@ -359,7 +359,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish();
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             yield return new WaitForSeconds(0.2f);
@@ -392,7 +392,7 @@ namespace Rzeka.Tests.Integration
                 .Select(_ => new UserData("xx", "uu", 555))
                 .Publish();
 
-            Q += Rzeka.Pluck<UserData>(this, spell: observable);
+            Q += Rzeka.Strand<UserData>(this, spell: observable);
             Q += observable.Connect();
 
             Q += Weave_UserData();

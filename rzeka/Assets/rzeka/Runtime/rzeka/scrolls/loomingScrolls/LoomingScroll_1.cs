@@ -26,17 +26,17 @@ namespace Rzeka
             ThisAsBinding.InitializeBindingSpell();
             ThisAsConjuring.InitializeConjuringSpell();
         }
-
-        public override Dictionary<Type, List<IConjuringSpell>> Ingredients { get; } = new(1)
+        
+        public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
         {
-            { typeof(T1), new List<IConjuringSpell>() },
+            { typeof(T1), false },
         };
 
-        protected override IObservable<TOut> GetConjuring()
+        protected override IDisposable CastSpell()
         {
             /* ⭐ ---- ---- */
-
-            T1 lastT = default(T1); // * attach last matter grabber
+            
+            var lastT = default(T1); // * attach last matter grabber
             IObservable<T1> ingredientT = ThisAsBinding
                 .GetObservableIngredient<T1>()
                 .Do(nextT =>
@@ -44,7 +44,8 @@ namespace Rzeka
                     lastT = nextT;
                 });
 
-            IObservable<TOut> conjuring = _spell.Invoke(ingredientT)
+            var conjuring = _spell
+                .Invoke(ingredientT)
                 .Select(matter =>
                 {
 
@@ -60,19 +61,17 @@ namespace Rzeka
 
                     /* ---- ---- 🌠 */
 
-                })
+                });
+                // nd
                 // TODO this will be deleted since Library will handle that
-                .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives
-                .RefCount();
+                // .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives
+                // .RefCount();
 
-            return conjuring;
+            IDisposable token = Library.RegisterConjurer<TOut>(conjuring);
+
+            return token;
 
             /* ---- ---- 🌠 */
-        }
-
-        public override void Dispose()
-        {
-            base.Dispose();
         }
     }
 }

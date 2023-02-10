@@ -24,14 +24,6 @@ namespace Rzeka
             return newMatter;
         }
 
-        public TMatter WithCircumstances<T,Y>(Glyph<T,Y> glyph)
-            where T : TMatter
-            where Y : TMatter
-        {
-            Circumstances = glyph.AsCircumstance();
-            return this;
-        }
-
         bool IEquatable<TMatter>.Equals(TMatter other)
         {
             return this.Guid == other.Guid;

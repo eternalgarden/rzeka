@@ -12,12 +12,13 @@ using System.Reactive.Subjects;
 
 namespace Rzeka
 {
-    public class SpringRiver : IRzeka, ITestableRzeka
+    public class SpringRiver : ITestableRzeka
     {
+        Library _library;
         public Eris Eris { get; }
-        
-        public Library Library { get; }
-        
+
+        Library ITestableRzeka.Library => _library;
+
         // TODO could these two and actually Library aswell be moved to eris
         Subject<SpellOccurence> SpellStream { get; }
         Subject<MatterOccurence> MatterStream { get; }
@@ -28,45 +29,47 @@ namespace Rzeka
             MatterStream = new Subject<MatterOccurence>();
 
             Eris = new Eris(SpellStream.AsObservable(), MatterStream.AsObservable());
-            Library = new();
+            _library = new();
         }
 
-        public IDisposable Pluck<Q>(object who, IObservable<Q> spell)
-            where Q : TMatter
+        public IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
+            where TOut : TMatter
         {
-            ConjuringScroll<Q> newScroll = new ConjuringScroll<Q>(who, spell, SpellStream, MatterStream);
+            ConjuringScroll<TOut> newScroll = new ConjuringScroll<TOut>(who, _library, spell, SpellStream, MatterStream);
 
-            newScroll.Library = Library;
-            newScroll.Cast();
-            
             return Disposable.Create(() => newScroll.Dispose());
-
         }
 
         public IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter
         {
-            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, spell, SpellStream, MatterStream);
+            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, _library, spell, SpellStream, MatterStream);
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public IDisposable Loom<T1, TOut>(object who, Func<IObservable<T1>, IObservable<TOut>> spell)
+            where T1 : TMatter
+            where TOut : TMatter
+        {
+            LoomingScroll_1<T1, TOut> newScroll = new LoomingScroll_1<T1, TOut>(who, _library, spell, SpellStream, MatterStream);
 
             return Disposable.Create(() => newScroll.Dispose());
         }
 
-        public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell)
-            where T : TMatter
-            where Q : TMatter
+        public IDisposable Loom<T1, T2, TOut>(object who, Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell)
+            where T1 : TMatter
+            where T2 : TMatter
+            where TOut : TMatter
         {
-            LoomingScroll_1<T, Q> newScroll = new LoomingScroll_1<T, Q>(who, Library, spell, SpellStream, MatterStream);
+            LoomingScroll_2<T1, T2, TOut> newScroll = new LoomingScroll_2<T1, T2, TOut>(who, _library, spell, SpellStream, MatterStream);
 
             return Disposable.Create(() => newScroll.Dispose());
         }
 
-        public IDisposable Loom<T, Y, Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell)
-            where T : TMatter
-            where Y : TMatter
-            where Q : TMatter
+        public IDisposable Loom<T1, T2, T3, TOut>(object who, Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter where TOut : TMatter
         {
-            LoomingScroll_2<T, Y, Q> newScroll = new LoomingScroll_2<T, Y, Q>(who, Library, spell, SpellStream, MatterStream);
-
+            LoomingScroll_3<T1, T2, T3, TOut> newScroll = new LoomingScroll_3<T1, T2, T3, TOut>(who, _library, spell, SpellStream, MatterStream);
             return Disposable.Create(() => newScroll.Dispose());
+
         }
 
         public void Dispose()
@@ -80,10 +83,10 @@ namespace Rzeka
         //
         #region ITestableRzeka
         
-        public IDisposable Pluck<Q>(object who, IObservable<Q> spell, out ConjuringScroll<Q> scroll)
+        public IDisposable Strand<Q>(object who, IObservable<Q> spell, out ConjuringScroll<Q> scroll)
             where Q : TMatter
         {
-            ConjuringScroll<Q> newScroll = new ConjuringScroll<Q>(who, spell, SpellStream, MatterStream);
+            ConjuringScroll<Q> newScroll = new ConjuringScroll<Q>(who, _library, spell, SpellStream, MatterStream);
             scroll = newScroll;
             return Disposable.Create(() => newScroll.Dispose());
 
@@ -91,7 +94,7 @@ namespace Rzeka
 
         public IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter
         {
-            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, spell, SpellStream, MatterStream);
+            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, _library, spell, SpellStream, MatterStream);
             scroll = newScroll;
             return Disposable.Create(() => newScroll.Dispose());
         }
@@ -100,7 +103,7 @@ namespace Rzeka
             where T : TMatter
             where Q : TMatter
         {
-            LoomingScroll_1<T, Q> newScroll = new LoomingScroll_1<T, Q>(who, spell, SpellStream, MatterStream);
+            LoomingScroll_1<T, Q> newScroll = new LoomingScroll_1<T, Q>(who, _library, spell, SpellStream, MatterStream);
             scroll = newScroll;
             return Disposable.Create(() => newScroll.Dispose());
         }
@@ -110,7 +113,7 @@ namespace Rzeka
             where Y : TMatter
             where Q : TMatter
         {
-            LoomingScroll_2<T, Y, Q> newScroll = new LoomingScroll_2<T, Y, Q>(who, spell, SpellStream, MatterStream);
+            LoomingScroll_2<T, Y, Q> newScroll = new LoomingScroll_2<T, Y, Q>(who, _library, spell, SpellStream, MatterStream);
             scroll = newScroll;
             return Disposable.Create(() => newScroll.Dispose());
         }

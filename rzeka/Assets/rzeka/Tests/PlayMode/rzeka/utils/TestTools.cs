@@ -16,24 +16,28 @@ using UnityEngine.TestTools;
 
 namespace Rzeka.Tests
 {
-    public class TestTools
+    internal class TestTools
     {
-        readonly ITestableRzeka Rzeka;
+        readonly ITestableRzeka _rzeka;
 
         public TestTools(ITestableRzeka rzeka)
         {
-            Rzeka = rzeka;
+            _rzeka = rzeka;
         }
 
         public static void AssertEqual<T>(T expected, T actual)
         {
             Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.");
         }
-
         
-        public IDisposable Pluck_UserData(out ConjuringScroll<UserData> scroll, int count = 1)
+        public static void AssertEqual<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
-            return Rzeka.Pluck<UserData>(
+            Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.", comparer);
+        }
+        
+        public IDisposable Strand_UserData(out ConjuringScroll<UserData> scroll, int count = 1)
+        {
+            return _rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -50,9 +54,9 @@ namespace Rzeka.Tests
                 scroll: out scroll);
         }
 
-        public IDisposable Pluck_UserData(out ConjuringScroll<UserData> scroll, params string[] names)
+        public IDisposable Strand_UserData(out ConjuringScroll<UserData> scroll, params string[] names)
         {
-            return Rzeka.Pluck<UserData>(
+            return _rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -69,9 +73,9 @@ namespace Rzeka.Tests
                 scroll: out scroll);
         }
 
-        public IDisposable Pluck_ANumber(out ConjuringScroll<ANumber> scroll, params int[] numbers)
+        public IDisposable Strand_ANumber(out ConjuringScroll<ANumber> scroll, params int[] numbers)
         {
-            return Rzeka.Pluck<ANumber>(
+            return _rzeka.Strand<ANumber>(
                 who: this,
                 spell: Observable
                     .Create<ANumber>(observer =>
@@ -88,9 +92,9 @@ namespace Rzeka.Tests
                 scroll: out scroll);
         }
 
-        public IDisposable Pluck_AName(out ConjuringScroll<AName> scroll, params string[] names)
+        public IDisposable Strand_AName(out ConjuringScroll<AName> scroll, params string[] names)
         {
-            return Rzeka.Pluck<AName>(
+            return _rzeka.Strand<AName>(
                 who: this,
                 spell: Observable
                     .Create<AName>(observer =>
@@ -109,7 +113,7 @@ namespace Rzeka.Tests
 
         public IDisposable Loom_ANumber_To_AName(out LoomingScroll_1<ANumber,AName> scroll)
         {
-            return Rzeka.Loom<ANumber, AName>(
+            return _rzeka.Loom<ANumber, AName>(
                 who: this,
                 spell: number => number
                     .Select(i => new AName($"{i.Number}")),
@@ -118,16 +122,16 @@ namespace Rzeka.Tests
 
         public IDisposable Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll)
         {
-            return Rzeka.Loom<AName, UserData>(
+            return _rzeka.Loom<AName, UserData>(
                 who: this,
                 spell: aName => aName
                     .Select(i => new UserData(i.Name, "whos that hottie?", 5)),
                 scroll: out scroll);
         }
 
-        public IDisposable Pluck_UserData(int count = 1)
+        public IDisposable Strand_UserData(int count = 1)
         {
-            return Rzeka.Pluck<UserData>(
+            return _rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -143,9 +147,9 @@ namespace Rzeka.Tests
                     }));
         }
 
-        public IDisposable Pluck_UserData(params string[] names)
+        public IDisposable Strand_UserData(params string[] names)
         {
-            return Rzeka.Pluck<UserData>(
+            return _rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -161,9 +165,9 @@ namespace Rzeka.Tests
                     }));
         }
 
-        public IDisposable Pluck_ANumber(params int[] numbers)
+        public IDisposable Strand_ANumber(params int[] numbers)
         {
-            return Rzeka.Pluck<ANumber>(
+            return _rzeka.Strand<ANumber>(
                 who: this,
                 spell: Observable
                     .Create<ANumber>(observer =>
@@ -177,9 +181,9 @@ namespace Rzeka.Tests
                     }));
         }
 
-        public IDisposable Pluck_AName(params string[] names)
+        public IDisposable Strand_AName(params string[] names)
         {
-            return Rzeka.Pluck<AName>(
+            return _rzeka.Strand<AName>(
                 who: this,
                 spell: Observable
                     .Create<AName>(observer =>
@@ -194,10 +198,64 @@ namespace Rzeka.Tests
                         return Disposable.Empty;
                     }));
         }
+        
+        public IDisposable Strand_ArbitraryMatter1(params string[] strings)
+        {
+            return _rzeka.Strand<ArbitraryMatter1>(
+                who: this,
+                spell: Observable
+                    .Create<ArbitraryMatter1>(observer =>
+                    {
+                        for (int i = 0; i < strings.Length; i++)
+                        {
+                            observer.OnNext(new ArbitraryMatter1(strings[i]));
+                        }
+
+                        observer.OnCompleted();
+
+                        return Disposable.Empty;
+                    }));
+        }
+        
+        public IDisposable Strand_ArbitraryMatter2(params string[] strings)
+        {
+            return _rzeka.Strand<ArbitraryMatter2>(
+                who: this,
+                spell: Observable
+                    .Create<ArbitraryMatter2>(observer =>
+                    {
+                        for (int i = 0; i < strings.Length; i++)
+                        {
+                            observer.OnNext(new ArbitraryMatter2(strings[i]));
+                        }
+
+                        observer.OnCompleted();
+
+                        return Disposable.Empty;
+                    }));
+        }
+        
+        public IDisposable Strand_ArbitraryMatter3(params string[] strings)
+        {
+            return _rzeka.Strand<ArbitraryMatter3>(
+                who: this,
+                spell: Observable
+                    .Create<ArbitraryMatter3>(observer =>
+                    {
+                        for (int i = 0; i < strings.Length; i++)
+                        {
+                            observer.OnNext(new ArbitraryMatter3(strings[i]));
+                        }
+
+                        observer.OnCompleted();
+
+                        return Disposable.Empty;
+                    }));
+        }
 
         public IDisposable Pluck_UserDataInterval()
         {
-            return Rzeka.Pluck<UserData>(
+            return _rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Interval(TimeSpan.FromSeconds(1))
@@ -206,7 +264,7 @@ namespace Rzeka.Tests
 
         public IDisposable Loom_UserData_To_UserWelcomingText()
         {
-            return Rzeka.Loom<UserData, UserWelcomingText>(
+            return _rzeka.Loom<UserData, UserWelcomingText>(
                 who: this,
                 spell: userData => userData
                     .Select(dd => new UserWelcomingText($"Hi {dd.Name}! Ur fav number is <<{dd.FavNumber}>>, a {dd.Zodiac}")));
@@ -223,7 +281,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext));
@@ -233,7 +291,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext),
@@ -244,7 +302,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext));
@@ -254,7 +312,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext),
@@ -266,7 +324,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext));
@@ -277,7 +335,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext),
@@ -288,7 +346,7 @@ namespace Rzeka.Tests
         {
             onNext ??= _ => { };
 
-            return Rzeka.Weave(
+            return _rzeka.Weave(
                 who: this,
                 spell: Observer.Create(
                     onNext: onNext));

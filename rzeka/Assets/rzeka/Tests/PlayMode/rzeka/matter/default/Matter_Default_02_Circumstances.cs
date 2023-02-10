@@ -13,22 +13,22 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.Integration
+namespace Rzeka.Tests.Matter.Default
 {
-    public class New_Process_Circumstances
+    public class Matter_Default_02_Circumstances
     {
         // -------------
     
-        ITestableRzeka Rzeka;
-        TestTools tools;
+        ITestableRzeka _rzeka;
+        TestTools _tools;
     
         [UnitySetUp]
         public virtual IEnumerator Setup()
         {
             // -------------
 
-            Rzeka = new SpringRiver();
-            tools = new TestTools(Rzeka);
+            _rzeka = new SpringRiver();
+            _tools = new TestTools(_rzeka);
 
             yield return null;
 
@@ -40,7 +40,7 @@ namespace Rzeka.Tests.Integration
         {
             // -------------
 
-            Rzeka.Dispose();
+            _rzeka.Dispose();
 
             yield return null;
 
@@ -50,12 +50,12 @@ namespace Rzeka.Tests.Integration
         [UnityTest]
         public IEnumerator a_are_any_circumstances_set()
         {
-            using var p1 = tools.Pluck_ANumber(1);
-            using var l1 = tools.Loom_ANumber_To_AName(out _);
+            using var p1 = _tools.Strand_ANumber(1);
+            using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             bool areAny = false;
             
-            using var w2 = tools.Weave_AName(name => {
+            using var w2 = _tools.Weave_AName(name => {
                 areAny = name.Circumstances is not null && name.Circumstances.Length > 0;
             });
 
@@ -67,14 +67,14 @@ namespace Rzeka.Tests.Integration
         [UnityTest]
         public IEnumerator b_are_two_different_weavings_receiving_same_conjurring()
         {
-            using var p1 = tools.Pluck_ANumber(1);
-            using var l1 = tools.Loom_ANumber_To_AName(out _);
+            using var p1 = _tools.Strand_ANumber(1);
+            using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             Guid num1Guid = Guid.NewGuid(); // so we can be sure they will be starting out different
             Guid num2Guid = Guid.NewGuid(); // ^
 
-            using var w1 = tools.Weave_ANumber(num => num1Guid = num.Guid);
-            using var w2 = tools.Weave_ANumber(num => num2Guid = num.Guid);
+            using var w1 = _tools.Weave_ANumber(num => num1Guid = num.Guid);
+            using var w2 = _tools.Weave_ANumber(num => num2Guid = num.Guid);
 
             yield return null;
 
@@ -84,14 +84,14 @@ namespace Rzeka.Tests.Integration
         [UnityTest]
         public IEnumerator c_are_guids_same_for_matter_received_and_also_used_as_circumstance()
         {
-            using var p1 = tools.Pluck_ANumber(1); // * both will be separately woven
-            using var l1 = tools.Loom_ANumber_To_AName(out _);
+            using var p1 = _tools.Strand_ANumber(1); // * both will be separately woven
+            using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             Guid numberGuid =           Guid.NewGuid(); // so we can be sure they will be starting out different
             Guid nameCircumstanceGuid = Guid.NewGuid();
 
-            using var w1 = tools.Weave_ANumber(num => numberGuid = num.Guid);
-            using var w2 = tools.Weave_AName(name => nameCircumstanceGuid = name.Circumstances[0]);
+            using var w1 = _tools.Weave_ANumber(num => numberGuid = num.Guid);
+            using var w2 = _tools.Weave_AName(name => nameCircumstanceGuid = name.Circumstances[0]);
 
             yield return null;
 

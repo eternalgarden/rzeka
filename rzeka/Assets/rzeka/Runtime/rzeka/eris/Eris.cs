@@ -58,7 +58,8 @@ namespace Rzeka
                 Emanation.ReceiveSpellOccurence(serializableOcc);
             });
 
-            _disposables += MatterOccurences.Subscribe(occ => {
+            _disposables += MatterOccurences.Subscribe(occ =>
+            {
 
                 var serializableOcc = new SerializableMatterOccurence() {
                     guid = occ.Guid,
@@ -157,14 +158,15 @@ namespace Rzeka
 
             return weaving;
         }
-
+        
+        [Obsolete] // TODO there is a problem with that, there are no longer ingredients list
         private Dictionary<string, SerializableStranding[]> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
-                .Ingredients
+                .SatisfiedRequirements
                 .Select(kvp => new KeyValuePair<string, SerializableStranding[]>(
                     key: kvp.Key.Name,
-                    value: kvp.Value.Select(conjuring => GetSerializableStranding(conjuring)).ToArray())
+                    value: null) // oops
                 )
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }

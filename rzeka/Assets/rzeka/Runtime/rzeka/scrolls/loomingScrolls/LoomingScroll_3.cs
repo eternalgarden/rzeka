@@ -7,17 +7,18 @@ using System.Reactive.Subjects;
 namespace Rzeka
 {
     [Serializable]
-    public class LoomingScroll_2<T1, T2, TOut> : LoomingScroll<TOut>
+    public class LoomingScroll_3<T1, T2, T3, TOut> : LoomingScroll<TOut>
         where TOut : TMatter
         where T1 : TMatter
         where T2 : TMatter
+        where T3 : TMatter
     {
-        readonly Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> _spell;
+        readonly Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> _spell;
 
-        public LoomingScroll_2(
+        public LoomingScroll_3(
             object who,
             Library library,
-            Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell,
+            Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell,
             ISubject<SpellOccurence> spellStream, 
             ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
         {
@@ -27,10 +28,12 @@ namespace Rzeka
             ThisAsConjuring.InitializeConjuringSpell();
         }
         
+        // TODO replace it with a string that will throw an error for end user that informs same type cant be used twice
         public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
         {
             { typeof(T1), false },
             { typeof(T2), false },
+            { typeof(T3), false },
         };
 
         protected override IDisposable CastSpell()
@@ -51,15 +54,24 @@ namespace Rzeka
                     lastT2 = nextT;
                 });
             
-            IObservable<Glyph<T1,T2>> observable = ingredient1
-                .CombineLatest(ingredient2)
-                .Select(anon => new Glyph<T1, T2>() { One = anon.First, Two = anon.Second });
+            var lastT3 = default(T3); // * attach last matter grabber
+            IObservable<T3> ingredient3 = ThisAsBinding
+                .GetObservableIngredient<T3>()
+                .Do(nextT =>
+                {
+                    lastT3 = nextT;
+                });
+            
+            IObservable<Glyph<T1,T2,T3>> observable = ingredient1
+                .CombineLatest(ingredient2, ingredient3)
+                .Select(anon => new Glyph<T1, T2, T3>() 
+                    { One = anon.First, Two = anon.Second, Three = anon.Third});
 
             var conjuring = _spell
                 .Invoke(observable)
                 .Select(matter =>
                 {   
-                    matter = matter.WithCircumstances<TOut>(lastT1, lastT2);
+                    matter = matter.WithCircumstances<TOut>(lastT1, lastT2, lastT3);
 
                     ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
 

@@ -148,8 +148,8 @@ namespace Rzeka.Tests.Integration
                 this,
                 obs => obs
                     .Do(glyph => {
-                        if (glyph.one.Number == 1) receivedANumber++;
-                        if (glyph.two.Name == "Ali") receivedANumber++;
+                        if (glyph.One.Number == 1) receivedANumber++;
+                        if (glyph.Two.Name == "Ali") receivedANumber++;
                     })
                     .Select(_ => new UserWelcomingText("oik")) // * not important in this test
             );
@@ -215,7 +215,7 @@ namespace Rzeka.Tests.Integration
             using var oik1 = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 this,
                 obs => obs
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name)) // * not important in this test
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name)) // * not important in this test
             );
 
             using var oik2 = Rzeka.Weave<ANumberAndName>(

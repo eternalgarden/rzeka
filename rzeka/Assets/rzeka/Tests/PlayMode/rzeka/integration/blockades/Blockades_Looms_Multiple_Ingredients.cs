@@ -21,7 +21,7 @@ namespace Rzeka.Tests.Integration
             using var x = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             yield return null;
@@ -49,7 +49,7 @@ namespace Rzeka.Tests.Integration
             using var x1 = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             yield return null;
@@ -72,7 +72,7 @@ namespace Rzeka.Tests.Integration
             using var x = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             yield return null;
@@ -105,7 +105,7 @@ namespace Rzeka.Tests.Integration
             using var x = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             using var x2 = Pluck_ANumber(1);
@@ -138,7 +138,7 @@ namespace Rzeka.Tests.Integration
             using var x = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             using var x2 = Pluck_ANumber(1);
@@ -171,7 +171,7 @@ namespace Rzeka.Tests.Integration
             using var x = Rzeka.Loom<ANumber,AName,ANumberAndName>(
                 who: this,
                 spell: o => o
-                    .Select(glyph => new ANumberAndName(glyph.one.Number, glyph.two.Name))
+                    .Select(glyph => new ANumberAndName(glyph.One.Number, glyph.Two.Name))
             );
 
             using var x2 = Pluck_ANumber(1);

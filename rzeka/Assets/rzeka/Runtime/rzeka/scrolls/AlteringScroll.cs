@@ -7,34 +7,38 @@ using UnityEngine;
 namespace Rzeka
 {
     [Serializable]
-    public class AlteringScroll<T> : TWeavingSpell
-        where T : TMatter
+    public class AlteringScroll<T1> : TWeavingSpell
+        where T1 : TMatter
     {
-        readonly IObserver<T> spell;
+        readonly IObserver<T1> _spell;
         IDisposable _subscriptionDisposable;
 
         public Guid Guid { get; }
+        public Library Library { get; }
         public CollectibleDisposable CollectionDisposable { get; set; }
-        public bool WasCast { get; private set; }
         public object Who { get; }
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }
         public SpellSchool SpellSchool => SpellSchool.Weaving;
-        public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T).Name}";
-
-        public Dictionary<Type, List<IConjuringSpell>> Ingredients { get; } = new(1)
+        public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T1).Name}";
+        
+        public bool WasCast => _subscriptionDisposable is not null;
+        
+        readonly Dictionary<Type, bool> _satisfiedRequirements = new(1)
         {
-            { typeof(T), new List<IConjuringSpell>() }
+            { typeof(T1), false },
         };
 
-
-        public AlteringScroll(object who, IObserver<T> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        public Dictionary<Type, bool> SatisfiedRequirements => _satisfiedRequirements;
+        
+        public AlteringScroll(object who, Library library, IObserver<T1> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
         {
-            this.spell = spell;
+            _spell = spell;
 
             Guid = Guid.NewGuid();
+            Library = library;
             Who = who;
             SpellStream = spellStream;
             MatterStream = matterStream;
@@ -82,12 +86,12 @@ namespace Rzeka
         void TBindingSpell.OnLostMana()
         {
              _subscriptionDisposable.Dispose();
+             _subscriptionDisposable = null; // TODO name this clearer
         }
 
         public void Dispose()
         {
-            if (WasCast) _subscriptionDisposable.Dispose(); // TODO check this
-
+            _subscriptionDisposable?.Dispose(); // TODO check this
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
         }
@@ -99,14 +103,12 @@ namespace Rzeka
             // todo add this check
             // if (ThisAsBinding.IsCastable is false) throw new Exception("messed up");
 
-            var ingredient = ThisAsBinding.GetObservableIngredient<T>();
+            var ingredient = ThisAsBinding.GetObservableIngredient<T1>();
 
-            if (ingredient is null) throw new Exception($"Missing ingredient of type {typeof(T)}");
+            if (ingredient is null) throw new Exception($"Missing ingredient of type {typeof(T1)}");
             
             _subscriptionDisposable = ingredient
-                .Subscribe(spell);
-
-            WasCast = true;
+                .Subscribe(_spell);
         }
     }
 }

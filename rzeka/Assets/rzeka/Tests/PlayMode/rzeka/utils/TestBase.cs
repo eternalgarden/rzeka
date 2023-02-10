@@ -53,7 +53,7 @@ namespace Rzeka.Tests
 
         protected IDisposable Pluck_UserData(int count = 1)
         {
-            return Rzeka.Pluck<UserData>(
+            return Rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -71,7 +71,7 @@ namespace Rzeka.Tests
 
         protected IDisposable Pluck_UserData(params string[] names)
         {
-            return Rzeka.Pluck<UserData>(
+            return Rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Create<UserData>(observer =>
@@ -89,7 +89,7 @@ namespace Rzeka.Tests
 
         protected IDisposable Pluck_ANumber(params int[] numbers)
         {
-            return Rzeka.Pluck<ANumber>(
+            return Rzeka.Strand<ANumber>(
                 who: this,
                 spell: Observable
                     .Create<ANumber>(observer =>
@@ -107,7 +107,7 @@ namespace Rzeka.Tests
 
         protected IDisposable Pluck_AName(params string[] names)
         {
-            return Rzeka.Pluck<AName>(
+            return Rzeka.Strand<AName>(
                 who: this,
                 spell: Observable
                     .Create<AName>(observer =>
@@ -125,7 +125,7 @@ namespace Rzeka.Tests
 
         protected IDisposable Pluck_UserDataInterval()
         {
-            return Rzeka.Pluck<UserData>(
+            return Rzeka.Strand<UserData>(
                 who: this,
                 spell: Observable
                     .Interval(TimeSpan.FromSeconds(1))

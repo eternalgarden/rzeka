@@ -102,7 +102,7 @@ namespace Rzeka.Tests.Rx
 
             List<long> intervalValues = new();
 
-            using var oik = combine.Subscribe(combine => {
+            using IDisposable oik = combine.Subscribe(combine => {
                 intervalValues.Add(combine.Second); // will have three different values as the interval keeps going
             });
 

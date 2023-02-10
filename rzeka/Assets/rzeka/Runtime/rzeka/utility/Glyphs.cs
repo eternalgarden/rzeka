@@ -15,24 +15,27 @@ using UnityEngine.UI;
 
 namespace Rzeka
 {
-    public abstract class Glyph
-    {
-        public abstract Guid[] AsCircumstance();
-    }
-
-    public class Glyph<T, Y> : Glyph
-        where T : TMatter
-        where Y : TMatter
+    public struct Glyph<T1, T2>
+        where T1 : TMatter
+        where T2 : TMatter
     {
         // -------------
 
-        public T one { get; set; }
-        public Y two { get; set; }
+        public T1 One { get; set; }
+        public T2 Two { get; set; }
 
-        public override Guid[] AsCircumstance()
-        {
-            return new Guid[2] { one.Guid, two.Guid };
-        }
+        // -------------
+    }
+    
+    public struct Glyph<T1, T2, T3>
+        where T1 : TMatter
+        where T2 : TMatter
+    {
+        // -------------
+
+        public T1 One { get; set; }
+        public T2 Two { get; set; }
+        public T3 Three { get; set; }
 
         // -------------
     }
