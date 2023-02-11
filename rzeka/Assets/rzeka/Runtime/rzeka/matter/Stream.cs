@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Rzeka
@@ -18,13 +19,11 @@ namespace Rzeka
         /// Its as simple as that.
         /// If you want to keep a source available keep it's conjurers/sources alife.
         /// </summary>
-        public bool IsAvailable => HasSources;
+        public bool IsActive => HasSources;
 
-        public bool IsActive => HasSubject;
-        
         bool HasSources => _sources.Count > 0;
 
-        bool HasSubject => _strainSubject is not null;
+        bool HasSubject => Subject is not null;
         
         /// <summary>
         /// currently only keys are used, there is a common subscription disposable below
@@ -32,92 +31,124 @@ namespace Rzeka
         /// 'full replug'
         /// sources will be recombined into a new subscription on each source (dis)appearing
         /// </summary>
-        List<IObservable<T>> _sources;
+        List<IObservable<T>> _sources = new();
+        List<TConjuringSpell<T>> _conjurings = new();
+        Dictionary<TConjuringSpell<T>, IDisposable> _conjuringHasManaListeners = new();
 
         IDisposable _sourcesSubscription;
-        
+        ISubject<T> _subject;
+        HashSet<TConjuringSpell<T>> _activeSources;
+
         /// <summary>
         /// IMPORTANT 🙀
         /// By default it is a ReplaySubject with buffer size 1
         /// </summary>
-        ISubject<T> _strainSubject;
-
-        public Stream()
+        ISubject<T> Subject
         {
-            _sources = new();
-            InitializeSubject();
+            get { return _subject ??= CreateSubject(); }
         }
 
-        public IDisposable RegisterConjurer(IObservable<T> strand)
+        public IDisposable RegisterConjurer(IObservable<T> conjurer, TConjuringSpell<T> conjuring)
         {
-            _sources.Add(strand);
-            _sourcesSubscription?.Dispose();
-            _sourcesSubscription = GetCombinedSourcesStream().Subscribe(_strainSubject);
-            
-            var token = Disposable.Create(strand, x => { RemoveSource(x); });
+            Debug.Log(typeof(T));
+
+            AddSource(conjurer, conjuring);
+
+            var token = Disposable.Create(conjurer, RemoveSource);
             
             return token;
+        }
+
+        void AddSource(IObservable<T> source, TConjuringSpell<T> conjuring)
+        {
+            _sources.Add(source);
+            _conjurings.Add(conjuring);
+
+            IDisposable hasmanalistener = conjuring
+                .HasMana
+                .Subscribe(hasMana =>
+                {
+                    if (hasMana)
+                    {
+                        _activeSources.Add(conjuring);
+                    }
+                });
+            
+            _conjuringHasManaListeners.Add(conjuring, hasmanalistener);
+            RecombineSourcesSubscription();
+        }
+
+        void RemoveSource(IObservable<T> source)
+        {
+            _sources.Remove(source);
+            RecombineSourcesSubscription();
+        }
+
+        void RecombineSourcesSubscription()
+        {
+            _sourcesSubscription?.Dispose();
+            
+            if (HasSources is false) return;
+            
+            IObservable <T> combinedSourcesStream = CombineSources(_sources);
+            _sourcesSubscription = combinedSourcesStream.Subscribe(Subject.AsObserver());
         }
         
         // * Notice Stream cannot force unregister those who already requested it as a source
         // * They need to do it on their own when they lose mana
         public IObservable<T> GetStream()
         {
-            if (IsAvailable is false) throw new Exception("waffle ice cream");
-            
-            if (HasSubject is false) InitializeSubject();
-
-            return _strainSubject.AsObservable();
+            return Subject.AsObservable();
         }
 
         public void Dispose()
         {
             _sourcesSubscription?.Dispose();
-            _strainSubject = null;
         }
 
-        void InitializeSubject()
+        ISubject<T> CreateSubject()
         {
             // TODO At the moment (probably a long one) only such subject is allowed
             // A custom buffer size subject could be made depending on type attributes for example
             // Also a type that doesnt store any value and sompletely fades away on completion
             // return new Subject<T>();
             
-            _strainSubject = new ReplaySubject<T>(1);
+            return new ReplaySubject<T>(1);
         }
 
-        IObservable<T> GetCombinedSourcesStream()
+        static IObservable<T> CombineSources([NotNull] IReadOnlyCollection<IObservable<T>> sources)
         {
+            if (sources == null) throw new ArgumentNullException(nameof(sources));
+            
             IObservable<T> stream = null;
             
-            int availableSources = _sources.Count;
+            // _conjurings
+            //     .ToObservable()
+            //     .Where(con =>
+            //     {
+            //         bool hasMana = false;
+            //         using var _ = con.HasMana.Subscribe(oik => hasMana = oik);
+            //         return hasMana;
+            //     })
+
+            int availableSources = sources.Count;
 
             if (availableSources > 1)
             {
                 // multisouce handle
                 // alternatives per specific matter attribute description can be handled here
-                stream = _sources.Merge();
+                stream = sources.Merge();
             }
             else if (availableSources == 1)
             {
-                stream = _sources.First();
+                stream = sources.First();
             }
             else
             {
-                throw new Exception("impossibiru");
+                Debug.Log("impossibiru");
             }
 
             return stream;
-        }
-
-        void RemoveSource(IObservable<T> source)
-        {
-            _sources.Remove(source);
-
-            if (IsAvailable is false)
-            {
-                Dispose();
-            }
         }
     }
 }

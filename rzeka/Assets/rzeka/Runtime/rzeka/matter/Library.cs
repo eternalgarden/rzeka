@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using UnityEngine;
 
 [assembly:InternalsVisibleTo("com.rzeka.tests.playmode")]
@@ -21,68 +22,74 @@ namespace Rzeka
             _streams = new();
         }
 
-        public bool DoesStreamExist<T>() where T : TMatter
+        public bool WasStreamCreated<T>() where T : TMatter
         {
             Type key = typeof(T);
-            return DoesStreamExist(key);
+            return WasStreamCreated(key);
         }
 
-        public bool DoesStreamExist(Type key)
+        public bool WasStreamCreated(Type key)
         {
             return _streams.ContainsKey(key);
         }
 
-        public bool IsStreamAvailable<T>() where T : TMatter
+        public bool IsStreamActive<T>() where T : TMatter
         {
             Type key = typeof(T);
-            return IsStreamAvailable(key);
+            return IsStreamActive(key);
         }
         
-        public bool IsStreamAvailable(Type key)
+        public bool IsStreamActive(Type key)
         {
-            return DoesStreamExist(key) && _streams[key].IsAvailable;
+            return WasStreamCreated(key) && _streams[key].IsActive;
         }
 
         public IObservable<T> GetConjurer<T>() where T : TMatter
         {
-            Type key = typeof(T);
-            Stream<T> stream = _streams[key] as Stream<T>;
-            Debug.Assert(stream != null, nameof(stream) + " != null");
+            Stream<T> stream = GetStream<T>();
             IObservable<T> conjurer = stream.GetStream();
             return conjurer;
         }
         
-        public IDisposable RegisterConjurer<T>(IObservable<T> strand)
+        public IDisposable RegisterConjurer<T>([NotNull] IObservable<T> strand, TConjuringSpell<T> conjuring)
             where T : TMatter
         {
-            Type key = typeof(T);
+            if (strand == null) throw new ArgumentNullException(nameof(strand));
+            
+            Stream<T> stream = GetStream<T>();
 
+            Debug.Assert(stream != null, nameof(stream) + " != null");
+            
+            IDisposable registrationToken = stream.RegisterConjurer(strand, conjuring);
+
+            return registrationToken;
+        }
+        
+        /// <summary>
+        /// TODO IMPORTANT CONSIDERATION
+        /// At the moment all created streams stay for the duration of application running
+        /// They are never un-created only become inactive when they lack sources.
+        /// They are also created BOTH by a conjurer or a stream request
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        Stream<T> GetStream<T>() where T : TMatter
+        {
+            Type key = typeof(T);
+            
             Stream<T> stream;
+            
             if (_streams.ContainsKey(key) is false)
             {
                 stream = new();
-                _streams[key] = stream;
+                _streams.Add(key, stream);
             }
             else
             {
                 stream = _streams[key] as Stream<T>;
             }
 
-            Debug.Assert(stream != null, nameof(stream) + " != null");
-            
-            IDisposable registrationToken = stream.RegisterConjurer(strand);
-
-            return Disposable.Create(() =>
-            {
-                
-                registrationToken.Dispose();
-
-                if (stream.IsAvailable is false)
-                {
-                    // folding, is it necessary?
-                    _streams.Remove(key);
-                }
-            });
+            return stream;
         }
     }
 }

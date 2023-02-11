@@ -15,16 +15,29 @@ namespace Rzeka
         public string Title => $"Conjuring of {typeof(TOut).Name}";
         public TSpell ThisAsBase { get; }
         public TConjuringSpell<TOut> ThisAsConjuring { get; }
+        public IObservable<TOut> Conjuring { get; set; }
 
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }        
         public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(TOut);
         public Library Library { get; }
-        public IObservable<TOut> ConjuredSpell { get; private set; } // ND
+        
+        
+        IObservable<TOut> TConjuringSpell<TOut>.CreateConjuring()
+        {
+            return _spell
+                .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
+        }
 
         IDisposable _libraryToken;
-        public bool WasCast => _libraryToken is not null;
+
+        bool _isChanneling;
+        bool TSpell.IsChanneling
+        {
+            get => _isChanneling;
+            set => _isChanneling = value;
+        }
         
         readonly IObservable<TOut> _spell;
 
@@ -43,6 +56,8 @@ namespace Rzeka
 
             ThisAsConjuring.InitializeConjuringSpell();
 
+            // A Stranding spell is always channeling, it cant be blocked, its a pure giver
+            _isChanneling = true;
             Cast();
         }
 
@@ -50,26 +65,11 @@ namespace Rzeka
         {
             /* ⭐ ---- ---- */
 
-            if (ThisAsBase.WasCast is true) throw new Exception("Was already cast 🦇");
-            
+            if (_libraryToken is not null) throw new Exception("Was already cast 🦇");
 
             try
             {
-                // ConjuredSpell = spell
-                //     .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
-                //     .Multicast(new ReplaySubject<Q>(bufferSize: 1))
-                //     .RefCount();
-
-                var notifyingSpell = _spell
-                    .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
-
-                // IDisposable token = Library.RegisterConjurer(
-                //     notifyingSpell, 
-                //     out var observable);
-                //
-
-                _libraryToken = Library.RegisterConjurer(notifyingSpell);
-                
+                _libraryToken = Library.RegisterConjurer(Conjuring);
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
             }
             catch (Exception ex)
@@ -85,8 +85,8 @@ namespace Rzeka
         public void Dispose()
         {
             _libraryToken.Dispose();
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
     }
 }

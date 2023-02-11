@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using UnityEngine;
 
 namespace Rzeka
 {
@@ -17,27 +18,37 @@ namespace Rzeka
     * 
     TODO basically all t
     */
-    public abstract class LoomingScroll<Q> : TLoomingScroll<Q>
-        where Q : TMatter
+    public abstract class LoomingScroll<TOut> : TLoomingScroll<TOut>
+        where TOut : TMatter
     {
         public Guid Guid { get; }
         public object Who { get; }
         public Library Library { get; }
         public SpellSchool SpellSchool => SpellSchool.Looming;
-        public string Title => $"{Who.GetType().Name}'s Looming of {typeof(Q).Name}";
+        public string Title => $"{Who.GetType().Name}'s Looming of {typeof(TOut).Name}";
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
-        public TConjuringSpell<Q> ThisAsConjuring { get; }
+        public TConjuringSpell<TOut> ThisAsConjuring { get; }
+
+        IObservable<TOut> TConjuringSpell<TOut>.Conjuring { get; set; }
+
+        IObservable<TOut> TConjuringSpell<TOut>.CreateConjuring()
+        {
+            return CreateConjuring();
+        }
+
         public ISubject<SpellOccurence> SpellStream { get; }
         public ISubject<MatterOccurence> MatterStream { get; }
         public CollectibleDisposable CollectionDisposable { get; set; }
+        public Type ConjuredType => typeof(TOut);
+        bool TSpell.IsChanneling { get; set; }
 
-        public Type ConjuredType => typeof(Q);
-        public bool WasCast => _libraryToken is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
-
-        public abstract Dictionary<Type, bool> SatisfiedRequirements { get; }
+        // public bool WasCast => _conjurerLibraryToken is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
         
-        IDisposable _libraryToken;
+        public abstract Dictionary<Type, bool> SatisfiedRequirements { get; }
+        protected abstract IObservable<TOut> CreateConjuring();
+        
+        IDisposable _conjurerLibraryToken;
 
         public LoomingScroll(
             object who,
@@ -57,30 +68,42 @@ namespace Rzeka
             ThisAsConjuring = this;
         }
 
-        protected abstract IDisposable CastSpell();
+        protected void InitializeLooming()
+        {
+            ThisAsConjuring.InitializeConjuringSpell();
+            ThisAsBinding.InitializeBindingSpell();
+        }
+
 
         public void Cast()
         {
-            if (WasCast is true) throw new Exception("Was already cast 🦇");
-            if (ThisAsBinding.HasMana is false) throw new Exception("No mana to cast 😼");
+            if (_conjurerLibraryToken is not null) throw new Exception("Was already cast 🦇");
+            if (ThisAsConjuring.Conjuring is null) throw new Exception("Conjuring is null");
             
-            // replace that with a registration to the library
-            _libraryToken = CastSpell();
+            Debug.Log("get get got got");
 
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
+            _conjurerLibraryToken = Library.RegisterConjurer<TOut>(ThisAsConjuring.Conjuring, this);
         }
-
+        
+        // TODO VERY IMPORTANT, CHECK IF SPELLS ARE BEING DISPOSED CORRECTLY
         public virtual void Dispose()
         {
-            _libraryToken?.Dispose();
+            UnregisterConjurerFromLibrary();
             CollectionDisposable.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
 
         void TBindingSpell.OnLostMana()
         {
-            _libraryToken.Dispose();
-            _libraryToken = null;
+            UnregisterConjurerFromLibrary();
+        }
+
+        public ReplaySubject<bool> BindingHasMana { get; } = new();
+
+        void UnregisterConjurerFromLibrary()
+        {
+            _conjurerLibraryToken?.Dispose();
+            _conjurerLibraryToken = null;
         }
     }
 }

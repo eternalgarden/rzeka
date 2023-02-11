@@ -79,20 +79,17 @@ namespace Rzeka.Tests.SpellOccurences
             // -------------
         }
 
-        [UnityTest]
-        public IEnumerator c2_NoMana_Cast_Weave()
+        [Test]
+        [TestCase(SpellOccurenceCategory.Cast)]
+        [TestCase(SpellOccurenceCategory.NoMana)]
+        public void c2_NoMana_Cast_Weave(SpellOccurenceCategory category)
         {
             // -------------
             
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
-                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
-                .Subscribe(_ => occurence++);
-
-            using var d2 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.NoMana)
+                .Where(occ => occ.SpellOccurenceCategory == category)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
@@ -102,9 +99,7 @@ namespace Rzeka.Tests.SpellOccurences
 
             p1.Dispose();
 
-            yield return null;
-
-            Assert.AreEqual(2, occurence);
+            Assert.AreEqual(1, occurence);
 
             // -------------
         }

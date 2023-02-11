@@ -24,8 +24,7 @@ namespace Rzeka
         {
             this._spell = spell;
 
-            ThisAsBinding.InitializeBindingSpell();
-            ThisAsConjuring.InitializeConjuringSpell();
+            InitializeLooming();
         }
         
         // TODO replace it with a string that will throw an error for end user that informs same type cant be used twice
@@ -36,7 +35,7 @@ namespace Rzeka
             { typeof(T3), false },
         };
 
-        protected override IDisposable CastSpell()
+        protected override IObservable<TOut> CreateConjuring()
         {
             var lastT1 = default(T1); // * attach last matter grabber
             IObservable<T1> ingredient1 = ThisAsBinding
@@ -78,9 +77,7 @@ namespace Rzeka
                     return matter;
                 });
             
-            IDisposable token = Library.RegisterConjurer<TOut>(conjuring);
-
-            return token;
+            return conjuring;
         }
     }
 }

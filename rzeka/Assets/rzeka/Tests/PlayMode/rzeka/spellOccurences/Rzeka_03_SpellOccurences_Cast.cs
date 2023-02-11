@@ -58,7 +58,7 @@ namespace Rzeka.Tests.SpellOccurences
             
             using var d2 = tools.Strand_ANumber(out ConjuringScroll<ANumber> scroll);
 
-            Assert.AreEqual(true, (scroll as TSpell).WasCast);
+            Assert.AreEqual(true, (scroll as TSpell).IsChanneling);
 
             yield return null;
 
@@ -94,7 +94,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d2 = tools.Strand_AName("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
-            Assert.AreEqual(true, scroll.WasCast);
+            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
 
             yield return null;
 
@@ -132,7 +132,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
-            Assert.AreEqual(true, scroll.WasCast);
+            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
 
             yield return null;
 
@@ -176,7 +176,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d2 = tools.Strand_AName("Agent Cooper");
 
-            Assert.AreEqual(true, scroll.WasCast);
+            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
 
             yield return null;
 
@@ -214,7 +214,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(true, scroll.WasCast);
+            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
 
             yield return null;
 
@@ -254,7 +254,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(true, scroll.WasCast);
+            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
 
             yield return null;
 

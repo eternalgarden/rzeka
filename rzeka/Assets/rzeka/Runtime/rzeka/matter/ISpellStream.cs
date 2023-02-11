@@ -5,6 +5,6 @@ namespace Rzeka
     public interface ISpellStream : IDisposable
     {
         Type MatterType { get; }
-        bool IsAvailable { get; }
+        bool IsActive { get; }
     }
 }

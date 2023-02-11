@@ -183,12 +183,31 @@ namespace Rzeka.Tests.Matter.Default
         [TestCase(new int[] {5,8})]
         [TestCase(new int[] {1,2,3})]
         public void b_early_subscriber_gets_all_the_values(int[] emitValues)
-        {
+         {
             // -------------
 
             int receivals = 0;
 
             using var w1 = _tools.Weave_ANumber(_ => receivals++);
+            using var s1 = _tools.Strand_ANumber(emitValues);
+
+            Assert.AreEqual(emitValues.Length, receivals);
+
+            // -------------
+        }
+        
+        [Test]
+        // [TestCase(new int[] {5})]
+        [TestCase(new int[] {5,8})]
+        // [TestCase(new int[] {1,2,3})]
+        public void b_early_subscriber_gets_all_the_values_loom_version(int[] emitValues)
+        {
+            // -------------
+            
+            int receivals = 0;
+
+            using var w1 = _tools.Weave_AName(_ => receivals++);
+            using var l1 = _tools.Loom_ANumber_To_AName(out _);
             using var s1 = _tools.Strand_ANumber(emitValues);
 
             Assert.AreEqual(emitValues.Length, receivals);

@@ -25,12 +25,14 @@ namespace Rzeka
         SpellSchool SpellSchool { get; }
         Guid Guid { get; }
         object Who { get; }
-        bool WasCast { get; }
+        bool IsChanneling { get; protected set; }
         string Title { get; }
         ISubject<SpellOccurence> SpellStream { get; }
         ISubject<MatterOccurence> MatterStream { get; }
         Library Library { get; }
         CollectibleDisposable CollectionDisposable { get; set; }
+        
+        IObservable<bool> HasMana { get; }
 
         void Cast();
 

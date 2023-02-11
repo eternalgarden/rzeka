@@ -16,7 +16,7 @@ namespace Rzeka
         IDisposable Loom<T1,TOut>(object who, Func<IObservable<T1>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter;
         IDisposable Loom<T1,T2,TOut>(object who, Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter;
         IDisposable Loom<T1,T2,T3,TOut>(object who, Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter where T3 : TMatter;
-        IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter; // TODO add overload that lets you first filter
+        IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter;
     }
 
     internal interface ITestableRzeka : IRzeka

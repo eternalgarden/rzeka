@@ -17,12 +17,13 @@ namespace Rzeka
         /// To re-cast one it's scroll would have to be disposed and summoned again, unless it has gotten out of mana and then it is be provided with it again.
         /// TODO CONSIDER ADDING ReCast() INTERFACE METHOD
         /// </summary>
-        // IObservable<TOut> ConjuredSpell { get; }
+        IObservable<TOut> Conjuring { get; set; }
         
         // ND: obsolete because of the above
 
         // bool TSpell.WasCast => ConjuredSpell is not null;
-        
+        protected IObservable<TOut> CreateConjuring();
+
         //
         // ⛺ ─── Conjurer Registrations ───────────────────────────────────────────────────
         //
@@ -34,7 +35,9 @@ namespace Rzeka
             
             InitializeSpellBase();
             ListenForIntroductions();
-            
+
+            Conjuring = CreateConjuring();
+
             /* ---- ---- 🌠 */
         }
         

@@ -24,12 +24,12 @@ namespace Rzeka
         public SpellSchool SpellSchool => SpellSchool.Weaving;
         public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T1).Name}";
         
-        public bool WasCast => _subscriptionDisposable is not null;
-        
         readonly Dictionary<Type, bool> _satisfiedRequirements = new(1)
         {
             { typeof(T1), false },
         };
+
+        bool _isChanneling;
 
         public Dictionary<Type, bool> SatisfiedRequirements => _satisfiedRequirements;
         
@@ -46,6 +46,8 @@ namespace Rzeka
             ThisAsBinding = this;
 
             ThisAsBinding.InitializeBindingSpell();
+            
+            ExecuteCast(); // ! this is weird but currently weavings should cast immediately aswell
         }
 
         
@@ -58,9 +60,7 @@ namespace Rzeka
         {
             try
             {
-                ExecuteCast();
-
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
+                // ExecuteCast(); 
             }
             catch (Exception ex)
             {
@@ -85,15 +85,23 @@ namespace Rzeka
 
         void TBindingSpell.OnLostMana()
         {
-             _subscriptionDisposable.Dispose();
-             _subscriptionDisposable = null; // TODO name this clearer
+             // _subscriptionDisposable.Dispose();
+             // _subscriptionDisposable = null; // TODO name this clearer
+        }
+
+        public ReplaySubject<bool> BindingHasMana { get; } = new();
+
+        bool TSpell.IsChanneling
+        {
+            get => _isChanneling;
+            set => _isChanneling = value;
         }
 
         public void Dispose()
         {
             _subscriptionDisposable?.Dispose(); // TODO check this
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
             CollectionDisposable.Dispose();
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
         
         #endregion // ---------------------------------- Public -------------------------

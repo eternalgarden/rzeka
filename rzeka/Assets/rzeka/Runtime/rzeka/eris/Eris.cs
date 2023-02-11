@@ -110,7 +110,7 @@ namespace Rzeka
             spell.whosName = source.Who is MonoBehaviour 
                 ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
                 : source.Who.GetType().Name;
-            spell.wasCast = source.WasCast;
+            spell.wasCast = source.IsChanneling;
 
             return spell;
         }
@@ -136,9 +136,9 @@ namespace Rzeka
             {
                 spellSchool = SpellSchool.Looming,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.WasCast,
+                wasCast = binding.IsChanneling,
                 conjuredType = conjuring.ConjuredType,
-                hasMana = binding.HasMana
+                hasMana = binding.IsChanneling // TODO this is a naming misguide
             };
 
             return looming;
@@ -152,8 +152,8 @@ namespace Rzeka
             {
                 spellSchool = SpellSchool.Weaving,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.WasCast,
-                hasMana = binding.HasMana
+                wasCast = binding.IsChanneling,
+                hasMana = binding.IsChanneling // TODO this is a naming misguide
             };
 
             return weaving;

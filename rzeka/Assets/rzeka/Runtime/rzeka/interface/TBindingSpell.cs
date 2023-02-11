@@ -20,30 +20,10 @@ namespace Rzeka
         //
         #region Default Imlementation
 
-        bool HasMana => SatisfiedRequirements.All(x => x.Value is true);
-
-        void SetRequirementSatisfied(Type type, bool satisfied)
-        {
-            if (RequiresIngredient(type) is false) Debug.LogError("HUH");
-
-            SatisfiedRequirements[type] = satisfied;
-            
-            if (WasCast)
-            {
-                if (HasMana is true) return;
-                
-                OnLostMana();
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
-            }
-            else
-            {
-                if (HasMana)
-                {
-                    ThisAsBase.Cast();
-                }
-            }
-        }
+        IObservable<bool> TSpell.HasMana => BindingHasMana.AsObservable();
         
+        ReplaySubject<bool> BindingHasMana { get; }
+
         bool RequiresIngredient(Type key)
         {
             return SatisfiedRequirements.ContainsKey(key);
@@ -92,9 +72,33 @@ namespace Rzeka
             ListenForAppearingIngredients();
             ListenForFadingIngredients();
             
-            // TODO ADD CHECK FOR SATISFIED INGREDIENTS
-            
             /* ---- ---- 🌠 */
+        }
+        
+        void SetRequirementSatisfied(Type type, bool satisfied)
+        {
+            if (RequiresIngredient(type) is false) Debug.LogError("HUH");
+
+            SatisfiedRequirements[type] = satisfied;
+            
+            bool hasMana = SatisfiedRequirements.All(x => x.Value is true);
+
+            if (IsChanneling == hasMana) return;
+
+            if (IsChanneling && !hasMana)
+            {
+                IsChanneling = false;
+                OnLostMana();
+                BindingHasMana.OnNext(false);
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
+            }
+            else
+            {
+                IsChanneling = true;
+                Cast(); // atm it is only used for looming scrolls ugh
+                BindingHasMana.OnNext(true);
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
+            }
         }
         
         // nd
@@ -105,16 +109,16 @@ namespace Rzeka
         private void RegisterPostCreationManaCheck()
         {
             var activeKeys = SatisfiedRequirements
-                .Where(kvp => Library.IsStreamAvailable(kvp.Key))
+                .Where(kvp => Library.IsStreamActive(kvp.Key))
                 .Select(kvp => kvp.Key)
                 .ToArray(); // TODO why if you remove this there is an error in c2_NoMana_Cast_Weave test
 
             foreach (Type key in activeKeys)
             {
-                if (Library.IsStreamAvailable(key)) SetRequirementSatisfied(key, true);
+                if (Library.IsStreamActive(key)) SetRequirementSatisfied(key, true);
             }
             
-            if (WasCast is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
+            if (IsChanneling is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
         }
 
         /// <summary>
@@ -150,7 +154,7 @@ namespace Rzeka
                 {
                     Type conjuredType = i.ConjuredType;
                     
-                    if (Library.IsStreamAvailable(conjuredType) is false)
+                    if (Library.IsStreamActive(conjuredType) is false)
                     {
                         ThisAsBinding.SetRequirementSatisfied(conjuredType, false);
                     }

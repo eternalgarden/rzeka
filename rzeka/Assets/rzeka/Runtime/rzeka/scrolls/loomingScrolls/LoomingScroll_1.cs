@@ -23,8 +23,7 @@ namespace Rzeka
         {
             _spell = spell;
 
-            ThisAsBinding.InitializeBindingSpell();
-            ThisAsConjuring.InitializeConjuringSpell();
+            InitializeLooming();
         }
         
         public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
@@ -32,7 +31,7 @@ namespace Rzeka
             { typeof(T1), false },
         };
 
-        protected override IDisposable CastSpell()
+        protected override IObservable<TOut> CreateConjuring()
         {
             /* ⭐ ---- ---- */
             
@@ -41,6 +40,7 @@ namespace Rzeka
                 .GetObservableIngredient<T1>()
                 .Do(nextT =>
                 {
+                    Debug.Log("receiveed");
                     lastT = nextT;
                 });
 
@@ -67,9 +67,7 @@ namespace Rzeka
                 // .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives
                 // .RefCount();
 
-            IDisposable token = Library.RegisterConjurer<TOut>(conjuring);
-
-            return token;
+            return conjuring;
 
             /* ---- ---- 🌠 */
         }

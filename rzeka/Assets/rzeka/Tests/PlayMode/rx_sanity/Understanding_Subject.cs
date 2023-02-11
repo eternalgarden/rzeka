@@ -13,8 +13,11 @@ namespace Rzeka.Tests.Rx
 {
     public class Understanding_Subjects
     {
-        [UnityTest]
-        public IEnumerator a_somethign()
+        [Test]
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(5)]
+        public void a_subject_pushes_to_its_subscribers(int pushedValuesCount)
         {
             var q = new CollectibleDisposable();
 
@@ -24,34 +27,35 @@ namespace Rzeka.Tests.Rx
 
             q += subject.Subscribe(i => receivals++);
             q += subject.Subscribe(i => receivals++);
-            
-            subject.OnNext(1);
 
-            yield return null;
-            
+            for (int i = 0; i < pushedValuesCount; i++)
+            {
+                subject.OnNext(1);
+            }
+
             q.Dispose();
             
-            Assert.AreEqual(2, receivals);
+            Assert.AreEqual(pushedValuesCount*2, receivals);
         }
 
-        [UnityTest]
-        public IEnumerator b_somethign()
+        [Test]
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(7)]
+        public void b_subject_as_both_observer_and_observable(int count)
         {
-            IObservable<int> source = Observable.Return<int>(1);
+            IObservable<int> source = Observable.Range(0,count);
 
             using Subject<int> subject = new Subject<int>();
 
-            int receivals = 0; // * EXPECTED 2
+            int receivals = 0;
 
             using var o1 = subject.Subscribe(i => receivals++);
             using var o2 = subject.Subscribe(i => receivals++);
 
             using var oSub = source.Subscribe(subject);
 
-            yield return null;
-
-
-            Assert.AreEqual(2, receivals);
+            Assert.AreEqual(count*2, receivals);
         }
         
         [UnityTest]

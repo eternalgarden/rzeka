@@ -18,22 +18,21 @@ namespace Rzeka
             object who,
             Library library,
             Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell,
-            ISubject<SpellOccurence> spellStream, 
+            ISubject<SpellOccurence> spellStream,
             ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
         {
             this._spell = spell;
 
-            ThisAsBinding.InitializeBindingSpell();
-            ThisAsConjuring.InitializeConjuringSpell();
+            InitializeLooming();
         }
-        
+
         public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
         {
             { typeof(T1), false },
             { typeof(T2), false },
         };
 
-        protected override IDisposable CastSpell()
+        protected override IObservable<TOut> CreateConjuring()
         {
             var lastT1 = default(T1); // * attach last matter grabber
             IObservable<T1> ingredient1 = ThisAsBinding
@@ -66,9 +65,7 @@ namespace Rzeka
                     return matter;
                 });
             
-            IDisposable token = Library.RegisterConjurer<TOut>(conjuring);
-
-            return token;
+            return conjuring;
         }
     }
 }
