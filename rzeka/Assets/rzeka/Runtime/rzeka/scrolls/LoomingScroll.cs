@@ -24,6 +24,7 @@ namespace Rzeka
         public Guid Guid { get; }
         public object Who { get; }
         public Library Library { get; }
+        public Eris Eris { get; }
         public SpellSchool SpellSchool => SpellSchool.Looming;
         public string Title => $"{Who.GetType().Name}'s Looming of {typeof(TOut).Name}";
         public TSpell ThisAsBase  { get; }
@@ -36,12 +37,9 @@ namespace Rzeka
         {
             return CreateConjuring();
         }
-
-        public ISubject<SpellOccurence> SpellStream { get; }
-        public ISubject<MatterOccurence> MatterStream { get; }
         public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(TOut);
-        bool TSpell.IsChanneling { get; set; }
+        bool TSpell.HasMana { get; set; }
 
         // public bool WasCast => _conjurerLibraryToken is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
         
@@ -50,18 +48,15 @@ namespace Rzeka
         
         IDisposable _conjurerLibraryToken;
 
-        public LoomingScroll(
+        protected LoomingScroll(
             object who,
             Library library,
-            ISubject<SpellOccurence> spellStream, 
-            ISubject<MatterOccurence> matterStream)
+            Eris eris)
         {
             Who = who;
             Library = library;
+            Eris = eris;
             Guid = Guid.NewGuid();
-
-            SpellStream = spellStream;
-            MatterStream = matterStream;
 
             ThisAsBase = this;
             ThisAsBinding = this;
@@ -70,8 +65,11 @@ namespace Rzeka
 
         protected void InitializeLooming()
         {
+            ThisAsBase.InitializeSpellBase();
             ThisAsConjuring.InitializeConjuringSpell();
             ThisAsBinding.InitializeBindingSpell();
+            
+            Cast(); // atm it is only used for looming scrolls ugh
         }
 
 
@@ -80,9 +78,7 @@ namespace Rzeka
             if (_conjurerLibraryToken is not null) throw new Exception("Was already cast 🦇");
             if (ThisAsConjuring.Conjuring is null) throw new Exception("Conjuring is null");
             
-            Debug.Log("get get got got");
-
-            _conjurerLibraryToken = Library.RegisterConjurer<TOut>(ThisAsConjuring.Conjuring, this);
+            _conjurerLibraryToken = Library.RegisterConjurer<TOut>(ThisAsConjuring.Conjuring);
         }
         
         // TODO VERY IMPORTANT, CHECK IF SPELLS ARE BEING DISPOSED CORRECTLY
@@ -91,11 +87,6 @@ namespace Rzeka
             UnregisterConjurerFromLibrary();
             CollectionDisposable.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
-        }
-
-        void TBindingSpell.OnLostMana()
-        {
-            UnregisterConjurerFromLibrary();
         }
 
         public ReplaySubject<bool> BindingHasMana { get; } = new();

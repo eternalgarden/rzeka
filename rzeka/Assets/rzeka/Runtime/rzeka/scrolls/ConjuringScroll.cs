@@ -16,12 +16,10 @@ namespace Rzeka
         public TSpell ThisAsBase { get; }
         public TConjuringSpell<TOut> ThisAsConjuring { get; }
         public IObservable<TOut> Conjuring { get; set; }
-
-        public ISubject<SpellOccurence> SpellStream { get; }
-        public ISubject<MatterOccurence> MatterStream { get; }        
         public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(TOut);
         public Library Library { get; }
+        public Eris Eris { get; }
         
         
         IObservable<TOut> TConjuringSpell<TOut>.CreateConjuring()
@@ -33,7 +31,7 @@ namespace Rzeka
         IDisposable _libraryToken;
 
         bool _isChanneling;
-        bool TSpell.IsChanneling
+        bool TSpell.HasMana
         {
             get => _isChanneling;
             set => _isChanneling = value;
@@ -41,19 +39,19 @@ namespace Rzeka
         
         readonly IObservable<TOut> _spell;
 
-        public ConjuringScroll(object who, Library library, IObservable<TOut> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        public ConjuringScroll(object who, IObservable<TOut> spell, Library library, Eris eris)
         {
             _spell = spell;
             
             Guid = Guid.NewGuid();
             Who = who;
             Library = library;
+            Eris = eris;
 
-            SpellStream = spellStream;
-            MatterStream = matterStream;
             ThisAsBase = this;
             ThisAsConjuring = this;
 
+            ThisAsBase.InitializeSpellBase();
             ThisAsConjuring.InitializeConjuringSpell();
 
             // A Stranding spell is always channeling, it cant be blocked, its a pure giver
@@ -70,7 +68,7 @@ namespace Rzeka
             try
             {
                 _libraryToken = Library.RegisterConjurer(Conjuring);
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
             }
             catch (Exception ex)
             {

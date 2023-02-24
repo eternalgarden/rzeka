@@ -46,120 +46,71 @@ namespace Rzeka.Tests.SpellOccurences
             // -------------
         }
         
-        //
-        // ⛺ ─── Creation ───────────────────────────────────────────────────
-        //
-        #region Creation
-        
-        [UnityTest]
-        public IEnumerator a1_Created_Pluck_Logged()
+        [Test]
+        [TestCase(SpellOccurenceCategory.Created, true)]
+        [TestCase(SpellOccurenceCategory.HasMana, true)]
+        [TestCase(SpellOccurenceCategory.NoMana, false)] 
+        public void a1_alone_stranding_creation_occurences(SpellOccurenceCategory category, bool happened)
         {
             // -------------
             
-            int createdOccurenceNoted = 0;
+            int count = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
-                .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
-                .Where(occ => (occ.Source as IConjuringSpell).ConjuredType == typeof(ANumber))
-                .Subscribe(_ => createdOccurenceNoted++);
+                .Where(occ => occ.SpellOccurenceCategory == category)
+                .Where(occ => occ.Source.SpellSchool == SpellSchool.Stranding)
+                .Subscribe(_ => count++);
 
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(1, createdOccurenceNoted);
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a1_Created_Pluck_NotNull()
-        {
-            // -------------
-            
-            using var d2 = tools.Strand_ANumber(out var scroll);
-
-            Assert.NotNull(scroll);
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a2_Created_Loom_Logged()
-        {
-            // -------------
-            
-            int createdOccurenceNoted = 0;
-
-            using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
-                .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
-                .Where(occ => (occ.Source as IConjuringSpell).ConjuredType == typeof(UserData))
-                .Subscribe(_ => createdOccurenceNoted++);
-
-            using var d2 = tools.Loom_AName_To_UserData(out _);
-
-            Assert.AreEqual(1, createdOccurenceNoted);
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a2_Created_Loom_NotNull()
-        {
-            // -------------
-            
-            using var d2 = tools.Loom_AName_To_UserData(out var scroll);
-
-            Assert.NotNull(scroll);
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a3_Created_Weave_Logged()
-        {
-            // -------------
-            
-            int createdOccurenceNoted = 0;
-
-            using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
-                .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
-                .Where(occ => (occ.Source as TWeavingSpell).RequiresIngredient(typeof(ANumber)))
-                .Subscribe(_ => createdOccurenceNoted++);
-
-            using var d2 = tools.Weave_ANumber();
-
-            Assert.AreEqual(1, createdOccurenceNoted);
-
-            yield return null;
-
-            // -------------
-        }
-
-        [UnityTest]
-        public IEnumerator a3_Created_Weave_NotNull()
-        {
-            // -------------
-            
-            using var d2 = tools.Weave_ANumber(out var scroll);
-
-            Assert.NotNull(scroll);
-
-            yield return null;
+            Assert.AreEqual(happened ? 1 : 0, count);
 
             // -------------
         }
         
-        #endregion // ---------------------------------- Creation -------------------------
+        [Test]
+        [TestCase(SpellOccurenceCategory.Created, true)]
+        [TestCase(SpellOccurenceCategory.HasMana, false)]
+        [TestCase(SpellOccurenceCategory.NoMana, true)] 
+        public void a2_alone_loom_creation_occurences(SpellOccurenceCategory category, bool happened)
+        {
+            // -------------
+            
+            int count = 0;
+
+            using var d1 = Rzeka.Eris.SpellOccurences
+                .Where(occ => occ.SpellOccurenceCategory == category)
+                .Where(occ => occ.Source.SpellSchool == SpellSchool.Looming)
+                .Subscribe(_ => count++);
+
+            using var d2 = tools.Loom_ANumber_To_AName(out _);
+
+            Assert.AreEqual(happened ? 1 : 0, count);
+
+            // -------------
+        }
+        
+        [Test]
+        [TestCase(SpellOccurenceCategory.Created, true)]
+        [TestCase(SpellOccurenceCategory.HasMana, false)]
+        [TestCase(SpellOccurenceCategory.NoMana, true)] 
+        public void a3_alone_weave_creation_occurences(SpellOccurenceCategory category, bool happened)
+        {
+            // -------------
+            
+            int count = 0;
+
+            using var d1 = Rzeka.Eris.SpellOccurences
+                .Where(occ => occ.SpellOccurenceCategory == category)
+                .Where(occ => occ.Source.SpellSchool == SpellSchool.Weaving)
+                .Subscribe(_ => count++);
+
+            using var d2 = tools.Weave_ANumber(out _);
+
+            Assert.AreEqual(happened ? 1 : 0, count);
+
+            // -------------
+        }
         
         // -------------
     }

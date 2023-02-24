@@ -197,9 +197,9 @@ namespace Rzeka.Tests.Matter.Default
         }
         
         [Test]
-        // [TestCase(new int[] {5})]
+        [TestCase(new int[] {5})]
         [TestCase(new int[] {5,8})]
-        // [TestCase(new int[] {1,2,3})]
+        [TestCase(new int[] {1,2,3})]
         public void b_early_subscriber_gets_all_the_values_loom_version(int[] emitValues)
         {
             // -------------

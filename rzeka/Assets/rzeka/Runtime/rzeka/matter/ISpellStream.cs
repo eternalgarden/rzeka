@@ -2,9 +2,5 @@
 
 namespace Rzeka
 {
-    public interface ISpellStream : IDisposable
-    {
-        Type MatterType { get; }
-        bool IsActive { get; }
-    }
+    public interface ISpellStream : IDisposable { }
 }

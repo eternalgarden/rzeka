@@ -32,7 +32,7 @@ namespace Rzeka
     public enum SpellOccurenceCategory 
     { 
         Created, 
-        Cast, 
+        HasMana, 
         NoMana, 
         Morphed, 
         Wispd,

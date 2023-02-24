@@ -14,12 +14,10 @@ namespace Rzeka
     {
         readonly Func<IObservable<T1>, IObservable<TOut>> _spell;
 
-        public LoomingScroll_1(
-            object who,
-            Library library,
+        public LoomingScroll_1(object who,
             Func<IObservable<T1>, IObservable<TOut>> spell,
-            ISubject<SpellOccurence> spellStream,
-            ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
+            Library library,
+            Eris eris) : base(who, library, eris)
         {
             _spell = spell;
 
@@ -40,7 +38,6 @@ namespace Rzeka
                 .GetObservableIngredient<T1>()
                 .Do(nextT =>
                 {
-                    Debug.Log("receiveed");
                     lastT = nextT;
                 });
 

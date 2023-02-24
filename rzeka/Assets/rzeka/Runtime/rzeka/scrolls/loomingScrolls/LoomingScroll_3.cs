@@ -15,12 +15,10 @@ namespace Rzeka
     {
         readonly Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> _spell;
 
-        public LoomingScroll_3(
-            object who,
-            Library library,
+        public LoomingScroll_3(object who,
             Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell,
-            ISubject<SpellOccurence> spellStream, 
-            ISubject<MatterOccurence> matterStream) : base(who, library, spellStream, matterStream)
+            Library library,
+            Eris eris) : base(who, library, eris)
         {
             this._spell = spell;
 

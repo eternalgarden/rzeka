@@ -13,16 +13,10 @@ namespace Rzeka
         Dictionary<Type, bool> SatisfiedRequirements { get; }
         TBindingSpell ThisAsBinding { get; }
 
-        protected void OnLostMana(); // TODO
-
         //
         // ⛺ ─── Default Imlementation ───────────────────────────────────────────────────
         //
         #region Default Imlementation
-
-        IObservable<bool> TSpell.HasMana => BindingHasMana.AsObservable();
-        
-        ReplaySubject<bool> BindingHasMana { get; }
 
         bool RequiresIngredient(Type key)
         {
@@ -65,12 +59,40 @@ namespace Rzeka
         {
             /* ⭐ ---- ---- */
             
-            InitializeSpellBase();
-
             // * Binding Spell Registrations
-            RegisterPostCreationManaCheck();
-            ListenForAppearingIngredients();
-            ListenForFadingIngredients();
+            // RegisterPostCreationManaCheck();
+            // ListenForAppearingIngredients();
+            // ListenForFadingIngredients();
+
+            
+
+            using IDisposable initialManaCheck = Eris
+                .ManaProvideableObservable
+                .Subscribe(manainfo =>
+                {
+                    var keys = SatisfiedRequirements
+                        .Select(kvp => kvp.Key)
+                        .ToArray();
+                    
+                    foreach (Type type in keys)
+                    {
+                        SetRequirementSatisfied(type, manainfo.IsManaOfTypeAvailable(type));
+                    }
+                }, onError: ex     => Debug.LogError("errer") );
+            
+            if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
+
+            CollectionDisposable += Eris
+                .ManaProvideableObservable
+                .Skip(1) // handled above
+                .Where(manainfo => RequiresIngredient(manainfo.LastChangedType))
+                .Subscribe(
+                    onNext: manainfo =>
+                {
+                    Type type = manainfo.LastChangedType;
+                    SetRequirementSatisfied(type, manainfo.IsManaOfTypeAvailable(type));
+                }, onError: ex     => Debug.LogError("errer") );
+            
             
             /* ---- ---- 🌠 */
         }
@@ -82,83 +104,13 @@ namespace Rzeka
             SatisfiedRequirements[type] = satisfied;
             
             bool hasMana = SatisfiedRequirements.All(x => x.Value is true);
-
-            if (IsChanneling == hasMana) return;
-
-            if (IsChanneling && !hasMana)
-            {
-                IsChanneling = false;
-                OnLostMana();
-                BindingHasMana.OnNext(false);
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
-            }
-            else
-            {
-                IsChanneling = true;
-                Cast(); // atm it is only used for looming scrolls ugh
-                BindingHasMana.OnNext(true);
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Cast);
-            }
-        }
-        
-        // nd
-        /// <summary>
-        /// AFter being created, check after a designated time whether the spell (this one)
-        /// has been provided "mana" / necessary ingredients.
-        /// </summary>
-        private void RegisterPostCreationManaCheck()
-        {
-            var activeKeys = SatisfiedRequirements
-                .Where(kvp => Library.IsStreamActive(kvp.Key))
-                .Select(kvp => kvp.Key)
-                .ToArray(); // TODO why if you remove this there is an error in c2_NoMana_Cast_Weave test
-
-            foreach (Type key in activeKeys)
-            {
-                if (Library.IsStreamActive(key)) SetRequirementSatisfied(key, true);
-            }
             
-            if (IsChanneling is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
-        }
-
-        /// <summary>
-        /// Listen for relevant (providing ingredients of necessary type) conjurers cast.
-        /// </summary>
-        private void ListenForAppearingIngredients()
-        {
-            CollectionDisposable += SpellStream
-                .Where(i => i.Source.IsConjuring())
-                .Where(i => i.SpellOccurenceCategory == SpellOccurenceCategory.Cast)
-                .Select(i => i.Source as IConjuringSpell)
-                .Where(i => ThisAsBinding.IsMissingIngredient(i.ConjuredType))
-                .Subscribe(i =>
-                {
-                    Type conjuredType = i.ConjuredType;
-
-                    ThisAsBinding.SetRequirementSatisfied(conjuredType, true);
-
-                });
-        }
-
-        /// <summary>
-        /// Listen for relevant conjurers being forgotten or knocked out of mana.
-        /// </summary>
-        private void ListenForFadingIngredients()
-        {
-            CollectionDisposable += SpellStream
-                .Where(i => i.Source.IsConjuring())
-                .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Forgotten or SpellOccurenceCategory.NoMana)
-                .Select(i => i.Source as IConjuringSpell)
-                .Where(i => ThisAsBinding.RequiresIngredient(i.ConjuredType))
-                .Subscribe(i =>
-                {
-                    Type conjuredType = i.ConjuredType;
-                    
-                    if (Library.IsStreamActive(conjuredType) is false)
-                    {
-                        ThisAsBinding.SetRequirementSatisfied(conjuredType, false);
-                    }
-                });
+            // Debug.Log($"oik {HasMana} {hasMana}");
+            if (HasMana == hasMana) return;
+            HasMana = hasMana;
+            ThisAsBase.SendSpellOccurence(HasMana is false
+                ? SpellOccurenceCategory.NoMana
+                : SpellOccurenceCategory.HasMana); // has mana rename
         }
 
         #endregion // ---------------------------------- Registrations -------------------------

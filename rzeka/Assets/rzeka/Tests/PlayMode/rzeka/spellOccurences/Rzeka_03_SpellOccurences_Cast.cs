@@ -52,36 +52,38 @@ namespace Rzeka.Tests.SpellOccurences
         #region Casting
 
         [UnityTest]
-        public IEnumerator b1_2_Cast_Plucking()
+        public IEnumerator a1_stranding_hasMana()
         {
             // -------------
             
             using var d2 = tools.Strand_ANumber(out ConjuringScroll<ANumber> scroll);
 
-            Assert.AreEqual(true, (scroll as TSpell).IsChanneling);
+            Assert.AreEqual(true, (scroll as TSpell).HasMana);
 
             yield return null;
 
             // -------------
         }
         
-        [UnityTest]
-        public IEnumerator b1_2_Cast_Plucking_Logged()
+        [Test]
+        [TestCase(SpellOccurenceCategory.Created, 1)]
+        [TestCase(SpellOccurenceCategory.HasMana, 1)]
+        [TestCase(SpellOccurenceCategory.NoMana, 0)]
+        [TestCase(SpellOccurenceCategory.Forgotten, 0)]
+        public void a2_stranding_post_creation_occurences(SpellOccurenceCategory category, int count)
         {
             // -------------
             
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory == category)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(1, occurence);
-
-            yield return null;
+            Assert.AreEqual(count, occurence);
 
             // -------------
         }
@@ -94,31 +96,33 @@ namespace Rzeka.Tests.SpellOccurences
             using var d2 = tools.Strand_AName("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
-            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
+            Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
             yield return null;
 
             // -------------
         }
 
-        [UnityTest]
-        public IEnumerator b2_2_Cast_Looming_Logged()
+        [Test]
+        [TestCase(SpellOccurenceCategory.Created, 1)]
+        [TestCase(SpellOccurenceCategory.HasMana, 1)]
+        [TestCase(SpellOccurenceCategory.NoMana, 0)]
+        [TestCase(SpellOccurenceCategory.Forgotten, 0)]
+        public void b1_looming_post_creation_occurences(SpellOccurenceCategory category, int count)
         {
             // -------------
             
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory == category)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
             using var d2 = tools.Strand_AName("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out _);
 
-            Assert.AreEqual(1, occurence);
-
-            yield return null;
+            Assert.AreEqual(count, occurence);
 
             // -------------
         }
@@ -132,7 +136,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
-            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
+            Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
             yield return null;
 
@@ -147,7 +151,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
@@ -176,7 +180,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d2 = tools.Strand_AName("Agent Cooper");
 
-            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
+            Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
             yield return null;
 
@@ -191,7 +195,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
@@ -214,7 +218,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
+            Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
             yield return null;
 
@@ -229,7 +233,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
@@ -254,7 +258,7 @@ namespace Rzeka.Tests.SpellOccurences
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d2 = tools.Strand_ANumber(1);
 
-            Assert.AreEqual(true, scroll.ThisAsBase.IsChanneling);
+            Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
             yield return null;
 
@@ -269,7 +273,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
@@ -301,7 +305,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
@@ -323,7 +327,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
@@ -345,7 +349,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
@@ -368,7 +372,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 

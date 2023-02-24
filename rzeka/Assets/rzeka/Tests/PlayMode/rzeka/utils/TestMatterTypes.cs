@@ -69,8 +69,8 @@ namespace Rzeka.Tests
         {
             public bool Equals(UserData x, UserData y)
             {
-                Debug.Log(x.Name + x.Zodiac + x.FavNumber);
-                Debug.Log(y.Name + y.Zodiac + y.FavNumber);
+                // Debug.Log(x.Name + x.Zodiac + x.FavNumber);
+                // Debug.Log(y.Name + y.Zodiac + y.FavNumber);
                 return x.Name == y.Name && x.Zodiac == y.Zodiac && x.FavNumber == y.FavNumber;
             }
 

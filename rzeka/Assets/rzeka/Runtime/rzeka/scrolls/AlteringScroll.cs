@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Rzeka
 {
     [Serializable]
-    public class AlteringScroll<T1> : TWeavingSpell
+    public sealed class AlteringScroll<T1> : TWeavingSpell
         where T1 : TMatter
     {
         readonly IObserver<T1> _spell;
@@ -15,12 +15,11 @@ namespace Rzeka
 
         public Guid Guid { get; }
         public Library Library { get; }
+        public Eris Eris { get; }
         public CollectibleDisposable CollectionDisposable { get; set; }
         public object Who { get; }
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
-        public ISubject<SpellOccurence> SpellStream { get; }
-        public ISubject<MatterOccurence> MatterStream { get; }
         public SpellSchool SpellSchool => SpellSchool.Weaving;
         public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T1).Name}";
         
@@ -33,21 +32,21 @@ namespace Rzeka
 
         public Dictionary<Type, bool> SatisfiedRequirements => _satisfiedRequirements;
         
-        public AlteringScroll(object who, Library library, IObserver<T1> spell, ISubject<SpellOccurence> spellStream, ISubject<MatterOccurence> matterStream)
+        public AlteringScroll(object who, IObserver<T1> spell, Library library, Eris eris)
         {
             _spell = spell;
 
             Guid = Guid.NewGuid();
             Library = library;
+            Eris = eris;
             Who = who;
-            SpellStream = spellStream;
-            MatterStream = matterStream;
             ThisAsBase = this;
             ThisAsBinding = this;
-
+            
+            ThisAsBase.InitializeSpellBase();
             ThisAsBinding.InitializeBindingSpell();
             
-            ExecuteCast(); // ! this is weird but currently weavings should cast immediately aswell
+            Cast(); // ! this is weird but currently weavings should cast immediately aswell
         }
 
         
@@ -60,7 +59,7 @@ namespace Rzeka
         {
             try
             {
-                // ExecuteCast(); 
+                ExecuteCast(); 
             }
             catch (Exception ex)
             {
@@ -83,15 +82,7 @@ namespace Rzeka
             }
         }
 
-        void TBindingSpell.OnLostMana()
-        {
-             // _subscriptionDisposable.Dispose();
-             // _subscriptionDisposable = null; // TODO name this clearer
-        }
-
-        public ReplaySubject<bool> BindingHasMana { get; } = new();
-
-        bool TSpell.IsChanneling
+        bool TSpell.HasMana
         {
             get => _isChanneling;
             set => _isChanneling = value;

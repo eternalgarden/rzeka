@@ -33,8 +33,7 @@ namespace Rzeka
         {
             /* ⭐ ---- ---- */
             
-            InitializeSpellBase();
-            ListenForIntroductions();
+            // ListenForIntroductions();
 
             Conjuring = CreateConjuring();
 

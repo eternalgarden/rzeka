@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Test Runner
   m_RootView: {fileID: 9}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 330
     width: 777
     height: 609
-  m_MinSize: {x: 100, y: 100}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 101, y: 121}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 4386
+  controlID: 17
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 4303
+  controlID: 27
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,8 +145,8 @@ MonoBehaviour:
     y: 0
     width: 607
     height: 939
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 16}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 0
-  controlID: 4248
+  controlID: 81
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -253,7 +253,7 @@ MonoBehaviour:
     height: 30
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
-  m_LastLoadedLayoutName: testrunner
+  m_LastLoadedLayoutName: 
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 4385
+  controlID: 16
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -356,7 +356,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 4394
+    ID: 157
     splitterInitialOffset: 0
     currentActiveSplitter: -1
     realSizes:
@@ -387,9 +387,9 @@ MonoBehaviour:
       uniqueId: '[rzeka][suite]'
       name: rzeka
       fullName: rzeka
-      resultStatus: 1
-      duration: 0.0027743
-      messages: 
+      resultStatus: 2
+      duration: 0.1702573
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -403,8 +403,8 @@ MonoBehaviour:
       uniqueId: '[com.rzeka.tests.playmode][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.tests.playmode.dll][suite]'
       name: com.rzeka.tests.playmode.dll
       fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.tests.playmode.dll
-      resultStatus: 0
-      duration: 0.2342625
+      resultStatus: 2
+      duration: 0.149092
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -469,8 +469,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/[Rzeka][suite]
       name: Rzeka
       fullName: Rzeka
-      resultStatus: 0
-      duration: 0.1842739
+      resultStatus: 2
+      duration: 0.1386611
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -485,8 +485,8 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/[Tests][suite]
       name: Tests
       fullName: Rzeka.Tests
-      resultStatus: 0
-      duration: 0.1676138
+      resultStatus: 2
+      duration: 0.1337197
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -629,23 +629,6 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1005
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_01_Basics][suite]
-    - id: 1008
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_01_Basics.c_is_stream_active]
-      name: c_is_stream_active
-      fullName: Rzeka.Tests.Library.Library_01_Basics.c_is_stream_active
-      resultStatus: 1
-      duration: 0.0495465
-      messages: 
-      output: "was or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1005
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_01_Basics][suite]
     - id: 1086
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_01_Basics.d1_loom_is_provided_mana]
       name: d1_loom_is_provided_mana
@@ -766,23 +749,6 @@ MonoBehaviour:
       categories: []
       parentId: 1146
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.Library][suite]
-    - id: 1011
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.a_is_active_stream_strand]
-      name: a_is_active_stream_strand
-      fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.a_is_active_stream_strand
-      resultStatus: 1
-      duration: 0.0668509
-      messages: 
-      output: "was or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1009
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
     - id: 1010
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.a_is_counted_as_library_stream_strand]
       name: a_is_counted_as_library_stream_strand
@@ -816,40 +782,6 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1102
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
-    - id: 1103
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.b2_nomana_loom_doesnt_count_as_an_active_stream]
-      name: b2_nomana_loom_doesnt_count_as_an_active_stream
-      fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.b2_nomana_loom_doesnt_count_as_an_active_stream
-      resultStatus: 1
-      duration: 0.0500274
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1099
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
-    - id: 1104
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.b3_cast_loom_registers_as_an_active_stream]
-      name: b3_cast_loom_registers_as_an_active_stream
-      fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.b3_cast_loom_registers_as_an_active_stream
-      resultStatus: 1
-      duration: 0.082999
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1099
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
     - id: 1105
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.b4_one_strand_one_looom_gives_two_streams]
@@ -885,91 +817,6 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1102
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
-    - id: 1110
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_02_Stream_Registration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration.c2_such_created_stream_is_inactive]
-      name: c2_such_created_stream_is_inactive
-      fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.c2_such_created_stream_is_inactive
-      resultStatus: 1
-      duration: 0.083195
-      messages: 
-      output: "was or not \r\nget get got got\r\nwas or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1102
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_02_Stream_Registration][suite]
-    - id: 1015
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration][suite]
-      name: Library_03_Stream_Unegistration
-      fullName: Rzeka.Tests.Library.Library_03_Stream_Unegistration
-      resultStatus: 1
-      duration: 0.1663249
-      messages: 
-      output: 
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 1
-      categories: []
-      parentId: 1152
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.Library][suite]
-    - id: 1107
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_03_Stream_Unegistration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration.a1_unregistered_strand_deactivates_stream]
-      name: a1_unregistered_strand_deactivates_stream
-      fullName: Rzeka.Tests.Library.Library_03_Stream_Unegistration.a1_unregistered_strand_deactivates_stream
-      resultStatus: 1
-      duration: 0.0331588
-      messages: 
-      output: "was or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1106
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration][suite]
-    - id: 1108
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_03_Stream_Unegistration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration.a2_unregistered_loom_deactivates_stream]
-      name: a2_unregistered_loom_deactivates_stream
-      fullName: Rzeka.Tests.Library.Library_03_Stream_Unegistration.a2_unregistered_loom_deactivates_stream
-      resultStatus: 1
-      duration: 0.0499746
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1106
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration][suite]
-    - id: 1109
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_03_Stream_Unegistration/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration.b_registered_loom_that_lost_mana_is_no_longer_a_stream]
-      name: b_registered_loom_that_lost_mana_is_no_longer_a_stream
-      fullName: Rzeka.Tests.Library.Library_03_Stream_Unegistration.b_registered_loom_that_lost_mana_is_no_longer_a_stream
-      resultStatus: 1
-      duration: 0.0497865
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nwas or not \r\nwas
-        or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1106
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_03_Stream_Unegistration][suite]
     - id: 1097
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_04_MultipleProviders][suite]
       name: Library_04_MultipleProviders
@@ -1019,24 +866,6 @@ MonoBehaviour:
       categories: []
       parentId: 1197
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.Library][suite]
-    - id: 1106
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_05_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_05_Overloads.a1_loom_2_is_available_as_stream]
-      name: a1_loom_2_is_available_as_stream
-      fullName: Rzeka.Tests.Library.Library_05_Overloads.a1_loom_2_is_available_as_stream
-      resultStatus: 1
-      duration: 0.0384361
-      messages: 
-      output: "get get got got\r\nget get got got\r\nwas or not \r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1105
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_05_Overloads][suite]
     - id: 1107
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_05_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_05_Overloads.b1_loom_2_provides_mana_to_weave]
       name: b1_loom_2_provides_mana_to_weave
@@ -1604,6 +1433,24 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1078
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_01_Receivals/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_01_Receivals.b_early_subscriber_gets_all_the_values_loom_version][suite]
+    - id: 1093
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_01_Receivals/b_early_subscriber_gets_all_the_values_loom_version/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_01_Receivals.b_early_subscriber_gets_all_the_values_loom_version(System.Int32[])]3
+      name: b_early_subscriber_gets_all_the_values_loom_version(System.Int32[])
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_01_Receivals.b_early_subscriber_gets_all_the_values_loom_version(System.Int32[]
+        GeneratedTestCase3)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1094
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_01_Receivals/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_01_Receivals.b_early_subscriber_gets_all_the_values_loom_version][suite]
     - id: 1082
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_02_Circumstances][suite]
       name: Matter_Default_02_Circumstances
@@ -1690,12 +1537,12 @@ MonoBehaviour:
       categories: []
       parentId: 1183
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default][suite]
-    - id: 1074
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter][suite]
-      name: a1_loom_2_shaped_receiveable_matter
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter
-      resultStatus: 1
-      duration: 0.1329408
+    - id: 1102
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single][suite]
+      name: a1_loom_2_shaped_receiveable_matter_single
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -1704,17 +1551,16 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1071
+      parentId: 1099
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads][suite]
-    - id: 1072
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_2_shaped_receiveable_matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter("Sally",7)]
-      name: a1_loom_2_shaped_receiveable_matter("Sally",7)
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter("Sally",7)
-      resultStatus: 1
-      duration: 0.0670736
+    - id: 1100
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_2_shaped_receiveable_matter_single/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single("Sally",7)]
+      name: a1_loom_2_shaped_receiveable_matter_single("Sally",7)
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single("Sally",7)
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "get get got got\r\nget get got got\r\nwas or not \r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\nget get got got\r\nSallyAries7\r\nSallyAries7\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1722,17 +1568,16 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1074
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter][suite]
-    - id: 1073
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_2_shaped_receiveable_matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter("Dipsy",88)]
-      name: a1_loom_2_shaped_receiveable_matter("Dipsy",88)
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter("Dipsy",88)
-      resultStatus: 1
-      duration: 0.0494239
+      parentId: 1102
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single][suite]
+    - id: 1101
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_2_shaped_receiveable_matter_single/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single("Dipsy",88)]
+      name: a1_loom_2_shaped_receiveable_matter_single("Dipsy",88)
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single("Dipsy",88)
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "get get got got\r\nget get got got\r\nwas or not \r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\nget get got got\r\nDipsyAries88\r\nDipsyAries88\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1740,14 +1585,14 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1074
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter][suite]
-    - id: 1077
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter][suite]
-      name: a1_loom_3_shaped_receiveable_matter
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter
-      resultStatus: 1
-      duration: 0.1502955
+      parentId: 1102
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_2_shaped_receiveable_matter_single][suite]
+    - id: 1107
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a2_loom_2_shaped_receiveable_matter_multiple][suite]
+      name: a2_loom_2_shaped_receiveable_matter_multiple
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a2_loom_2_shaped_receiveable_matter_multiple
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -1756,18 +1601,16 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1071
+      parentId: 1099
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads][suite]
-    - id: 1075
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_3_shaped_receiveable_matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter("Sally","Aquarius",5)]
-      name: a1_loom_3_shaped_receiveable_matter("Sally","Aquarius",5)
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter("Sally","Aquarius",5)
-      resultStatus: 1
-      duration: 0.0384239
+    - id: 1106
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a2_loom_2_shaped_receiveable_matter_multiple/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a2_loom_2_shaped_receiveable_matter_multiple(System.String[],System.Int32[])]
+      name: a2_loom_2_shaped_receiveable_matter_multiple(System.String[],System.Int32[])
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a2_loom_2_shaped_receiveable_matter_multiple(System.String[],System.Int32[])
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "get get got got\r\nget get got got\r\nget get got got\r\nwas or not
-        \r\nwas or not \r\nwas or not \r\nwas or not \r\nwas or not \r\nwas or not
-        \r\nwas or not \r\nwas or not \r\nget get got got\r\nSallyAquarius5\r\nSallyAquarius5\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1775,35 +1618,15 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1077
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter][suite]
-    - id: 1076
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_3_shaped_receiveable_matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter("Dipsy","Aries",666)]
-      name: a1_loom_3_shaped_receiveable_matter("Dipsy","Aries",666)
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter("Dipsy","Aries",666)
-      resultStatus: 1
-      duration: 0.0784339
+      parentId: 1107
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a2_loom_2_shaped_receiveable_matter_multiple][suite]
+    - id: 1105
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single][suite]
+      name: b1_loom_3_shaped_receiveable_matter_single
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "get get got got\r\nget get got got\r\nget get got got\r\nwas or not
-        \r\nwas or not \r\nwas or not \r\nwas or not \r\nwas or not \r\nwas or not
-        \r\nwas or not \r\nwas or not \r\nget get got got\r\nDipsyAries666\r\nDipsyAries666\r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1077
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter][suite]
-    - id: 1083
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter]2[suite]
-      name: a1_loom_3_shaped_receiveable_matter
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter
-        GeneratedTestCase2
-      resultStatus: 2
-      duration: 0.0656998
-      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1811,32 +1634,75 @@ MonoBehaviour:
       description: 
       isSuite: 1
       categories: []
-      parentId: 1075
+      parentId: 1099
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads][suite]
-    - id: 1082
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/a1_loom_3_shaped_receiveable_matter/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter(System.String[],System.String[],System.Int32[])]
-      name: a1_loom_3_shaped_receiveable_matter(System.String[],System.String[],System.Int32[])
-      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter(System.String[],System.String[],System.Int32[])
-      resultStatus: 2
-      duration: 0.0329821
-      messages: "  EXPECTED:  WillowAquarius6, XanderScorpio69, BuffyCancer7,\nRECEIVED: 
-        BuffyCancer7,\r\n  Expected: True\r\n  But was:  False\r\n"
-      output: "3\r\nget get got got\r\nget get got got\r\nget get got got\r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\nget get got got\r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 'at Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter
-        (System.String[] names, System.String[] zodiacs, System.Int32[] favnums)
-        [0x00143] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\matter\default\Matter_Default_03_Overloads.cs:147
-
-'
+    - id: 1103
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/b1_loom_3_shaped_receiveable_matter_single/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single("Sally","Aquarius",5)]
+      name: b1_loom_3_shaped_receiveable_matter_single("Sally","Aquarius",5)
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single("Sally","Aquarius",5)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1083
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.a1_loom_3_shaped_receiveable_matter]2[suite]
+      parentId: 1105
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single][suite]
+    - id: 1104
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/b1_loom_3_shaped_receiveable_matter_single/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single("Dipsy","Aries",666)]
+      name: b1_loom_3_shaped_receiveable_matter_single("Dipsy","Aries",666)
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single("Dipsy","Aries",666)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1105
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b1_loom_3_shaped_receiveable_matter_single][suite]
+    - id: 1109
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b2_loom_3_shaped_receiveable_matter_multiple][suite]
+      name: b2_loom_3_shaped_receiveable_matter_multiple
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b2_loom_3_shaped_receiveable_matter_multiple
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1099
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads][suite]
+    - id: 1108
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/b2_loom_3_shaped_receiveable_matter_multiple/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b2_loom_3_shaped_receiveable_matter_multiple(System.String[],System.String[],System.Int32[])]
+      name: b2_loom_3_shaped_receiveable_matter_multiple(System.String[],System.String[],System.Int32[])
+      fullName: Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b2_loom_3_shaped_receiveable_matter_multiple(System.String[],System.String[],System.Int32[])
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1109
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Matter/Default/Matter_Default_03_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Matter.Default.Matter_Default_03_Overloads.b2_loom_3_shaped_receiveable_matter_multiple][suite]
     - id: 1157
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences][suite]
       name: MatterOccurences
@@ -1869,120 +1735,30 @@ MonoBehaviour:
       categories: []
       parentId: 1157
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences][suite]
-    - id: 1038
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a_no_weaving_no_matter_occurences_strand]
-      name: a_no_weaving_no_matter_occurences_strand
-      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a_no_weaving_no_matter_occurences_strand
-      resultStatus: 2
-      duration: 0.0328313
-      messages: 'UnityEngine.Assertions.AssertionException : Expected: 0 while actual:
-        1.
-
-        Assertion failure. Values are not equal.
-
-        Expected:
-        1 == 0'
+    - id: 1044
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission][suite]
+      name: a1_strand_alone_matter_occurence_emission
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission
+      resultStatus: 0
+      duration: 0
+      messages: 
       output: 
-      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-        System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
-        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-        comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-        (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:30
-        \r\n  at Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a_no_weaving_no_matter_occurences_strand
-        () [0x00046] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\MatterOccurences_01_Basics.cs:61
-        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x0006a] in <1f66344f2f89470293d8b67d71308c07>:0 "
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
-    - id: 1039
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_no_weaving_no_matter_occurences_loom]
-      name: a1_no_weaving_no_matter_occurences_loom
-      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_no_weaving_no_matter_occurences_loom
-      resultStatus: 2
-      duration: 0.0502754
-      messages: 'UnityEngine.Assertions.AssertionException : Expected: 0 while actual:
-        3.
-
-        Assertion failure. Values are not equal.
-
-        Expected:
-        3 == 0'
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-        System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
-        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-        comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-        (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:30
-        \r\n  at Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_no_weaving_no_matter_occurences_loom
-        () [0x00054] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\MatterOccurences_01_Basics.cs:79
-        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
-        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
-        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
-        System.Globalization.CultureInfo culture) [0x0006a] in <1f66344f2f89470293d8b67d71308c07>:0 "
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
-    - id: 1040
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.b_single_matter_emission_two_matter_occurences]
-      name: b_single_matter_emission_two_matter_occurences
-      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.b_single_matter_emission_two_matter_occurences
-      resultStatus: 1
-      duration: 0.0495849
-      messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\n"
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
-    - id: 1041
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.c1_matter_emit_by_stranding]
-      name: c1_matter_emit_by_stranding
-      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.c1_matter_emit_by_stranding
-      resultStatus: 1
-      duration: 0.0511006
-      messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\n"
-      stacktrace: 
-      notRunnable: 0
-      ignoredOrSkipped: 0
-      description: 
-      isSuite: 0
-      categories:
-      - Uncategorized
-      parentId: 1037
+      isSuite: 1
+      categories: []
+      parentId: 1041
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
     - id: 1042
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.c2_emitted_matter_received_by_weaving]
-      name: c2_emitted_matter_received_by_weaving
-      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.c2_emitted_matter_received_by_weaving
-      resultStatus: 1
-      duration: 0.0984896
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a1_strand_alone_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission(Shaped,True)]
+      name: a1_strand_alone_matter_occurence_emission(Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission(Shaped,True)
+      resultStatus: 0
+      duration: 0
       messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1990,8 +1766,277 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1037
+      parentId: 1044
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission][suite]
+    - id: 1043
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a1_strand_alone_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission(Received,False)]
+      name: a1_strand_alone_matter_occurence_emission(Received,False)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission(Received,False)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1044
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a1_strand_alone_matter_occurence_emission][suite]
+    - id: 1049
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission][suite]
+      name: a2_strand_and_loom_matter_occurence_emission
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1041
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
+    - id: 1045
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a2_strand_and_loom_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)]
+      name: a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission][suite]
+    - id: 1046
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a2_strand_and_loom_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)]
+      name: a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission][suite]
+    - id: 1047
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a2_strand_and_loom_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)]
+      name: a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission][suite]
+    - id: 1048
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a2_strand_and_loom_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Received,False)]
+      name: a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Received,False)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission(Rzeka.Tests.AName,Received,False)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1049
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a2_strand_and_loom_matter_occurence_emission][suite]
+    - id: 1054
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission][suite]
+      name: a3_strand_loom_and_weave_matter_occurence_emission
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1041
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
+    - id: 1050
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a3_strand_loom_and_weave_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)]
+      name: a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1054
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission][suite]
+    - id: 1051
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a3_strand_loom_and_weave_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)]
+      name: a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.ANumber,Received,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1054
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission][suite]
+    - id: 1052
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a3_strand_loom_and_weave_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)]
+      name: a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1054
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission][suite]
+    - id: 1053
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a3_strand_loom_and_weave_matter_occurence_emission/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Received,True)]
+      name: a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Received,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission(Rzeka.Tests.AName,Received,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1054
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a3_strand_loom_and_weave_matter_occurence_emission][suite]
+    - id: 1059
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions][suite]
+      name: a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1041
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics][suite]
+    - id: 1055
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Shaped,True)]
+      name: a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1059
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions][suite]
+    - id: 1056
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Received,True)]
+      name: a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Received,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.ANumber,Received,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1059
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions][suite]
+    - id: 1057
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Shaped,True)]
+      name: a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Shaped,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Shaped,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1059
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions][suite]
+    - id: 1058
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Received,True)]
+      name: a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Received,True)
+      fullName: Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions(System.Int32[],Rzeka.Tests.AName,Received,True)
+      resultStatus: 0
+      duration: 0
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1059
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/MatterOccurences_01_Basics/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_01_Basics.a4_strand_loom_and_weave_matter_occurence_emission_multiple_emissions][suite]
     - id: 1043
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/MatterOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.MatterOccurences.MatterOccurences_02_Overloads][suite]
       name: MatterOccurences_02_Overloads
@@ -2892,9 +2937,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences][suite]
       name: SpellOccurences
       fullName: Rzeka.Tests.SpellOccurences
-      resultStatus: 1
-      duration: 3.3336766
-      messages: 
+      resultStatus: 2
+      duration: 0.1308845
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -2909,7 +2954,7 @@ MonoBehaviour:
       name: Rzeka_01_SpellOccurences_Created
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created
       resultStatus: 1
-      duration: 0.6837073
+      duration: 0.6002142
       messages: 
       output: 
       stacktrace: 
@@ -2925,7 +2970,7 @@ MonoBehaviour:
       name: a1_Created_Pluck_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a1_Created_Pluck_Logged
       resultStatus: 1
-      duration: 0.0824805
+      duration: 0.0836774
       messages: 
       output: 
       stacktrace: 
@@ -2942,7 +2987,7 @@ MonoBehaviour:
       name: a1_Created_Pluck_NotNull
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a1_Created_Pluck_NotNull
       resultStatus: 1
-      duration: 0.100279
+      duration: 0.0995703
       messages: 
       output: 
       stacktrace: 
@@ -2959,9 +3004,9 @@ MonoBehaviour:
       name: a2_Created_Loom_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a2_Created_Loom_Logged
       resultStatus: 1
-      duration: 0.0993671
+      duration: 0.0986415
       messages: 
-      output: "get get got got\r\nwas or not \r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2976,9 +3021,9 @@ MonoBehaviour:
       name: a2_Created_Loom_NotNull
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a2_Created_Loom_NotNull
       resultStatus: 1
-      duration: 0.1334548
+      duration: 0.0999216
       messages: 
-      output: "get get got got\r\nwas or not \r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -2993,9 +3038,9 @@ MonoBehaviour:
       name: a3_Created_Weave_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a3_Created_Weave_Logged
       resultStatus: 1
-      duration: 0.1161251
+      duration: 0.1005186
       messages: 
-      output: "was or not \r\nget get got got\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3010,9 +3055,9 @@ MonoBehaviour:
       name: a3_Created_Weave_NotNull
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_01_SpellOccurences_Created.a3_Created_Weave_NotNull
       resultStatus: 1
-      duration: 0.1332706
+      duration: 0.0990698
       messages: 
-      output: "was or not \r\nget get got got\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3026,9 +3071,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana][suite]
       name: Rzeka_02_SpellOccurences_NoMana
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana
-      resultStatus: 1
-      duration: 0.5002014
-      messages: 
+      resultStatus: 2
+      duration: 0.1283794
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -3043,9 +3088,9 @@ MonoBehaviour:
       name: c1_NoMana_Created_Weave
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c1_NoMana_Created_Weave
       resultStatus: 1
-      duration: 0.0863766
+      duration: 0.080233
       messages: 
-      output: "was or not \r\nget get got got\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3059,9 +3104,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave][suite]
       name: c2_NoMana_Cast_Weave
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave
-      resultStatus: 1
-      duration: 0.1428545
-      messages: 
+      resultStatus: 2
+      duration: 0.1238655
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -3072,14 +3117,21 @@ MonoBehaviour:
       parentId: 1012
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana][suite]
     - id: 1014
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/c2_NoMana_Cast_Weave/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave(Cast)]
-      name: c2_NoMana_Cast_Weave(Cast)
-      fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave(Cast)
-      resultStatus: 1
-      duration: 0.0328932
-      messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\nwas or not \r\n"
-      stacktrace: 
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/c2_NoMana_Cast_Weave/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave(HasMana)]
+      name: c2_NoMana_Cast_Weave(HasMana)
+      fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave(HasMana)
+      resultStatus: 2
+      duration: 0.0960799
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 'oik False
+
+        False
+
+'
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave
+        (Rzeka.SpellOccurenceCategory category) [0x00096] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_02_SpellOccurences_NoMana.cs:102
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3093,9 +3145,13 @@ MonoBehaviour:
       name: c2_NoMana_Cast_Weave(NoMana)
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.c2_NoMana_Cast_Weave(NoMana)
       resultStatus: 1
-      duration: 0.0497918
+      duration: 0.0150402
       messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\nwas or not \r\n"
+      output: 'oik False
+
+        False
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3110,9 +3166,9 @@ MonoBehaviour:
       name: d1_NoMana_Created_Loom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d1_NoMana_Created_Loom
       resultStatus: 1
-      duration: 0.1329142
+      duration: 0.1004664
       messages: 
-      output: "get get got got\r\nwas or not \r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3123,29 +3179,214 @@ MonoBehaviour:
       parentId: 1016
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana][suite]
     - id: 1020
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom]
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom][suite]
       name: d2_NoMana_Cast_Loom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom
-      resultStatus: 1
-      duration: 0.1003032
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nwas or not \r\n"
+      resultStatus: 2
+      duration: 0.1164698
+      messages: One or more child tests had errors
+      output: 
       stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1012
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana][suite]
+    - id: 1018
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/d2_NoMana_Cast_Loom/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom(HasMana)]
+      name: d2_NoMana_Cast_Loom(HasMana)
+      fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom(HasMana)
+      resultStatus: 2
+      duration: 0.0327655
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.ConjuringScroll`1[TOut].Dispose () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\ConjuringScroll.cs:87
+        \r\n  at Rzeka.SpringRiver+<>c__DisplayClass7_0`1[TOut].<Strand>b__0 () [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:35
+        \r\n  at System.Reactive.Disposables.AnonymousDisposable.Dispose () [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Disposables\\AnonymousDisposable.cs:37
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom
+        (Rzeka.SpellOccurenceCategory category) [0x00090] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_02_SpellOccurences_NoMana.cs:153
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <1f66344f2f89470293d8b67d71308c07>:0 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1016
-      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana][suite]
+      parentId: 1020
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom][suite]
+    - id: 1019
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/d2_NoMana_Cast_Loom/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom(NoMana)]
+      name: d2_NoMana_Cast_Loom(NoMana)
+      fullName: Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom(NoMana)
+      resultStatus: 2
+      duration: 0.0493612
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.ConjuringScroll`1[TOut].Dispose () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\ConjuringScroll.cs:87
+        \r\n  at Rzeka.SpringRiver+<>c__DisplayClass7_0`1[TOut].<Strand>b__0 () [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:35
+        \r\n  at System.Reactive.Disposables.AnonymousDisposable.Dispose () [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Disposables\\AnonymousDisposable.cs:37
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom
+        (Rzeka.SpellOccurenceCategory category) [0x00090] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_02_SpellOccurences_NoMana.cs:153
+        \r\n  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)\r\n 
+        at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags
+        invokeAttr, System.Reflection.Binder binder, System.Object[] parameters,
+        System.Globalization.CultureInfo culture) [0x0006a] in <1f66344f2f89470293d8b67d71308c07>:0 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1020
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_02_SpellOccurences_NoMana/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_02_SpellOccurences_NoMana.d2_NoMana_Cast_Loom][suite]
     - id: 1019
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast][suite]
       name: Rzeka_03_SpellOccurences_Cast
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast
-      resultStatus: 1
-      duration: 1.8822358
-      messages: 
+      resultStatus: 2
+      duration: 1.3999456
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -3160,7 +3401,7 @@ MonoBehaviour:
       name: b1_2_Cast_Plucking
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b1_2_Cast_Plucking
       resultStatus: 1
-      duration: 0.1167423
+      duration: 0.0817618
       messages: 
       output: 
       stacktrace: 
@@ -3177,7 +3418,7 @@ MonoBehaviour:
       name: b1_2_Cast_Plucking_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b1_2_Cast_Plucking_Logged
       resultStatus: 1
-      duration: 0.0997793
+      duration: 0.0995424
       messages: 
       output: 
       stacktrace: 
@@ -3193,11 +3434,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_1_Cast_Looming]
       name: b2_1_Cast_Looming
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_1_Cast_Looming
-      resultStatus: 1
-      duration: 0.0996468
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0839325
+      messages: "  Expected: True\r\n  But was:  False\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_1_Cast_Looming>d__6.MoveNext
+        () [0x00078] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:97
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3210,11 +3458,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_2_Cast_Looming_Logged]
       name: b2_2_Cast_Looming_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_2_Cast_Looming_Logged
-      resultStatus: 1
-      duration: 0.0996734
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0832782
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_2_Cast_Looming_Logged>d__7.MoveNext
+        () [0x0010c] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:119
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3227,12 +3482,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_3_Cast_Looming_FromAnotherLoom]
       name: b2_3_Cast_Looming_FromAnotherLoom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_3_Cast_Looming_FromAnotherLoom
-      resultStatus: 1
-      duration: 0.1331124
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nget get got got\r\nwas
-        or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0821129
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_AName_To_UserData (Rzeka.LoomingScroll_1`2[Rzeka.Tests.AName,Rzeka.Tests.UserData]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:125
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_3_Cast_Looming_FromAnotherLoom>d__8.MoveNext
+        () [0x00070] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:133
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3245,12 +3576,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_4_Cast_Looming_Logged_FromAnotherLoom]
       name: b2_4_Cast_Looming_Logged_FromAnotherLoom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_4_Cast_Looming_Logged_FromAnotherLoom
-      resultStatus: 1
-      duration: 0.099739
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\nget get got got\r\nwas
-        or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0832479
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_AName_To_UserData (Rzeka.LoomingScroll_1`2[Rzeka.Tests.AName,Rzeka.Tests.UserData]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:125
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_4_Cast_Looming_Logged_FromAnotherLoom>d__9.MoveNext
+        () [0x00108] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:156
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3263,11 +3670,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_1_Cast_Looming]
       name: b2_Flipped_1_Cast_Looming
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_1_Cast_Looming
-      resultStatus: 1
-      duration: 0.1330744
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0829139
+      messages: "  Expected: True\r\n  But was:  False\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_1_Cast_Looming>d__10.MoveNext
+        () [0x00078] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:179
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3280,11 +3694,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_2_Cast_Looming_Logged]
       name: b2_Flipped_2_Cast_Looming_Logged
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_2_Cast_Looming_Logged
-      resultStatus: 1
-      duration: 0.1332865
-      messages: 
-      output: "get get got got\r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0847851
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_2_Cast_Looming_Logged>d__11.MoveNext
+        () [0x0010c] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:201
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3297,12 +3718,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_3_Cast_Looming_FromAnotherLoom]
       name: b2_Flipped_3_Cast_Looming_FromAnotherLoom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_3_Cast_Looming_FromAnotherLoom
-      resultStatus: 1
-      duration: 0.0996147
-      messages: 
-      output: "get get got got\r\nwas or not \r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0829976
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_ANumber_To_AName (Rzeka.LoomingScroll_1`2[Rzeka.Tests.ANumber,Rzeka.Tests.AName]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:116
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_3_Cast_Looming_FromAnotherLoom>d__12.MoveNext
+        () [0x0004c] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:214
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3315,12 +3812,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2]
       name: b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2
-      resultStatus: 1
-      duration: 0.1332011
-      messages: 
-      output: "get get got got\r\nwas or not \r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.082317
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_AName_To_UserData (Rzeka.LoomingScroll_1`2[Rzeka.Tests.AName,Rzeka.Tests.UserData]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:125
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_3_Cast_Looming_FromAnotherLoom_v2>d__14.MoveNext
+        () [0x00048] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:254
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3333,12 +3906,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom]
       name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom
-      resultStatus: 1
-      duration: 0.0994085
-      messages: 
-      output: "get get got got\r\nwas or not \r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0831534
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_ANumber_To_AName (Rzeka.LoomingScroll_1`2[Rzeka.Tests.ANumber,Rzeka.Tests.AName]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:116
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom>d__13.MoveNext
+        () [0x000e4] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:237
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3351,12 +4000,88 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2]
       name: b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2
-      resultStatus: 1
-      duration: 0.1330722
-      messages: 
-      output: "get get got got\r\nwas or not \r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0849293
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.TBindingSpell.InitializeBindingSpell () [0x0002b] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:83
+        \r\n  at Rzeka.LoomingScroll`1[TOut].InitializeLooming () [0x00019] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:70
+        \r\n  at Rzeka.LoomingScroll_1`2[T1,TOut]..ctor (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.Library library, Rzeka.Eris eris) [0x00033] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\loomingScrolls\\LoomingScroll_1.cs:24
+        \r\n  at Rzeka.SpringRiver.Loom[T,Q] (System.Object who, System.Func`2[T,TResult]
+        spell, Rzeka.LoomingScroll_1`2[T,Q]& scroll) [0x00007] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:117
+        \r\n  at Rzeka.Tests.TestTools.Loom_AName_To_UserData (Rzeka.LoomingScroll_1`2[Rzeka.Tests.AName,Rzeka.Tests.UserData]&
+        scroll) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:125
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b2_Flipped_4_Cast_Looming_Logged_FromAnotherLoom_v2>d__15.MoveNext
+        () [0x000e0] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:278
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3369,11 +4094,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b3_Cast_Weave]
       name: b3_Cast_Weave
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b3_Cast_Weave
-      resultStatus: 1
-      duration: 0.0998163
-      messages: 
-      output: "was or not \r\nwas or not \r\nget get got got\r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0978599
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b3_Cast_Weave>d__16.MoveNext
+        () [0x00107] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:311
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3386,11 +4118,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b3b_Cast_Weave_FlippedOrder]
       name: b3b_Cast_Weave_FlippedOrder
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b3b_Cast_Weave_FlippedOrder
-      resultStatus: 1
-      duration: 0.1330741
-      messages: 
-      output: "was or not \r\nget get got got\r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0829642
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b3b_Cast_Weave_FlippedOrder>d__17.MoveNext
+        () [0x00107] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:333
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3403,12 +4142,89 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b4_Cast_Weave_Logged_FromLoom]
       name: b4_Cast_Weave_Logged_FromLoom
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b4_Cast_Weave_Logged_FromLoom
-      resultStatus: 1
-      duration: 0.1336807
-      messages: 
-      output: "was or not \r\nget get got got\r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0829579
+      messages: 'System.ArgumentNullException : Value cannot be null.
+
+        Parameter
+        name: key'
+      output: 
+      stacktrace: "  at System.Collections.Generic.Dictionary`2[TKey,TValue].FindEntry
+        (TKey key) [0x00008] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at System.Collections.Generic.Dictionary`2[TKey,TValue].ContainsKey
+        (TKey key) [0x00000] in <1f66344f2f89470293d8b67d71308c07>:0 \r\n  at Rzeka.TBindingSpell.RequiresIngredient
+        (System.Type key) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:23
+        \r\n  at Rzeka.TBindingSpell.<InitializeBindingSpell>b__7_1 (Rzeka.IManaInformationProvideable
+        manainfo) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TBindingSpell.cs:89
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00004] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:44
+        \r\n--- End of stack trace from previous location where exception was thrown
+        ---\r\n\r\n  at System.Reactive.PlatformServices.ExceptionServicesImpl.Rethrow
+        (System.Exception exception) [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServicesImpl.cs:19
+        \r\n  at System.Reactive.ExceptionHelpers.Throw (System.Exception exception)
+        [0x00000] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\ExceptionServices.cs:16
+        \r\n  at System.Reactive.Stubs+<>c.<.cctor>b__2_1 (System.Exception ex) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Stubs.cs:16
+        \r\n  at System.Reactive.AnonymousSafeObserver`1[T].OnError (System.Exception
+        error) [0x00018] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\AnonymousSafeObserver.cs:69
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnError (System.Exception
+        error) [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:60
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00016] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Skip`1+Count+_[TSource].OnNext
+        (TSource value) [0x00012] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Skip.cs:53
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        (System.Int32 count) [0x001ff] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:903
+        \r\n  at System.Reactive.Subjects.FastImmediateObserver`1[T].EnsureActive
+        () [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:765
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1+ReplayBase[T].OnNext (T
+        value) [0x0009a] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:272
+        \r\n  at System.Reactive.Subjects.ReplaySubject`1[T].OnNext (T value) [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\ReplaySubject.cs:161
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.IdentitySink`1[T].OnNext (T value) [0x00001] in
+        C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\IdentitySink.cs:15
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Select`2+Selector+_[TSource,TResult].OnNext
+        (TSource value) [0x0001e] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Select.cs:47
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Scan`2+_[TSource,TAccumulate].OnNext
+        (TSource value) [0x00029] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Scan.cs:48
+        \r\n  at System.Reactive.Sink`1[TTarget].ForwardOnNext (TTarget value) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Internal\\Sink.cs:49
+        \r\n  at System.Reactive.Linq.ObservableImpl.Where`1+Predicate+_[TSource].OnNext
+        (TSource value) [0x00026] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Linq\\Observable\\Where.cs:54
+        \r\n  at System.Reactive.Subjects.Subject`1[T].OnNext (T value) [0x00036]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Subjects\\Subject.cs:147
+        \r\n  at Rzeka.Eris.PublishSpellOccurence (Rzeka.SpellOccurence spellOccurence)
+        [0x00001] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\eris\\Eris.cs:92
+        \r\n  at Rzeka.TSpell.SendSpellOccurence (Rzeka.SpellOccurenceCategory occurenceCategory)
+        [0x00037] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\interface\\TSpell.cs:48
+        \r\n  at Rzeka.LoomingScroll`1[TOut].Dispose () [0x00014] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\scrolls\\LoomingScroll.cs:89
+        \r\n  at Rzeka.SpringRiver+<>c__DisplayClass18_0`2[T,Q].<Loom>b__0 () [0x00000]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rzeka\\core\\SpringRiver.cs:119
+        \r\n  at System.Reactive.Disposables.AnonymousDisposable.Dispose () [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Runtime\\rx.net\\Rx.NET\\Source\\src\\System.Reactive\\Disposables\\AnonymousDisposable.cs:37
+        \r\n  at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b4_Cast_Weave_Logged_FromLoom>d__18.<>m__Finally4
+        () <0x18018523d20 + 0x00077> in <921717097f334bc292d16f8c0643f7c3>:0 \r\n 
+        at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b4_Cast_Weave_Logged_FromLoom>d__18.System.IDisposable.Dispose
+        () <0x18018523a80 + 0x00122> in <921717097f334bc292d16f8c0643f7c3>:0 \r\n 
+        at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b4_Cast_Weave_Logged_FromLoom>d__18.MoveNext
+        () [0x00185] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\spellOccurences\\Rzeka_03_SpellOccurences_Cast.cs:361
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3421,12 +4237,18 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/SpellOccurences/Rzeka_03_SpellOccurences_Cast/[com.rzeka.tests.playmode][Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b4b_Cast_Weave_Logged_FromLoom_FlippedOrder]
       name: b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast.b4b_Cast_Weave_Logged_FromLoom_FlippedOrder
-      resultStatus: 1
-      duration: 0.0991564
-      messages: 
-      output: "was or not \r\nget get got got\r\nget get got got\r\nwas or not \r\nwas
-        or not \r\nwas or not \r\nwas or not \r\nwas or not \r\n"
-      stacktrace: 
+      resultStatus: 2
+      duration: 0.0831273
+      messages: "  Expected: 1\r\n  But was:  0\r\n"
+      output: 
+      stacktrace: 'at Rzeka.Tests.SpellOccurences.Rzeka_03_SpellOccurences_Cast+<b4b_Cast_Weave_Logged_FromLoom_FlippedOrder>d__19.MoveNext
+        () [0x00127] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\spellOccurences\Rzeka_03_SpellOccurences_Cast.cs:379
+
+        at
+        UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\box\sanctuary\rzeka\rzeka\Library\PackageCache\com.unity.test-framework@1.1.33\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:46
+
+'
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -3440,7 +4262,7 @@ MonoBehaviour:
       name: Rzeka_04_SpellOccurences_Forgotten
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_04_SpellOccurences_Forgotten
       resultStatus: 1
-      duration: 0.2498281
+      duration: 0.212344
       messages: 
       output: 
       stacktrace: 
@@ -3456,7 +4278,7 @@ MonoBehaviour:
       name: d1_Forgotten_Plucking
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_04_SpellOccurences_Forgotten.d1_Forgotten_Plucking
       resultStatus: 1
-      duration: 0.116248
+      duration: 0.0819111
       messages: 
       output: 
       stacktrace: 
@@ -3473,9 +4295,9 @@ MonoBehaviour:
       name: d3_Forgotten_Weaving
       fullName: Rzeka.Tests.SpellOccurences.Rzeka_04_SpellOccurences_Forgotten.d3_Forgotten_Weaving
       resultStatus: 1
-      duration: 0.1000321
+      duration: 0.0997119
       messages: 
-      output: "was or not \r\nget get got got\r\n"
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -8855,16 +9677,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1692
       parentUniqueId: Zenject-IntegrationTests-Editor.dll/Zenject/Tests/[Zenject-IntegrationTests-Editor][Zenject.Tests.TestSceneContextEvents][suite]
-    m_ResultText: 
-    m_ResultStacktrace: 'at Rzeka.Tests.Matter.Default.Matter_Default_01_Receivals.b_early_subscriber_gets_all_the_values_loom_version
-      (System.Int32[] emitValues) [0x00041] in C:\box\sanctuary\rzeka\rzeka\Assets\rzeka\Tests\PlayMode\rzeka\matter\default\Matter_Default_01_Receivals.cs:212
-
-'
+    m_ResultText: b1_2_Cast_Plucking (0.082s)
+    m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 8}
-      m_SelectedIDs: 1340c9f7
-      m_LastClickedID: -137805805
-      m_ExpandedIDs: 310d8f85df68b285ce91fd8519c3ef87fbd3da88dbe4118b344c948c21992094d6646895be95c895dc889898629ff99aba85ec9b94ef39a00feee2a2791b40a5785364a527c860a7c30c7aa714eaa6ac247a0bad8cb207b3f5a5b2b4460e04b5d9ff32b7217fcfba1cb4f2bc57b8d2be67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3302175ced37426d0cd4d61d04ba1e5d12ab82bd30447b4d4726a64db46f7d4e4546ff3ebebab89ec5a2b91f0e2451cf15afca5f11cb0fef1c1a216f3233320f343d00af4c526c8f43d10e8f5559a09fa330266fb25ff16fc45aee9fd820e00008f1d550683b30c0a9cd9e50e07153417ffedab17d14fb419145e381cd451aa1e5bb507210f13eb21ad1e45249ed8dc24551199267f75852790a911285763c22871f2002a2211392e3ee43930fa873a324c4d2934f1c337364d0df43676aab137113db63792b56938cca5a93c1a4a753d87be6e3ebb71033f1300753f0e5fc84199010043d261b64604bb4b4f3bdac350b384905137bbb7520e790054d6e74559a862a45974da9d5de3a3bd66733fd067ad7f0f6fd9746071c2d067783cee807a4af91e7dfa14837dffffff7f
+      scrollPos: {x: 0, y: 276}
+      m_SelectedIDs: ef89a6a6
+      m_LastClickedID: -1499035153
+      m_ExpandedIDs: 310d8f85df68b285ce91fd8519c3ef87fbd3da88dbe4118b344c948c21992094d6646895be95c895dc889898629ff99aba85ec9b94ef39a00feee2a2791b40a5785364a527c860a7c30c7aa714eaa6ac247a0bad8cb207b3f5a5b2b4460e04b5d9ff32b7217fcfba1cb4f2bc57b8d2be67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c3302175ced37426d0cd4d61d04ba1e5d12ab82bd30447b4d4726a64db46f7d4e4546ff3ebebab89ec5a2b91f0e2451cf15afca5f11cb0fef1c1a216f3233320f343d00af4c526c8f43d10e8f5559a09fa330266fb25ff16fc45aee9fd820e00008f1d550683b30c0a9cd9e50e38a8911107153417ffedab17d14fb419145e381cd451aa1e5bb507210f13eb21ad1e45249ed8dc24551199267f75852790a911285763c22871f2002a2211392e3ee43930fa873a324c4d2934f1c337364d0df43676aab137113db63792b56938cca5a93c1a4a753d87be6e3ebb71033f1300753f0e5fc84199010043d261b6465d9d434704bb4b4f3bdac350b384905137bbb7520e790054d6e74559a862a45974da9d5de3a3bd66733fd067ad7f0f6fd9746071c2d067783cee807a4af91e7dfa14837dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -18155,7 +18974,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: b4e60000
     m_LastClickedID: 59060
-    m_ExpandedIDs: ffffffff0000000026650000286500002a6500002c6500002e65000030650000666500007265000040770000ca770000e077000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000002e65000030650000326500003465000036650000386500003a6500003c6500003e6500004065000042650000446500004665000048650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -18183,7 +19002,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 376}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000026650000286500002a6500002c6500002e65000030650000346500006665000072650000d2670000d467000040770000ca770000e077000000ca9a3bffffff7f
+    m_ExpandedIDs: ffffffff000000002e65000030650000326500003465000036650000386500003a6500003c6500003e6500004065000042650000446500004665000048650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -18746,7 +19565,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: aaddfdff7cdefdff94dffdff5ee0fdffc8e0fdffa2e1fdff00e2fdffcae2fdff24e3fdfffee3fdff6ce4fdff36e5fdff94e5fdff5ee6fdffb8e6fdff9ae7fdff26e9fdff08eafdff58ebfdff0aedfdff94edfdffb6eefdff14f0fdffdef0fdff48f2fdffe2f3fdff58f4fdfff2f5fdff60f6fdff3af7fdff34f8fdff46f9fdff82fafdff5cfbfdff60fcfdff3afdfdff52fefdff64fffdff7800feff8a01feff7e02feff8803feff0405fefff605feff4e07feff3808feff3c09feff160afeff160bfeff000cfeffb60dfeff400ffeffa20ffeff8c10feffb411feffc612feff3813feff3a14feff9c15feff8e16feff8617feff6018feff9819feff721afeffac1cfeff361efeff041ffeff8e20feff1c21feff3e22fefff422feffae24feffe825feffc226fefff427feffce28feff682afeff422bfeff6c2cfeff462dfeffac2efeff862ffeff8230feff5c31feffb432feff8e33feffc634feffa035feffa436feff7e37feff1439feffee39feffe63afeffa03cfeff183efeffd23ffeff2a41feffdc42feff8a43feff1c45feff7e46feff0848feff6a48feff8449feff524dfeff4c4efeff8e52feff2857feffca57feff1459feff7e59feff585afeff6a5bfeff3c5cfeff725dfeff0c62feff8662feff8863feffc064feff6269feffe06dfeffc26efeff3670feff0871feff7a71feff7c72feff7873feff7274feff8075feff1a7afeff907efeffea7ffeffce81feffa882feffa883feff8284feff9685feff7086feff7087feff4a88feff5a89feff348afeff548bfeff2e8cfeff4a8dfeff248efeff788ffeff5290feff6691feff3892feff9493feff6694feffc894feff9295feff0896feffda96feff3a98feff1c99feff2c9afefffe9afeff8c9bfeff6e9cfeffa29dfeff949efeffcc9ffeff9ea0feff48a1feff2aa2feff26a3feff18a4feff68a5feff5aa6feff7ea7feff68a8feff6ca9feff46aafeffacaafeff8eabfeffb2acfeff8cadfeff8caefeff66affefffeb0feff18b2feff46bdfeff40befefff2befefff4bffefffcc0fefffec1fefff6c2fefff8c3feff58c5feff3ac6feff2ec7feff20c8feff38c9feff12cafeff60cafeff3acbfeff12cdfefff4cdfeff22cffeff04d0feffbed1feffa8d2feff1ad3fefff4d3feff4cd5feff26d6feff3ad7feff14d8feff22defeff64e3feff86e4feff78e5feffe4e6feffbee7feff2ce8feff0ee9fefff8f0feffdaf1fefff2f2feffccf3feff56fbfeff36fcfeff98fdfefff2fefeff4e01ffff3002ffff8a02ffff5c03ffffc204ffff0406ffff5407ffff9608fffff209ffff0c0bffff2e0cffff280dffff200effff1a0fffff1e10ffff1011ffff2012fffffa12fffffa13ffffd414fffff415ffffce16ffff1218ffffec18ffff001affffda1affffe61bffffd81cffff461dffff401effffe21fffffdc20ffffe421ffffbe22ffffda23ffffbc24ffffbc26ffff9627ffffee28ffffd829ffff102bfffff22bffff882cffff722dffff6a2effff542fffff4830ffff2231ffff1432ffffe632ffff3833ffff1234ffff3236ffff0c37ffff4c38ffff2639ffff523affff2c3bffff223cfffffc3cffff143effffee3effff3640ffff1041ffff0c42ffffe642ffffea43ffffc444ffffd845ffffb246ffffb047ffff8a48ffff8249ffff5c4affff584bffff324cffff2a4dffff044efffffc4effffd64fffffee50ffffc851ffffce52ffffb853ffffb054ffff9a55ffff9656ffff8057ffff8a58ffff6459ffff985affff725bffff825cffff5c5dffffb45effff965fffffb863ffff9264ffff2a66ffff7c67ffff4869ffff426affff046dfffff66dffff626fffff4470ffffb670ffffa071ffffd674ffffd075ffffcc76ffffb677ffff3e7effff107fffff0281fffff481fffffc82ffffee83ffff8a85ffff2c87ffff549affff269cffff909dffffb29effff4aa0ffff1ca1ffff8ea1ffff68a2ffffbca4ffff9ea5ffff18a6ffff3aa7ffff3ca8ffff56a9fffff4a9ffffceaaffffd8abffffb2acffffaeadffff88aeffffa0afffff7ab0ffffbab1ffff94b2fffff0b3ffffcab4ffff46b6ffff20b7ffffc8b8ffff9ab9ffff0cbaffffe6baffffeabbffffc4bcffffd4bdffffaebefffff2bfffffccc0ffffdcc1ffffb6c2ffff00c4ffffdac4ffff44c6ffff1ec7ffffe2c8ffffbcc9ffff28cbffff02ccffff1ecdffff38ceffffa2cfffff94d1ffff92d2ffff7cd3ffff94d4ffff7ed5ffffbcd6ffff96d7ffff26d9ffff08daffff7adaffff54dbffff5cdcffff2eddffffacddffff86deffffe6dfffffc0e0ffff54e2ffff2ee3ffffd4e4ffffbee5ffffdee6ffffb8e7ffffd8e8ffffaae9ffff2ceaffff06ebffff26ecffff00edffff34eeffff0eefffffb4f0ffff8ef1ffffdaf2ffffc4f3fffff8f4ffffdaf5ffff84f7ffff6af8ffff34fbffff
+      m_ExpandedIDs: d0e9ffffb2eafffffaebffffdcecffff04eeffff78eeffff1cefffffeeefffff88f0ffff6af1ffff54f3ffff0ef5ffff70f5ffff42f6ffffa8f6ffff82f7ffff90f8ffff6ef9ffff36fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

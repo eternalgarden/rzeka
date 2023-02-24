@@ -16,28 +16,17 @@ namespace Rzeka
         public Type MatterType => typeof(T);
         
         /// <summary>
-        /// Its as simple as that.
-        /// If you want to keep a source available keep it's conjurers/sources alife.
-        /// </summary>
-        public bool IsActive => HasSources;
-
-        bool HasSources => _sources.Count > 0;
-
-        bool HasSubject => Subject is not null;
-        
-        /// <summary>
         /// currently only keys are used, there is a common subscription disposable below
         /// this means the current approach in case of a change of number of sources is
         /// 'full replug'
         /// sources will be recombined into a new subscription on each source (dis)appearing
         /// </summary>
-        List<IObservable<T>> _sources = new();
-        List<TConjuringSpell<T>> _conjurings = new();
-        Dictionary<TConjuringSpell<T>, IDisposable> _conjuringHasManaListeners = new();
+        readonly List<IObservable<T>> _sources = new();
+
+        bool HasSources => _sources.Count > 0;
 
         IDisposable _sourcesSubscription;
         ISubject<T> _subject;
-        HashSet<TConjuringSpell<T>> _activeSources;
 
         /// <summary>
         /// IMPORTANT 🙀
@@ -48,33 +37,18 @@ namespace Rzeka
             get { return _subject ??= CreateSubject(); }
         }
 
-        public IDisposable RegisterConjurer(IObservable<T> conjurer, TConjuringSpell<T> conjuring)
+        public IDisposable RegisterConjurer(IObservable<T> conjurer)
         {
-            Debug.Log(typeof(T));
+            AddSource(conjurer);
 
-            AddSource(conjurer, conjuring);
-
-            var token = Disposable.Create(conjurer, RemoveSource);
+            IDisposable token = Disposable.Create(conjurer, RemoveSource);
             
             return token;
         }
 
-        void AddSource(IObservable<T> source, TConjuringSpell<T> conjuring)
+        void AddSource(IObservable<T> source)
         {
             _sources.Add(source);
-            _conjurings.Add(conjuring);
-
-            IDisposable hasmanalistener = conjuring
-                .HasMana
-                .Subscribe(hasMana =>
-                {
-                    if (hasMana)
-                    {
-                        _activeSources.Add(conjuring);
-                    }
-                });
-            
-            _conjuringHasManaListeners.Add(conjuring, hasmanalistener);
             RecombineSourcesSubscription();
         }
 
@@ -93,7 +67,7 @@ namespace Rzeka
             IObservable <T> combinedSourcesStream = CombineSources(_sources);
             _sourcesSubscription = combinedSourcesStream.Subscribe(Subject.AsObserver());
         }
-        
+
         // * Notice Stream cannot force unregister those who already requested it as a source
         // * They need to do it on their own when they lose mana
         public IObservable<T> GetStream()
@@ -121,15 +95,6 @@ namespace Rzeka
             if (sources == null) throw new ArgumentNullException(nameof(sources));
             
             IObservable<T> stream = null;
-            
-            // _conjurings
-            //     .ToObservable()
-            //     .Where(con =>
-            //     {
-            //         bool hasMana = false;
-            //         using var _ = con.HasMana.Subscribe(oik => hasMana = oik);
-            //         return hasMana;
-            //     })
 
             int availableSources = sources.Count;
 

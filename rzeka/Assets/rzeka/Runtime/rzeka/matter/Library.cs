@@ -12,13 +12,14 @@ namespace Rzeka
     // TODO wouldn't it be a good idea to push entire library and eris as internal classes in the end?
     public class Library
     {
-        Dictionary<Type, ISpellStream> _streams;
+        readonly Eris _eris;
+        readonly Dictionary<Type, ISpellStream> _streams;
 
         internal int StreamsCount => _streams.Count;
-        internal IEnumerator<KeyValuePair<Type, ISpellStream>> StreamEnumerator => _streams.GetEnumerator();
 
-        public Library()
+        public Library(Eris eris)
         {
+            _eris = eris;
             _streams = new();
         }
 
@@ -32,26 +33,8 @@ namespace Rzeka
         {
             return _streams.ContainsKey(key);
         }
-
-        public bool IsStreamActive<T>() where T : TMatter
-        {
-            Type key = typeof(T);
-            return IsStreamActive(key);
-        }
         
-        public bool IsStreamActive(Type key)
-        {
-            return WasStreamCreated(key) && _streams[key].IsActive;
-        }
-
-        public IObservable<T> GetConjurer<T>() where T : TMatter
-        {
-            Stream<T> stream = GetStream<T>();
-            IObservable<T> conjurer = stream.GetStream();
-            return conjurer;
-        }
-        
-        public IDisposable RegisterConjurer<T>([NotNull] IObservable<T> strand, TConjuringSpell<T> conjuring)
+        public IDisposable RegisterConjurer<T>([NotNull] IObservable<T> strand)
             where T : TMatter
         {
             if (strand == null) throw new ArgumentNullException(nameof(strand));
@@ -60,9 +43,16 @@ namespace Rzeka
 
             Debug.Assert(stream != null, nameof(stream) + " != null");
             
-            IDisposable registrationToken = stream.RegisterConjurer(strand, conjuring);
+            IDisposable registrationToken = stream.RegisterConjurer(strand);
 
             return registrationToken;
+        }
+
+        public IObservable<T> GetConjurer<T>() where T : TMatter
+        {
+            Stream<T> stream = GetStream<T>();
+            IObservable<T> conjurer = stream.GetStream();
+            return conjurer;
         }
         
         /// <summary>

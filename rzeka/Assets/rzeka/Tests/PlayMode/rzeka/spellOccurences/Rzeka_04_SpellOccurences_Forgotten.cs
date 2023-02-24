@@ -60,7 +60,7 @@ namespace Rzeka.Tests.SpellOccurences
             int occurence = 0;
 
             using var d1 = Rzeka.Eris.SpellOccurences
-                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.Cast)
+                .Where(occ => occ.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 

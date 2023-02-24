@@ -34,6 +34,14 @@ namespace Rzeka.Tests
         {
             Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.", comparer);
         }
+
+        // public bool IsManaOfTypeAvailable(Type type)
+        // {
+        //
+        //     bool isIt = false;
+        //     using var d _rzeka.Eris.ManaProvideableObservable.Subscribe(next => isIt = )
+        //     return 
+        // }
         
         public IDisposable Strand_UserData(out ConjuringScroll<UserData> scroll, int count = 1)
         {

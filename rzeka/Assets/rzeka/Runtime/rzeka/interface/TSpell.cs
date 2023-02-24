@@ -25,14 +25,11 @@ namespace Rzeka
         SpellSchool SpellSchool { get; }
         Guid Guid { get; }
         object Who { get; }
-        bool IsChanneling { get; protected set; }
+        bool HasMana { get; protected set; }
         string Title { get; }
-        ISubject<SpellOccurence> SpellStream { get; }
-        ISubject<MatterOccurence> MatterStream { get; }
         Library Library { get; }
+        Eris Eris { get; }
         CollectibleDisposable CollectionDisposable { get; set; }
-        
-        IObservable<bool> HasMana { get; }
 
         void Cast();
 
@@ -48,7 +45,7 @@ namespace Rzeka
                 Source = this
             };
 
-            SpellStream.OnNext(occurence);
+            Eris.PublishSpellOccurence(occurence);
             
             /* ---- ---- 🌠 */
         }
@@ -74,7 +71,7 @@ namespace Rzeka
                 Source = this
             };
 
-            MatterStream.OnNext(occurence);
+            Eris.PublishMatterOccurence(occurence);
             
             /* ---- ---- 🌠 */
         }
@@ -92,7 +89,7 @@ namespace Rzeka
                 Luggage = new ExceptionalLuggage(ex)
             };
 
-            MatterStream.OnNext(occurence);
+            Eris.PublishMatterOccurence(occurence);
             
             /* ---- ---- 🌠 */
         }

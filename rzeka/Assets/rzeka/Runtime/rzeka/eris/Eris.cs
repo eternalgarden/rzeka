@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Rzeka
@@ -13,27 +15,146 @@ namespace Rzeka
         void ReceiveMatterOccurence(SerializableMatterOccurence occurence);
     }
 
+    public interface IManaInformationProvideable
+    {
+        Type LastChangedType { get; }
+        bool IsManaOfTypeAvailable<T>() where T : TMatter;
+        bool IsManaOfTypeAvailable(Type type);
+    }
+
+    public class AvailableConjurers : IManaInformationProvideable
+    {
+        readonly Dictionary<Type, HashSet<Guid>> _availableConjurers = new();
+
+        public Type LastChangedType { get; private set; }
+
+        public void ActivateConjurer([NotNull] IConjuringSpell conjuringSpell)
+        {
+            if (conjuringSpell == null) throw new ArgumentNullException(nameof(conjuringSpell));
+            
+            Type key = conjuringSpell.ConjuredType;
+            if (_availableConjurers.ContainsKey(key) is false)
+            {
+                _availableConjurers[key] = new HashSet<Guid>();
+            } 
+            
+            _availableConjurers[key].Add(conjuringSpell.Guid);
+
+            LastChangedType = key;
+        }
+        
+        public void DectivateConjurer([NotNull] IConjuringSpell conjuringSpell)
+        {
+            if (conjuringSpell == null) throw new ArgumentNullException(nameof(conjuringSpell));
+            
+            Type key = conjuringSpell.ConjuredType;
+
+            if (_availableConjurers.ContainsKey(key) is false) return;
+            if (!_availableConjurers[key].Contains(conjuringSpell.Guid)) return;
+            
+            // TODO this could use some testing if things are properly removed
+            _availableConjurers[key].Remove(conjuringSpell.Guid);
+            
+            LastChangedType = key;
+        }
+
+        public bool IsManaOfTypeAvailable<T>() where T : TMatter
+        {
+            return IsManaOfTypeAvailable(typeof(T));
+        }
+        
+        public bool IsManaOfTypeAvailable(Type type)
+        {
+            return _availableConjurers.ContainsKey(type) && _availableConjurers[type].Count > 0;
+        }
+    }
+
     public class Eris : IDisposable
     {
+        readonly Library _library;
         public IErisEmanationCapable Emanation { get; set; }
-        public IObservable<SpellOccurence> SpellOccurences { get; }
-        public IObservable<MatterOccurence> MatterOccurences { get; }
 
         CollectibleDisposable _disposables;
-
-        [Obsolete] public readonly IObservable<RealmEvent> RealmEventStream;
 
         Queue<SerializableSpellOccurence> spellOccQueue = new();
         Queue<SerializableMatterOccurence> matterOccQueue = new();
 
-        public Eris(IObservable<SpellOccurence> spellOccurences, IObservable<MatterOccurence> matterOccurences)
+        public IObservable<SpellOccurence> SpellOccurences => SpellStream;
+        public IObservable<MatterOccurence> MatterOccurences => MatterStream;
+
+        Subject<SpellOccurence> SpellStream { get; }
+        Subject<MatterOccurence> MatterStream { get; }
+        
+        IConnectableObservable<IManaInformationProvideable> _manaStream { get; }
+        public IObservable<IManaInformationProvideable> ManaProvideableObservable => _manaStream;
+
+        public void PublishSpellOccurence(SpellOccurence spellOccurence)
+        {
+            SpellStream.OnNext(spellOccurence);
+        }
+        
+        public void PublishMatterOccurence(MatterOccurence matterOccurence)
+        {
+            MatterStream.OnNext(matterOccurence);
+        }
+
+        public Eris()
         {
             _disposables = new CollectibleDisposable();
 
-            SpellOccurences = spellOccurences;
-            MatterOccurences = matterOccurences;
+            SpellStream = new Subject<SpellOccurence>();
+            MatterStream = new Subject<MatterOccurence>();
 
-            _disposables += SpellOccurences.Subscribe(occ => {
+            _manaStream = SpellStream
+                .Where(occ => occ.Source.SpellSchool
+                    is SpellSchool.Looming
+                    or SpellSchool.Stranding)
+                .Where(occ => occ.SpellOccurenceCategory
+                    is SpellOccurenceCategory.HasMana
+                    or SpellOccurenceCategory.NoMana
+                    or SpellOccurenceCategory.Forgotten)
+                .Scan((false, new AvailableConjurers()), (acc, current) =>
+                {
+                    AvailableConjurers accumulator = acc.Item2;
+
+                    IConjuringSpell sourceAsConjuring =
+                        current.Source as IConjuringSpell ?? throw new InvalidOperationException();
+
+                    Type conjuredType = sourceAsConjuring.ConjuredType;
+                    bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+
+                    SpellOccurenceCategory category = current.SpellOccurenceCategory;
+                    if (category is SpellOccurenceCategory.HasMana)
+                    {
+                        accumulator.ActivateConjurer(sourceAsConjuring);
+                    }
+                    else
+                    {
+                        accumulator.DectivateConjurer(sourceAsConjuring);
+                    }
+
+                    bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+
+                    bool hasAnythingChanged = wasManaAvailable != isManaAvailable;
+
+                    return (hasAnythingChanged, accumulator);
+                })
+                .Where(accumulator => accumulator.Item1)
+                .Select(accumulator => accumulator.Item2 as IManaInformationProvideable)
+                .StartWith(new AvailableConjurers())
+                .Multicast(new ReplaySubject<IManaInformationProvideable>(1));
+
+            _disposables += _manaStream.Connect();
+
+            _disposables += ManaProvideableObservable
+                .Subscribe(info =>
+                {
+                    if (info.LastChangedType == null) return;
+                    // Debug.Log($"next : {info.LastChangedType} {info.IsManaOfTypeAvailable(info.LastChangedType)}");
+                });
+            
+
+            _disposables += SpellStream.Subscribe(occ => {
 
                 var serializableOcc = new SerializableSpellOccurence() {
                     guid = occ.Guid,
@@ -58,7 +179,7 @@ namespace Rzeka
                 Emanation.ReceiveSpellOccurence(serializableOcc);
             });
 
-            _disposables += MatterOccurences.Subscribe(occ =>
+            _disposables += MatterStream.Subscribe(occ =>
             {
 
                 var serializableOcc = new SerializableMatterOccurence() {
@@ -110,7 +231,7 @@ namespace Rzeka
             spell.whosName = source.Who is MonoBehaviour 
                 ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
                 : source.Who.GetType().Name;
-            spell.wasCast = source.IsChanneling;
+            spell.wasCast = source.HasMana;
 
             return spell;
         }
@@ -136,9 +257,9 @@ namespace Rzeka
             {
                 spellSchool = SpellSchool.Looming,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.IsChanneling,
+                wasCast = binding.HasMana,
                 conjuredType = conjuring.ConjuredType,
-                hasMana = binding.IsChanneling // TODO this is a naming misguide
+                hasMana = binding.HasMana // TODO this is a naming misguide
             };
 
             return looming;
@@ -152,8 +273,8 @@ namespace Rzeka
             {
                 spellSchool = SpellSchool.Weaving,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.IsChanneling,
-                hasMana = binding.IsChanneling // TODO this is a naming misguide
+                wasCast = binding.HasMana,
+                hasMana = binding.HasMana // TODO this is a naming misguide
             };
 
             return weaving;
