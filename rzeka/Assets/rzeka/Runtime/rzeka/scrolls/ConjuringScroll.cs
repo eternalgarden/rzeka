@@ -45,8 +45,8 @@ namespace Rzeka
             
             Guid = Guid.NewGuid();
             Who = who;
-            Library = library;
             Eris = eris;
+            Library = library;
 
             ThisAsBase = this;
             ThisAsConjuring = this;
@@ -65,17 +65,18 @@ namespace Rzeka
 
             if (_libraryToken is not null) throw new Exception("Was already cast 🦇");
 
-            try
-            {
+            // try
+            // {
                 _libraryToken = Library.RegisterConjurer(Conjuring);
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
-            }
-            catch (Exception ex)
-            {
-                // todo send luggage
-                
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     // todo send luggage
+            //     throw ex;
+            //     
+            //     ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
+            // }
 
             /* ---- ---- 🌠 */
         }

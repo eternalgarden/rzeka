@@ -10,6 +10,7 @@ namespace Rzeka
         public string title { get; set; }
         public SpellSchool spellSchool { get; set; }
         public string whosName { get; set; }
-        public bool wasCast { get; set; }
+        public bool hasMana { get; set; }
+        public Who Who { get; set; }
     }
 }

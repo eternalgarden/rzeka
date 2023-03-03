@@ -9,8 +9,9 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface IErisEmanationCapable
+    public interface IErisConsulate
     {
+        void OpenConsole();
         void ReceiveSpellOccurence(SerializableSpellOccurence occurence);
         void ReceiveMatterOccurence(SerializableMatterOccurence occurence);
     }
@@ -72,7 +73,7 @@ namespace Rzeka
     public class Eris : IDisposable
     {
         readonly Library _library;
-        public IErisEmanationCapable Emanation { get; set; }
+        public IErisConsulate Emanation { get; set; }
 
         CollectibleDisposable _disposables;
 
@@ -231,7 +232,7 @@ namespace Rzeka
             spell.whosName = source.Who is MonoBehaviour 
                 ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
                 : source.Who.GetType().Name;
-            spell.wasCast = source.HasMana;
+            spell.hasMana = source.HasMana;
 
             return spell;
         }
@@ -240,9 +241,11 @@ namespace Rzeka
         {
             IConjuringSpell conjuring = source as IConjuringSpell;
 
+            Debug.Assert(conjuring != null, nameof(conjuring) + " != null");
             SerializableStranding stranding = new SerializableStranding() {
                 spellSchool = SpellSchool.Stranding,
-                conjuredType = conjuring.ConjuredType
+                conjuredType = conjuring.ConjuredType,
+                Who = GetWho(source)
             };
 
             return stranding;
@@ -253,13 +256,15 @@ namespace Rzeka
             TBindingSpell binding = source as TBindingSpell;
             IConjuringSpell conjuring = source as IConjuringSpell;
 
+            Debug.Assert(binding != null, nameof(binding) + " != null");
+            Debug.Assert(conjuring != null, nameof(conjuring) + " != null");
             SerializableLooming looming = new SerializableLooming()
             {
                 spellSchool = SpellSchool.Looming,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.HasMana,
+                hasMana = binding.HasMana,
                 conjuredType = conjuring.ConjuredType,
-                hasMana = binding.HasMana // TODO this is a naming misguide
+                Who = GetWho(source)
             };
 
             return looming;
@@ -269,27 +274,58 @@ namespace Rzeka
         {
             TBindingSpell binding = source as TBindingSpell;
 
+            Debug.Assert(binding != null, nameof(binding) + " != null");
             SerializableWeaving weaving = new SerializableWeaving()
             {
                 spellSchool = SpellSchool.Weaving,
                 ingredients = GetSerializableIngredients(binding),
-                wasCast = binding.HasMana,
-                hasMana = binding.HasMana // TODO this is a naming misguide
+                hasMana = binding.HasMana,
+                Who = GetWho(source)
             };
 
             return weaving;
         }
-        
+
+        Who GetWho(TSpell source)
+        {
+            Type whosType = source.Who.GetType();
+            
+            string parentGameObjectName = null;
+            if (source.Who is MonoBehaviour monoWho)
+            {
+                parentGameObjectName = monoWho.gameObject.name;
+            }
+
+            return new Who()
+            {
+                WhosType = whosType,
+                ParentGameObjectName = parentGameObjectName
+            };
+        }
+
         [Obsolete] // TODO there is a problem with that, there are no longer ingredients list
-        private Dictionary<string, SerializableStranding[]> GetSerializableIngredients(TBindingSpell binding)
+        private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
-                .SatisfiedRequirements
-                .Select(kvp => new KeyValuePair<string, SerializableStranding[]>(
-                    key: kvp.Key.Name,
-                    value: null) // oops
-                )
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                .SatisfiedRequirements 
+                .Select(kvp => new KeyValuePair<string, bool>(
+                key: kvp.Key.Name,
+                value: kvp.Value) // oops
+            )
+            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);;
+            // return binding
+            //     .SatisfiedRequirements
+            //     .Select(kvp => new KeyValuePair<string, bool>(
+            //         key: kvp.Key.Name,
+            //         value: kvp.Value) // oops
+            //     )
+            //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            
+        }
+
+        void Asd(Vector3 test)
+        {
+            
         }
 
         public void Dispose()

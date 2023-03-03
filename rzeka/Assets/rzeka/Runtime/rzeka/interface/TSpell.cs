@@ -1,15 +1,30 @@
 using System;
 using System.Reactive.Subjects;
+using JetBrains.Annotations;
 
 namespace Rzeka
 {
+    
+    [Serializable]
+    public struct Who
+    {
+        public Type WhosType { get; set; }
+        [CanBeNull] public string ParentGameObjectName { get; set; }
+    }
+    
     public interface ISerializableSpell
     {
         Guid guid { get; set; }
         string title { set; get; }
         SpellSchool spellSchool { get; set; }
-        string whosName { get; set; }
-        bool wasCast { get; set; }
+        string whosName { get; set; } 
+        bool hasMana { get; set; } // TODO REMOVE
+        Who Who { get; set; }
+        // TODO ADD HASMANA
+        
+        // TODO REPLACE INGREDIENTS IN BINDING SPELL
+        
+        
     }
 
     public interface TSpell : IDisposable // TODO Rename to TSpell
