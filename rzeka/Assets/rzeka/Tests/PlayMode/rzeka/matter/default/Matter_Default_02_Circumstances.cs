@@ -50,7 +50,7 @@ namespace Rzeka.Tests.Matter.Default
         [UnityTest]
         public IEnumerator a_are_any_circumstances_set()
         {
-            using var p1 = _tools.Strand_ANumber(1);
+            using var p1 = _tools.Strand_ANumber_Synchronous(1);
             using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             bool areAny = false;
@@ -67,7 +67,7 @@ namespace Rzeka.Tests.Matter.Default
         [UnityTest]
         public IEnumerator b_are_two_different_weavings_receiving_same_conjurring()
         {
-            using var p1 = _tools.Strand_ANumber(1);
+            using var p1 = _tools.Strand_ANumber_Synchronous(1);
             using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             Guid num1Guid = Guid.NewGuid(); // so we can be sure they will be starting out different
@@ -84,7 +84,7 @@ namespace Rzeka.Tests.Matter.Default
         [UnityTest]
         public IEnumerator c_are_guids_same_for_matter_received_and_also_used_as_circumstance()
         {
-            using var p1 = _tools.Strand_ANumber(1); // * both will be separately woven
+            using var p1 = _tools.Strand_ANumber_Synchronous(1); // * both will be separately woven
             using var l1 = _tools.Loom_ANumber_To_AName(out _);
 
             Guid numberGuid =           Guid.NewGuid(); // so we can be sure they will be starting out different

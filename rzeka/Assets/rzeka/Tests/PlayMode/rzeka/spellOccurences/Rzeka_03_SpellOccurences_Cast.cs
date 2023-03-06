@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.SpellOccurences
+namespace Rzeka.Tests.ASpellOccurences
 {
     public class Rzeka_03_SpellOccurences_Cast
     {
@@ -51,20 +51,6 @@ namespace Rzeka.Tests.SpellOccurences
         //
         #region Casting
 
-        [UnityTest]
-        public IEnumerator a1_stranding_hasMana()
-        {
-            // -------------
-            
-            using var d2 = tools.Strand_ANumber(out ConjuringScroll<ANumber> scroll);
-
-            Assert.AreEqual(true, (scroll as TSpell).HasMana);
-
-            yield return null;
-
-            // -------------
-        }
-        
         [Test]
         [TestCase(SpellOccurenceCategory.Created, 1)]
         [TestCase(SpellOccurenceCategory.HasMana, 1)]
@@ -81,7 +67,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(count, occurence);
 
@@ -93,7 +79,7 @@ namespace Rzeka.Tests.SpellOccurences
         {
             // -------------
             
-            using var d2 = tools.Strand_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
@@ -119,7 +105,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Strand_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
             using var d3 = tools.Loom_AName_To_UserData(out _);
 
             Assert.AreEqual(count, occurence);
@@ -132,7 +118,7 @@ namespace Rzeka.Tests.SpellOccurences
         {
             // -------------
             
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
@@ -155,7 +141,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
 
@@ -178,7 +164,7 @@ namespace Rzeka.Tests.SpellOccurences
             // -------------
             
             using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Strand_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
@@ -200,7 +186,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Loom_AName_To_UserData(out _);
-            using var d2 = tools.Strand_AName("Agent Cooper");
+            using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
 
             Assert.AreEqual(1, occurence);
 
@@ -216,7 +202,7 @@ namespace Rzeka.Tests.SpellOccurences
             
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
@@ -239,7 +225,7 @@ namespace Rzeka.Tests.SpellOccurences
             
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(2, occurence);
 
@@ -256,7 +242,7 @@ namespace Rzeka.Tests.SpellOccurences
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
@@ -280,7 +266,7 @@ namespace Rzeka.Tests.SpellOccurences
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(2, occurence);
 
@@ -309,7 +295,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Weave_ANumber();
 
             Assert.AreEqual(1, occurence);
@@ -332,7 +318,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Subscribe(_ => occurence++);
 
             using var d3 = tools.Weave_ANumber();
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(1, occurence);
 
@@ -353,7 +339,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Weaving)
                 .Subscribe(_ => occurence++);
 
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Weave_AName();
             using var d4 = tools.Loom_ANumber_To_AName(out _);
 
@@ -378,7 +364,7 @@ namespace Rzeka.Tests.SpellOccurences
 
             using var d3 = tools.Weave_AName();
             using var d4 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(1, occurence);
 

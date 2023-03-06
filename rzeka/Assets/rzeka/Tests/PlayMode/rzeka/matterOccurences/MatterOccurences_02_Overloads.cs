@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.MatterOccurences
+namespace Rzeka.Tests.BMatterOccurences
 {
     public class MatterOccurences_02_Overloads
     {
@@ -64,8 +64,8 @@ namespace Rzeka.Tests.MatterOccurences
                 .Where(m => m.Matter.GetType() == type)
                 .Subscribe(_ => registered = true);
 
-            using var s1 = _tools.Strand_ANumber(1);
-            using var s2 = _tools.Strand_AName("fluff");
+            using var s1 = _tools.Strand_ANumber_Synchronous(1);
+            using var s2 = _tools.Strand_AName_Synchronous("fluff");
 
             using var loom = _rzeka.Loom<ANumber, AName, UserData>(
                 who: this,

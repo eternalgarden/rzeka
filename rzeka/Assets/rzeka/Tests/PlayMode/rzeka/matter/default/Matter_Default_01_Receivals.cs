@@ -60,7 +60,7 @@ namespace Rzeka.Tests.Matter.Default
             
             bool occurence = false;
 
-            using var d2 = _tools.Strand_ANumber(1);
+            using var d2 = _tools.Strand_ANumber_Synchronous(1);
             using var d3 = _tools.Weave_ANumber(_ => occurence = true);
 
             Assert.AreEqual(true, occurence);
@@ -78,7 +78,7 @@ namespace Rzeka.Tests.Matter.Default
             List<int> receivednumbers = new();
             
             // notice there are two values pushed
-            using var d2 = _tools.Strand_ANumber(emitValues);
+            using var d2 = _tools.Strand_ANumber_Synchronous(emitValues);
             using var d3 = _tools.Weave_ANumber(i => {
                 receivednumbers.Add(i.Number);
             });
@@ -101,12 +101,14 @@ namespace Rzeka.Tests.Matter.Default
             
             int occurence = 0;
 
-            using var d1 = _tools.Strand_ANumber(emitValues);
+            using var d1 = _tools.Strand_ANumber_Synchronous(emitValues);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
             using var d3 = _tools.Weave_AName(i => {
                 occurence++;
             });
-
+            
+            // 1 is expected because Weave is being registered after the Loom
+            // and the way
             Assert.AreEqual(1, occurence);
 
             // -------------
@@ -121,7 +123,7 @@ namespace Rzeka.Tests.Matter.Default
             
             string text = "";
 
-            using var d1 = _tools.Strand_ANumber(emitValues);
+            using var d1 = _tools.Strand_ANumber_Synchronous(emitValues);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
             using var d3 = _tools.Weave_AName(i =>
             {
@@ -143,7 +145,7 @@ namespace Rzeka.Tests.Matter.Default
             
             string text = "";
 
-            using var d1 = _tools.Strand_ANumber(emitValues);
+            using var d1 = _tools.Strand_ANumber_Synchronous(emitValues);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
             using var d3 = _tools.Loom_AName_To_UserData(out _);
             using var d4 = _tools.Weave_UserData(i =>
@@ -166,7 +168,7 @@ namespace Rzeka.Tests.Matter.Default
 
             int receivals = 0;
 
-            using var d1 = _tools.Strand_ANumber(emitValues);
+            using var d1 = _tools.Strand_ANumber_Synchronous(emitValues);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
             using var d3 = _tools.Loom_AName_To_UserData(out _);
             using var d4 = _tools.Weave_UserData(i =>
@@ -189,7 +191,7 @@ namespace Rzeka.Tests.Matter.Default
             int receivals = 0;
 
             using var w1 = _tools.Weave_ANumber(_ => receivals++);
-            using var s1 = _tools.Strand_ANumber(emitValues);
+            using var s1 = _tools.Strand_ANumber_Synchronous(emitValues);
 
             Assert.AreEqual(emitValues.Length, receivals);
 
@@ -208,7 +210,7 @@ namespace Rzeka.Tests.Matter.Default
 
             using var w1 = _tools.Weave_AName(_ => receivals++);
             using var l1 = _tools.Loom_ANumber_To_AName(out _);
-            using var s1 = _tools.Strand_ANumber(emitValues);
+            using var s1 = _tools.Strand_ANumber_Synchronous(emitValues);
 
             Assert.AreEqual(emitValues.Length, receivals);
 

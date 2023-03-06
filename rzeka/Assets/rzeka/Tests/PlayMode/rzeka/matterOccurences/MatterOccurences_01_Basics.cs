@@ -7,12 +7,10 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 using NUnit.Framework;
 using System;
 using System.Collections;
-using System.Reactive;
 using System.Reactive.Linq;
-using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.MatterOccurences
+namespace Rzeka.Tests.BMatterOccurences
 {
     public class MatterOccurences_01_Basics
     {
@@ -59,7 +57,7 @@ namespace Rzeka.Tests.MatterOccurences
                 .Where(occ => occ.MatterOccurenceCategory == category)
                 .Subscribe(_ => actual = true);
 
-            using var d1 = _tools.Strand_ANumber(1);
+            using var d1 = _tools.Strand_ANumber_Synchronous(1);
 
             TestTools.AssertEqual(occured, actual);
 
@@ -82,7 +80,7 @@ namespace Rzeka.Tests.MatterOccurences
                 .Where(occ => occ.MatterOccurenceCategory == category)
                 .Subscribe(_ => actual = true);
 
-            using var d1 = _tools.Strand_ANumber(1);
+            using var d1 = _tools.Strand_ANumber_Synchronous(1);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
 
             TestTools.AssertEqual(occured, actual);
@@ -106,7 +104,7 @@ namespace Rzeka.Tests.MatterOccurences
                 .Where(occ => occ.MatterOccurenceCategory == category)
                 .Subscribe(_ => actual = true);
 
-            using var d1 = _tools.Strand_ANumber(1);
+            using var d1 = _tools.Strand_ANumber_Synchronous(1);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
             using var w1 = _tools.Weave_AName(out _);
 
@@ -133,7 +131,7 @@ namespace Rzeka.Tests.MatterOccurences
 
             using var w1 = _tools.Weave_AName(out _);
             using var d2 = _tools.Loom_ANumber_To_AName(out _);
-            using var d1 = _tools.Strand_ANumber(values);
+            using var d1 = _tools.Strand_ANumber_Synchronous(values);
 
             TestTools.AssertEqual(values.Length, count);
 

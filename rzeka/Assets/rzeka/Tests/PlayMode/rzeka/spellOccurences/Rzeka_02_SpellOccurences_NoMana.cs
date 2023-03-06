@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.SpellOccurences
+namespace Rzeka.Tests.ASpellOccurences
 {
     public class Rzeka_02_SpellOccurences_NoMana
     {
@@ -77,7 +77,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(info => info.IsManaOfTypeAvailable<ANumber>())
                 .Subscribe(_ => occurence++);
             
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(1, occurence);
         
@@ -95,7 +95,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(info => info.IsManaOfTypeAvailable<AName>())
                 .Subscribe(_ => occurence++);
             
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var w1 = tools.Loom_ANumber_To_AName(out _);
 
             Assert.AreEqual(1, occurence);
@@ -118,7 +118,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool == SpellSchool.Weaving)
                 .Subscribe(_ => count++);
 
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var w1 = tools.Weave_ANumber();
 
             Assert.AreEqual(happened ? 1 : 0, count);
@@ -146,7 +146,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Subscribe(_ => count++);
 
             using var w1 = tools.Weave_ANumber();
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             yield return new WaitForSeconds(0.2f);
 
@@ -170,7 +170,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool == SpellSchool.Looming)
                 .Subscribe(_ => count++);
 
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var w1 = tools.Loom_ANumber_To_AName(out _);
 
             Assert.AreEqual(happened ? 1 : 0, count);
@@ -195,7 +195,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Subscribe(_ => count++);
 
             using var w1 = tools.Loom_ANumber_To_AName(out _);
-            using var d2 = tools.Strand_ANumber(1);
+            using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(happened ? 1 : 0, count);
 
@@ -244,7 +244,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occured = true);
 
-            var p1 = tools.Strand_ANumber(1);
+            var p1 = tools.Strand_ANumber_Synchronous(1);
             
             using var w1 = tools.Loom_ANumber_To_AName(out _);
 

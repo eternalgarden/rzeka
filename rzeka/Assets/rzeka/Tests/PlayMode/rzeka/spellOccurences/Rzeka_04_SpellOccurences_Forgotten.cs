@@ -12,7 +12,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.SpellOccurences
+namespace Rzeka.Tests.ASpellOccurences
 {
     public class Rzeka_04_SpellOccurences_Forgotten
     {
@@ -69,7 +69,7 @@ namespace Rzeka.Tests.SpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Stranding)
                 .Subscribe(_ => occurence++);
 
-            var p1 = tools.Strand_ANumber(1);
+            var p1 = tools.Strand_ANumber_Synchronous(1);
 
             p1.Dispose();
 

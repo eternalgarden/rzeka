@@ -35,53 +35,7 @@ namespace Rzeka.Tests
             Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.", comparer);
         }
 
-        // public bool IsManaOfTypeAvailable(Type type)
-        // {
-        //
-        //     bool isIt = false;
-        //     using var d _rzeka.Eris.ManaProvideableObservable.Subscribe(next => isIt = )
-        //     return 
-        // }
-        
-        public IDisposable Strand_UserData(out ConjuringScroll<UserData> scroll, int count = 1)
-        {
-            return _rzeka.Strand<UserData>(
-                who: this,
-                spell: Observable
-                    .Create<UserData>(observer =>
-                    {
-                        for (int i = 0; i < count; i++)
-                        {
-                            observer.OnNext(new UserData("Ali", "Roofwalking Cat", i));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }),
-                scroll: out scroll);
-        }
-
-        public IDisposable Strand_UserData(out ConjuringScroll<UserData> scroll, params string[] names)
-        {
-            return _rzeka.Strand<UserData>(
-                who: this,
-                spell: Observable
-                    .Create<UserData>(observer =>
-                    {
-                        for (int i = 0; i < names.Length; i++)
-                        {
-                            observer.OnNext(new UserData(names[i], "whos that hottie?", i));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }),
-                scroll: out scroll);
-        }
-
-        public IDisposable Strand_ANumber(out ConjuringScroll<ANumber> scroll, params int[] numbers)
+        public IDisposable Strand_ANumber_Synchronous(params int[] numbers)
         {
             return _rzeka.Strand<ANumber>(
                 who: this,
@@ -93,14 +47,11 @@ namespace Rzeka.Tests
                             observer.OnNext(new ANumber(numbers[i]));
                         }
 
-                        observer.OnCompleted();
-
                         return Disposable.Empty;
-                    }),
-                scroll: out scroll);
+                    }));
         }
 
-        public IDisposable Strand_AName(out ConjuringScroll<AName> scroll, params string[] names)
+        public IDisposable Strand_AName_Synchronous(params string[] names)
         {
             return _rzeka.Strand<AName>(
                 who: this,
@@ -115,9 +66,25 @@ namespace Rzeka.Tests
                         observer.OnCompleted();
 
                         return Disposable.Empty;
-                    }),
-                scroll: out scroll);
+                    }));
         }
+        
+        // public IDisposable Strand_ANumber_Interval(double milliseconds, params int[] numbers)
+        // {
+        //     return _rzeka.Strand<ANumber>(
+        //         who: this,
+        //         spell: Observable
+        //             .Interval(TimeSpan.FromMilliseconds(milliseconds))
+        //             .Select<ANumber>(observer =>
+        //             {
+        //                 for (int i = 0; i < numbers.Length; i++)
+        //                 {
+        //                     observer.OnNext(new ANumber(numbers[i]));
+        //                 }
+        //
+        //                 return Disposable.Empty;
+        //             }));
+        // }
 
         public IDisposable Loom_ANumber_To_AName(out LoomingScroll_1<ANumber,AName> scroll)
         {
@@ -135,76 +102,6 @@ namespace Rzeka.Tests
                 spell: aName => aName
                     .Select(i => new UserData(i.Name, "whos that hottie?", 5)),
                 scroll: out scroll);
-        }
-
-        public IDisposable Strand_UserData(int count = 1)
-        {
-            return _rzeka.Strand<UserData>(
-                who: this,
-                spell: Observable
-                    .Create<UserData>(observer =>
-                    {
-                        for (int i = 0; i < count; i++)
-                        {
-                            observer.OnNext(new UserData("Ali", "Roofwalking Cat", i));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }));
-        }
-
-        public IDisposable Strand_UserData(params string[] names)
-        {
-            return _rzeka.Strand<UserData>(
-                who: this,
-                spell: Observable
-                    .Create<UserData>(observer =>
-                    {
-                        for (int i = 0; i < names.Length; i++)
-                        {
-                            observer.OnNext(new UserData(names[i], "whos that hottie?", i));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }));
-        }
-
-        public IDisposable Strand_ANumber(params int[] numbers)
-        {
-            return _rzeka.Strand<ANumber>(
-                who: this,
-                spell: Observable
-                    .Create<ANumber>(observer =>
-                    {
-                        for (int i = 0; i < numbers.Length; i++)
-                        {
-                            observer.OnNext(new ANumber(numbers[i]));
-                        }
-
-                        return Disposable.Empty;
-                    }));
-        }
-
-        public IDisposable Strand_AName(params string[] names)
-        {
-            return _rzeka.Strand<AName>(
-                who: this,
-                spell: Observable
-                    .Create<AName>(observer =>
-                    {
-                        for (int i = 0; i < names.Length; i++)
-                        {
-                            observer.OnNext(new AName(names[i]));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }));
         }
         
         public IDisposable Strand_ArbitraryMatter1(params string[] strings)
@@ -235,24 +132,6 @@ namespace Rzeka.Tests
                         for (int i = 0; i < strings.Length; i++)
                         {
                             observer.OnNext(new ArbitraryMatter2(strings[i]));
-                        }
-
-                        observer.OnCompleted();
-
-                        return Disposable.Empty;
-                    }));
-        }
-        
-        public IDisposable Strand_ArbitraryMatter3(params string[] strings)
-        {
-            return _rzeka.Strand<ArbitraryMatter3>(
-                who: this,
-                spell: Observable
-                    .Create<ArbitraryMatter3>(observer =>
-                    {
-                        for (int i = 0; i < strings.Length; i++)
-                        {
-                            observer.OnNext(new ArbitraryMatter3(strings[i]));
                         }
 
                         observer.OnCompleted();

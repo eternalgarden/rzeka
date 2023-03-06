@@ -57,8 +57,8 @@ namespace Rzeka.Tests.Matter.Default
 
             string zodiac = "Aries";
 
-            using var s1 = _tools.Strand_AName(name);
-            using var s2 = _tools.Strand_ANumber(favnum);
+            using var s1 = _tools.Strand_AName_Synchronous(name);
+            using var s2 = _tools.Strand_ANumber_Synchronous(favnum);
 
             using var loom = _rzeka.Loom<AName, ANumber, UserData>(
                 who: this,
@@ -88,7 +88,7 @@ namespace Rzeka.Tests.Matter.Default
 
             using var s1 = _tools.Strand_ArbitraryMatter1(name);
             using var s2 = _tools.Strand_ArbitraryMatter2(zodiac);
-            using var s3 = _tools.Strand_ANumber(favnum);
+            using var s3 = _tools.Strand_ANumber_Synchronous(favnum);
 
             using var loom = _rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2, ANumber, UserData>(
                 who: this,
@@ -150,7 +150,7 @@ namespace Rzeka.Tests.Matter.Default
             using var d1 = _tools.Weave_UserData(m => receivedData.Add(m));
 
             using var s1 = _tools.Strand_ArbitraryMatter1(names);
-            using var s3 = _tools.Strand_ANumber(favnums);
+            using var s3 = _tools.Strand_ANumber_Synchronous(favnums);
 
             bool areEqual = expectedData.SequenceEqual(receivedData, UserData.NameZodiacFavNumberComparer);
 
@@ -194,7 +194,7 @@ namespace Rzeka.Tests.Matter.Default
 
             using var s1 = _tools.Strand_ArbitraryMatter1(names);
             using var s2 = _tools.Strand_ArbitraryMatter2(zodiacs);
-            using var s3 = _tools.Strand_ANumber(favnums);
+            using var s3 = _tools.Strand_ANumber_Synchronous(favnums);
 
             bool areEqual = expectedData.SequenceEqual(receivedData, UserData.NameZodiacFavNumberComparer);
 
