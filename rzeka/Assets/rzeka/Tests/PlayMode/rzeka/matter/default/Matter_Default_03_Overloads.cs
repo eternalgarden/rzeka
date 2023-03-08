@@ -14,7 +14,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.Matter.Default
+namespace Rzeka.Tests.DMatter.Default
 {
     public class Matter_Default_03_Overloads
     {

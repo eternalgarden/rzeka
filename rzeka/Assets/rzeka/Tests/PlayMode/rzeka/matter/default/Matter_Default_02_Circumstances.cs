@@ -13,7 +13,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.Matter.Default
+namespace Rzeka.Tests.DMatter.Default
 {
     public class Matter_Default_02_Circumstances
     {

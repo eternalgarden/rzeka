@@ -24,7 +24,7 @@ namespace Rzeka
             MatterOccurences = matterOccurences;
         }
 
-        public ConjuringScroll<Q> CreateConjuring<Q>(object who, IObservable<Q> spell) where Q : TMatter
+        public StrandingSpell<Q> CreateConjuring<Q>(object who, IObservable<Q> spell) where Q : TMatter
         {
             //  
 

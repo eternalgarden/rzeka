@@ -17,15 +17,15 @@ namespace Rzeka
         IDisposable Loom<T1,T2,TOut>(object who, Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter;
         IDisposable Loom<T1,T2,T3,TOut>(object who, Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell) where TOut : TMatter where T1 : TMatter where T2 : TMatter where T3 : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell) where T : TMatter;
-        IDisposable Weave<T1>(object who, Action<IObservable<T1>> spell) where T1 : TMatter;
-        IDisposable Weave<T1,T2>(object who, Action<IObservable<Glyph<T1, T2>>> spell) where T1 : TMatter where T2 : TMatter;
-        IDisposable Weave<T1,T2,T3>(object who, Action<IObservable<Glyph<T1, T2, T3>>> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter;
+        IDisposable Weave<T1>(object who, Func<IObservable<T1>,IDisposable> spell) where T1 : TMatter;
+        IDisposable Weave<T1,T2>(object who, Func<IObservable<Glyph<T1, T2>>,IDisposable> spell) where T1 : TMatter where T2 : TMatter;
+        IDisposable Weave<T1,T2,T3>(object who, Func<IObservable<Glyph<T1, T2, T3>>,IDisposable> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter;
     }
 
     internal interface ITestableRzeka : IRzeka
     {
         Library Library { get; }
-        IDisposable Strand<Q>(object who, IObservable<Q> spell, out ConjuringScroll<Q> scroll) where Q : TMatter;
+        IDisposable Strand<Q>(object who, IObservable<Q> spell, out StrandingSpell<Q> scroll) where Q : TMatter;
         IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingScroll_1<T,Q> scroll) where Q : TMatter where T : TMatter;
         IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell, out LoomingScroll_2<T,Y,Q> scroll) where Q : TMatter where T : TMatter where Y : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter; // TODO add overload that lets you first filter

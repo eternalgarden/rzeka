@@ -7,14 +7,14 @@ namespace Rzeka
 {
 
     [Serializable] // TODO remove serializable marks ... maybe?
-    public sealed class ConjuringScroll<TOut> : TConjuringSpell<TOut> where TOut : TMatter
+    public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TMatter
     {
         public Guid Guid { get; }
         public object Who { get; }
         public SpellSchool SpellSchool => SpellSchool.Stranding;
         public string Title => $"Conjuring of {typeof(TOut).Name}";
         public TSpell ThisAsBase { get; }
-        public TConjuringSpell<TOut> ThisAsConjuring { get; }
+        public TStrandingSpell<TOut> ThisAsStranding { get; }
         public IObservable<TOut> Conjuring { get; set; }
         public CollectibleDisposable CollectionDisposable { get; set; }
         public Type ConjuredType => typeof(TOut);
@@ -22,7 +22,7 @@ namespace Rzeka
         public Eris Eris { get; }
         
         
-        IObservable<TOut> TConjuringSpell<TOut>.CreateConjuring()
+        IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
         {
             return _spell
                 .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
@@ -39,7 +39,7 @@ namespace Rzeka
         
         readonly IObservable<TOut> _spell;
 
-        public ConjuringScroll(object who, IObservable<TOut> spell, Library library, Eris eris)
+        public StrandingSpell(object who, IObservable<TOut> spell, Library library, Eris eris)
         {
             _spell = spell;
             
@@ -49,10 +49,10 @@ namespace Rzeka
             Library = library;
 
             ThisAsBase = this;
-            ThisAsConjuring = this;
+            ThisAsStranding = this;
 
             ThisAsBase.InitializeSpellBase();
-            ThisAsConjuring.InitializeConjuringSpell();
+            ThisAsStranding.InitializeConjuringSpell();
 
             // A Stranding spell is always channeling, it cant be blocked, its a pure giver
             _isChanneling = true;

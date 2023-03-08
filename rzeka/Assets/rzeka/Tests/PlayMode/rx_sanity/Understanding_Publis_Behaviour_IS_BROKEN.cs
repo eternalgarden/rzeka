@@ -11,7 +11,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using NUnit.Framework;
 using Rzeka;
-using Rzeka.Tests.Integration;
+using Rzeka.Tests.EIntegration;
 using UnityEngine;
 using UnityEngine.TestTools;
 

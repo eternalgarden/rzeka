@@ -29,11 +29,11 @@ namespace Rzeka
         public string Title => $"{Who.GetType().Name}'s Looming of {typeof(TOut).Name}";
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
-        public TConjuringSpell<TOut> ThisAsConjuring { get; }
+        public TStrandingSpell<TOut> ThisAsStranding { get; }
 
-        IObservable<TOut> TConjuringSpell<TOut>.Conjuring { get; set; }
+        IObservable<TOut> TStrandingSpell<TOut>.Conjuring { get; set; }
 
-        IObservable<TOut> TConjuringSpell<TOut>.CreateConjuring()
+        IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
         {
             return CreateConjuring();
         }
@@ -60,13 +60,13 @@ namespace Rzeka
 
             ThisAsBase = this;
             ThisAsBinding = this;
-            ThisAsConjuring = this;
+            ThisAsStranding = this;
         }
 
         protected void InitializeLooming()
         {
             ThisAsBase.InitializeSpellBase();
-            ThisAsConjuring.InitializeConjuringSpell();
+            ThisAsStranding.InitializeConjuringSpell();
             ThisAsBinding.InitializeBindingSpell();
             
             Cast(); // atm it is only used for looming scrolls ugh
@@ -76,9 +76,9 @@ namespace Rzeka
         public void Cast()
         {
             if (_conjurerLibraryToken is not null) throw new Exception("Was already cast 🦇");
-            if (ThisAsConjuring.Conjuring is null) throw new Exception("Conjuring is null");
+            if (ThisAsStranding.Conjuring is null) throw new Exception("Conjuring is null");
             
-            _conjurerLibraryToken = Library.RegisterConjurer<TOut>(ThisAsConjuring.Conjuring);
+            _conjurerLibraryToken = Library.RegisterConjurer<TOut>(ThisAsStranding.Conjuring);
         }
         
         // TODO VERY IMPORTANT, CHECK IF SPELLS ARE BEING DISPOSED CORRECTLY

@@ -26,7 +26,7 @@ namespace Rzeka
         }
         
         // TODO replace it with a string that will throw an error for end user that informs same type cant be used twice
-        public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
+        public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(3 )
         {
             { typeof(T1), false },
             { typeof(T2), false },

@@ -24,7 +24,7 @@ namespace Rzeka
             InitializeLooming();
         }
 
-        public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(1)
+        public override Dictionary<Type, bool> SatisfiedRequirements { get; } = new(2)
         {
             { typeof(T1), false },
             { typeof(T2), false },

@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface TConjuringSpell<TOut> : IConjuringSpell where TOut : TMatter
+    public interface TStrandingSpell<TOut> : IConjuringSpell where TOut : TMatter
     {
-        TConjuringSpell<TOut> ThisAsConjuring { get; }
+        TStrandingSpell<TOut> ThisAsStranding { get; }
         
         // ND: this is getting obsolete because of library being the provider of conjurings
         // nd or is it?

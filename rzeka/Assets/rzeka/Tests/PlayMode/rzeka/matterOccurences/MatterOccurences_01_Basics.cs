@@ -65,6 +65,28 @@ namespace Rzeka.Tests.BMatterOccurences
         }
         
         [Test]
+        [TestCase(MatterOccurenceCategory.Shaped, true)]
+        [TestCase(MatterOccurenceCategory.Received, true)]
+        public void a1b_strand_with_weave(MatterOccurenceCategory category, bool occured)
+        {
+            // -------------
+            
+            bool actual = false;
+            
+            using var m1 = _rzeka.Eris.MatterOccurences
+                .Where(occ => occ.MatterOccurenceCategory == category)
+                .Subscribe(_ => actual = true);
+
+            using var d1 = _tools.Strand_ANumber_Synchronous(1);
+            using var d2 = _tools.Weave_ANumber();
+            using var d3 = _tools.Weave_ANumber();
+
+            TestTools.AssertEqual(occured, actual);
+
+            // -------------
+        }
+        
+        [Test]
         [TestCase(typeof(ANumber), MatterOccurenceCategory.Shaped, true)]
         [TestCase(typeof(ANumber), MatterOccurenceCategory.Received, true)]
         [TestCase(typeof(AName), MatterOccurenceCategory.Shaped, true)]

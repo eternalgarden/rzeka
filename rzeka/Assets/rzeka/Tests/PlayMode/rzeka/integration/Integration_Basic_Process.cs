@@ -4,49 +4,80 @@ using System;
 using System.Collections;
 using System.Reactive;
 using System.Reactive.Linq;
+using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.Integration
+namespace Rzeka.Tests.EIntegration
 {
-    public class Integration_Basic_Process : IntegrationBase
+    public class Integration_Basic_Process
     {
+        ITestableRzeka _rzeka;
+        Library _library;
+        TestTools _tools;
+        CollectibleDisposable Q { get; set; }
 
-        [UnityTest]
-        public IEnumerator b_Is_Weave_UserWelcomingText_Received()
+        [UnitySetUp]
+        public virtual IEnumerator Setup()
         {
             // -------------
 
-            Q += Pluck_UserData();
-            Q += Loom_UserData_To_UserWelcomingText();
-
-            bool received = false;
             
-            Q += Weave_UserWelcomingText(onNext: u => received = true);
+            _rzeka = new SpringRiver();
+            _library = _rzeka.Library;
+            _tools = new TestTools(_rzeka);
+            Q = new();
 
             yield return null;
-
-            Assert.IsTrue(received);
 
             // -------------
         }
 
+        [UnityTearDown]
+        public virtual IEnumerator Teardown()
+        {
+            // -------------
+            
+            _rzeka.Dispose();
+            Q.Dispose();
+            
+            yield return null;
+
+            // -------------
+        }
+        
         [UnityTest]
-        public IEnumerator b_Is_Weave_UserWelcomingText_Received_By_Different_Weavings()
+        public IEnumerator a_Is_Weave_UserWelcomingText_Received()
         {
             // -------------
 
-            Q += Pluck_UserData();
-            Q += Loom_UserData_To_UserWelcomingText();
+            int count = 0;
+            Q += _rzeka.Weave<ArbitraryMatter2>(
+                this,
+                Observer.Create<ArbitraryMatter2>(next =>
+                {
+                    Debug.Log($"<color=yellow>{next.Text}</color>");
+                    count++;
+                }));
 
-            bool receivedOne = false;
-            bool receivedTwo = false;
-
-            Q += Weave_UserWelcomingText(onNext: u => receivedOne = true);
-            Q += Weave_UserWelcomingText(onNext: u => receivedTwo = true);
+            Q += _rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2>(
+                this,
+                input => input
+                    .Select(_ =>
+                    {
+                        return new ArbitraryMatter2("pops");
+                    }));
+            
+            Q += _rzeka.Strand<ArbitraryMatter1>(
+                this,
+                Observable.Return(new ArbitraryMatter1("some")));
+            
+            Q += _rzeka.Strand<ArbitraryMatter2>(
+                this,
+                Observable.Return(new ArbitraryMatter2("flower")));
 
             yield return null;
 
-            Assert.IsTrue(receivedOne && receivedTwo);
+            Assert.AreEqual(2, count);
 
             // -------------
         }

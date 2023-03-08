@@ -1,7 +1,7 @@
 namespace Rzeka
 {
 
-  public interface TLoomingScroll<TOut> : TBindingSpell, TConjuringSpell<TOut> 
+  public interface TLoomingScroll<TOut> : TBindingSpell, TStrandingSpell<TOut> 
         where TOut : TMatter
     {
 
