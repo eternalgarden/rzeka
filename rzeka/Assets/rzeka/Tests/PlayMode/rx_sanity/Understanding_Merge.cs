@@ -86,7 +86,7 @@ namespace Rzeka.Tests.Rx
             int count = 0;
             using var sub = subject.Subscribe(next =>
             {
-                Debug.Log($"<color=yellow>{next}</color>");
+                // Debug.Log($"<color=yellow>{next}</color>");
                 count++;
             });
             
@@ -113,7 +113,7 @@ namespace Rzeka.Tests.Rx
             int count = 0;
             using var sub = subject.Subscribe(next =>
             {
-                Debug.Log($"<color=yellow>{next}</color>");
+                // Debug.Log($"<color=yellow>{next}</color>");
                 count++;
             });
             
@@ -148,7 +148,7 @@ namespace Rzeka.Tests.Rx
             using var sub = subject.Subscribe(next =>
             {
                 count++;
-                Debug.Log($"<color=yellow>{next}</color>");
+                // Debug.Log($"<color=yellow>{next}</color>");
             });
 
             var o1 = Observable
@@ -176,7 +176,7 @@ namespace Rzeka.Tests.Rx
             
             Assert.AreEqual(3, count);
             
-            Debug.Log($"<color=green>hilfe</color>");
+            // Debug.Log($"<color=green>hilfe</color>");
         }
         
         [UnityTest]
@@ -189,7 +189,7 @@ namespace Rzeka.Tests.Rx
             Q += subject.Subscribe(next =>
             {
                 count++;
-                Debug.Log($"<color=yellow>{next}</color>");
+                // Debug.Log($"<color=yellow>{next}</color>");
             });
             
             

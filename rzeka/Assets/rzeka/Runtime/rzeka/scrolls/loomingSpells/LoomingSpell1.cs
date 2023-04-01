@@ -8,13 +8,13 @@ using UnityEngine;
 namespace Rzeka
 {
     [Serializable]
-    public class LoomingScroll_1<T1, TOut> : LoomingScroll<TOut>
+    public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
         where TOut : TMatter
         where T1 : TMatter
     {
         readonly Func<IObservable<T1>, IObservable<TOut>> _spell;
 
-        public LoomingScroll_1(object who,
+        public LoomingSpell1(object who,
             Func<IObservable<T1>, IObservable<TOut>> spell,
             Library library,
             Eris eris) : base(who, library, eris)

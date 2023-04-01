@@ -7,14 +7,14 @@ using System.Reactive.Subjects;
 namespace Rzeka
 {
     [Serializable]
-    public class LoomingScroll_2<T1, T2, TOut> : LoomingScroll<TOut>
+    public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
         where TOut : TMatter
         where T1 : TMatter
         where T2 : TMatter
     {
         readonly Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> _spell;
 
-        public LoomingScroll_2(object who,
+        public LoomingSpell2(object who,
             Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell,
             Library library,
             Eris eris) : base(who, library, eris)

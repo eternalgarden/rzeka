@@ -18,7 +18,7 @@ namespace Rzeka
     * 
     TODO basically all t
     */
-    public abstract class LoomingScroll<TOut> : TLoomingScroll<TOut>
+    public abstract class LoomingSpell<TOut> : TLoomingSpell<TOut>
         where TOut : TMatter
     {
         public Guid Guid { get; }
@@ -48,7 +48,7 @@ namespace Rzeka
         
         IDisposable _conjurerLibraryToken;
 
-        protected LoomingScroll(
+        protected LoomingSpell(
             object who,
             Library library,
             Eris eris)

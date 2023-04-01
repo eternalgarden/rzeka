@@ -29,32 +29,32 @@ namespace Rzeka
 
         public Type LastChangedType { get; private set; }
 
-        public void ActivateConjurer([NotNull] IConjuringSpell conjuringSpell)
+        public void ActivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
-            if (conjuringSpell == null) throw new ArgumentNullException(nameof(conjuringSpell));
+            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
             
-            Type key = conjuringSpell.ConjuredType;
+            Type key = strandingSpell.ConjuredType;
             if (_availableConjurers.ContainsKey(key) is false)
             {
                 _availableConjurers[key] = new HashSet<Guid>();
             } 
             
-            _availableConjurers[key].Add(conjuringSpell.Guid);
+            _availableConjurers[key].Add(strandingSpell.Guid);
 
             LastChangedType = key;
         }
         
-        public void DectivateConjurer([NotNull] IConjuringSpell conjuringSpell)
+        public void DectivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
-            if (conjuringSpell == null) throw new ArgumentNullException(nameof(conjuringSpell));
+            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
             
-            Type key = conjuringSpell.ConjuredType;
+            Type key = strandingSpell.ConjuredType;
 
             if (_availableConjurers.ContainsKey(key) is false) return;
-            if (!_availableConjurers[key].Contains(conjuringSpell.Guid)) return;
+            if (!_availableConjurers[key].Contains(strandingSpell.Guid)) return;
             
             // TODO this could use some testing if things are properly removed
-            _availableConjurers[key].Remove(conjuringSpell.Guid);
+            _availableConjurers[key].Remove(strandingSpell.Guid);
             
             LastChangedType = key;
         }
@@ -66,6 +66,7 @@ namespace Rzeka
         
         public bool IsManaOfTypeAvailable(Type type)
         {
+            // TODO rework to consider stateful matter as always available
             return _availableConjurers.ContainsKey(type) && _availableConjurers[type].Count > 0;
         }
     }
@@ -118,20 +119,20 @@ namespace Rzeka
                 {
                     AvailableConjurers accumulator = acc.Item2;
 
-                    IConjuringSpell sourceAsConjuring =
-                        current.Source as IConjuringSpell ?? throw new InvalidOperationException();
+                    TStrandingSpell sourceAsStranding =
+                        current.Source as TStrandingSpell ?? throw new InvalidOperationException();
 
-                    Type conjuredType = sourceAsConjuring.ConjuredType;
+                    Type conjuredType = sourceAsStranding.ConjuredType;
                     bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
 
                     SpellOccurenceCategory category = current.SpellOccurenceCategory;
                     if (category is SpellOccurenceCategory.HasMana)
                     {
-                        accumulator.ActivateConjurer(sourceAsConjuring);
+                        accumulator.ActivateConjurer(sourceAsStranding);
                     }
                     else
                     {
-                        accumulator.DectivateConjurer(sourceAsConjuring);
+                        accumulator.DectivateConjurer(sourceAsStranding);
                     }
 
                     bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
@@ -237,33 +238,34 @@ namespace Rzeka
             return spell;
         }
 
-        private SerializableStranding GetSerializableStranding(TSpell source)
+        SerializableStranding GetSerializableStranding(TSpell source)
         {
-            IConjuringSpell conjuring = source as IConjuringSpell;
+            TStrandingSpell strand = source as TStrandingSpell;
 
-            Debug.Assert(conjuring != null, nameof(conjuring) + " != null");
-            SerializableStranding stranding = new SerializableStranding() {
+            Debug.Assert(strand != null, nameof(strand) + " != null");
+            
+            SerializableStranding serializableStranding = new SerializableStranding() {
                 spellSchool = SpellSchool.Stranding,
-                conjuredType = conjuring.ConjuredType,
+                conjuredType = strand.ConjuredType,
                 Who = GetWho(source)
             };
 
-            return stranding;
+            return serializableStranding;
         }
 
         private SerializableLooming GetSerializableLooming(TSpell source)
         {
             TBindingSpell binding = source as TBindingSpell;
-            IConjuringSpell conjuring = source as IConjuringSpell;
+            TStrandingSpell stranding = source as TStrandingSpell;
 
             Debug.Assert(binding != null, nameof(binding) + " != null");
-            Debug.Assert(conjuring != null, nameof(conjuring) + " != null");
+            Debug.Assert(stranding != null, nameof(stranding) + " != null");
             SerializableLooming looming = new SerializableLooming()
             {
                 spellSchool = SpellSchool.Looming,
                 ingredients = GetSerializableIngredients(binding),
                 hasMana = binding.HasMana,
-                conjuredType = conjuring.ConjuredType,
+                conjuredType = stranding.ConjuredType,
                 Who = GetWho(source)
             };
 

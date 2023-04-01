@@ -80,7 +80,7 @@ namespace Rzeka.Tests.ASpellOccurences
             // -------------
             
             using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
-            using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d3 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
@@ -120,7 +120,7 @@ namespace Rzeka.Tests.ASpellOccurences
             
             using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
 
@@ -143,7 +143,7 @@ namespace Rzeka.Tests.ASpellOccurences
             
             using var d2 = tools.Strand_ANumber_Synchronous(1);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
 
             Assert.AreEqual(2, occurence); // since there are two looms that we expect to be cast
 
@@ -163,7 +163,7 @@ namespace Rzeka.Tests.ASpellOccurences
         {
             // -------------
             
-            using var d3 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d3 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
             using var d2 = tools.Strand_AName_Synchronous("Agent Cooper");
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
@@ -200,7 +200,7 @@ namespace Rzeka.Tests.ASpellOccurences
         {
             // -------------
             
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d2 = tools.Strand_ANumber_Synchronous(1);
 
@@ -223,7 +223,7 @@ namespace Rzeka.Tests.ASpellOccurences
                 .Where(occ => occ.Source.SpellSchool is SpellSchool.Looming)
                 .Subscribe(_ => occurence++);
             
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
             using var d3 = tools.Loom_ANumber_To_AName(out _);
             using var d2 = tools.Strand_ANumber_Synchronous(1);
 
@@ -241,7 +241,7 @@ namespace Rzeka.Tests.ASpellOccurences
             
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
             using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(true, scroll.ThisAsBase.HasMana);
@@ -265,7 +265,7 @@ namespace Rzeka.Tests.ASpellOccurences
             
             // notice just d3 and d4 are flipped here
             using var d3 = tools.Loom_ANumber_To_AName(out _);
-            using var d4 = tools.Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll);
+            using var d4 = tools.Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll);
             using var d2 = tools.Strand_ANumber_Synchronous(1);
 
             Assert.AreEqual(2, occurence);

@@ -7,6 +7,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
@@ -33,6 +34,32 @@ namespace Rzeka.Tests
         public static void AssertEqual<T>(T expected, T actual, IEqualityComparer<T> comparer)
         {
             Assert.AreEqual(expected, actual, $"Expected: {expected} while actual: {actual}.", comparer);
+        }
+        
+        public static void AssertEqual<T>(T expected, T actual, Func<T,T,bool> comparer)
+        {
+            bool areEqual = comparer.Invoke(expected, actual);
+            Assert.AreEqual(true, areEqual, $"Expected: {GetPrintable<T>(expected)} while actual: {GetPrintable<T>(actual)}.");
+        }
+
+        static string GetPrintable<T>(T expected)
+        {
+            string result = "";
+            if (expected is IEnumerable enumerable)
+            {
+                result += "{ ";
+                foreach (var x in enumerable)
+                {
+                    result += $"{x} ";
+                }
+                result += " }";
+            }
+            else
+            {
+                result = expected.ToString();
+            }
+
+            return result;
         }
 
         public IDisposable Strand_ANumber_Synchronous(params int[] numbers)
@@ -86,7 +113,7 @@ namespace Rzeka.Tests
         //             }));
         // }
 
-        public IDisposable Loom_ANumber_To_AName(out LoomingScroll_1<ANumber,AName> scroll)
+        public IDisposable Loom_ANumber_To_AName(out LoomingSpell1<ANumber,AName> scroll)
         {
             return _rzeka.Loom<ANumber, AName>(
                 who: this,
@@ -95,7 +122,7 @@ namespace Rzeka.Tests
                 scroll: out scroll);
         }
 
-        public IDisposable Loom_AName_To_UserData(out LoomingScroll_1<AName,UserData> scroll)
+        public IDisposable Loom_AName_To_UserData(out LoomingSpell1<AName,UserData> scroll)
         {
             return _rzeka.Loom<AName, UserData>(
                 who: this,

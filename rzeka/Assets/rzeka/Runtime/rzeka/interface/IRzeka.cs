@@ -26,8 +26,8 @@ namespace Rzeka
     {
         Library Library { get; }
         IDisposable Strand<Q>(object who, IObservable<Q> spell, out StrandingSpell<Q> scroll) where Q : TMatter;
-        IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingScroll_1<T,Q> scroll) where Q : TMatter where T : TMatter;
-        IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell, out LoomingScroll_2<T,Y,Q> scroll) where Q : TMatter where T : TMatter where Y : TMatter;
+        IDisposable Loom<T,Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingSpell1<T,Q> scroll) where Q : TMatter where T : TMatter;
+        IDisposable Loom<T,Y,Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell, out LoomingSpell2<T,Y,Q> scroll) where Q : TMatter where T : TMatter where Y : TMatter;
         IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter; // TODO add overload that lets you first filter
     }
 

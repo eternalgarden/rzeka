@@ -31,7 +31,7 @@ namespace Rzeka
             return null;
         }
 
-        public LoomingScroll<Q> CreateLoom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter
+        public LoomingSpell<Q> CreateLoom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter
         {
             // LoomingScroll_1<T, Q> newScroll = new(who, spell, TheLibrary, Eris);
 

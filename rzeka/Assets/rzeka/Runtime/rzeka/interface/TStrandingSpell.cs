@@ -5,7 +5,12 @@ using UnityEngine;
 
 namespace Rzeka
 {
-    public interface TStrandingSpell<TOut> : IConjuringSpell where TOut : TMatter
+    public interface TStrandingSpell : TSpell
+    {
+        Type ConjuredType { get; }
+    }
+    
+    public interface TStrandingSpell<TOut> : TStrandingSpell where TOut : TMatter
     {
         TStrandingSpell<TOut> ThisAsStranding { get; }
         

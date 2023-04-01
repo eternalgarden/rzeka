@@ -22,10 +22,10 @@ namespace Rzeka
             return isConjuring;
         }
     
-        public static bool IsConjuring(this TSpell scroll, out IConjuringSpell asConjuring)
+        public static bool IsConjuring(this TSpell scroll, out TStrandingSpell asStranding)
         {
             bool isConjuring = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding;
-            asConjuring = isConjuring ? scroll as IConjuringSpell : null;
+            asStranding = isConjuring ? scroll as TStrandingSpell : null;
             return isConjuring;
         }
 
