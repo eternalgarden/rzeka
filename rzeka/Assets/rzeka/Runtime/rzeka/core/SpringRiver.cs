@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using UnityEngine;
 
 namespace Rzeka
 {
@@ -90,6 +91,7 @@ namespace Rzeka
 
         public void Dispose()
         {
+            Debug.Log($"<color=yellow>rzeka disposed</color>");
             Eris.Dispose();
         }
 

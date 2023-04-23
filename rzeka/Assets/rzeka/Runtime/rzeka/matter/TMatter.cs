@@ -26,7 +26,7 @@ namespace Rzeka
 
         bool IEquatable<TMatter>.Equals(TMatter other)
         {
-            return this.Guid == other.Guid;
+            return other != null && this.Guid == other.Guid;
         }
     }
 
@@ -34,6 +34,7 @@ namespace Rzeka
     public interface IResponse<T> : TMatter where T : IRequest
     {
         T Request { get; set; }
+        bool WasSuccseful { get; set; }
     }
 
     public interface TAllowingMultipleSources<T> where T : TMatter

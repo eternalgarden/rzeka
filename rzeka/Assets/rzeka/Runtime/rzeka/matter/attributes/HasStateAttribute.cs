@@ -17,6 +17,13 @@ namespace Rzeka
 
     public class HasStateAttribute : HasBufferAttribute
     {
+        readonly object _defaultValue;
         public HasStateAttribute() : base(1) { }
+        
+        public HasStateAttribute(object defaultValue) : base(1)
+        {
+            _defaultValue = defaultValue;
+        }
     }
+    
 }
