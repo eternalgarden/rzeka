@@ -80,6 +80,14 @@ namespace Rzeka
         public TMatter Matter { get; set; }
     }
 
+    // public struct EnvironmentOccurence : Occurence
+    // {
+    //     public Guid Guid { get; set; }
+    //     public DateTimeOffset Timestamp { get; set; }
+    //     public TSpell Source { get; set; }
+    //     public Luggage Luggage { get; set; }
+    // }
+
     
     //
     // ⛺ ─── Serializable Occurences ───────────────────────────────────────────────────

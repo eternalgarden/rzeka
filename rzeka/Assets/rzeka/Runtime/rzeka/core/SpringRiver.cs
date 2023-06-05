@@ -91,7 +91,6 @@ namespace Rzeka
 
         public void Dispose()
         {
-            Debug.Log($"<color=yellow>rzeka disposed</color>");
             Eris.Dispose();
         }
 
