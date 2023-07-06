@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
-using NaughtyAttributes;
+// using NaughtyAttributes;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ public class AssemblyComparer : MonoBehaviour
     [SerializeField] AssemblyDefinitionAsset ada;
     [SerializeField] TypePublicMethods tpm;
 
-    [Button]
+    // [Button]
     void Compare()
     {
         tpm = new();

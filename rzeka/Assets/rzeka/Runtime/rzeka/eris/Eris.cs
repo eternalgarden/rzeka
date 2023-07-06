@@ -97,6 +97,7 @@ namespace Rzeka
         
         public void PublishMatterOccurence(MatterOccurence matterOccurence)
         {
+            Debug.Log($"<color=orange>Matter Occurence {matterOccurence.MatterOccurenceCategory}</color>");
             MatterStream.OnNext(matterOccurence);
         }
 

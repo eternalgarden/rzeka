@@ -20,10 +20,10 @@ namespace Rzeka
         readonly object _defaultValue;
         public HasStateAttribute() : base(1) { }
         
-        public HasStateAttribute(object defaultValue) : base(1)
-        {
-            _defaultValue = defaultValue;
-        }
+        // public HasStateAttribute(object defaultValue = null) : base(1)
+        // {
+        //     if (defaultValue != null) _defaultValue = defaultValue;
+        // }
     }
     
 }
