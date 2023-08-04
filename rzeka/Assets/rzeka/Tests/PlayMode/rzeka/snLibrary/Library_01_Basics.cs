@@ -8,7 +8,7 @@ using NUnit.Framework;
 using System.Collections;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.CLibrary
+namespace Rzeka.Tests.Library
 {
     public class Library_01_Basics
     {

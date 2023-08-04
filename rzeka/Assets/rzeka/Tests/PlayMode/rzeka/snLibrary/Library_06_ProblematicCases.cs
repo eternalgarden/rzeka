@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.CLibrary
+namespace Rzeka.Tests.Library
 {
     public class Library_06_ProblematicCases
     {

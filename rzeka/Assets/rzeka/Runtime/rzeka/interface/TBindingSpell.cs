@@ -34,6 +34,8 @@ namespace Rzeka
            
             IObservable<T> ingredient = Library.GetConjurer<T>();
             
+            // Debug.Log($"<color=green>well?</color>");
+            
             var erisTouchedIngredient = ingredient
                 .Do( // TODO Maybe add on completed for any reason?
                     // * It's safe to use .Do modifier here since besically the ingredient given here

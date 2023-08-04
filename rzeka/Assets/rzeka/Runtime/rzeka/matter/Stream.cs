@@ -130,6 +130,7 @@ namespace Rzeka
             // A custom buffer size subject could be made depending on type attributes for example
             // Also a type that doesnt store any value and sompletely fades away on completion
             // return new Subject<T>();
+            
             ISubject<T> subject;
             Type matterType = typeof(T);
             var attrs = matterType
@@ -193,7 +194,7 @@ namespace Rzeka
 
         // * Notice Stream cannot force unregister those who already requested it as a source
         // * They need to do it on their own when they lose mana
-        public IObservable<T> GetStream()
+        public IObservable<T> GetStreamAsObservable()
         {
             return _subject.AsObservable();
         }

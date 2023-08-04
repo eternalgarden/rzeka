@@ -51,7 +51,7 @@ namespace Rzeka
         public IObservable<T> GetConjurer<T>() where T : TMatter
         {
             Stream<T> stream = GetStream<T>();
-            IObservable<T> conjurer = stream.GetStream();
+            IObservable<T> conjurer = stream.GetStreamAsObservable();
             return conjurer;
         }
         

@@ -9,7 +9,7 @@ using System.Collections;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Rzeka.Tests.EIntegration;
+using Rzeka.Tests.Integration;
 using UnityEngine;
 using UnityEngine.TestTools;
 

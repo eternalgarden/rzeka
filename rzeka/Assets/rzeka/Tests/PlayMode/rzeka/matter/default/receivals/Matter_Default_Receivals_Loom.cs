@@ -14,7 +14,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.DMatter.Default.Receivals
+namespace Rzeka.Tests.Matter.Default.Receivals
 {
     public class Matter_Default_Receivals_Loom
     {

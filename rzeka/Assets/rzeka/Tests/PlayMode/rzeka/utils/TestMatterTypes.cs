@@ -22,7 +22,6 @@ namespace Rzeka.Tests
 
         public int Number { get; }
     }
-
     public struct AName : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
@@ -41,28 +40,6 @@ namespace Rzeka.Tests
 
         public string Name { get; }
     }
-
-    public struct ANumberAndName : TMatter
-    {
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
-        
-        public ANumberAndName(int number, string name)
-        {
-            Guid = Guid.NewGuid();
-            Type = typeof(ANumberAndName);
-            Circumstances = new Guid[] { };
-
-            Number = number;
-            Name = name;
-        }
-
-        public int Number { get; }
-        public string Name { get; }
-    }
-
     public struct UserData : TMatter
     {
         sealed class NameZodiacFavNumberEqualityComparer : IEqualityComparer<UserData>
@@ -102,7 +79,6 @@ namespace Rzeka.Tests
         public string Zodiac { get; }
         public int FavNumber { get; }
     }
-
     public struct UserWelcomingText : TMatter
     {
         public string Description => "Test matter carrying hypothetical welcoming text";
@@ -142,12 +118,11 @@ namespace Rzeka.Tests
         public string Description => "Test matter carrying hypothetical welcoming text";
         public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
+        public Type Type => typeof(ArbitraryMatter1);
         
         public ArbitraryMatter1(string text)
         {
             Guid = Guid.NewGuid();
-            Type = typeof(ANumber);
             Circumstances = new Guid[] { };
             Text = text;
         }
@@ -175,12 +150,11 @@ namespace Rzeka.Tests
         public string Description => "Test matter carrying hypothetical welcoming text";
         public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
+        public Type Type => typeof(ArbitraryMatter2);
         
         public ArbitraryMatter2(string text)
         {
             Guid = Guid.NewGuid();
-            Type = typeof(ANumber);
             Circumstances = new Guid[] { };
             Text = text;
         }
@@ -208,16 +182,33 @@ namespace Rzeka.Tests
         public string Description => "Test matter carrying hypothetical welcoming text";
         public Guid Guid { get; set; }
         public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
+        public Type Type => typeof(ArbitraryMatter3);
         
         public ArbitraryMatter3(string text)
         {
             Guid = Guid.NewGuid();
-            Type = typeof(ANumber);
             Circumstances = new Guid[] { };
             Text = text;
         }
 
         public string Text { get; }
+    }
+    
+    [HasState]
+    public struct ArbitraryStatefulMatter1 : TMatter
+    {
+        public string Description => "";
+        public Guid Guid { get; set; }
+        public Guid[] Circumstances { get; set; }
+        public Type Type => typeof(ArbitraryStatefulMatter1);
+        
+        public ArbitraryStatefulMatter1(int state)
+        {
+            Guid = Guid.NewGuid();
+            Circumstances = new Guid[] { };
+            State = state;
+        }
+
+        public int State { get; }
     }
 }

@@ -13,7 +13,7 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.CLibrary
+namespace Rzeka.Tests.Library
 {
     public class Library_02_Stream_Registration
     {

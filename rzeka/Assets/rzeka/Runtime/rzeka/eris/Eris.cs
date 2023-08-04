@@ -76,7 +76,7 @@ namespace Rzeka
         readonly Library _library;
         public IErisConsulate Emanation { get; set; }
 
-        CollectibleDisposable _disposables;
+        CollectibleDisposable Q { get; set; }
 
         Queue<SerializableSpellOccurence> spellOccQueue = new();
         Queue<SerializableMatterOccurence> matterOccQueue = new();
@@ -87,8 +87,7 @@ namespace Rzeka
         Subject<SpellOccurence> SpellStream { get; }
         Subject<MatterOccurence> MatterStream { get; }
         
-        IConnectableObservable<IManaInformationProvideable> _manaStream { get; }
-        public IObservable<IManaInformationProvideable> ManaProvideableObservable => _manaStream;
+        public IObservable<IManaInformationProvideable> ManaProvideableObservable { get; private set; }
 
         public void PublishSpellOccurence(SpellOccurence spellOccurence)
         {
@@ -97,18 +96,82 @@ namespace Rzeka
         
         public void PublishMatterOccurence(MatterOccurence matterOccurence)
         {
-            Debug.Log($"<color=orange>Matter Occurence {matterOccurence.MatterOccurenceCategory}</color>");
+            // Debug.Log($"<color=orange>Matter Occurence {matterOccurence.MatterOccurenceCategory}</color>");
             MatterStream.OnNext(matterOccurence);
         }
 
         public Eris()
         {
-            _disposables = new CollectibleDisposable();
+            Q = new CollectibleDisposable();
 
             SpellStream = new Subject<SpellOccurence>();
             MatterStream = new Subject<MatterOccurence>();
+            
+            InitializeManaStreamMystery();
 
-            _manaStream = SpellStream
+            Q += SpellStream.Subscribe(occ => {
+
+                var serializableOcc = new SerializableSpellOccurence() {
+                    guid = occ.Guid,
+                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
+                    spell = GetSerializableSpell(occ.Source),
+                    spellOccurenceCategory = occ.SpellOccurenceCategory
+                };
+
+                if (Emanation is null)
+                {
+                    spellOccQueue.Enqueue(serializableOcc);
+                    return;
+                }
+                else
+                {
+                    if (spellOccQueue.Count > 0)
+                    {
+                        while (spellOccQueue.Count > 0)
+                        {
+                            Emanation.ReceiveSpellOccurence(spellOccQueue.Dequeue());
+                        }
+                    }
+                }
+
+                Emanation.ReceiveSpellOccurence(serializableOcc);
+            });
+
+            Q += MatterStream.Subscribe(occ =>
+            {
+                var serializableOcc = new SerializableMatterOccurence() {
+                    guid = occ.Guid,
+                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
+                    spell = GetSerializableSpell(occ.Source),
+                    matter = occ.Matter,
+                    matterType = occ.Matter.GetType(), // * custom serializer
+                    matterOccurenceCategory = occ.MatterOccurenceCategory
+                };
+
+                if (Emanation is null)
+                {
+                    matterOccQueue.Enqueue(serializableOcc);
+                    return;
+                }
+                else if (matterOccQueue.Count > 0)
+                {
+                    while (matterOccQueue.Count > 0)
+                    {
+                        Emanation.ReceiveMatterOccurence(matterOccQueue.Dequeue());
+                    }
+                }
+                
+                Debug.Log($"<color=cyan>Sending to the emanation {serializableOcc.matterOccurenceCategory} : {serializableOcc.matterType}</color>");
+
+                Emanation.ReceiveMatterOccurence(serializableOcc);
+            });
+        }
+
+        void InitializeManaStreamMystery()
+        {
+            // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES
+            // CONGRATULATIONS MARIA ON WRITING THIS BLOB
+            IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
                 .Where(occ => occ.Source.SpellSchool
                     is SpellSchool.Looming
                     or SpellSchool.Stranding)
@@ -147,68 +210,16 @@ namespace Rzeka
                 .StartWith(new AvailableConjurers())
                 .Multicast(new ReplaySubject<IManaInformationProvideable>(1));
 
-            _disposables += _manaStream.Connect();
+            Q += manaStream.Connect();
 
-            _disposables += ManaProvideableObservable
+            ManaProvideableObservable = manaStream;
+            
+            Q += ManaProvideableObservable
                 .Subscribe(info =>
                 {
                     if (info.LastChangedType == null) return;
                     // Debug.Log($"next : {info.LastChangedType} {info.IsManaOfTypeAvailable(info.LastChangedType)}");
                 });
-            
-
-            _disposables += SpellStream.Subscribe(occ => {
-
-                var serializableOcc = new SerializableSpellOccurence() {
-                    guid = occ.Guid,
-                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
-                    spell = GetSerializableSpell(occ.Source),
-                    spellOccurenceCategory = occ.SpellOccurenceCategory
-                };
-
-                if (Emanation is null)
-                {
-                    spellOccQueue.Enqueue(serializableOcc);
-                    return;
-                }
-                else if (spellOccQueue.Count > 0)
-                {
-                    while (spellOccQueue.Count > 0)
-                    {
-                        Emanation.ReceiveSpellOccurence(spellOccQueue.Dequeue());
-                    }
-                }
-
-                Emanation.ReceiveSpellOccurence(serializableOcc);
-            });
-
-            _disposables += MatterStream.Subscribe(occ =>
-            {
-
-                var serializableOcc = new SerializableMatterOccurence() {
-                    guid = occ.Guid,
-                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
-                    spell = GetSerializableSpell(occ.Source),
-                    matter = occ.Matter,
-                    matterType = occ.Matter.GetType(), // * custom serializer
-                    matterOccurenceCategory = occ.MatterOccurenceCategory
-                };
-
-                if (Emanation is null)
-                {
-                    matterOccQueue.Enqueue(serializableOcc);
-                    return;
-                }
-                else if (matterOccQueue.Count > 0)
-                {
-                    while (matterOccQueue.Count > 0)
-                    {
-                        Emanation.ReceiveMatterOccurence(matterOccQueue.Dequeue());
-                    }
-                }
-
-                Emanation.ReceiveMatterOccurence(serializableOcc);
-            });
         }
 
         // ? move this to the scroll so it wont have to be created each time if that makes sense
@@ -333,7 +344,7 @@ namespace Rzeka
 
         public void Dispose()
         {
-            _disposables.Dispose();
+            Q.Dispose();
         }
 
         void Print(string color, string head, string msg, params object[] args)

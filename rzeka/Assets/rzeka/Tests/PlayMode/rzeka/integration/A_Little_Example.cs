@@ -7,12 +7,12 @@ using System.Reactive.Linq;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.EIntegration
+namespace Rzeka.Tests.Integration
 {
-    public class Integration_Basic_Process
+    public class A_Little_Example
     {
         ITestableRzeka _rzeka;
-        Library _library;
+        Rzeka.Library _library;
         TestTools _tools;
         CollectibleDisposable Q { get; set; }
 

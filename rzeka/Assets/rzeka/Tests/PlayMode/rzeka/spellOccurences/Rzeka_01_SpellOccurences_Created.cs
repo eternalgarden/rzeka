@@ -10,7 +10,7 @@ using System.Collections;
 using System.Reactive.Linq;
 using UnityEngine.TestTools;
 
-namespace Rzeka.Tests.ASpellOccurences
+namespace Rzeka.Tests.Occurences.Spell
 {
     public class Rzeka_01_SpellOccurences_Created
     {
