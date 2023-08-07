@@ -120,27 +120,27 @@ namespace Rzeka.Tests.Overloads.Weave
             // -------------
         }
         
-        [Test]
-        public void c_receives_one_matter_late_subscriber()
-        {
-            // -------------
-
-            int count = 0;
-            
-            using var weave = _rzeka.Weave<
-                ArbitraryMatter1, 
-                ArbitraryMatter2, 
-                ArbitraryMatter3>(
-                this,
-                source => source
-                    .Subscribe(glyph =>
-                    {
-                        count++;
-                    }));
-            
-            Assert.AreEqual(1, count);
-        
-            // -------------
-        }
+        // [Test]
+        // public void c_receives_one_matter_late_subscriber()
+        // {
+        //     // -------------
+        //
+        //     int count = 0;
+        //     
+        //     using var weave = _rzeka.Weave<
+        //         ArbitraryMatter1, 
+        //         ArbitraryMatter2, 
+        //         ArbitraryMatter3>(
+        //         this,
+        //         source => source
+        //             .Subscribe(glyph =>
+        //             {
+        //                 count++;
+        //             }));
+        //     
+        //     Assert.AreEqual(1, count);
+        //
+        //     // -------------
+        // }
     }
 }

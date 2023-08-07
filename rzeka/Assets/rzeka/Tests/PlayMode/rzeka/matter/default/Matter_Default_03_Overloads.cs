@@ -57,9 +57,6 @@ namespace Rzeka.Tests.Matter.Default
 
             string zodiac = "Aries";
 
-            using var s1 = _tools.Strand_AName_Synchronous(name);
-            using var s2 = _tools.Strand_ANumber_Synchronous(favnum);
-
             using var loom = _rzeka.Loom<AName, ANumber, UserData>(
                 who: this,
                 spell: source => source
@@ -71,6 +68,9 @@ namespace Rzeka.Tests.Matter.Default
             UserData receivedData = default;
 
             using var d1 = _tools.Weave_UserData(m => receivedData = m);
+
+            using var s1 = _tools.Strand_AName_Synchronous(name);
+            using var s2 = _tools.Strand_ANumber_Synchronous(favnum);
 
             TestTools.AssertEqual(new UserData(name, zodiac, favnum), receivedData, UserData.NameZodiacFavNumberComparer);
 
@@ -86,10 +86,6 @@ namespace Rzeka.Tests.Matter.Default
         {
             // -------------
 
-            using var s1 = _tools.Strand_ArbitraryMatter1(name);
-            using var s2 = _tools.Strand_ArbitraryMatter2(zodiac);
-            using var s3 = _tools.Strand_ANumber_Synchronous(favnum);
-
             using var loom = _rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2, ANumber, UserData>(
                 who: this,
                 spell: source => source
@@ -101,6 +97,10 @@ namespace Rzeka.Tests.Matter.Default
             UserData receivedData = default;
 
             using var d1 = _tools.Weave_UserData(m => receivedData = m);
+            
+            using var s1 = _tools.Strand_ArbitraryMatter1(name);
+            using var s2 = _tools.Strand_ArbitraryMatter2(zodiac);
+            using var s3 = _tools.Strand_ANumber_Synchronous(favnum);
 
             TestTools.AssertEqual(new UserData(name, zodiac, favnum), receivedData, UserData.NameZodiacFavNumberComparer);
 

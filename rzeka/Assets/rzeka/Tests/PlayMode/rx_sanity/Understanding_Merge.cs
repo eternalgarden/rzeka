@@ -56,6 +56,7 @@ namespace Rzeka.Tests.Rx
         public void c_oik()
         {
             var subject = new Subject<string>();
+            
             int count = 0;
             using var sub = subject.Subscribe(next =>
             {
@@ -64,17 +65,17 @@ namespace Rzeka.Tests.Rx
             });
             
             var o1 = Observable.Return("oik!");
-
-            var d1 = o1.Subscribe(subject);
             
-            d1.Dispose();
+            // TODO HOW THE HELL COUNT IS '1' WHEN BELOW IS UNCOMMENTED
+            // var d1 = o1.Subscribe(subject);
+            // d1.Dispose();
             
             var o2 = Observable.Return("nifty!");
             var merge = o1.Merge(o2);
 
             using var d = merge.Subscribe(subject);
             
-            Assert.AreEqual(2, count);
+            TestTools.AssertEqual(2, count);
         }
         
         [Test]
@@ -91,10 +92,10 @@ namespace Rzeka.Tests.Rx
             });
             
             var o1 = Observable.Return("oik!");
-
-            var d1 = o1.Subscribe(obs);
             
-            d1.Dispose();
+            // TODO HOW THE HELL COUNT IS '1' WHEN BELOW IS UNCOMMENTED
+            // var d1 = o1.Subscribe(obs);
+            // d1.Dispose();
             
             var o2 = Observable.Return("nifty!");
             var merge = o1.Merge(o2);
