@@ -161,7 +161,7 @@ namespace Rzeka
                     }
                 }
                 
-                Debug.Log($"<color=cyan>Sending to the emanation {serializableOcc.matterOccurenceCategory} : {serializableOcc.matterType}</color>");
+                // Debug.Log($"<color=cyan>Sending to the emanation {serializableOcc.matterOccurenceCategory} : {serializableOcc.matterType}</color>");
 
                 Emanation.ReceiveMatterOccurence(serializableOcc);
             });

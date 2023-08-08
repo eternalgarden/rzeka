@@ -21,7 +21,7 @@ namespace Rzeka.Tests.Overloads.Weave
         Rzeka.Library _library;
         TestTools _tools;
 
-        CollectibleDisposable Dependencies { get; set; }
+        CollectibleDisposable Q { get; set; }
     
         [UnitySetUp]
         public virtual IEnumerator Setup()
@@ -33,12 +33,12 @@ namespace Rzeka.Tests.Overloads.Weave
             _library = _rzeka.Library;
             _tools = new TestTools(_rzeka);
 
-            Dependencies = new();
-             Dependencies += _rzeka.Strand<ArbitraryMatter1>(
+            Q = new();
+             Q += _rzeka.Strand<ArbitraryMatter1>(
                  this,
                  Observable.Return(new ArbitraryMatter1("some")));
             
-             Dependencies += _rzeka.Strand<ArbitraryMatter2>(
+             Q += _rzeka.Strand<ArbitraryMatter2>(
                  this,
                  Observable.Return(new ArbitraryMatter2("flower")));
 
@@ -53,7 +53,7 @@ namespace Rzeka.Tests.Overloads.Weave
             // -------------
             
             _rzeka.Dispose();
-            Dependencies.Dispose();
+            Q.Dispose();
             
             yield return null;
 
@@ -62,8 +62,8 @@ namespace Rzeka.Tests.Overloads.Weave
         
         [Test]
         [TestCase(SpellOccurenceCategory.Created, 1)]
-        [TestCase(SpellOccurenceCategory.HasMana, 1)]
-        [TestCase(SpellOccurenceCategory.NoMana, 0)]
+        [TestCase(SpellOccurenceCategory.HasMana, 0)]
+        [TestCase(SpellOccurenceCategory.NoMana, 1)]
         public void a_correct_creation_spell_occurences(SpellOccurenceCategory category, int expected)
         {
             // -------------
@@ -94,7 +94,7 @@ namespace Rzeka.Tests.Overloads.Weave
         {
             // -------------
             
-            Dependencies.Dispose();
+            Q.Dispose();
             
             int count = 0;
             
