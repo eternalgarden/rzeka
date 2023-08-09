@@ -166,11 +166,14 @@ namespace Rzeka
                 Emanation.ReceiveMatterOccurence(serializableOcc);
             });
         }
-
+        
+        // TODO 🧙🏻 wow this is complicated
+        // TODO why?
         void InitializeManaStreamMystery()
         {
             // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES
             // CONGRATULATIONS MARIA ON WRITING THIS BLOB
+            
             IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
                 .Where(occ => occ.Source.SpellSchool
                     is SpellSchool.Looming
@@ -181,11 +184,10 @@ namespace Rzeka
                     or SpellOccurenceCategory.Forgotten)
                 .Scan((false, new AvailableConjurers()), (acc, current) =>
                 {
-                    AvailableConjurers accumulator = acc.Item2;
-
                     TStrandingSpell sourceAsStranding =
                         current.Source as TStrandingSpell ?? throw new InvalidOperationException();
-
+                    
+                    AvailableConjurers accumulator = acc.Item2;
                     Type conjuredType = sourceAsStranding.ConjuredType;
                     bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
 
@@ -336,12 +338,7 @@ namespace Rzeka
             //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             
         }
-
-        void Asd(Vector3 test)
-        {
-            
-        }
-
+        
         public void Dispose()
         {
             Q.Dispose();

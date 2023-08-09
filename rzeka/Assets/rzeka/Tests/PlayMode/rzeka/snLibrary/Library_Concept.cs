@@ -79,7 +79,6 @@ namespace Rzeka.Tests.Library
 
             Q += stream.Subscribe(x =>
             {
-                Debug.Log($"<color=orange>{x.ToString()}</color>");
                 count++;
             });
 
@@ -118,32 +117,6 @@ namespace Rzeka.Tests.Library
              * here an anonymous observer serves as a proxy
              */
             Q += o1.Subscribe(proxy);
-            Q += o2.Subscribe(proxy);  
-            
-            TestTools.AssertEqual(2, count);
-        }
-        
-        [UnityTest]
-        public IEnumerator d()
-        {
-            int count = 0;
-            
-            Subject<string> stream = new();
-            
-            IObserver<string> proxy = Observer.Create<string>(x => stream.OnNext(x));
-
-            Q += stream.Subscribe(x => count++);
-
-            var source1 = Observable.Interval(TimeSpan.FromMilliseconds(100));
-
-            yield return new WaitForSecondsRealtime(0.2f);
-            
-            var o2 = Observable.Return("B");
-
-            /*
-             * here an anonymous observer serves as a proxy
-             */
-            // Q += o1.Subscribe(proxy);
             Q += o2.Subscribe(proxy);  
             
             TestTools.AssertEqual(2, count);

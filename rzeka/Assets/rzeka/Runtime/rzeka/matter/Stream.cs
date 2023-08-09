@@ -18,10 +18,6 @@ namespace Rzeka
     {
         public Type MatterType => typeof(T);
         
-        int _sources = 0;
-
-        bool HasSources => _sources > 0;
-
         IDisposable _sourcesSubscription;
         readonly ISubject<T> _subject;
         readonly IObserver<T> _subjectFeeder;
@@ -133,13 +129,13 @@ namespace Rzeka
         public IDisposable RegisterConjurer(IObservable<T> conjurer)
         {
             IDisposable token = conjurer.Subscribe(SourceObserver);
-            _sources++;
+            // _sources++;
             
             return Disposable.Create(() =>
             {
                 // TODO THIS IS SHADY
                 token.Dispose();
-                _sources--;
+                // _sources--;
             });
         } 
 

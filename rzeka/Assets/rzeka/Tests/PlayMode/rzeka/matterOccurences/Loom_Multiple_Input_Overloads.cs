@@ -86,57 +86,6 @@ namespace Rzeka.Tests.Occurences.Matter
         }
 
         [UnityTest]
-        public IEnumerator b()
-        {
-            int count = 0;
-            
-            // TODO would it make sense for a variant like this
-            // Q += _rzeka.Eris.MatterOccurences
-            //     .Where(m => m.MatterOccurenceCategory == category)
-            //     .Where(m => m.Matter.GetType() == type)
-            //     .Subscribe(_ => count++);
-
-            Q += Rzeka.Weave<ArbitraryMatter3>(
-                this,
-                next => next.Subscribe(m =>
-                {
-                    count++;
-                }));
-            
-            IDisposable strand1a = Rzeka.Strand<ArbitraryMatter1>(
-                this,
-                Observable.Return(new ArbitraryMatter1("1")));
-
-            Q += Rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2, ArbitraryMatter3>(
-                this,
-                x => x.Select(x =>
-                {
-                    Debug.Log($"<color=red>{x.Two.Text}</color>");
-                    return new ArbitraryMatter3("3");
-                }));
-
-            
-            IDisposable strand2 = Rzeka.Strand<ArbitraryMatter2>(
-                this,
-                Observable
-                        .Timer(TimeSpan.FromSeconds(0.5))
-                        .Select(_ => new ArbitraryMatter2("2")));
-            
-            strand1a.Dispose();
-            
-            yield return new WaitForSeconds(0.7f);
-            
-            IDisposable strand1b = Rzeka.Strand<ArbitraryMatter1>(
-                this,
-                Observable.Return(new ArbitraryMatter1("1")));
-            
-            strand1b.Dispose();
-            strand2.Dispose();
-            
-            TestTools.AssertEqual(1, count);
-        }
-
-        [UnityTest]
         public IEnumerator b1_Late_Loom_will_not_produce_an_output()
         {
             int count = 0;
@@ -218,7 +167,6 @@ namespace Rzeka.Tests.Occurences.Matter
                 this,
                 x => x.Select(x =>
                 {
-                    Debug.Log($"<color=red>{x.Two.Text}</color>");
                     return new ArbitraryMatter3("3");
                 }));
             

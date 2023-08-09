@@ -133,7 +133,7 @@ namespace Rzeka.Tests.Library
         }
         
         [Test]
-        public void e_weave_is_provided_mana()
+        public void e_weave_has_mana()
         {
             // -------------
             
@@ -146,14 +146,13 @@ namespace Rzeka.Tests.Library
         }
         
         [Test]
-        public void e1_weave_is_provided_mana_was_cast()
+        public void e1_weave_no_mana()
         {
             // -------------
             
-            using var d1 = _tools.Strand_ANumber_Synchronous(1);
             using var d3 = _tools.Weave_ANumber(out var weavingScroll);
 
-            Assert.AreEqual(true, weavingScroll.ThisAsBinding.HasMana);
+            Assert.AreEqual(false, weavingScroll.ThisAsBinding.HasMana);
 
             // -------------
         }

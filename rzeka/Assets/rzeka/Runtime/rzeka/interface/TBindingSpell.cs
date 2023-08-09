@@ -66,8 +66,6 @@ namespace Rzeka
             // ListenForAppearingIngredients();
             // ListenForFadingIngredients();
 
-            
-
             using IDisposable initialManaCheck = Eris
                 .ManaProvideableObservable
                 .Subscribe(manainfo =>
@@ -78,8 +76,9 @@ namespace Rzeka
                     
                     foreach (Type type in keys)
                     {
-                        SetRequirementSatisfied(type, manainfo.IsManaOfTypeAvailable(type));
+                        CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
                     }
+                    
                 }, onError: ex     => Debug.LogError("errer") );
             
             if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
@@ -92,14 +91,14 @@ namespace Rzeka
                     onNext: manainfo =>
                 {
                     Type type = manainfo.LastChangedType;
-                    SetRequirementSatisfied(type, manainfo.IsManaOfTypeAvailable(type));
+                    CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
                 }, onError: ex     => Debug.LogError("errer") );
             
             
             /* ---- ---- 🌠 */
         }
         
-        void SetRequirementSatisfied(Type type, bool satisfied)
+        void CheckIfHasMana(Type type, bool satisfied)
         {
             if (RequiresIngredient(type) is false) Debug.LogError("HUH");
 
@@ -110,6 +109,7 @@ namespace Rzeka
             // Debug.Log($"oik {HasMana} {hasMana}");
             if (HasMana == hasMana) return;
             HasMana = hasMana;
+            
             ThisAsBase.SendSpellOccurence(HasMana is false
                 ? SpellOccurenceCategory.NoMana
                 : SpellOccurenceCategory.HasMana); // has mana rename

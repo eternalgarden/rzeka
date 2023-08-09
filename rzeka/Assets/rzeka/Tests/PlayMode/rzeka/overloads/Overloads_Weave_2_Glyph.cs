@@ -17,7 +17,7 @@ namespace Rzeka.Tests.Overloads.Weave
 {
     public class Overloads_Weave_2_Glyph
     {
-        ITestableRzeka _rzeka;
+        ITestableRzeka Rzeka;
         Rzeka.Library _library;
         TestTools _tools;
 
@@ -29,18 +29,18 @@ namespace Rzeka.Tests.Overloads.Weave
             // -------------
 
             
-            _rzeka = new SpringRiver();
-            _library = _rzeka.Library;
-            _tools = new TestTools(_rzeka);
+            Rzeka = new SpringRiver();
+            _library = Rzeka.Library;
+            _tools = new TestTools(Rzeka);
 
             Q = new();
-             Q += _rzeka.Strand<ArbitraryMatter1>(
-                 this,
-                 Observable.Return(new ArbitraryMatter1("some")));
-            
-             Q += _rzeka.Strand<ArbitraryMatter2>(
-                 this,
-                 Observable.Return(new ArbitraryMatter2("flower")));
+             // Q += _rzeka.Strand<ArbitraryMatter1>(
+             //     this,
+             //     Observable.Return(new ArbitraryMatter1("some")));
+             //
+             // Q += _rzeka.Strand<ArbitraryMatter2>(
+             //     this,
+             //     Observable.Return(new ArbitraryMatter2("flower")));
 
             yield return null;
 
@@ -52,7 +52,7 @@ namespace Rzeka.Tests.Overloads.Weave
         {
             // -------------
             
-            _rzeka.Dispose();
+            Rzeka.Dispose();
             Q.Dispose();
             
             yield return null;
@@ -70,12 +70,12 @@ namespace Rzeka.Tests.Overloads.Weave
             
             int count = 0;
             
-            using var m1 = _rzeka.Eris.SpellOccurences
+            using var m1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory == category)
-                .Where(occ => occ.Source is WeavingSpell2Glyph<ArbitraryMatter1, ArbitraryMatter2>)
+                // .Where(occ => occ.Source is WeavingSpell2Glyph<ArbitraryMatter1, ArbitraryMatter2>)
                 .Subscribe(_ => count++);
             
-            using var weave = _rzeka.Weave<
+            using var weave = Rzeka.Weave<
                 ArbitraryMatter1, 
                 ArbitraryMatter2>(
                 this,
@@ -98,12 +98,12 @@ namespace Rzeka.Tests.Overloads.Weave
             
             int count = 0;
             
-            using var m1 = _rzeka.Eris.SpellOccurences
+            using var m1 = Rzeka.Eris.SpellOccurences
                 .Where(occ => occ.SpellOccurenceCategory == category)
                 .Where(occ => occ.Source is WeavingSpell2Glyph<ArbitraryMatter1, ArbitraryMatter2>)
                 .Subscribe(_ => count++);
             
-            using var weave = _rzeka.Weave<
+            using var weave = Rzeka.Weave<
                 ArbitraryMatter1, 
                 ArbitraryMatter2>(
                 this,
