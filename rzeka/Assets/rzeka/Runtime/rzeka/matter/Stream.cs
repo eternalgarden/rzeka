@@ -16,24 +16,16 @@ namespace Rzeka
     public class Stream<T> : ISpellStream
         where T : TMatter
     {
-        
         public Type MatterType => typeof(T);
         
-        /// <summary>
-        /// currently only keys are used, there is a common subscription disposable below
-        /// this means the current approach in case of a change of number of sources is
-        /// 'full replug'
-        /// sources will be recombined into a new subscription on each source (dis)appearing
-        /// </summary>
-        readonly List<SourceContract<T>> _contracts = new();
+        int _sources = 0;
 
-        bool HasSources => _contracts.Count > 0;
+        bool HasSources => _sources > 0;
 
         IDisposable _sourcesSubscription;
         readonly ISubject<T> _subject;
         readonly IObserver<T> _subjectFeeder;
 
-        long _previousStamp;
         int _secondsCount = 0;
         bool _isOverheat;
         DateTimeOffset _overheatStartTime;
@@ -42,7 +34,7 @@ namespace Rzeka
         {
             _subject = CreateSubject();
             
-            _previousStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+            long previousStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             
             _subjectFeeder = Observer.Create<T>(next =>
             {
@@ -60,7 +52,7 @@ namespace Rzeka
                 
                 try
                 {
-                    IsInfiniteLoopDetected(_previousStamp, newStamp);
+                    IsInfiniteLoopDetected(previousStamp, newStamp);
                 }
                 catch (InfiniteLoopException e)
                 {
@@ -71,7 +63,12 @@ namespace Rzeka
                 }
                 finally
                 {
-                    _previousStamp = newStamp;
+                    previousStamp = newStamp;
+                }
+
+                if (typeof(T).Name.Contains("EditedNoteUpdated"))
+                {
+                    Debug.Log($"<color=green>whatt</color>");
                 }
                 
                 _subject.OnNext(next);
@@ -87,7 +84,6 @@ namespace Rzeka
 
                 if (_secondsCount > 100)
                 {
-
                     throw new InfiniteLoopException();
                 }
             }
@@ -131,42 +127,21 @@ namespace Rzeka
             return subject;
         }
 
+        IObserver<T> SourceObserver => Observer.Create<T>(
+            onNext: next => _subjectFeeder.OnNext(next));
+
         public IDisposable RegisterConjurer(IObservable<T> conjurer)
         {
-            CreateContract(conjurer, out var newContract);
-            newContract.Begin();
-            IDisposable token = Disposable.Create(newContract, EndContract);
+            IDisposable token = conjurer.Subscribe(SourceObserver);
+            _sources++;
             
-            return token;
+            return Disposable.Create(() =>
+            {
+                // TODO THIS IS SHADY
+                token.Dispose();
+                _sources--;
+            });
         } 
-
-        void CreateContract(IObservable<T> source, out SourceContract<T> newContract)
-        {
-            newContract = new(source);
-            _contracts.Add(newContract);
-            RecombineSourcesSubscription();
-        }
-
-        void EndContract(SourceContract<T> contract)
-        {
-            _contracts.Remove(contract);
-            contract.Dispose();
-            RecombineSourcesSubscription();
-        }
-
-        void RecombineSourcesSubscription()
-        {
-            if (HasSources is false) return;
-            
-            _sourcesSubscription?.Dispose();
-
-            IObservable<T>[] sources = _contracts
-                .Select(c => c.SourceSubject.AsObservable())
-                .ToArray();
-
-            IObservable <T> combinedSourcesStream = CombineSources(sources);
-            _sourcesSubscription = combinedSourcesStream.Subscribe(_subjectFeeder);
-        }
 
         // * Notice Stream cannot force unregister those who already requested it as a source
         // * They need to do it on their own when they lose mana
@@ -178,32 +153,6 @@ namespace Rzeka
         public void Dispose()
         {
             _sourcesSubscription?.Dispose();
-        }
-
-        static IObservable<T> CombineSources([NotNull] IReadOnlyCollection<IObservable<T>> sources)
-        {
-            if (sources == null) throw new ArgumentNullException(nameof(sources));
-            
-            IObservable<T> stream = null;
-
-            int availableSources = sources.Count;
-
-            if (availableSources > 1)
-            {
-                // multisouce handle
-                // alternatives per specific matter attribute description can be handled here
-                stream = sources.Merge();
-            }
-            else if (availableSources == 1)
-            {
-                stream = sources.First();
-            }
-            else
-            {
-                Debug.Log("impossibiru");
-            }
-
-            return stream;
         }
     }
 }

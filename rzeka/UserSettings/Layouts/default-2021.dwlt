@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Test Runner
+  m_Title: Console
   m_RootView: {fileID: 9}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 143
+  controlID: 101
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 57
+  controlID: 111
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,8 +145,8 @@ MonoBehaviour:
     y: 0
     width: 772
     height: 939
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 16}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 0
-  controlID: 93
+  controlID: 16
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 142
+  controlID: 100
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -387,9 +387,9 @@ MonoBehaviour:
       uniqueId: '[rzeka][suite]'
       name: rzeka
       fullName: rzeka
-      resultStatus: 1
-      duration: 1.7051936
-      messages: 
+      resultStatus: 2
+      duration: 2.5675995
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -403,9 +403,9 @@ MonoBehaviour:
       uniqueId: '[com.rzeka.tests.playmode][C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.tests.playmode.dll][suite]'
       name: com.rzeka.tests.playmode.dll
       fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.tests.playmode.dll
-      resultStatus: 1
-      duration: 1.646223
-      messages: 
+      resultStatus: 2
+      duration: 2.507042
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -469,9 +469,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/[Rzeka][suite]
       name: Rzeka
       fullName: Rzeka
-      resultStatus: 1
-      duration: 1.5848691
-      messages: 
+      resultStatus: 2
+      duration: 2.4443088
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -485,9 +485,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/[Tests][suite]
       name: Tests
       fullName: Rzeka.Tests
-      resultStatus: 1
-      duration: 1.5667728
-      messages: 
+      resultStatus: 2
+      duration: 2.426229
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -558,9 +558,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.Library][suite]
       name: Library
       fullName: Rzeka.Tests.Library
-      resultStatus: 1
-      duration: 2.10603
-      messages: 
+      resultStatus: 2
+      duration: 2.4098818
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -575,7 +575,7 @@ MonoBehaviour:
       name: Library_01_Basics
       fullName: Rzeka.Tests.Library.Library_01_Basics
       resultStatus: 1
-      duration: 0.473099
+      duration: 0.4242165
       messages: 
       output: 
       stacktrace: 
@@ -591,7 +591,7 @@ MonoBehaviour:
       name: a_strand_spell_counts_as_stream
       fullName: Rzeka.Tests.Library.Library_01_Basics.a_strand_spell_counts_as_stream
       resultStatus: 1
-      duration: 0.0697525
+      duration: 0.0711524
       messages: 
       output: 
       stacktrace: 
@@ -608,7 +608,7 @@ MonoBehaviour:
       name: b_does_stream_exist
       fullName: Rzeka.Tests.Library.Library_01_Basics.b_does_stream_exist
       resultStatus: 1
-      duration: 0.0314355
+      duration: 0.0307456
       messages: 
       output: 
       stacktrace: 
@@ -625,11 +625,9 @@ MonoBehaviour:
       name: d1_loom_is_provided_mana
       fullName: Rzeka.Tests.Library.Library_01_Basics.d1_loom_is_provided_mana
       resultStatus: 1
-      duration: 0.0602235
+      duration: 0.0577264
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -644,11 +642,9 @@ MonoBehaviour:
       name: d2_loom_is_provided_mana_was_cast
       fullName: Rzeka.Tests.Library.Library_01_Basics.d2_loom_is_provided_mana_was_cast
       resultStatus: 1
-      duration: 0.0395836
+      duration: 0.0422094
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -663,13 +659,9 @@ MonoBehaviour:
       name: d3_loom_provides_mana_to_weave
       fullName: Rzeka.Tests.Library.Library_01_Basics.d3_loom_provides_mana_to_weave
       resultStatus: 1
-      duration: 0.0494096
+      duration: 0.0496376
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -684,13 +676,9 @@ MonoBehaviour:
       name: d4_loom_provides_mana_to_weave_wascast
       fullName: Rzeka.Tests.Library.Library_01_Basics.d4_loom_provides_mana_to_weave_wascast
       resultStatus: 1
-      duration: 0.0498189
+      duration: 0.0503244
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -705,11 +693,9 @@ MonoBehaviour:
       name: e_weave_is_provided_mana
       fullName: Rzeka.Tests.Library.Library_01_Basics.e_weave_is_provided_mana
       resultStatus: 1
-      duration: 0.0501954
+      duration: 0.0492272
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -724,11 +710,9 @@ MonoBehaviour:
       name: e1_weave_is_provided_mana_was_cast
       fullName: Rzeka.Tests.Library.Library_01_Basics.e1_weave_is_provided_mana_was_cast
       resultStatus: 1
-      duration: 0.0996103
+      duration: 0.049974
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -743,7 +727,7 @@ MonoBehaviour:
       name: Library_02_Stream_Registration
       fullName: Rzeka.Tests.Library.Library_02_Stream_Registration
       resultStatus: 1
-      duration: 0.2482009
+      duration: 0.2148657
       messages: 
       output: 
       stacktrace: 
@@ -759,7 +743,7 @@ MonoBehaviour:
       name: a_is_counted_as_library_stream_strand
       fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.a_is_counted_as_library_stream_strand
       resultStatus: 1
-      duration: 0.0332475
+      duration: 0.0331229
       messages: 
       output: 
       stacktrace: 
@@ -776,11 +760,9 @@ MonoBehaviour:
       name: b1_nomana_loom_2_creates_both_streams_immediately
       fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.b1_nomana_loom_2_creates_both_streams_immediately
       resultStatus: 1
-      duration: 0.0827102
+      duration: 0.0497545
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -795,11 +777,9 @@ MonoBehaviour:
       name: b4_one_strand_one_looom_gives_two_streams
       fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.b4_one_strand_one_looom_gives_two_streams
       resultStatus: 1
-      duration: 0.0505199
+      duration: 0.0499144
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -814,11 +794,9 @@ MonoBehaviour:
       name: c1_nomana_weave_creates_needed_streams_immediately
       fullName: Rzeka.Tests.Library.Library_02_Stream_Registration.c1_nomana_weave_creates_needed_streams_immediately
       resultStatus: 1
-      duration: 0.0493094
+      duration: 0.0497623
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -833,7 +811,7 @@ MonoBehaviour:
       name: Library_04_MultipleProviders
       fullName: Rzeka.Tests.Library.Library_04_MultipleProviders
       resultStatus: 1
-      duration: 0.2086351
+      duration: 0.1698528
       messages: 
       output: 
       stacktrace: 
@@ -849,7 +827,7 @@ MonoBehaviour:
       name: a_double_conjurer_counts_as_one_stream
       fullName: Rzeka.Tests.Library.Library_04_MultipleProviders.a_double_conjurer_counts_as_one_stream
       resultStatus: 1
-      duration: 0.0329968
+      duration: 0.0327723
       messages: 
       output: 
       stacktrace: 
@@ -866,11 +844,9 @@ MonoBehaviour:
       name: b_strands_of_same_type
       fullName: Rzeka.Tests.Library.Library_04_MultipleProviders.b_strands_of_same_type
       resultStatus: 1
-      duration: 0.0869184
+      duration: 0.0495859
       messages: 
-      output: '<color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -885,13 +861,9 @@ MonoBehaviour:
       name: c_strand_and_a_loom_of_same_type
       fullName: Rzeka.Tests.Library.Library_04_MultipleProviders.c_strand_and_a_loom_of_same_type
       resultStatus: 1
-      duration: 0.0549166
+      duration: 0.0535672
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -906,7 +878,7 @@ MonoBehaviour:
       name: Library_05_Overloads
       fullName: Rzeka.Tests.Library.Library_05_Overloads
       resultStatus: 1
-      duration: 0.2411244
+      duration: 0.2158759
       messages: 
       output: 
       stacktrace: 
@@ -922,15 +894,9 @@ MonoBehaviour:
       name: b1_loom_2_provides_mana_to_weave
       fullName: Rzeka.Tests.Library.Library_05_Overloads.b1_loom_2_provides_mana_to_weave
       resultStatus: 1
-      duration: 0.0389754
+      duration: 0.0354776
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -945,15 +911,9 @@ MonoBehaviour:
       name: b2_loom_2_provides_mana_to_weave_wascast
       fullName: Rzeka.Tests.Library.Library_05_Overloads.b2_loom_2_provides_mana_to_weave_wascast
       resultStatus: 1
-      duration: 0.0777044
+      duration: 0.0477734
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -968,17 +928,9 @@ MonoBehaviour:
       name: b3_loom_3_provides_mana_to_weave
       fullName: Rzeka.Tests.Library.Library_05_Overloads.b3_loom_3_provides_mana_to_weave
       resultStatus: 1
-      duration: 0.0496427
+      duration: 0.052188
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -993,17 +945,9 @@ MonoBehaviour:
       name: b4_loom_3_provides_mana_to_weave_wascast
       fullName: Rzeka.Tests.Library.Library_05_Overloads.b4_loom_3_provides_mana_to_weave_wascast
       resultStatus: 1
-      duration: 0.0496949
+      duration: 0.0499393
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-'
+      output: 
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -1018,7 +962,7 @@ MonoBehaviour:
       name: Library_06_ProblematicCases
       fullName: Rzeka.Tests.Library.Library_06_ProblematicCases
       resultStatus: 1
-      duration: 0.9164366
+      duration: 0.8663901
       messages: 
       output: 
       stacktrace: 
@@ -1034,15 +978,9 @@ MonoBehaviour:
       name: a_
       fullName: Rzeka.Tests.Library.Library_06_ProblematicCases.a_
       resultStatus: 1
-      duration: 0.833434
+      duration: 0.7827376
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=cyan>oik1</color>
+      output: '<color=cyan>oik1</color>
 
         <color=yellow>oik</color>
 
@@ -1063,17 +1001,9 @@ MonoBehaviour:
       name: b_
       fullName: Rzeka.Tests.Library.Library_06_ProblematicCases.b_
       resultStatus: 1
-      duration: 0.0492983
+      duration: 0.0498132
       messages: 
-      output: '<color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=green>well?</color>
-
-        <color=cyan>oik1</color>
+      output: '<color=cyan>oik1</color>
 
         <color=yellow>oik</color>
 
@@ -1089,6 +1019,122 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1027
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_06_ProblematicCases][suite]
+    - id: 1030
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept][suite]
+      name: Library_Concept
+      fullName: Rzeka.Tests.Library.Library_Concept
+      resultStatus: 2
+      duration: 0.4997106
+      messages: One or more child tests had errors
+      output: 'You are trying to create a MonoBehaviour using the ''new'' keyword. 
+        This is not allowed.  MonoBehaviours can only be added using AddComponent().
+        Alternatively, your script can inherit from ScriptableObject or no base class
+        at all
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 1
+      categories: []
+      parentId: 1241
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[com.rzeka.tests.playmode][Rzeka.Tests.Library][suite]
+    - id: 1031
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_Concept/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept.a_Unfortunately_you_cant_use_a_single_subject_as_proxy]
+      name: a_Unfortunately_you_cant_use_a_single_subject_as_proxy
+      fullName: Rzeka.Tests.Library.Library_Concept.a_Unfortunately_you_cant_use_a_single_subject_as_proxy
+      resultStatus: 1
+      duration: 0.0326594
+      messages: 
+      output: '<color=orange>1</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept][suite]
+    - id: 1032
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_Concept/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept.b_However_an_additional_implied_subject_works]
+      name: b_However_an_additional_implied_subject_works
+      fullName: Rzeka.Tests.Library.Library_Concept.b_However_an_additional_implied_subject_works
+      resultStatus: 1
+      duration: 0.0499093
+      messages: 
+      output: '<color=orange>1</color>
+
+        <color=orange>2</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept][suite]
+    - id: 1033
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_Concept/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept.c_Using_an_Observer_as_the_proxy]
+      name: c_Using_an_Observer_as_the_proxy
+      fullName: Rzeka.Tests.Library.Library_Concept.c_Using_an_Observer_as_the_proxy
+      resultStatus: 1
+      duration: 0.0496535
+      messages: 
+      output: '<color=orange>1</color>
+
+        <color=orange>2</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept][suite]
+    - id: 1034
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/Library_Concept/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept.d]
+      name: d
+      fullName: Rzeka.Tests.Library.Library_Concept.d
+      resultStatus: 2
+      duration: 0.3327757
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: 2 while actual:
+        1.
+
+        Assertion failure. Values are not equal.
+
+        Expected:
+        1 == 2'
+      output: 
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
+        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:31
+        \r\n  at Rzeka.Tests.Library.Library_Concept+<d>d__12.MoveNext () [0x00119]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\snLibrary\\Library_Concept.cs:149
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1030
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Library/[com.rzeka.tests.playmode][Rzeka.Tests.Library.Library_Concept][suite]
     - id: 1244
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[Matter][suite]
       name: Matter
@@ -1527,9 +1573,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/[Occurences][suite]
       name: Occurences
       fullName: Rzeka.Tests.Occurences
-      resultStatus: 1
-      duration: 1.7772098
-      messages: 
+      resultStatus: 2
+      duration: 2.4872186
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1543,9 +1589,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter][suite]
       name: Matter
       fullName: Rzeka.Tests.Occurences.Matter
-      resultStatus: 1
-      duration: 1.760213
-      messages: 
+      resultStatus: 2
+      duration: 2.4701862
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1827,9 +1873,9 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
       name: Loom_Multiple_Input_Overloads
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads
-      resultStatus: 1
-      duration: 0.3330938
-      messages: 
+      resultStatus: 2
+      duration: 2.452962
+      messages: One or more child tests had errors
       output: 
       stacktrace: 
       notRunnable: 0
@@ -1844,7 +1890,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter
       resultStatus: 1
-      duration: 0.2998805
+      duration: 0.3754473
       messages: 
       output: 
       stacktrace: 
@@ -1860,7 +1906,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.ANumber)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.ANumber)
       resultStatus: 1
-      duration: 0.0438863
+      duration: 0.1221842
       messages: 
       output: 
       stacktrace: 
@@ -1877,7 +1923,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.ANumber)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.ANumber)
       resultStatus: 1
-      duration: 0.0390183
+      duration: 0.030994
       messages: 
       output: 
       stacktrace: 
@@ -1894,7 +1940,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.AName)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.AName)
       resultStatus: 1
-      duration: 0.0498387
+      duration: 0.0501899
       messages: 
       output: 
       stacktrace: 
@@ -1911,7 +1957,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.AName)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.AName)
       resultStatus: 1
-      duration: 0.0496703
+      duration: 0.0502374
       messages: 
       output: 
       stacktrace: 
@@ -1928,7 +1974,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.UserData)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Shaped,Rzeka.Tests.UserData)
       resultStatus: 1
-      duration: 0.0496378
+      duration: 0.049796
       messages: 
       output: 
       stacktrace: 
@@ -1945,7 +1991,7 @@ MonoBehaviour:
       name: a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.UserData)
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter(Received,Rzeka.Tests.UserData)
       resultStatus: 1
-      duration: 0.0498218
+      duration: 0.0492743
       messages: 
       output: 
       stacktrace: 
@@ -1957,6 +2003,97 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1137
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.a1_loom_2_shaped_receiveable_matter][suite]
+    - id: 1136
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b]
+      name: b
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b
+      resultStatus: 1
+      duration: 0.809483
+      messages: 
+      output: '<color=red>2</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1128
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
+    - id: 1142
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b1_Late_Loom_will_not_produce_an_output]
+      name: b1_Late_Loom_will_not_produce_an_output
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b1_Late_Loom_will_not_produce_an_output
+      resultStatus: 1
+      duration: 0.2497823
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1133
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
+    - id: 1143
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b2_Neither_will_partially_late]
+      name: b2_Neither_will_partially_late
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.b2_Neither_will_partially_late
+      resultStatus: 1
+      duration: 0.2005727
+      messages: 
+      output: 
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1133
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
+    - id: 1139
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.e]
+      name: e
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.e
+      resultStatus: 2
+      duration: 0.7994601
+      messages: 'UnityEngine.Assertions.AssertionException : Expected: 1 while actual:
+        2.
+
+        Assertion failure. Values are not equal.
+
+        Expected:
+        2 == 1'
+      output: '<color=red>2</color>
+
+        <color=red>2</color>
+
+'
+      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
+        System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
+        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
+        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
+        comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
+        (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
+        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:31
+        \r\n  at Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads+<e>d__12.MoveNext
+        () [0x001a7] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\Loom_Multiple_Input_Overloads.cs:241
+        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
+        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1128
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
     - id: 1114
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Stateful_Vs_Normal_Matter_Emission_Behaviour][suite]
       name: Stateful_Vs_Normal_Matter_Emission_Behaviour
@@ -3646,7 +3783,7 @@ MonoBehaviour:
       name: Overloads
       fullName: Rzeka.Tests.Overloads
       resultStatus: 1
-      duration: 0.7726897
+      duration: 0.2876312
       messages: 
       output: 
       stacktrace: 
@@ -3662,7 +3799,7 @@ MonoBehaviour:
       name: Weave
       fullName: Rzeka.Tests.Overloads.Weave
       resultStatus: 1
-      duration: 0.7558772
+      duration: 0.2708751
       messages: 
       output: 
       stacktrace: 
@@ -3678,7 +3815,7 @@ MonoBehaviour:
       name: Overloads_Weave_2_Glyph
       fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph
       resultStatus: 1
-      duration: 0.3882344
+      duration: 0.2533825
       messages: 
       output: 
       stacktrace: 
@@ -3694,7 +3831,7 @@ MonoBehaviour:
       name: a_correct_creation_spell_occurences
       fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences
       resultStatus: 1
-      duration: 0.2054206
+      duration: 0.2357864
       messages: 
       output: 
       stacktrace: 
@@ -3710,9 +3847,13 @@ MonoBehaviour:
       name: a_correct_creation_spell_occurences(Created,1)
       fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(Created,1)
       resultStatus: 1
-      duration: 0.1025409
+      duration: 0.1328882
       messages: 
-      output: 
+      output: '<color=cyan>Setup</color>
+
+        <color=red>Teardown</color>
+
+'
       stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
@@ -3722,12 +3863,12 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1098
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences][suite]
-    - id: 1096
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/a_correct_creation_spell_occurences/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(HasMana,1)]
-      name: a_correct_creation_spell_occurences(HasMana,1)
-      fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(HasMana,1)
-      resultStatus: 1
-      duration: 0.0311576
+    - id: 1032
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/a_correct_creation_spell_occurences/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(HasMana,0)]
+      name: a_correct_creation_spell_occurences(HasMana,0)
+      fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(HasMana,0)
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -3737,14 +3878,14 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1098
+      parentId: 1034
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences][suite]
-    - id: 1097
-      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/a_correct_creation_spell_occurences/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(NoMana,0)]
-      name: a_correct_creation_spell_occurences(NoMana,0)
-      fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(NoMana,0)
-      resultStatus: 1
-      duration: 0.0495952
+    - id: 1033
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/a_correct_creation_spell_occurences/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(NoMana,1)]
+      name: a_correct_creation_spell_occurences(NoMana,1)
+      fullName: Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences(NoMana,1)
+      resultStatus: 0
+      duration: 0
       messages: 
       output: 
       stacktrace: 
@@ -3754,7 +3895,7 @@ MonoBehaviour:
       isSuite: 0
       categories:
       - Uncategorized
-      parentId: 1098
+      parentId: 1034
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.a_correct_creation_spell_occurences][suite]
     - id: 1102
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Overloads/Weave/Overloads_Weave_2_Glyph/[com.rzeka.tests.playmode][Rzeka.Tests.Overloads.Weave.Overloads_Weave_2_Glyph.b_correct_creation_spell_occurences_nomana][suite]
@@ -10093,13 +10234,13 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1692
       parentUniqueId: Zenject-IntegrationTests-Editor.dll/Zenject/Tests/[Zenject-IntegrationTests-Editor][Zenject.Tests.TestSceneContextEvents][suite]
-    m_ResultText: f_oik (1.516s)
+    m_ResultText: a_will_need_all_of_observables_to_emit_at_least_once (0.249s)
     m_ResultStacktrace: 
     m_TestListState:
-      scrollPos: {x: 0, y: 808}
-      m_SelectedIDs: b511156b
-      m_LastClickedID: 1796542901
-      m_ExpandedIDs: 5b59b481310d8f85df68b285ce91fd8519c3ef87dbe4118b344c948c21992094166e1895d6646895be95c89503875b97dc889898f6b87399727feb9a629ff99acd97bd9d94ef39a00feee2a2791b40a527c860a7c30c7aa723bffca7ee3f0aa862d3dba814eaa6ac247a0bad57c7f8af8cb207b3f5a5b2b4460e04b5b866c1b6d9ff32b7217fcfba1cb4f2bc57b8d2bed69011bf67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c35784ceced37426d0cd4d61d04ba1e5d12ab82bd30447b4d49243c6dedca9bae346f7d4e4546ff3ebebab89ec7419b1ec055269ee5a2b91f0e2451cf15afca5f11cb0fef1c1a216f3233320f343d00af4079b3ff4c526c8f49af390f53d10e8f5ca293bf88256f4f858b468f9559a09fa330266fb25ff16fc820e00008f1d5506f80b950883b30c0ab3a29e0cc4c60a0dd1eb8d1307153417ffedab17d14fb419145e381cf6258a1cd451aa1e5bb507210f13eb21ad1e45249ed8dc24551199267f75852790a911285763c22868fcd62971f2002af1baaa2a2211392e3ee43930fa873a321d7c6c35f1c337364d0df43676aab13792b56938cca5a93c1a4a753d87be6e3ebb71033f549f263f1300753f0e5fc84199010043d261b646775a524a09b3424f04bb4b4f3bdac350b384905137bbb7520e790054e93b5556a862a45974da9d5d78ca1b66e3a3bd66733fd067559503692f01fe69ad7f0f6fd97460717c4fdd7375442d77c2d067783cee807af5cfb17c4af91e7dfa14837dffffff7f
+      scrollPos: {x: 0, y: 792}
+      m_SelectedIDs: cd5d52f5
+      m_LastClickedID: -179151411
+      m_ExpandedIDs: 5b59b481310d8f85df68b285ce91fd8519c3ef87dbe4118b344c948c21992094166e1895d6646895be95c89503875b97dc889898f6b87399727feb9a629ff99acd97bd9d94ef39a00feee2a2791b40a527c860a7c30c7aa723bffca7ee3f0aa862d3dba814eaa6ac247a0bad585086ae57c7f8af8cb207b3f5a5b2b4460e04b5b866c1b6d9ff32b7217fcfba57b8d2bed69011bf67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c35784ceced37426d0cd4d61d04ba1e5d12ab82bd30447b4d40e0b7edb9243c6dedca9bae346f7d4e4546ff3ebebab89ec7419b1ec055269ee5a2b91f0e2451cf15afca5f11cb0fef1c1a216f3233320f343d00af4079b3ff4c526c8f49af390f53d10e8f5ca293bf88256f4f858b468f9559a09fa330266fb25ff16fc20f563fe820e00008f1d5506f80b950883b30c0ab3a29e0cc4c60a0dd1eb8d1307153417ffedab17d14fb419145e381cf6258a1cd451aa1e5bb507210f13eb21ad1e45246cfeba249ed8dc24551199267f75852790a9112868fcd62971f2002af1baaa2a3ee43930fa873a321d7c6c35f1c337364d0df43676aab13792b56938cca5a93c1a4a753d87be6e3ebb71033f549f263f1300753f0e5fc84199010043d261b646775a524a09b3424f04bb4b4f3bdac350b384905137bbb7520e790054e93b5556a862a45974da9d5d78ca1b66e3a3bd66733fd067559503692f01fe69ad7f0f6fd97460717c4fdd7375442d77c2d067783cee807af5cfb17c4af91e7dfa14837dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -19390,7 +19531,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: b4e60000
     m_LastClickedID: 59060
-    m_ExpandedIDs: 0000000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c650000
+    m_ExpandedIDs: 000000001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -19418,7 +19559,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 660}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff0000000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c650000
+    m_ExpandedIDs: ffffffff000000001e65000020650000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -19919,7 +20060,7 @@ MonoBehaviour:
   m_Rotation:
     m_Target: {x: 0.24449584, y: -0.7415211, z: 0.34992838, w: 0.51778877}
     speed: 2
-    m_Value: {x: -0.244473, y: 0.7414518, z: -0.3498957, w: -0.51774037}
+    m_Value: {x: 0.244473, y: -0.7414518, z: 0.3498957, w: 0.51774037}
   m_Size:
     m_Target: 18.102251
     speed: 2
@@ -19981,7 +20122,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 30fbffff
+      m_ExpandedIDs: bac1ffff54c3ffff8cc4ffffaec5ffff16c8fffff0c8fffff8c9ffffd2caffffd2cbffffbcccffffe4cdffffc6ceffffc2cfffff9cd0ffffb4d1ffff86d2ffffe8d2ffffc2d3ffff02d5ffffdcd5ffffecd6ffffc6d7ffffded8ffffb8d9ffff3adcffff14ddffff48deffff1adfffff80dfffff5ae0ffff7ee1ffff58e2ffff54e3ffff2ee4ffff26e5ffff00e6ffff44e7ffff1ee8ffff32e9ffff0ceaffff08ebffffe2ebffff22edfffff4edffff48f0ffff22f1ffff3af2ffff14f3ffff22f4fffffcf4ffff00f8ffffeef8ffff30fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

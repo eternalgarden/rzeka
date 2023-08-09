@@ -37,7 +37,7 @@ namespace Rzeka
         {
             return CreateConjuring();
         }
-        public CollectibleDisposable CollectionDisposable { get; set; }
+        public CollectibleDisposable Q { get; set; }
         public Type ConjuredType => typeof(TOut);
         bool TSpell.HasMana { get; set; }
 
@@ -82,10 +82,11 @@ namespace Rzeka
         }
         
         // TODO VERY IMPORTANT, CHECK IF SPELLS ARE BEING DISPOSED CORRECTLY
+        // * even though I warned myself 😭
         public virtual void Dispose()
         {
             UnregisterConjurerFromLibrary();
-            CollectionDisposable.Dispose();
+            Q.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
 

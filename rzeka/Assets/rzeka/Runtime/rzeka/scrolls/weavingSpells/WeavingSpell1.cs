@@ -31,7 +31,7 @@ namespace Rzeka
 
             if (ingredientT1 is null) throw new Exception($"Missing ingredient of type {typeof(T1)}");
 
-            CollectionDisposable += _spell.Invoke(ingredientT1);
+            Q += _spell.Invoke(ingredientT1);
 
             /* ---- ---- 🌠 */
         }

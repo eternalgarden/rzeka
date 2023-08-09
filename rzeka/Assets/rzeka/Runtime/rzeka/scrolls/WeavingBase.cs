@@ -16,7 +16,7 @@ namespace Rzeka
         bool TSpell.HasMana { get; set; }
         public TBindingSpell ThisAsBinding { get; }
         public SpellSchool SpellSchool => SpellSchool.Weaving;
-        public CollectibleDisposable CollectionDisposable { get; set; }
+        public CollectibleDisposable Q { get; set; }
         
         public abstract string Title { get; }
         public abstract Dictionary<Type, bool> SatisfiedRequirements { get; }
@@ -39,6 +39,9 @@ namespace Rzeka
 
         public abstract void Cast();
 
-        public virtual void Dispose() { }
+        public virtual void Dispose()
+        {
+            Q.Dispose();
+        }
     }
 }

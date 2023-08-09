@@ -49,7 +49,7 @@ namespace Rzeka
                     Three = comb.Third,
                 });
             
-            CollectionDisposable += _spell.Invoke(obs);
+            Q += _spell.Invoke(obs);
 
             /* ---- ---- 🌠 */
         }

@@ -44,7 +44,7 @@ namespace Rzeka
         string Title { get; }
         Library Library { get; }
         Eris Eris { get; }
-        CollectibleDisposable CollectionDisposable { get; set; }
+        CollectibleDisposable Q { get; set; }
 
         void Cast();
 
@@ -113,8 +113,8 @@ namespace Rzeka
         {
             /* ⭐ ---- ---- */
             
-            if (CollectionDisposable is not null) return; // * hehe, this means it's already initialized
-            CollectionDisposable = new();
+            if (Q is not null) return; // * hehe, this means it's already initialized
+            Q = new();
             SendSpellOccurence(SpellOccurenceCategory.Created);
             
             /* ---- ---- 🌠 */

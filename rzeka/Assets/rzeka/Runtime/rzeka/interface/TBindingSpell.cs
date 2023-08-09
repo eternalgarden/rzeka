@@ -84,7 +84,7 @@ namespace Rzeka
             
             if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
 
-            CollectionDisposable += Eris
+            Q += Eris
                 .ManaProvideableObservable
                 .Skip(1) // handled above
                 .Where(manainfo => RequiresIngredient(manainfo.LastChangedType))

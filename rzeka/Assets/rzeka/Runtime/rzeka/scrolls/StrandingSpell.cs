@@ -16,7 +16,7 @@ namespace Rzeka
         public TSpell ThisAsBase { get; }
         public TStrandingSpell<TOut> ThisAsStranding { get; }
         public IObservable<TOut> Conjuring { get; set; }
-        public CollectibleDisposable CollectionDisposable { get; set; }
+        public CollectibleDisposable Q { get; set; }
         public Type ConjuredType => typeof(TOut);
         public Library Library { get; }
         public Eris Eris { get; }
@@ -84,7 +84,7 @@ namespace Rzeka
         public void Dispose()
         {
             _libraryToken.Dispose();
-            CollectionDisposable.Dispose();
+            Q.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
     }

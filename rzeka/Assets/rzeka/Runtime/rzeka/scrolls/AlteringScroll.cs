@@ -16,7 +16,7 @@ namespace Rzeka
         public Guid Guid { get; }
         public Library Library { get; }
         public Eris Eris { get; }
-        public CollectibleDisposable CollectionDisposable { get; set; }
+        public CollectibleDisposable Q { get; set; }
         public object Who { get; }
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
@@ -91,7 +91,7 @@ namespace Rzeka
         public void Dispose()
         {
             _subscriptionDisposable?.Dispose(); // TODO check this
-            CollectionDisposable.Dispose();
+            Q.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
         
