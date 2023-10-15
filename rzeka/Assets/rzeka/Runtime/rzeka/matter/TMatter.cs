@@ -16,7 +16,7 @@ namespace Rzeka
 
         public T WithCircumstances<T>(params TMatter[] circumstances) where T : TMatter
         {
-            T newMatter = (T)this; // intentionally quick exception
+            T newMatter = (T)this; // TODO intentionally quick exception
 
             Guid[] newCircumstances = circumstances.Select(x => x.Guid).ToArray();
             newMatter.Circumstances = newCircumstances;
@@ -34,7 +34,7 @@ namespace Rzeka
     public interface IResponse<T> : TMatter where T : IRequest
     {
         T Request { get; set; }
-        bool WasSuccseful { get; set; }
+        bool WasSuccessful { get; set; }
     }
 
     public interface TAllowingMultipleSources<T> where T : TMatter

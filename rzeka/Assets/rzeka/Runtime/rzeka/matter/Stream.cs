@@ -24,6 +24,8 @@ namespace Rzeka
 
         int _secondsCount = 0;
         bool _isOverheat;
+        bool _isHighVelocity;
+        
         DateTimeOffset _overheatStartTime;
         
         public Stream()
@@ -73,6 +75,8 @@ namespace Rzeka
 
         void IsInfiniteLoopDetected(long previousStamp, long newStamp)
         {
+            if (_isHighVelocity) return;
+            
             if (newStamp - previousStamp < 1000)
             {
                 // Debug.Log($"<color=yellow>ere</color>");
@@ -89,7 +93,7 @@ namespace Rzeka
             }
         }
 
-        static ISubject<T> CreateSubject()
+        ISubject<T> CreateSubject()
         {
             // TODO At the moment (probably a long one) only such subject is allowed
             // A custom buffer size subject could be made depending on type attributes for example
@@ -119,6 +123,8 @@ namespace Rzeka
             {
                 subject = new Subject<T>();
             }
+
+            if (attrs.Any(x => x is HighVelocityAttribute)) _isHighVelocity = true;
              
             return subject;
         }

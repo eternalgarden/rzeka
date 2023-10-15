@@ -2,6 +2,10 @@ using System;
 
 namespace Rzeka
 {
+    public class HighVelocityAttribute : Attribute
+    {
+    }
+    
     public class HasBufferAttribute : Attribute
     {
         int _buffer;

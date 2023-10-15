@@ -139,6 +139,9 @@ namespace Rzeka
 
             Q += MatterStream.Subscribe(occ =>
             {
+                // TODO temporary skip for high velocity matter emissions
+                if (occ.Matter.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length > 0) return; 
+                
                 var serializableOcc = new SerializableMatterOccurence() {
                     guid = occ.Guid,
                     timestamp = occ.Timestamp.ToUnixTimeSeconds(),
@@ -341,6 +344,8 @@ namespace Rzeka
         
         public void Dispose()
         {
+            Debug.Log($"<color=blue>Eris was disposed, yay!</color>");
+
             Q.Dispose();
         }
 
