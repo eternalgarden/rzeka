@@ -35,14 +35,14 @@ namespace Rzeka
             IObservable<T> ingredient = Library.GetConjurer<T>();
             
             // Debug.Log($"<color=green>well?</color>");
-            
+
             var erisTouchedIngredient = ingredient
                 .Do( // TODO Maybe add on completed for any reason?
                     // * It's safe to use .Do modifier here since besically the ingredient given here
                     // * will be prepended to whatever following sequence of operators
                     // * Reminder, appending is dangerous (since it can cool a hot observable), prepending isnt
                     onNext: matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Received),
-                    onError: err => ThisAsBase.SendMatterExceptionOccurence(err));
+                    onError: ThisAsBase.SendMatterExceptionOccurence);
 
             return erisTouchedIngredient;
            

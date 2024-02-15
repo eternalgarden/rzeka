@@ -186,7 +186,81 @@ namespace Rzeka.Tests.Occurences.Matter
             
             yield return new WaitForSeconds(0.7f);
             
-            TestTools.AssertEqual(1, count);
+            TestTools.AssertEqual(2, count);
+        }
+        
+        [UnityTest]
+        public IEnumerator f()
+        {
+            string result = "";
+
+            Q += Rzeka.Weave<ArbitraryMatter3>(
+                this,
+                next => next
+                    .Subscribe(m =>
+                {
+                    result = m.Text;
+                }));
+            
+            Q += Rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2, ArbitraryMatter3>(
+                this,
+                x => x.Select(x =>
+                {
+                    return new ArbitraryMatter3(x.One.Text+x.Two.Text);
+                }));
+            
+            Q += Rzeka.Strand<ArbitraryMatter1>(
+                this,
+                Observable.Return(new ArbitraryMatter1("a")));
+            
+            Q += Rzeka.Strand<ArbitraryMatter1>(
+                this,
+                Observable.Return(new ArbitraryMatter1("b")));
+            
+            Q += Rzeka.Strand<ArbitraryMatter2>(
+                this,
+                Observable.Return(new ArbitraryMatter2("c")));
+            
+            yield return new WaitForSeconds(0.7f);
+            
+            TestTools.AssertEqual("bc", result);
+        }
+        
+        [UnityTest]
+        public IEnumerator g()
+        {
+            string result = "";
+
+            Q += Rzeka.Weave<ArbitraryMatter1>(
+                this,
+                next => next
+                    .Subscribe(m =>
+                    {
+                        result = m.Text;
+                    }));
+            
+            Q += Rzeka.Loom<ArbitraryMatter1, ArbitraryMatter2, ArbitraryMatter1>(
+                this,
+                x => x.Select(x =>
+                {
+                    return new ArbitraryMatter1(x.One.Text+x.Two.Text);
+                }));
+            
+            Q += Rzeka.Strand<ArbitraryMatter1>(
+                this,
+                Observable.Return(new ArbitraryMatter1("a")));
+            
+            Q += Rzeka.Strand<ArbitraryMatter1>(
+                this,
+                Observable.Return(new ArbitraryMatter1("b")));
+            
+            Q += Rzeka.Strand<ArbitraryMatter2>(
+                this,
+                Observable.Return(new ArbitraryMatter2("c")));
+            
+            yield return new WaitForSeconds(0.7f);
+            
+            TestTools.AssertEqual("bc", result);
         }
     }
 }

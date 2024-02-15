@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using JetBrains.Annotations;
@@ -32,30 +33,30 @@ namespace Rzeka
         public void ActivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
             if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
-            
+
             Type key = strandingSpell.ConjuredType;
             if (_availableConjurers.ContainsKey(key) is false)
             {
                 _availableConjurers[key] = new HashSet<Guid>();
-            } 
-            
+            }
+
             _availableConjurers[key].Add(strandingSpell.Guid);
 
             LastChangedType = key;
         }
-        
+
         public void DectivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
             if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
-            
+
             Type key = strandingSpell.ConjuredType;
 
             if (_availableConjurers.ContainsKey(key) is false) return;
             if (!_availableConjurers[key].Contains(strandingSpell.Guid)) return;
-            
+
             // TODO this could use some testing if things are properly removed
             _availableConjurers[key].Remove(strandingSpell.Guid);
-            
+
             LastChangedType = key;
         }
 
@@ -63,7 +64,7 @@ namespace Rzeka
         {
             return IsManaOfTypeAvailable(typeof(T));
         }
-        
+
         public bool IsManaOfTypeAvailable(Type type)
         {
             // TODO rework to consider stateful matter as always available
@@ -74,30 +75,40 @@ namespace Rzeka
     public class Eris : IDisposable
     {
         readonly Library _library;
-        public IErisConsulate Emanation { get; set; }
+        public IErisConsulate Emanation { get; set; } // Rename to 
 
         CollectibleDisposable Q { get; set; }
 
-        Queue<SerializableSpellOccurence> spellOccQueue = new();
-        Queue<SerializableMatterOccurence> matterOccQueue = new();
+        Queue<SerializableSpellOccurence> spellOccQueue { get; } = new();
+        Queue<SerializableMatterOccurence> matterOccQueue { get; } = new();
 
-        public IObservable<SpellOccurence> SpellOccurences => SpellStream;
-        public IObservable<MatterOccurence> MatterOccurences => MatterStream;
+        public IObservable<SpellOccurence> SpellOccurences => SpellStream.AsObservable();
+        public IObservable<MatterOccurence> MatterOccurences => MatterStream.AsObservable();
 
         Subject<SpellOccurence> SpellStream { get; }
         Subject<MatterOccurence> MatterStream { get; }
-        
+        Subject<ExceptionOccurence> ExceptionStream { get; }
+
         public IObservable<IManaInformationProvideable> ManaProvideableObservable { get; private set; }
 
         public void PublishSpellOccurence(SpellOccurence spellOccurence)
         {
             SpellStream.OnNext(spellOccurence);
         }
-        
+
+        public void PublishExceptionOccurence(ExceptionOccurence exceptionOccurence)
+        {
+            ExceptionStream.OnNext(exceptionOccurence);
+        }
+
         public void PublishMatterOccurence(MatterOccurence matterOccurence)
         {
-            // Debug.Log($"<color=orange>Matter Occurence {matterOccurence.MatterOccurenceCategory}</color>");
             MatterStream.OnNext(matterOccurence);
+
+            if (Environment.CurrentManagedThreadId != 1)
+            {
+                Debug.LogError($"<color=red>Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}</color>");
+            }
         }
 
         public Eris()
@@ -106,12 +117,90 @@ namespace Rzeka
 
             SpellStream = new Subject<SpellOccurence>();
             MatterStream = new Subject<MatterOccurence>();
-            
+            ExceptionStream = new Subject<ExceptionOccurence>();
+
             InitializeManaStreamMystery();
 
-            Q += SpellStream.Subscribe(occ => {
+            SubscribeSpellStream();
+            SubscribeMatterStream();
+            SubscribeExceptionStream();
+        }
 
-                var serializableOcc = new SerializableSpellOccurence() {
+        void SubscribeExceptionStream()
+        {
+            Q += ExceptionStream
+                .Do(x =>
+                {
+                    Debug.LogError($"<color=yellow>Message: {x.Exception.Message}</color>");
+                    Debug.LogError(x.Exception.StackTrace);
+                    
+                    // TODO add listener to update cycle
+                    // queue exception throwing there in editor
+                    // so that we get it to fail properly for easy debugging
+                    
+                    // 1. if data structure loaded push a proper log
+                    // 2. otherwise serialize to a CRASH_LOG.txt
+                    
+                })
+                .Subscribe(occ =>
+                {
+                    throw occ.Exception;
+                });
+        }
+
+        void SubscribeMatterStream()
+        {
+            Q += MatterStream
+                // TODO temporary lock on high velocity matter
+                .Where(occ => occ.Matter?.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length == 0)
+                .Select(occ =>
+                {
+                    try
+                    {
+                        var mocc = new SerializableMatterOccurence()
+                        {
+                            guid = occ.Guid,
+                            timestamp = occ.Timestamp.ToUnixTimeSeconds(),
+                            spell = GetSerializableSpell(occ.Source),
+                            matter = occ.Matter,
+                            matterType = occ.Matter.GetType(), // * custom serializer
+                            matterOccurenceCategory = occ.MatterOccurenceCategory
+                        };
+
+                        return mocc;
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogError($"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}");
+                        throw;
+                    }
+                })
+                .Subscribe(occ =>
+                {
+                    if (Emanation is null)
+                    {
+                        matterOccQueue.Enqueue(occ);
+                        return;
+                    }
+
+                    if (matterOccQueue.Count > 0)
+                    {
+                        while (matterOccQueue.Count > 0)
+                        {
+                            Emanation.ReceiveMatterOccurence(matterOccQueue.Dequeue());
+                        }
+                    }
+
+                    Emanation.ReceiveMatterOccurence(occ);
+                });
+        }
+
+        void SubscribeSpellStream()
+        {
+            Q += SpellStream.Subscribe(occ =>
+            {
+                var serializableOcc = new SerializableSpellOccurence()
+                {
                     guid = occ.Guid,
                     timestamp = occ.Timestamp.ToUnixTimeSeconds(),
                     spell = GetSerializableSpell(occ.Source),
@@ -136,52 +225,21 @@ namespace Rzeka
 
                 Emanation.ReceiveSpellOccurence(serializableOcc);
             });
-
-            Q += MatterStream.Subscribe(occ =>
-            {
-                // TODO temporary skip for high velocity matter emissions
-                if (occ.Matter.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length > 0) return; 
-                
-                var serializableOcc = new SerializableMatterOccurence() {
-                    guid = occ.Guid,
-                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
-                    spell = GetSerializableSpell(occ.Source),
-                    matter = occ.Matter,
-                    matterType = occ.Matter.GetType(), // * custom serializer
-                    matterOccurenceCategory = occ.MatterOccurenceCategory
-                };
-
-                if (Emanation is null)
-                {
-                    matterOccQueue.Enqueue(serializableOcc);
-                    return;
-                }
-                else if (matterOccQueue.Count > 0)
-                {
-                    while (matterOccQueue.Count > 0)
-                    {
-                        Emanation.ReceiveMatterOccurence(matterOccQueue.Dequeue());
-                    }
-                }
-                
-                // Debug.Log($"<color=cyan>Sending to the emanation {serializableOcc.matterOccurenceCategory} : {serializableOcc.matterType}</color>");
-
-                Emanation.ReceiveMatterOccurence(serializableOcc);
-            });
         }
-        
+
         // TODO 🧙🏻 wow this is complicated
         // TODO why?
+        // TODO add2. and why is it here, if anything, wouldn't that be better off in library, could it be there?
         void InitializeManaStreamMystery()
         {
             // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES
             // CONGRATULATIONS MARIA ON WRITING THIS BLOB
-            
+
             IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
                 .Where(occ => occ.Source.SpellSchool
                     is SpellSchool.Looming
                     or SpellSchool.Stranding)
-                .Where(occ => occ.SpellOccurenceCategory
+                .Where(occ => occ.SpellOccurenceCategory // TODO why only these occurences
                     is SpellOccurenceCategory.HasMana
                     or SpellOccurenceCategory.NoMana
                     or SpellOccurenceCategory.Forgotten)
@@ -189,7 +247,7 @@ namespace Rzeka
                 {
                     TStrandingSpell sourceAsStranding =
                         current.Source as TStrandingSpell ?? throw new InvalidOperationException();
-                    
+
                     AvailableConjurers accumulator = acc.Item2;
                     Type conjuredType = sourceAsStranding.ConjuredType;
                     bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
@@ -218,7 +276,7 @@ namespace Rzeka
             Q += manaStream.Connect();
 
             ManaProvideableObservable = manaStream;
-            
+
             Q += ManaProvideableObservable
                 .Subscribe(info =>
                 {
@@ -247,9 +305,10 @@ namespace Rzeka
 
             spell.guid = source.Guid;
             spell.title = source.Title;
-            spell.whosName = source.Who is MonoBehaviour 
-                ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
-                : source.Who.GetType().Name;
+            // spell.whosName = source.Who is MonoBehaviour
+            //     ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
+            //     : source.Who.GetType().Name;
+            spell.whosName = GetWho(source).WhosType.Name;
             spell.hasMana = source.HasMana;
 
             return spell;
@@ -260,8 +319,9 @@ namespace Rzeka
             TStrandingSpell strand = source as TStrandingSpell;
 
             Debug.Assert(strand != null, nameof(strand) + " != null");
-            
-            SerializableStranding serializableStranding = new SerializableStranding() {
+
+            SerializableStranding serializableStranding = new SerializableStranding()
+            {
                 spellSchool = SpellSchool.Stranding,
                 conjuredType = strand.ConjuredType,
                 Who = GetWho(source)
@@ -308,11 +368,19 @@ namespace Rzeka
         Who GetWho(TSpell source)
         {
             Type whosType = source.Who.GetType();
-            
+
             string parentGameObjectName = null;
             if (source.Who is MonoBehaviour monoWho)
             {
-                parentGameObjectName = monoWho.gameObject.name;
+                // try
+                // {
+                    parentGameObjectName = monoWho.gameObject.name;
+                // }
+                // catch (Exception e)
+                // {
+                //     Debug.Log($"<color=red>Illegally attempted to access gameObject info while not bein on the main thread.</color>");
+                //     parentGameObjectName = "unknown error";
+                // }
             }
 
             return new Who()
@@ -326,12 +394,13 @@ namespace Rzeka
         private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
-                .SatisfiedRequirements 
+                .SatisfiedRequirements
                 .Select(kvp => new KeyValuePair<string, bool>(
-                key: kvp.Key.Name,
-                value: kvp.Value) // oops
-            )
-            .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);;
+                        key: kvp.Key.Name,
+                        value: kvp.Value) // oops
+                )
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            ;
             // return binding
             //     .SatisfiedRequirements
             //     .Select(kvp => new KeyValuePair<string, bool>(
@@ -339,12 +408,11 @@ namespace Rzeka
             //         value: kvp.Value) // oops
             //     )
             //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-            
         }
-        
+
         public void Dispose()
         {
-            Debug.Log($"<color=blue>Eris was disposed, yay!</color>");
+            Debug.Log($"<color=blue>Bye Eris!</color>");
 
             Q.Dispose();
         }

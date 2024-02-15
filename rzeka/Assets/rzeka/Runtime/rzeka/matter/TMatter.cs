@@ -31,32 +31,15 @@ namespace Rzeka
     }
 
     public interface IRequest : TMatter { }
-    public interface IResponse<T> : TMatter where T : IRequest
+    public interface IResponse<out T> : TMatter where T : IRequest
     {
-        T Request { get; set; }
-        bool WasSuccessful { get; set; }
+        T Request { get; }
+        bool WasSuccessful { get; }
     }
 
     public interface TAllowingMultipleSources<T> where T : TMatter
     {
         public IObservable<T> CombineSourcesPattern(params IObservable<T>[] sources)
             => Observable.Merge(sources);
-    }
-
-    public interface ICacheLast : IHasDefaultValue
-    {
-        bool TreasureData { get; } // TODO Should keep that data if noone listens to it anymore
-        //WindowSize 
-    }
-
-    public interface ICacheBuffer
-    {
-        int BufferSize { get; }
-
-    }
-
-    public interface IHasDefaultValue
-    {
-        void SetToDefaultValues();
     }
 }

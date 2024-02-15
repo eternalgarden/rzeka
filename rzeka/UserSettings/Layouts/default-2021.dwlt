@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 989
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Console
   m_RootView: {fileID: 9}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -43,8 +43,8 @@ MonoBehaviour:
     y: 330
     width: 467
     height: 609
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 38
+  controlID: 73
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 48
+  controlID: 18
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,8 +145,8 @@ MonoBehaviour:
     y: 0
     width: 772
     height: 939
-  m_MinSize: {x: 101, y: 121}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 16}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 0
-  controlID: 88
+  controlID: 128
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 37
+  controlID: 72
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -356,7 +356,7 @@ MonoBehaviour:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_Spl:
-    ID: 152
+    ID: 157
     splitterInitialOffset: 703
     currentActiveSplitter: -1
     realSizes:
@@ -388,7 +388,7 @@ MonoBehaviour:
       name: rzeka
       fullName: rzeka
       resultStatus: 2
-      duration: 1.8164605
+      duration: 0.3707401
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -404,7 +404,7 @@ MonoBehaviour:
       name: com.rzeka.tests.playmode.dll
       fullName: C:/box/sanctuary/rzeka/rzeka/Library/ScriptAssemblies/com.rzeka.tests.playmode.dll
       resultStatus: 2
-      duration: 1.8038253
+      duration: 0.3092384
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -470,7 +470,7 @@ MonoBehaviour:
       name: Rzeka
       fullName: Rzeka
       resultStatus: 2
-      duration: 1.7987145
+      duration: 0.2474961
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -486,7 +486,7 @@ MonoBehaviour:
       name: Tests
       fullName: Rzeka.Tests
       resultStatus: 2
-      duration: 1.7944012
+      duration: 0.2296715
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1540,7 +1540,7 @@ MonoBehaviour:
       name: Occurences
       fullName: Rzeka.Tests.Occurences
       resultStatus: 2
-      duration: 1.792193
+      duration: 0.2132047
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1556,7 +1556,7 @@ MonoBehaviour:
       name: Matter
       fullName: Rzeka.Tests.Occurences.Matter
       resultStatus: 2
-      duration: 1.7901243
+      duration: 0.1959396
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -1840,7 +1840,7 @@ MonoBehaviour:
       name: Loom_Multiple_Input_Overloads
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads
       resultStatus: 2
-      duration: 1.7879409
+      duration: 0.1785116
       messages: One or more child tests had errors
       output: 
       stacktrace: 
@@ -2007,32 +2007,13 @@ MonoBehaviour:
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.e]
       name: e
       fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.e
-      resultStatus: 2
-      duration: 0.7198367
-      messages: 'UnityEngine.Assertions.AssertionException : Expected: 1 while actual:
-        2.
-
-        Assertion failure. Values are not equal.
-
-        Expected:
-        2 == 1'
-      output: '<color=red>2</color>
-
-        <color=red>2</color>
+      resultStatus: 1
+      duration: 0.835998
+      messages: 
+      output: '<color=blue>Eris was disposed, yay!</color>
 
 '
-      stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-        System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual,
-        System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-        comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-        (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-        \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:31
-        \r\n  at Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads+<e>d__12.MoveNext
-        () [0x001a7] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\Loom_Multiple_Input_Overloads.cs:241
-        \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
-        in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+      stacktrace: 
       notRunnable: 0
       ignoredOrSkipped: 0
       description: 
@@ -2040,6 +2021,100 @@ MonoBehaviour:
       categories:
       - Uncategorized
       parentId: 1128
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
+    - id: 1143
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.f]
+      name: f
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.f
+      resultStatus: 1
+      duration: 0.8216945
+      messages: 
+      output: '<color=blue>Eris was disposed, yay!</color>
+
+'
+      stacktrace: 
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1132
+      parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
+    - id: 1144
+      uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/Loom_Multiple_Input_Overloads/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.g]
+      name: g
+      fullName: Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads.g
+      resultStatus: 2
+      duration: 0.1563767
+      messages: 'Unhandled log message: ''[Error] LOOPIDY LOOP! Rzeka.Tests.ArbitraryMatter1''.
+        Use UnityEngine.TestTools.LogAssert.Expect'
+      output: 'LOOPIDY LOOP! Rzeka.Tests.ArbitraryMatter1
+
+        <color=blue>Eris
+        was disposed, yay!</color>
+
+'
+      stacktrace: 'Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:60)
+
+        System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+        System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+        System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+        System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+        System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+        System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+        System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+        (Rzeka.Tests.ArbitraryMatter1)
+
+        Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+        (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+        System.Reactive.Linq.ObservableImpl.Select`2/Selector/_<System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+        Rzeka.Tests.ArbitraryMatter2>, Rzeka.Glyph`2<Rzeka.Tests.ArbitraryMatter1,
+        Rzeka.Tests.ArbitraryMatter2>>:OnNext (System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+        Rzeka.Tests.ArbitraryMatter2>) (at Assets/rzeka/Runtime/rx.net/Rx.NET/Source/src/System.Reactive/Linq/Observable/Select
+
+        
+
+'
+      notRunnable: 0
+      ignoredOrSkipped: 0
+      description: 
+      isSuite: 0
+      categories:
+      - Uncategorized
+      parentId: 1132
       parentUniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads][suite]
     - id: 1114
       uniqueId: com.rzeka.tests.playmode.dll/Rzeka/Tests/Occurences/Matter/[com.rzeka.tests.playmode][Rzeka.Tests.Occurences.Matter.Stateful_Vs_Normal_Matter_Emission_Behaviour][suite]
@@ -10177,35 +10252,128 @@ MonoBehaviour:
       - Uncategorized
       parentId: 1692
       parentUniqueId: Zenject-IntegrationTests-Editor.dll/Zenject/Tests/[Zenject-IntegrationTests-Editor][Zenject.Tests.TestSceneContextEvents][suite]
-    m_ResultText: "e (0.720s)\n---\nUnityEngine.Assertions.AssertionException : Expected:
-      1 while actual: 2.\nAssertion failure. Values are not equal.\r\nExpected: 2
-      == 1\n---\nat UnityEngine.Assertions.Assert.Fail (System.String message, System.String
-      userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-      (T expected, T actual, System.String message, System.Collections.Generic.IEqualityComparer`1[T]
-      comparer) [0x0005f] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-      (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-      \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-      in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:31
-      \r\n  at Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads+<e>d__12.MoveNext
-      () [0x001a7] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\Loom_Multiple_Input_Overloads.cs:241
-      \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
-      in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46\n---\n<color=red>2</color>\r\n<color=red>2</color>"
-    m_ResultStacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
-      System.String userMessage) [0x00043] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-      \r\n  at UnityEngine.Assertions.Assert.AreEqual[T] (T expected, T actual, System.String
-      message, System.Collections.Generic.IEqualityComparer`1[T] comparer) [0x0005f]
-      in <4014a86cbefb4944b2b6c9211c8fd2fc>:0 \r\n  at UnityEngine.Assertions.Assert.AreEqual[T]
-      (T expected, T actual, System.String message) [0x00009] in <4014a86cbefb4944b2b6c9211c8fd2fc>:0
-      \r\n  at Rzeka.Tests.TestTools.AssertEqual[T] (T expected, T actual) [0x00001]
-      in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\utils\\TestTools.cs:31
-      \r\n  at Rzeka.Tests.Occurences.Matter.Loom_Multiple_Input_Overloads+<e>d__12.MoveNext
-      () [0x001a7] in C:\\box\\sanctuary\\rzeka\\rzeka\\Assets\\rzeka\\Tests\\PlayMode\\rzeka\\matterOccurences\\Loom_Multiple_Input_Overloads.cs:241
-      \r\n  at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0004e]
-      in C:\\box\\sanctuary\\rzeka\\rzeka\\Library\\PackageCache\\com.unity.test-framework@1.1.33\\UnityEngine.TestRunner\\NUnitExtensions\\Attributes\\TestEnumerator.cs:46 "
+    m_ResultText: 'g (0.156s)
+
+      ---
+
+      Unhandled log message: ''[Error]
+      LOOPIDY LOOP! Rzeka.Tests.ArbitraryMatter1''. Use UnityEngine.TestTools.LogAssert.Expect
+
+      ---
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:60)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Linq.ObservableImpl.Select`2/Selector/_<System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>, Rzeka.Glyph`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>>:OnNext (System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>) (at Assets/rzeka/Runtime/rx.net/Rx.NET/Source/src/System.Reactive/Linq/Observable/Select
+
+      ---
+
+      LOOPIDY
+      LOOP! Rzeka.Tests.ArbitraryMatter1
+
+      <color=blue>Eris was disposed, yay!</color>'
+    m_ResultStacktrace: 'Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:60)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Subjects.Subject`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1/<>c__DisplayClass9_0<Rzeka.Tests.ArbitraryMatter1>:<.ctor>b__0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:75)
+
+      System.Reactive.ObserverBase`1<Rzeka.Tests.ArbitraryMatter1>:OnNext
+      (Rzeka.Tests.ArbitraryMatter1)
+
+      Rzeka.Stream`1<Rzeka.Tests.ArbitraryMatter1>:<get_SourceObserver>b__13_0
+      (Rzeka.Tests.ArbitraryMatter1) (at Assets/rzeka/Runtime/rzeka/matter/Stream.cs:136)
+
+      System.Reactive.Linq.ObservableImpl.Select`2/Selector/_<System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>, Rzeka.Glyph`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>>:OnNext (System.ValueTuple`2<Rzeka.Tests.ArbitraryMatter1,
+      Rzeka.Tests.ArbitraryMatter2>) (at Assets/rzeka/Runtime/rx.net/Rx.NET/Source/src/System.Reactive/Linq/Observable/Select
+
+      
+
+'
     m_TestListState:
-      scrollPos: {x: 0, y: 760}
-      m_SelectedIDs: d158c61b
-      m_LastClickedID: 465983697
+      scrollPos: {x: 0, y: 776}
+      m_SelectedIDs: cf58c61b
+      m_LastClickedID: 465983695
       m_ExpandedIDs: 5b59b481310d8f85df68b285ce91fd8519c3ef87dbe4118b344c948c21992094166e1895d6646895be95c89503875b97dc889898f6b87399727feb9a629ff99acd97bd9d94ef39a00feee2a2791b40a527c860a7c30c7aa723bffca7ee3f0aa862d3dba814eaa6ac247a0bad585086ae57c7f8af8cb207b3f5a5b2b4460e04b5b866c1b6d9ff32b7217fcfba57b8d2bed69011bf67bea2bfdbe0e6bff5e4f3bf6e811fc29159d8c35784ceced37426d0cd4d61d04ba1e5d12ab82bd30447b4d40e0b7edb9243c6dedca9bae346f7d4e4546ff3ebebab89ec7419b1ec055269ee5a2b91f0e2451cf15afca5f11cb0fef1c1a216f3233320f343d00af4079b3ff4c526c8f49af390f53d10e8f5ca293bf88256f4f858b468f9559a09fa330266fb25ff16fc20f563fe820e00008f1d5506f80b950883b30c0ab3a29e0cc4c60a0dd1eb8d1307153417ffedab17d14fb419145e381cf6258a1cd451aa1e5bb507210f13eb21ad1e45246cfeba249ed8dc24551199267f75852790a9112868fcd62971f2002af1baaa2a3ee43930fa873a321d7c6c35f1c337364d0df43676aab13792b56938cca5a93c1a4a753d87be6e3ebb71033f549f263f1300753f0e5fc84199010043d261b646775a524a09b3424f04bb4b4f3bdac350b384905137bbb7520e790054e93b5556a862a45974da9d5d78ca1b66e3a3bd66733fd067559503692f01fe69ad7f0f6fd97460717c4fdd7375442d77c2d067783cee807af5cfb17c4af91e7dfa14837dffffff7f
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -19422,9 +19590,9 @@ MonoBehaviour:
     m_Tooltip: 
   m_Pos:
     serializedVersion: 2
-    x: 1371
+    x: 1148
     y: 73
-    width: 548
+    width: 771
     height: 918
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
@@ -19436,7 +19604,7 @@ MonoBehaviour:
     m_CachedPref: -160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: 26644
+  m_LastInspectedObjectInstanceID: -1
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
@@ -19497,7 +19665,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: b4e60000
     m_LastClickedID: 59060
-    m_ExpandedIDs: 00000000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003a6500003c6500003e65000040650000426500004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e650000
+    m_ExpandedIDs: 000000004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -19525,21 +19693,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 120}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000226500002465000026650000286500002a6500002c6500002e65000030650000326500003465000036650000386500003c6500003e65000040650000426500004465000046650000486500004a6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e6500005866000010680000
+    m_ExpandedIDs: ffffffff000000004465000046650000486500004a6500004c6500004e65000050650000526500005465000056650000586500005a6500005c6500005e65000060650000626500006465000066650000686500006a6500006c6500006e65000070650000726500007465000076650000786500007a6500007c6500007e65000080650000826500008465000086650000886500008a6500008c6500008e65000090650000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: SkipZip
-      m_OriginalName: SkipZip
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 26644
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
@@ -20011,7 +20179,7 @@ MonoBehaviour:
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0.25, y: 0.25}
+      m_Size: {x: 0.125, y: 0.125}
     zGrid:
       m_Fade:
         m_Target: 0
@@ -20086,9 +20254,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 14680000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 90e9ffffaaeaffff0cebffff0eecffff38edffff22eeffffe4efffffc6f0ffff94f2ffff1ef4ffff74f4ffff7ef5ffffe8f5ffffd2f6ffff38f8ffff16f9ffff6af9ffff44faffff32fbffff
+      m_ExpandedIDs: 04f4ffffdef4ffff28f6ffff02f7ffff2af8ffff08f9ffff18fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

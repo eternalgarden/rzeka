@@ -5,8 +5,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 using System;
-using System.Reactive.Linq;
-using UnityEngine;
+using System.Linq;
 
 namespace Rzeka
 {
@@ -14,15 +13,22 @@ namespace Rzeka
     {
         // -------------
     
-        public static IObservable<T> Register<T>(this IObservable<T> source)
+        public static bool RespondsTo<TRequest, TResponse>(this TResponse response, TRequest request)
+            where TRequest : IRequest
+            where TResponse : IResponse<TRequest>
+        {
+            return response.Request.Guid == request.Guid;
+        }
+        
+        public static T WithCircumstances<T>(this T matter, params TMatter[] circumstances) 
             where T : TMatter
         {
-            // source = source.Where(x => x is not null);
-            return source
-                .Publish()
-                .RefCount();
+            Guid[] newCircumstances = circumstances.Select(x => x.Guid).ToArray();
+            matter.Circumstances = newCircumstances;
+
+            return matter;
         }
-    
+
         // -------------
     }
 }

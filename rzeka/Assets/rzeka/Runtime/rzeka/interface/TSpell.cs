@@ -12,6 +12,8 @@ namespace Rzeka
         [CanBeNull] public string ParentGameObjectName { get; set; }
     }
     
+    
+    // TODO rework as an abstract class and add its implementations / generators to within specific spells
     public interface ISerializableSpell
     {
         Guid guid { get; set; }
@@ -95,16 +97,15 @@ namespace Rzeka
         {
             /* ⭐ ---- ---- */
             
-            var occurence = new MatterOccurence
+            var occurence = new ExceptionOccurence()
             {
                 Guid = Guid.NewGuid(),
                 Timestamp = DateTimeOffset.Now,
-                MatterOccurenceCategory = MatterOccurenceCategory.Error,
                 Source = this,
-                Luggage = new ExceptionalLuggage(ex)
+                Exception = ex
             };
 
-            Eris.PublishMatterOccurence(occurence);
+            Eris.PublishExceptionOccurence(occurence);
             
             /* ---- ---- 🌠 */
         }
