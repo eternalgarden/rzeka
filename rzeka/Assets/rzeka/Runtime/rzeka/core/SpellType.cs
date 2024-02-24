@@ -19,7 +19,8 @@ namespace Rzeka
     public enum OccurenceCategory
     {
         Spell,
-        Matter
+        Matter,
+        Message
     }
 
     public enum MatterOccurenceCategory 
@@ -41,10 +42,11 @@ namespace Rzeka
     public interface IOccurence
     {
         Guid Guid { get; set; }
-        DateTimeOffset Timestamp  { get; set; }
-        TSpell Source { get; set; }
+        DateTimeOffset Timestamp { get; set; }
     }
     
+    // TODO get rid of this derp, using messages instead
+    [Obsolete]
     [Serializable]
     public class ExceptionOccurence : IOccurence
     {

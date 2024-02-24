@@ -15,6 +15,7 @@ namespace Rzeka
         void OpenConsole();
         void ReceiveSpellOccurence(SerializableSpellOccurence occurence);
         void ReceiveMatterOccurence(SerializableMatterOccurence occurence);
+        void ReceiveMessage(SerializableMessageOccurence messageOccurence);
     }
 
     public interface IManaInformationProvideable
@@ -109,6 +110,25 @@ namespace Rzeka
             {
                 Debug.LogError($"<color=red>Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}</color>");
             }
+        }
+
+        public void PublishMessage(MessageOccurence messageOccurence)
+        {
+            var serializableMess = new SerializableMessageOccurence()
+            {
+                guid = messageOccurence.Guid,
+                circumstances = messageOccurence.Circumstances,
+                timestamp = messageOccurence.Timestamp.ToUnixTimeSeconds(),
+                messageType = messageOccurence.MessageType,
+                message = messageOccurence.Message, // * custom serializer
+                exception =  new SerializableException()
+                {
+                    message = messageOccurence.Exception is not null ? messageOccurence.Exception.Message : "null",
+                    stackTrace = messageOccurence.Exception is not null ? messageOccurence.Exception.StackTrace : "null"
+                }
+            };
+            
+            Emanation.ReceiveMessage(serializableMess);
         }
 
         public Eris()

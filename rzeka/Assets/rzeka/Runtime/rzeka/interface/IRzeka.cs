@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reactive.Joins;
 using System.Runtime.CompilerServices;
-using UnityEngine;
 
 [assembly:InternalsVisibleTo("com.rzeka.tests.playmode")]
 
 namespace Rzeka
 {
-    public interface IRzeka : IDisposable
+    public interface IRzeka : IRzekaLogFairy, IDisposable
     {
         Eris Eris { get; } // TODO make Eris internal
         IDisposable Strand<TOut>(object who, IObservable<TOut> spell) where TOut : TMatter;

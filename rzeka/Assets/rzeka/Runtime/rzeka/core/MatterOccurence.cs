@@ -10,7 +10,9 @@ namespace Rzeka
         public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
         public TMatter Matter { get; set; }
     }
-
+    
+    // WARNING! VARIABLE NAMES CHANGE-SENSITIVE.
+    // NAMING IS USED DIRECTLY IN UI-WEB
     public struct SerializableMatterOccurence
     {
         public OccurenceCategory occurenceCategory => OccurenceCategory.Matter;
