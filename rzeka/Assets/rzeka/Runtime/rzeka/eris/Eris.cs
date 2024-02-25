@@ -33,6 +33,8 @@ namespace Rzeka
 
         public void ActivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
+            /* 🦠🦴 */
+
             if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
 
             Type key = strandingSpell.ConjuredType;
@@ -44,10 +46,14 @@ namespace Rzeka
             _availableConjurers[key].Add(strandingSpell.Guid);
 
             LastChangedType = key;
+
+            /* 🦠🦴 */
         }
 
         public void DectivateConjurer([NotNull] TStrandingSpell strandingSpell)
         {
+            /* 🧩 */
+
             if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
 
             Type key = strandingSpell.ConjuredType;
@@ -59,11 +65,17 @@ namespace Rzeka
             _availableConjurers[key].Remove(strandingSpell.Guid);
 
             LastChangedType = key;
+
+            /* 🧩 */
         }
 
         public bool IsManaOfTypeAvailable<T>() where T : TMatter
         {
+            /* ⚒️⚗️🛠️ */
+
             return IsManaOfTypeAvailable(typeof(T));
+
+            /* ⚒️⚗️🛠️ */
         }
 
         public bool IsManaOfTypeAvailable(Type type)
