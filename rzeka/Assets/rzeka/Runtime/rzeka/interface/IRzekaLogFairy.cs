@@ -43,9 +43,9 @@ namespace Rzeka
     
     public interface IRzekaLogFairy
     {
-        void Beseech(string message, params TMatter[] circumstances);
-        void Beseech(string message, MessageType messageType, params TMatter[] circumstances);
-        void Beseech(Exception exception, params TMatter[] circumstances);
+        void Speak(string message, params TMatter[] circumstances);
+        void Speak(string message, MessageType messageType, params TMatter[] circumstances);
+        void Speak(Exception exception, params TMatter[] circumstances);
     }
 
     public class LogFairy : IRzekaLogFairy
@@ -57,7 +57,7 @@ namespace Rzeka
             Eris = eris;
         }
 
-        public void Beseech(string message, params TMatter[] circumstances)
+        public void Speak(string message, params TMatter[] circumstances)
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();
@@ -72,7 +72,7 @@ namespace Rzeka
 #endif
         }
 
-        public void Beseech(string message, MessageType messageType, params TMatter[] circumstances)
+        public void Speak(string message, MessageType messageType, params TMatter[] circumstances)
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();
@@ -95,7 +95,7 @@ namespace Rzeka
 #endif
         }
 
-        public void Beseech(Exception exception, params TMatter[] circumstances)
+        public void Speak(Exception exception, params TMatter[] circumstances)
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();

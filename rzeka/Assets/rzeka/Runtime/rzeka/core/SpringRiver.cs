@@ -30,19 +30,19 @@ namespace Rzeka
 
         #region Log Inteface
 
-        public void Beseech(string message, params TMatter[] circumstances)
+        public void Speak(string message, params TMatter[] circumstances)
         {
-            LogFairy.Beseech(message, circumstances);
+            LogFairy.Speak(message, circumstances);
         }
 
-        public void Beseech(string message, MessageType messageType, params TMatter[] circumstances)
+        public void Speak(string message, MessageType messageType, params TMatter[] circumstances)
         {
-            LogFairy.Beseech(message, messageType, circumstances);
+            LogFairy.Speak(message, messageType, circumstances);
         }
 
-        public void Beseech(Exception exception, params TMatter[] circumstances)
+        public void Speak(Exception exception, params TMatter[] circumstances)
         {
-            LogFairy.Beseech(exception, circumstances);
+            LogFairy.Speak(exception, circumstances);
         }
 
         #endregion
