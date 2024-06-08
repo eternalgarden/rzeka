@@ -2,17 +2,6 @@
 
 namespace Rzeka
 {
-    public struct MatterOccurence : IOccurence
-    {
-        public Guid Guid { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
-        public TSpell Source { get; set; }
-        public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
-        public TMatter Matter { get; set; }
-    }
-    
-    // WARNING! VARIABLE NAMES CHANGE-SENSITIVE.
-    // NAMING IS USED DIRECTLY IN UI-WEB
     public struct SerializableMatterOccurence
     {
         public OccurenceCategory occurenceCategory => OccurenceCategory.Matter;

@@ -11,9 +11,15 @@ namespace Rzeka.Unirx
         static bool _initialized;
 
         readonly Subject<long> _everyUpdate = new();
+        readonly Subject<long> _lateUpdate = new();
+        readonly Subject<long> _fixedUpdate = new();
         internal IObservable<long> EveryUpdate => _everyUpdate.AsObservable();
+        internal IObservable<long> EveryLateUpdate => _lateUpdate.AsObservable();
+        internal IObservable<long> EveryFixedUpdate => _fixedUpdate.AsObservable();
 
         long _updateTick = 0;
+        long _lateUpdateTick = 0;
+        long _fixedUpdateTick = 0;
 
         public static bool IsInitialized
         {
@@ -34,7 +40,7 @@ namespace Rzeka.Unirx
             }
         }
 
-        private static void Initialize()
+        static void Initialize()
         {
             if (!_initialized)
             {
@@ -42,7 +48,7 @@ namespace Rzeka.Unirx
             }
         }
 
-        private void Awake()
+        void Awake()
         {
             if (_instance == null)
             {
@@ -61,18 +67,28 @@ namespace Rzeka.Unirx
             }
         }
 
-        private void Update()
+        void Update()
         {
             _everyUpdate.OnNext(_updateTick++);
         }
 
-        private void OnDestroy()
+        void LateUpdate()
+        {
+            _lateUpdate.OnNext(_lateUpdateTick++);
+        }
+
+        void FixedUpdate()
+        {
+            _fixedUpdate.OnNext(_fixedUpdateTick++);
+        }
+
+        void OnDestroy()
         {
             _initialized = false;
             _instance = null;
         }
 
-        private void RunUpdateObservables()
+        void RunUpdateObservables()
         {
             throw new NotImplementedException();
         }

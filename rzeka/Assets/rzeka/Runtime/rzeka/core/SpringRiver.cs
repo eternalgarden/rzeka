@@ -25,8 +25,11 @@ namespace Rzeka
         {
             Eris = new Eris();
             Library = new(Eris);
-            LogFairy = new LogFairy(Eris);
+            LogFairy = new ErisianLogFairy(Eris);
         }
+        
+        /* 🐋🐳 */
+
 
         #region Log Inteface
 
@@ -35,18 +38,26 @@ namespace Rzeka
             LogFairy.Speak(message, circumstances);
         }
 
-        public void Speak(string message, MessageType messageType, params TMatter[] circumstances)
+        public void Speak(string message, RzekaMessageType rzekaMessageType, params TMatter[] circumstances)
         {
-            LogFairy.Speak(message, messageType, circumstances);
+            LogFairy.Speak(message, rzekaMessageType, circumstances);
         }
 
         public void Speak(Exception exception, params TMatter[] circumstances)
         {
             LogFairy.Speak(exception, circumstances);
         }
+        
+        public void Speak(string message, Exception exception, params TMatter[] circumstances)
+        {
+            LogFairy.Speak(message, exception, circumstances);
+        }
 
         #endregion
 
+
+        /* 🐋🐳 */
+        
         public IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
             where TOut : TMatter
         {

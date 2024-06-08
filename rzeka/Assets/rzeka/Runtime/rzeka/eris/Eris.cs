@@ -5,86 +5,10 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Rzeka
 {
-    public interface IErisConsulate
-    {
-        void OpenConsole();
-        void ReceiveSpellOccurence(SerializableSpellOccurence occurence);
-        void ReceiveMatterOccurence(SerializableMatterOccurence occurence);
-        void ReceiveMessage(SerializableMessageOccurence messageOccurence);
-    }
-
-    public interface IManaInformationProvideable
-    {
-        Type LastChangedType { get; }
-        bool IsManaOfTypeAvailable<T>() where T : TMatter;
-        bool IsManaOfTypeAvailable(Type type);
-    }
-
-    public class AvailableConjurers : IManaInformationProvideable
-    {
-        readonly Dictionary<Type, HashSet<Guid>> _availableConjurers = new();
-
-        public Type LastChangedType { get; private set; }
-
-        public void ActivateConjurer([NotNull] TStrandingSpell strandingSpell)
-        {
-            /* 🦠🦴 */
-
-            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
-
-            Type key = strandingSpell.ConjuredType;
-            if (_availableConjurers.ContainsKey(key) is false)
-            {
-                _availableConjurers[key] = new HashSet<Guid>();
-            }
-
-            _availableConjurers[key].Add(strandingSpell.Guid);
-
-            LastChangedType = key;
-
-            /* 🦠🦴 */
-        }
-
-        public void DectivateConjurer([NotNull] TStrandingSpell strandingSpell)
-        {
-            /* 🧩 */
-
-            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
-
-            Type key = strandingSpell.ConjuredType;
-
-            if (_availableConjurers.ContainsKey(key) is false) return;
-            if (!_availableConjurers[key].Contains(strandingSpell.Guid)) return;
-
-            // TODO this could use some testing if things are properly removed
-            _availableConjurers[key].Remove(strandingSpell.Guid);
-
-            LastChangedType = key;
-
-            /* 🧩 */
-        }
-
-        public bool IsManaOfTypeAvailable<T>() where T : TMatter
-        {
-            /* ⚒️⚗️🛠️ */
-
-            return IsManaOfTypeAvailable(typeof(T));
-
-            /* ⚒️⚗️🛠️ */
-        }
-
-        public bool IsManaOfTypeAvailable(Type type)
-        {
-            // TODO rework to consider stateful matter as always available
-            return _availableConjurers.ContainsKey(type) && _availableConjurers[type].Count > 0;
-        }
-    }
-
     public class Eris : IDisposable
     {
         readonly Library _library;
@@ -126,21 +50,8 @@ namespace Rzeka
 
         public void PublishMessage(MessageOccurence messageOccurence)
         {
-            var serializableMess = new SerializableMessageOccurence()
-            {
-                guid = messageOccurence.Guid,
-                circumstances = messageOccurence.Circumstances,
-                timestamp = messageOccurence.Timestamp.ToUnixTimeSeconds(),
-                messageType = messageOccurence.MessageType,
-                message = messageOccurence.Message, // * custom serializer
-                exception =  new SerializableException()
-                {
-                    message = messageOccurence.Exception is not null ? messageOccurence.Exception.Message : "null",
-                    stackTrace = messageOccurence.Exception is not null ? messageOccurence.Exception.StackTrace : "null"
-                }
-            };
-            
-            Emanation.ReceiveMessage(serializableMess);
+            // TODO Rework other serializable occurence baking like that
+            Emanation.ReceiveMessage(SerializableMessageOccurence.FromMessageOccurence(messageOccurence));
         }
 
         public Eris()
@@ -262,6 +173,9 @@ namespace Rzeka
         // TODO 🧙🏻 wow this is complicated
         // TODO why?
         // TODO add2. and why is it here, if anything, wouldn't that be better off in library, could it be there?
+        // TODO THIS IS REALLY ITCHY
+        // TODO TOTES SHOULD *NOT* BE HERE
+        // TODO mana stream is referenced by TBindingSpell !!!! ridiculous
         void InitializeManaStreamMystery()
         {
             // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES

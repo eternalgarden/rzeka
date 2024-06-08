@@ -24,6 +24,16 @@ namespace Rzeka.Unirx
         {
             return NewDispatcher.Instance.EveryUpdate;
         }
+        
+        public static IObservable<long> EveryLateUpdate()
+        {
+            return NewDispatcher.Instance.EveryLateUpdate;
+        }
+        
+        public static IObservable<long> EveryFixedUpdate()
+        {
+            return NewDispatcher.Instance.EveryFixedUpdate;
+        }
     }
 
     /* ---- ---- ? */
