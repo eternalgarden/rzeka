@@ -13,7 +13,7 @@ namespace Rzeka
     {
         // -------------
     
-        public static bool RespondsTo<TRequest, TResponse>(this TResponse response, TRequest request)
+        public static bool IsRespondingTo<TRequest, TResponse>(this TResponse response, TRequest request)
             where TRequest : IRequest
             where TResponse : IResponse<TRequest>
         {
@@ -29,6 +29,31 @@ namespace Rzeka
             return matter;
         }
 
+        public static bool IsCircumstancedBy<T,U>(this T matter, U other, int maxDepth = 3)
+            where T : TMatter
+            where U : TMatter
+        {
+            if (maxDepth <=0) return false;
+            
+            foreach (TMatter circumstance in matter.Circumstances)
+            {
+                if (other.Equals(circumstance))
+                {
+                    return true;
+                }
+            }
+            
+            foreach (TMatter circumstance in matter.Circumstances)
+            {
+                if (circumstance.IsCircumstancedBy(other, maxDepth - 1))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        
         // -------------
     }
 }

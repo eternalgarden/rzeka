@@ -37,11 +37,7 @@ namespace Rzeka
 
             IObservable<Glyph<T1, T2>> obs = ingredientT1
                 .CombineLatest(ingredientT2)
-                .Select(comb => new Glyph<T1, T2>
-                {
-                    One = comb.First,
-                    Two = comb.Second
-                });
+                .Select(comb => new Glyph<T1, T2>(comb.First, comb.Second));
             
             Q += _spell.Invoke(obs);
 

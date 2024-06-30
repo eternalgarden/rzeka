@@ -56,11 +56,10 @@ namespace Rzeka
                 {
                     lastT3 = nextT;
                 });
-            
-            IObservable<Glyph<T1,T2,T3>> observable = ingredient1
+
+            IObservable<Glyph<T1, T2, T3>> observable = ingredient1
                 .CombineLatest(ingredient2, ingredient3)
-                .Select(anon => new Glyph<T1, T2, T3>() 
-                    { One = anon.First, Two = anon.Second, Three = anon.Third});
+                .Select(anon => new Glyph<T1, T2, T3>(anon.First, anon.Second, anon.Third)); 
 
             var conjuring = _spell
                 .Invoke(observable)

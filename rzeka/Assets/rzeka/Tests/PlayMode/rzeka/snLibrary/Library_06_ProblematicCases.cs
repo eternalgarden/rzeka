@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using NUnit.Framework;
 using UnityEditor;
@@ -83,7 +84,7 @@ namespace Rzeka.Tests.Library
             stranding = _rzeka.Strand<ArbitraryMatter1>(
                 this,
                 Observable
-                    .Timer(TimeSpan.FromSeconds(0.5))
+                    .Timer(TimeSpan.FromSeconds(0.5), Scheduler.Immediate)
                     .Select(_ => new ArbitraryMatter1("oik")));
             
             yield return new WaitForSeconds(0.7f);
