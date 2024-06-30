@@ -4,43 +4,25 @@ using UnityEngine;
 
 namespace Rzeka.Tests
 {
-    public struct ANumber : TMatter
+    public class ANumber : Rzeka.Matter
     {
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
-        
         public ANumber(int number)
         {
-            Guid = Guid.NewGuid();
-            Type = typeof(ANumber);
-            Circumstances = new Guid[] { };
-            
             Number = number;
         }
 
         public int Number { get; }
     }
-    public struct AName : TMatter
+    public class AName : Rzeka.Matter
     {
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
-        
         public AName(string name)
         {
-            Guid = Guid.NewGuid();
-            Type = typeof(AName);
-            Circumstances = new Guid[] { };
-            
             Name = name;
         }
 
         public string Name { get; }
     }
-    public struct UserData : TMatter
+    public class UserData : Rzeka.Matter
     {
         sealed class NameZodiacFavNumberEqualityComparer : IEqualityComparer<UserData>
         {
@@ -58,18 +40,9 @@ namespace Rzeka.Tests
         }
 
         public static IEqualityComparer<UserData> NameZodiacFavNumberComparer { get; } = new NameZodiacFavNumberEqualityComparer();
-
-        public string Description => "Test matter of user data";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
         
         public UserData(string name, string zodiac, int favNumber)
         {
-            Guid = Guid.NewGuid();
-            Type = typeof(UserData);
-            Circumstances = new Guid[] { };
-            
             Name = name;
             Zodiac = zodiac;
             FavNumber = favNumber;
@@ -79,26 +52,17 @@ namespace Rzeka.Tests
         public string Zodiac { get; }
         public int FavNumber { get; }
     }
-    public struct UserWelcomingText : TMatter
+    public class UserWelcomingText : Rzeka.Matter
     {
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type { get; }
-        
         public UserWelcomingText(string welcomingText)
         {
-            Guid = Guid.NewGuid();
-            Type = typeof(UserWelcomingText);
-            Circumstances = new Guid[] { };
-            
             WelcomingText = welcomingText;
         }
 
         public string WelcomingText { get; }
     }
     
-    public struct ArbitraryMatter1 : TMatter
+    public class ArbitraryMatter1 : Rzeka.Matter
     {
         sealed class TextEqualityComparer : IEqualityComparer<ArbitraryMatter1>
         {
@@ -115,22 +79,23 @@ namespace Rzeka.Tests
 
         public static IEqualityComparer<ArbitraryMatter1> TextComparer { get; } = new TextEqualityComparer();
 
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
+        
         public Type Type => typeof(ArbitraryMatter1);
+        
+        public ArbitraryMatter1()
+        {
+            Text = "lol";
+        }
         
         public ArbitraryMatter1(string text)
         {
-            Guid = Guid.NewGuid();
-            Circumstances = new Guid[] { };
             Text = text;
         }
 
         public string Text { get; }
     }
     
-    public struct ArbitraryMatter2 : TMatter
+    public class ArbitraryMatter2 : Rzeka.Matter
     {
         sealed class TextEqualityComparer : IEqualityComparer<ArbitraryMatter2>
         {
@@ -147,22 +112,23 @@ namespace Rzeka.Tests
 
         public static IEqualityComparer<ArbitraryMatter2> TextComparer { get; } = new TextEqualityComparer();
 
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
+        
         public Type Type => typeof(ArbitraryMatter2);
+        
+        public ArbitraryMatter2()
+        {
+            Text = "lol";
+        }
         
         public ArbitraryMatter2(string text)
         {
-            Guid = Guid.NewGuid();
-            Circumstances = new Guid[] { };
             Text = text;
         }
 
         public string Text { get; }
     }
     
-    public struct ArbitraryMatter3 : TMatter
+    public class ArbitraryMatter3 : Rzeka.Matter
     {
         sealed class TextEqualityComparer : IEqualityComparer<ArbitraryMatter3>
         {
@@ -179,15 +145,11 @@ namespace Rzeka.Tests
 
         public static IEqualityComparer<ArbitraryMatter3> TextComparer { get; } = new TextEqualityComparer();
 
-        public string Description => "Test matter carrying hypothetical welcoming text";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
+        
         public Type Type => typeof(ArbitraryMatter3);
         
-        public ArbitraryMatter3(string text)
+        public ArbitraryMatter3(string text = "lol")
         {
-            Guid = Guid.NewGuid();
-            Circumstances = new Guid[] { };
             Text = text;
         }
 
@@ -195,17 +157,15 @@ namespace Rzeka.Tests
     }
     
     [HasState]
-    public struct ArbitraryStatefulMatter1 : TMatter
+    public class ArbitraryStatefulMatter1 : Rzeka.Matter
     {
-        public string Description => "";
-        public Guid Guid { get; set; }
-        public Guid[] Circumstances { get; set; }
-        public Type Type => typeof(ArbitraryStatefulMatter1);
+        public ArbitraryStatefulMatter1()
+        {
+            State = 0;
+        }
         
         public ArbitraryStatefulMatter1(int state)
         {
-            Guid = Guid.NewGuid();
-            Circumstances = new Guid[] { };
             State = state;
         }
 

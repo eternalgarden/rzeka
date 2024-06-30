@@ -36,8 +36,10 @@ namespace Rzeka.Tests.Rx
             int receivals = 0;
 
             using var oik = mergedObservable.Subscribe(_ => receivals++);
-
-            yield return new WaitForSeconds(0.35f); // ! 0.35 meaning 3 ticks going through
+            
+            yield return EditorFakeDelay(2f);
+            // yield return null;
+            // yield return new WaitForSeconds(0.35f); // ! 0.35 meaning 3 ticks going through
 
             // * notice we are still getting only one receival
             // it's because obs1 gave only one tick and it "blocked" obs2

@@ -23,9 +23,9 @@ namespace Rzeka
         public static T WithCircumstances<T>(this T matter, params TMatter[] circumstances) 
             where T : TMatter
         {
-            Guid[] newCircumstances = circumstances.Select(x => x.Guid).ToArray();
-            matter.Circumstances = newCircumstances;
-
+            matter.Circumstances.Clear();
+            matter.Circumstances.AddRange(circumstances);
+        
             return matter;
         }
 

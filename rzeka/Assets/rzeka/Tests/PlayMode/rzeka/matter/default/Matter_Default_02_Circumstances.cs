@@ -55,7 +55,7 @@ namespace Rzeka.Tests.Matter.Default
             bool areAny = false;
             
             using var w2 = _tools.Weave_AName(name => {
-                areAny = name.Circumstances is not null && name.Circumstances.Length > 0;
+                areAny = name.Circumstances is not null && name.Circumstances.Count > 0;
             });
             
             using var p1 = _tools.Strand_ANumber_Synchronous(1);
@@ -92,7 +92,7 @@ namespace Rzeka.Tests.Matter.Default
             Guid nameCircumstanceGuid = Guid.NewGuid();
 
             using var w1 = _tools.Weave_ANumber(num => numberGuid = num.Guid);
-            using var w2 = _tools.Weave_AName(name => nameCircumstanceGuid = name.Circumstances[0]);
+            using var w2 = _tools.Weave_AName(name => nameCircumstanceGuid = name.Circumstances[0].Guid);
             
             using var p1 = _tools.Strand_ANumber_Synchronous(1); // * both will be separately woven
 

@@ -1,6 +1,5 @@
 using System;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Rzeka.Internal
 {

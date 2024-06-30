@@ -1,6 +1,3 @@
-using System;
-using System.Reactive.Linq;
-
 namespace Looming
 {
     public static class RzekaOperators

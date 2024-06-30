@@ -1,6 +1,3 @@
-using System;
-using System.Reactive.Linq;
-
 namespace Rzeka.Operators
 {
     public static class Operators

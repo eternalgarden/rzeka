@@ -260,10 +260,7 @@ namespace Rzeka.Tests
         {
             // TODO REALLY NEED A FACTORY FOR MATTER
             // returning new T() will skip all guid setting and important matter info
-            var t = new T
-            {
-                Guid = Guid.NewGuid()
-            };
+            var t = new T();
 
             return _rzeka.Strand<T>(
                 who: this,

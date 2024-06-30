@@ -1,6 +1,5 @@
 using Rzeka;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
@@ -26,7 +25,7 @@ namespace SpellsAndData
     public interface IRequest : TMatter { }
     public interface IResponse<T> : TMatter where T : IRequest
     {
-        T Request { get; set; }
+        T Request { get; }
     }
 
     public interface TAllowingMultipleSources<T> where T : TMatter

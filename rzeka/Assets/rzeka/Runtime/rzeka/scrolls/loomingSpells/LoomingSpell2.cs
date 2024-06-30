@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reactive.Joins;
 using System.Reactive.Linq;
-using System.Reactive.Subjects;
 
 namespace Rzeka
 {

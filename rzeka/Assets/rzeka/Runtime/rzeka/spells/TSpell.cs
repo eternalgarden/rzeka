@@ -1,5 +1,4 @@
 using System;
-using System.Reactive.Subjects;
 using JetBrains.Annotations;
 
 namespace Rzeka

@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using UnityEngine;
 using Rzeka.Unirx;
 using Observable = System.Reactive.Linq.Observable; // TODO remove observable implementation from unirx
 using TMPro;
 using UnityEngine.UI;
-using System.Threading;
-using System.Reactive.Subjects;
 using Rzeka;
 
 namespace Looming
@@ -59,12 +55,12 @@ namespace Looming
         }
     }
 
-    public struct ProvideDataForThoseIndices : IMatter
-    {
-        public string[] stringsForIndices;
-
-        public string Description => throw new NotImplementedException();
-    }
+    // public struct ProvideDataForThoseIndices : IMatter
+    // {
+    //     public string[] stringsForIndices;
+    //
+    //      throw new NotImplementedException();
+    // }
 
     public struct RequestDataForIndexRangeV2 : IMatter, IQuestion<RequestDataForIndexRangeV2.Answer>
     {

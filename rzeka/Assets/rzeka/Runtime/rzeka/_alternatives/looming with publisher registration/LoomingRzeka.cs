@@ -13,11 +13,9 @@ https://github.com/neuecc/UniRx
 //using System.Linq;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Disposables;
 using System.Reactive.Joins;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Threading;
 using UnityEngine;
 
 /*

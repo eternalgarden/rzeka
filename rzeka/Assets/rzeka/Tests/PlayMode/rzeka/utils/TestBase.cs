@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.TestTools;
 
@@ -44,6 +45,17 @@ namespace Rzeka.Tests
             yield return null;
 
             // -------------
+        }
+        
+        // Cos u cant suddenly use yield return other than null, so no WaitForSeconds
+        protected static IEnumerable EditorFakeDelay(float delaySeconds)
+        {
+            DateTime startTime = DateTime.UtcNow;
+            do
+            {
+                yield return null;
+            }
+            while ((DateTime.UtcNow - startTime).TotalMilliseconds < delaySeconds * 1000);
         }
 
         protected static void AssertEqual<T>(T expected, T actual)

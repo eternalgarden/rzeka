@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using Rzeka.Serialization;
 
 namespace Rzeka
 {
@@ -9,7 +11,7 @@ namespace Rzeka
         public long timestamp  { get; set; } // in unix seconds
         public ISerializableSpell spell { get; set; }
         public MatterOccurenceCategory matterOccurenceCategory { get; set; }
-        public Type matterType { get; set; } // * we use a custom serializer for Type
+        [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; set; } // * we use a custom serializer for Type
         public TMatter matter { get; set; }
     }
 }

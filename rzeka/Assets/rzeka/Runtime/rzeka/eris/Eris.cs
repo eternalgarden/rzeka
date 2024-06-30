@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Rzeka
@@ -109,6 +108,8 @@ namespace Rzeka
                             matterType = occ.Matter.GetType(), // * custom serializer
                             matterOccurenceCategory = occ.MatterOccurenceCategory
                         };
+                        
+                        // Debug.Log($"<color=yellow>{JsonConvert.SerializeObject(mocc)}</color>");
 
                         return mocc;
                     }
