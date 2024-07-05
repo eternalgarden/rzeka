@@ -9,15 +9,12 @@ namespace Rzeka.Serialization
         
         public override void WriteJson(JsonWriter writer, List<TMatter> value, JsonSerializer serializer)
         {
-            writer.WriteStartObject();
-            writer.WritePropertyName("Circumstances");
             writer.WriteStartArray();
             foreach (TMatter matter in value)
             {
                 writer.WriteValue(matter.Guid);
             }
             writer.WriteEndArray();
-            writer.WriteEndObject();
         }
 
         public override List<TMatter> ReadJson(JsonReader reader, Type objectType, List<TMatter> existingValue, bool hasExistingValue,
