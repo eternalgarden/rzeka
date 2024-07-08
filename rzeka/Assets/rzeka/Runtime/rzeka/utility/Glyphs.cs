@@ -5,11 +5,14 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 
+using System;
+
 namespace Rzeka
 {
     public interface IGlyph
     {
         int Size { get; }
+        Guid[] Guids { get; }
     }
     
     public class Glyph<T1, T2> : IGlyph
@@ -19,7 +22,8 @@ namespace Rzeka
         // -------------
 
         public int Size => 2;
-        
+        public Guid[] Guids => new[] { One.Guid, Two.Guid };
+
         public T1 One { get; }
         public T2 Two { get; }
 
@@ -35,10 +39,12 @@ namespace Rzeka
     public class Glyph<T1, T2, T3> : IGlyph
         where T1 : TMatter
         where T2 : TMatter
+        where T3 : TMatter
     {
         // -------------
 
         public int Size => 3;
+        public Guid[] Guids => new[] { One.Guid, Two.Guid, Three.Guid };
 
         public T1 One { get; }
         public T2 Two { get; }

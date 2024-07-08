@@ -15,15 +15,17 @@ namespace Rzeka
 
         CollectibleDisposable Q { get; set; }
 
-        Queue<SerializableSpellOccurence> spellOccQueue { get; } = new();
-        Queue<SerializableMatterOccurence> matterOccQueue { get; } = new();
+        Queue<SerializableSpellOccurence> spellOccurenceQueue { get; } = new();
+        Queue<SerializableMatterOccurence> matterOccurenceQueue { get; } = new();
+        Queue<SerializableMessageOccurence> messageOccurenceQueue { get; } = new();
 
         public IObservable<SpellOccurence> SpellOccurences => SpellStream.AsObservable();
         public IObservable<MatterOccurence> MatterOccurences => MatterStream.AsObservable();
 
-        Subject<SpellOccurence> SpellStream { get; }
-        Subject<MatterOccurence> MatterStream { get; }
-        Subject<ExceptionOccurence> ExceptionStream { get; }
+        Subject<SpellOccurence> SpellStream { get; } = new();
+        Subject<MatterOccurence> MatterStream { get; } = new();
+        Subject<ExceptionOccurence> ExceptionStream { get; } = new();
+        Subject<MessageOccurence> MessageStream { get; } = new();
 
         public IObservable<IManaInformationProvideable> ManaProvideableObservable { get; private set; }
 
@@ -39,33 +41,35 @@ namespace Rzeka
 
         public void PublishMatterOccurence(MatterOccurence matterOccurence)
         {
-            MatterStream.OnNext(matterOccurence);
-
             if (Environment.CurrentManagedThreadId != 1)
             {
                 Debug.LogError($"<color=red>Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}</color>");
             }
+            
+            MatterStream.OnNext(matterOccurence);
         }
 
         public void PublishMessage(MessageOccurence messageOccurence)
         {
+            if (Environment.CurrentManagedThreadId != 1)
+            {
+                Debug.LogError($"<color=red>Left the main thread for Message: {messageOccurence.Message}");
+            }
+            
             // TODO Rework other serializable occurence baking like that
-            Emanation.ReceiveMessage(SerializableMessageOccurence.FromMessageOccurence(messageOccurence));
+            MessageStream.OnNext(messageOccurence);
         }
 
         public Eris()
         {
             Q = new CollectibleDisposable();
 
-            SpellStream = new Subject<SpellOccurence>();
-            MatterStream = new Subject<MatterOccurence>();
-            ExceptionStream = new Subject<ExceptionOccurence>();
-
             InitializeManaStreamMystery();
 
             SubscribeSpellStream();
             SubscribeMatterStream();
             SubscribeExceptionStream();
+            SubscribeMessageStream();
         }
 
         void SubscribeExceptionStream()
@@ -123,15 +127,15 @@ namespace Rzeka
                 {
                     if (Emanation is null)
                     {
-                        matterOccQueue.Enqueue(occ);
+                        matterOccurenceQueue.Enqueue(occ);
                         return;
                     }
 
-                    if (matterOccQueue.Count > 0)
+                    if (matterOccurenceQueue.Count > 0)
                     {
-                        while (matterOccQueue.Count > 0)
+                        while (matterOccurenceQueue.Count > 0)
                         {
-                            Emanation.ReceiveMatterOccurence(matterOccQueue.Dequeue());
+                            Emanation.ReceiveMatterOccurence(matterOccurenceQueue.Dequeue());
                         }
                     }
 
@@ -153,21 +157,47 @@ namespace Rzeka
 
                 if (Emanation is null)
                 {
-                    spellOccQueue.Enqueue(serializableOcc);
+                    spellOccurenceQueue.Enqueue(serializableOcc);
                     return;
                 }
                 else
                 {
-                    if (spellOccQueue.Count > 0)
+                    if (spellOccurenceQueue.Count > 0)
                     {
-                        while (spellOccQueue.Count > 0)
+                        while (spellOccurenceQueue.Count > 0)
                         {
-                            Emanation.ReceiveSpellOccurence(spellOccQueue.Dequeue());
+                            Emanation.ReceiveSpellOccurence(spellOccurenceQueue.Dequeue());
                         }
                     }
                 }
 
                 Emanation.ReceiveSpellOccurence(serializableOcc);
+            });
+        }
+
+        void SubscribeMessageStream()
+        {
+            Q += MessageStream.Subscribe(occ =>
+            {
+                SerializableMessageOccurence serializableMessage = SerializableMessageOccurence.FromMessageOccurence(occ);
+
+                if (Emanation is null)
+                {
+                    messageOccurenceQueue.Enqueue(serializableMessage);
+                    return;
+                }
+                else
+                {
+                    if (messageOccurenceQueue.Count > 0)
+                    {
+                        while (messageOccurenceQueue.Count > 0)
+                        {
+                            Emanation.ReceiveMessage(messageOccurenceQueue.Dequeue());
+                        }
+                    }
+                }
+
+                Emanation.ReceiveMessage(serializableMessage);
             });
         }
 
