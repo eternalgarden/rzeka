@@ -3,8 +3,8 @@
     public interface IErisConsulate
     {
         void OpenConsole();
-        void ReceiveSpellOccurence(SerializableSpellOccurence occurence);
-        void ReceiveMatterOccurence(SerializableMatterOccurence occurence);
+        void ReceiveSpellOccurence(ISerializableSpellOccurence occurence);
+        void ReceiveMatterOccurence(ISerializableMatterOccurence occurence);
         void ReceiveMessage(SerializableMessageOccurence messageOccurence);
     }
 }

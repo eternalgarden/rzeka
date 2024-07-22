@@ -21,9 +21,9 @@ namespace Rzeka.Serialization
             writer.WriteValue(GetName(value));
             writer.WritePropertyName("namespace");
             writer.WriteValue(value.Namespace);
-            writer.WritePropertyName("baseTypeName");
+            // writer.WritePropertyName("baseTypeName");
             // writer.WriteValue(IsBaseTypeSystemType(value) ? "None" : value.BaseType);
-            writer.WriteValue(value.BaseType is not null ? value.BaseType.FullName : "null");
+            // writer.WriteValue(value.BaseType is not null ? value.BaseType.FullName : "null");
             writer.WriteEndObject();
         }
 
@@ -31,7 +31,7 @@ namespace Rzeka.Serialization
         {
             if (value.IsGenericType)
             {
-                UnityEngine.Debug.Log($"<color=orange>xxx</color>");
+                // UnityEngine.Debug.Log($"<color=orange>xxx</color>");
                 StringBuilder builder = new();
                 builder.Append("<");
                 builder.AppendJoin(char.Parse(","), value.GenericTypeArguments.Select(x => x.Name));

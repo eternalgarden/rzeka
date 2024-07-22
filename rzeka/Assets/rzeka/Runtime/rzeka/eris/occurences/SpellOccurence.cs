@@ -7,7 +7,6 @@ namespace Rzeka
         public Guid Guid { get; set; }
         public DateTimeOffset Timestamp { get; set; }
         public TSpell Source { get; set; }
-
         public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
     }
 }

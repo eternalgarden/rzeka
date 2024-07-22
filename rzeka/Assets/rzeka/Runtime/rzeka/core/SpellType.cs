@@ -11,7 +11,7 @@ namespace Rzeka
 {
     public enum SpellSchool 
     { 
-        Stranding, // todo big renaming work after this
+        Stranding, // todo big renaming work after this // so was it done?
         Looming, 
         Weaving 
     }

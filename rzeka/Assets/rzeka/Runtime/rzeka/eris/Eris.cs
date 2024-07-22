@@ -15,8 +15,8 @@ namespace Rzeka
 
         CollectibleDisposable Q { get; set; }
 
-        Queue<SerializableSpellOccurence> spellOccurenceQueue { get; } = new();
-        Queue<SerializableMatterOccurence> matterOccurenceQueue { get; } = new();
+        Queue<ISerializableSpellOccurence> spellOccurenceQueue { get; } = new();
+        Queue<ISerializableMatterOccurence> matterOccurenceQueue { get; } = new();
         Queue<SerializableMessageOccurence> messageOccurenceQueue { get; } = new();
 
         public IObservable<SpellOccurence> SpellOccurences => SpellStream.AsObservable();
@@ -99,28 +99,34 @@ namespace Rzeka
             Q += MatterStream
                 // TODO temporary lock on high velocity matter
                 .Where(occ => occ.Matter?.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length == 0)
-                .Select(occ =>
+                .Select<MatterOccurence, ISerializableMatterOccurence>(occ =>
                 {
                     try
                     {
-                        var mocc = new SerializableMatterOccurence()
+                        switch (occ.MatterOccurenceCategory)
                         {
-                            guid = occ.Guid,
-                            timestamp = occ.Timestamp.ToUnixTimeSeconds(),
-                            spell = GetSerializableSpell(occ.Source),
-                            matter = occ.Matter,
-                            matterType = occ.Matter.GetType(), // * custom serializer
-                            matterOccurenceCategory = occ.MatterOccurenceCategory
-                        };
-                        
-                        // Debug.Log($"<color=yellow>{JsonConvert.SerializeObject(mocc)}</color>");
-
-                        return mocc;
+                            case MatterOccurenceCategory.Shaped:
+                                return new SerializableShapedMatter(
+                                    occ.Guid,
+                                    occ.Timestamp.ToUnixTimeSeconds(),
+                                    GetSerializableSpell(occ.Source),
+                                    occ.Matter.GetType(), // * custom serializer
+                                    occ.Matter
+                                );
+                            case MatterOccurenceCategory.Received:
+                                return new SerializableReceivedMatter(
+                                    occ.Guid,
+                                    occ.Timestamp.ToUnixTimeSeconds(),
+                                    occ.Matter.GetType(), // * custom serializer
+                                    occ.Matter.Guid);
+                            default:
+                                throw new Exception($"Unhandled matter occurence category {occ.MatterOccurenceCategory}");
+                        }
                     }
                     catch (Exception e)
                     {
                         Debug.LogError($"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}");
-                        throw;
+                        return null;
                     }
                 })
                 .Subscribe(occ =>
@@ -145,19 +151,32 @@ namespace Rzeka
 
         void SubscribeSpellStream()
         {
-            Q += SpellStream.Subscribe(occ =>
+            Q += SpellStream
+                .Where(x => x.SpellOccurenceCategory 
+                    is SpellOccurenceCategory.Created or SpellOccurenceCategory.Forgotten)
+                .Subscribe(occ =>
             {
-                var serializableOcc = new SerializableSpellOccurence()
+                ISerializableSpellOccurence serializableSpellOccurence;
+                
+                if (occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 {
-                    guid = occ.Guid,
-                    timestamp = occ.Timestamp.ToUnixTimeSeconds(),
-                    spell = GetSerializableSpell(occ.Source),
-                    spellOccurenceCategory = occ.SpellOccurenceCategory
-                };
+                    serializableSpellOccurence = new SerializableCreatedSpellOccurence(
+                        occ.Guid,
+                        occ.Timestamp.ToUnixTimeSeconds(),
+                        GetSerializableSpell(occ.Source));
+                }
+                else
+                {
+                    serializableSpellOccurence = new SerializableOtherSpellOccurence(
+                        occ.Guid,
+                        occ.Timestamp.ToUnixTimeSeconds(),
+                        occ.SpellOccurenceCategory,
+                        occ.Source.Guid);
+                }
 
                 if (Emanation is null)
                 {
-                    spellOccurenceQueue.Enqueue(serializableOcc);
+                    spellOccurenceQueue.Enqueue(serializableSpellOccurence);
                     return;
                 }
                 else
@@ -171,7 +190,7 @@ namespace Rzeka
                     }
                 }
 
-                Emanation.ReceiveSpellOccurence(serializableOcc);
+                Emanation.ReceiveSpellOccurence(serializableSpellOccurence);
             });
         }
 
@@ -341,7 +360,7 @@ namespace Rzeka
 
             return weaving;
         }
-
+        
         Who GetWho(TSpell source)
         {
             Type whosType = source.Who.GetType();
