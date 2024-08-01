@@ -15,6 +15,7 @@ namespace Rzeka
     public interface ISerializableMatterOccurence : ISerializableOccurence
     {
         public MatterOccurenceCategory matterOccurenceCategory { get; }
+        public Guid spellGuid { get; }
     }
     
     [Serializable]
@@ -23,15 +24,17 @@ namespace Rzeka
         public OccurenceCategory occurenceCategory => OccurenceCategory.Matter;
         public abstract MatterOccurenceCategory matterOccurenceCategory { get; }
         public Guid guid { get; }
+        public Guid spellGuid { get; }
         public long timestamp  { get; } // in unix seconds
         // public ISerializableSpell spell { get; set; } // TODO rework to just Guid
         // [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; set; } // * we use a custom serializer for Type
         // public TMatter matter { get; set; } // TODO rework so only matter emission contains this
 
-        public SerializableMatterOccurence(Guid guid, long timestamp)
+        public SerializableMatterOccurence(Guid guid, long timestamp, Guid spellGuid)
         {
             this.guid = guid;
             this.timestamp = timestamp;
+            this.spellGuid = spellGuid;
         }
 
     }
@@ -40,22 +43,19 @@ namespace Rzeka
     public class SerializableShapedMatter : SerializableMatterOccurence
     {
         public override MatterOccurenceCategory matterOccurenceCategory => MatterOccurenceCategory.Shaped;
-
-        public ISerializableSpell spell { get; } // TODO rework to just Guid
         [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; } // * we use a custom serializer for Type
         public TMatter matter { get; }
 
         public SerializableShapedMatter(
             Guid guid, 
             long timestamp, 
-            ISerializableSpell spell, 
-            Type matterType, 
+            Type matterType,
+            Guid spellGuid,
             TMatter matter) 
-            : base(guid, timestamp)
+            : base(guid, timestamp, spellGuid)
         {
-            this.spell = spell;
-            this.matterType = matterType;
             this.matter = matter;
+            this.matterType = matterType;
         }
     }
 
@@ -64,16 +64,14 @@ namespace Rzeka
     {
         public override MatterOccurenceCategory matterOccurenceCategory => MatterOccurenceCategory.Received;
         public Guid receivedMatterGuid { get; set; }
-        [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; } // * we use a custom serializer for Type
         
         public SerializableReceivedMatter(
             Guid guid, 
             long timestamp,
-            Type matterType, 
+            Guid spellGuid,
             Guid receivedMatterGuid) 
-            : base(guid, timestamp)
+            : base(guid, timestamp, spellGuid)
         {
-            this.matterType = matterType;
             this.receivedMatterGuid = receivedMatterGuid;
         }
     }

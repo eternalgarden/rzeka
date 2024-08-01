@@ -109,15 +109,15 @@ namespace Rzeka
                                 return new SerializableShapedMatter(
                                     occ.Guid,
                                     occ.Timestamp.ToUnixTimeSeconds(),
-                                    GetSerializableSpell(occ.Source),
                                     occ.Matter.GetType(), // * custom serializer
+                                    occ.Source.Guid,
                                     occ.Matter
                                 );
                             case MatterOccurenceCategory.Received:
                                 return new SerializableReceivedMatter(
                                     occ.Guid,
                                     occ.Timestamp.ToUnixTimeSeconds(),
-                                    occ.Matter.GetType(), // * custom serializer
+                                    occ.Source.Guid,
                                     occ.Matter.Guid);
                             default:
                                 throw new Exception($"Unhandled matter occurence category {occ.MatterOccurenceCategory}");
