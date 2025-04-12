@@ -9,6 +9,8 @@ namespace Rzeka
         where TOut : TMatter
         where T1 : TMatter
     {
+        public override string Title => $"Looming of {typeof(T1).Name}";
+        
         readonly Func<IObservable<T1>, IObservable<TOut>> _spell;
 
         public LoomingSpell1(object who,
@@ -25,6 +27,7 @@ namespace Rzeka
         {
             { typeof(T1), false },
         };
+
 
         protected override IObservable<TOut> CreateConjuring()
         {

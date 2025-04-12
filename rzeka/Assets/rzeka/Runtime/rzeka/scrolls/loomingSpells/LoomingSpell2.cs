@@ -10,6 +10,8 @@ namespace Rzeka
         where T1 : TMatter
         where T2 : TMatter
     {
+        public override string Title => $"Looming of {typeof(T1).Name} and {typeof(T2).Name}";
+        
         readonly Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> _spell;
 
         public LoomingSpell2(object who,

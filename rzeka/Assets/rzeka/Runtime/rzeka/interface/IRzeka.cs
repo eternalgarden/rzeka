@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace Rzeka
 {
+    // TODO IDisposable should be hidden and related only directly to the instance
     public interface IRzeka : IRzekaLogFairy, IDisposable
     {
         Eris Eris { get; } // TODO make Eris internal

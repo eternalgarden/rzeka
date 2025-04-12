@@ -53,6 +53,7 @@ namespace Rzeka
         {
             if (Environment.CurrentManagedThreadId != 1)
             {
+                // TODO this message is probably stoopid cos if it wasnt thread 1 it wont disply this message anyways
                 Debug.LogError($"<color=red>Left the main thread for Message: {messageOccurence.Message}");
             }
             
@@ -70,6 +71,13 @@ namespace Rzeka
             SubscribeMatterStream();
             SubscribeExceptionStream();
             SubscribeMessageStream();
+        }
+
+        public void Dispose()
+        {
+            Debug.Log($"<color=#FF69B4>༼ つ ◕_◕ ༽つ Bye Eris!</color>");
+
+            Q.Dispose();
         }
 
         void SubscribeExceptionStream()
@@ -137,13 +145,7 @@ namespace Rzeka
                         return;
                     }
 
-                    if (matterOccurenceQueue.Count > 0)
-                    {
-                        while (matterOccurenceQueue.Count > 0)
-                        {
-                            Emanation.ReceiveMatterOccurence(matterOccurenceQueue.Dequeue());
-                        }
-                    }
+                    CheckOccurenceQueues();
 
                     Emanation.ReceiveMatterOccurence(occ);
                 });
@@ -179,16 +181,8 @@ namespace Rzeka
                     spellOccurenceQueue.Enqueue(serializableSpellOccurence);
                     return;
                 }
-                else
-                {
-                    if (spellOccurenceQueue.Count > 0)
-                    {
-                        while (spellOccurenceQueue.Count > 0)
-                        {
-                            Emanation.ReceiveSpellOccurence(spellOccurenceQueue.Dequeue());
-                        }
-                    }
-                }
+
+                CheckOccurenceQueues();
 
                 Emanation.ReceiveSpellOccurence(serializableSpellOccurence);
             });
@@ -205,19 +199,38 @@ namespace Rzeka
                     messageOccurenceQueue.Enqueue(serializableMessage);
                     return;
                 }
-                else
-                {
-                    if (messageOccurenceQueue.Count > 0)
-                    {
-                        while (messageOccurenceQueue.Count > 0)
-                        {
-                            Emanation.ReceiveMessage(messageOccurenceQueue.Dequeue());
-                        }
-                    }
-                }
+
+                CheckOccurenceQueues();
 
                 Emanation.ReceiveMessage(serializableMessage);
             });
+        }
+
+        void CheckOccurenceQueues()
+        {
+            if (matterOccurenceQueue.Count > 0)
+            {
+                while (matterOccurenceQueue.Count > 0)
+                {
+                    Emanation.ReceiveMatterOccurence(matterOccurenceQueue.Dequeue());
+                }
+            }
+            
+            if (spellOccurenceQueue.Count > 0)
+            {
+                while (spellOccurenceQueue.Count > 0)
+                {
+                    Emanation.ReceiveSpellOccurence(spellOccurenceQueue.Dequeue());
+                }
+            }
+            
+            if (messageOccurenceQueue.Count > 0)
+            {
+                while (messageOccurenceQueue.Count > 0)
+                {
+                    Emanation.ReceiveMessage(messageOccurenceQueue.Dequeue());
+                }
+            }
         }
 
         // TODO 🧙🏻 wow this is complicated
@@ -226,6 +239,7 @@ namespace Rzeka
         // TODO THIS IS REALLY ITCHY
         // TODO TOTES SHOULD *NOT* BE HERE
         // TODO mana stream is referenced by TBindingSpell !!!! ridiculous
+        // TODO add.3 one day we will understand what actually happens here
         void InitializeManaStreamMystery()
         {
             // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES
@@ -404,13 +418,6 @@ namespace Rzeka
             //         value: kvp.Value) // oops
             //     )
             //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        }
-
-        public void Dispose()
-        {
-            Debug.Log($"<color=blue>Bye Eris!</color>");
-
-            Q.Dispose();
         }
 
         void Print(string color, string head, string msg, params object[] args)

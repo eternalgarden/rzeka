@@ -47,7 +47,7 @@ namespace Rzeka
                 RzekaMessageType.Horror => "orange",
                 _ => ""
             };
-            Debug.Log($"<color={color}>{message}</color>");
+            Debug.Log($"<color={color}>{rzekaMessageType.ToString()}: {message}</color>");
 #endif
         }
 

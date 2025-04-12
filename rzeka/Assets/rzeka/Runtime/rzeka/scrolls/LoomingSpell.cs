@@ -24,7 +24,7 @@ namespace Rzeka
         public Library Library { get; }
         public Eris Eris { get; }
         public SpellSchool SpellSchool => SpellSchool.Looming;
-        public string Title => $"{Who.GetType().Name}'s Looming of {typeof(TOut).Name}";
+        public abstract string Title { get; }
         public TSpell ThisAsBase  { get; }
         public TBindingSpell ThisAsBinding { get; }
         public TStrandingSpell<TOut> ThisAsStranding { get; }
