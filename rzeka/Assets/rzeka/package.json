@@ -1,10 +1,10 @@
 {
-    "name": "com.aurelia.rzeka",
-    "version": "0.1.0",
+    "name": "com.sanctuary.rzeka",
+    "version": "1.0.0",
     "displayName": "rzeka",
-    "description": "a reimplementation of UniRx for the purposes of creating a base for a well debuggable, translucent and testable event-bus architecture",
+    "description": "An attempt at taming .NET implementation of Reactive Extensions combined with an implementation of a kind of event bus architecture, here called rzeka. 🐟",
     "keywords": [
-      "ecologys"
+      "ecology"
     ],
     "author": {
       "name": "marai dreams",
