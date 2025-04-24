@@ -15,17 +15,7 @@ namespace Rzeka
 
         public void Speak(string message, params TMatter[] circumstances)
         {
-            var msg = new MessageOccurence();
-            msg.Guid = Guid.NewGuid();
-            msg.RzekaMessageType = RzekaMessageType.Hint;
-            msg.Message = message;
-            msg.Circumstances = circumstances.Select(x => x.Guid).ToArray();
-            msg.Timestamp = DateTimeOffset.Now;
-            Eris.PublishMessage(msg);
-            
-#if UNITY_EDITOR
-            Debug.Log($"<color=magenta>{message}</color>");
-#endif
+            Speak(message, RzekaMessageType.Hint, circumstances);
         }
 
         public void Speak(string message, RzekaMessageType rzekaMessageType, params TMatter[] circumstances)
@@ -42,12 +32,12 @@ namespace Rzeka
 #if UNITY_EDITOR
             string color = rzekaMessageType switch
             {
-                RzekaMessageType.Hint => "cyan",
+                RzekaMessageType.Hint => "#FFB6C1",
                 RzekaMessageType.Hunch => "yellow",
                 RzekaMessageType.Horror => "orange",
                 _ => ""
             };
-            Debug.Log($"<color={color}>{rzekaMessageType.ToString()}: {message}</color>");
+            Debug.Log($"<color={color}>Rzeka: {rzekaMessageType.ToString()}: {message}</color>");
 #endif
         }
 

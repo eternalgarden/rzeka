@@ -330,8 +330,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Test Runner\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 859
-    y: 481
+    x: 1
+    y: 426
     width: 631
     height: 505
   m_SerializedDataModeController:
@@ -474,7 +474,7 @@ MonoBehaviour:
         UnityEditor.EditorApplication:Internal_CallUpdateFunctions
         ()
 
-        
+
 
 '
       notRunnable: 0
@@ -507,7 +507,7 @@ MonoBehaviour:
         UnityEditor.EditorApplication:Internal_CallUpdateFunctions
         ()
 
-        
+
 
 '
       notRunnable: 0
@@ -2159,7 +2159,7 @@ MonoBehaviour:
         UnityEditor.TestTools.TestRunner.EditModeRunner:MoveNextAndUpdateYieldObject
         () (at ./Library/PackageCache/com.unity.test-framework@388540
 
-        
+
 
 '
       notRunnable: 0
@@ -3957,8 +3957,8 @@ MonoBehaviour:
 
         Assertion failure. Values are not equal.
 
-        Expected:
-        0 == 1'
+        Expected: 0
+        == 1'
       output: "<color=#FF69B4>\u0F3C \u3064 \u25D5_\u25D5 \u0F3D\u3064 Bye Eris!</color>\r\n"
       stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
         System.String userMessage) [0x00043] in <844019a3a067481c8d9cb70c7a2ba447>:0
@@ -3991,8 +3991,8 @@ MonoBehaviour:
 
         Assertion failure. Values are not equal.
 
-        Expected:
-        0 == 2'
+        Expected: 0
+        == 2'
       output: "<color=#FF69B4>\u0F3C \u3064 \u25D5_\u25D5 \u0F3D\u3064 Bye Eris!</color>\r\n"
       stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
         System.String userMessage) [0x00043] in <844019a3a067481c8d9cb70c7a2ba447>:0
@@ -4160,8 +4160,8 @@ MonoBehaviour:
 
         Assertion failure. Values are not equal.
 
-        Expected:
-        0 == 3'
+        Expected: 0
+        == 3'
       output: "<color=#FF69B4>\u0F3C \u3064 \u25D5_\u25D5 \u0F3D\u3064 Bye Eris!</color>\r\n"
       stacktrace: "  at UnityEngine.Assertions.Assert.Fail (System.String message,
         System.String userMessage) [0x00043] in <844019a3a067481c8d9cb70c7a2ba447>:0
@@ -5129,7 +5129,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 79
+    y: 24
     width: 858
     height: 457
   m_SerializedDataModeController:
@@ -5757,7 +5757,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 562
+    y: 507
     width: 858
     height: 424
   m_SerializedDataModeController:
@@ -6898,8 +6898,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Project\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 859
-    y: 79
+    x: 1
+    y: 24
     width: 631
     height: 376
   m_SerializedDataModeController:
@@ -6942,7 +6942,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: ae890000
     m_LastClickedID: 35246
-    m_ExpandedIDs: 00000000588f00005a8f00005c8f00005e8f0000608f0000628f0000648f0000668f0000688f00006a8f00006c8f00006e8f0000708f0000728f0000748f0000768f0000788f00007a8f00007c8f00007e8f0000808f0000828f0000848f0000868f0000888f00008a8f00008c8f00008e8f0000908f0000928f0000948f0000968f0000988f00009a8f00009c8f00009e8f0000a08f0000a28f0000a48f0000a68f0000a88f0000aa8f0000ac8f0000ae8f0000b08f0000b28f0000b48f0000b68f0000b88f0000ba8f0000bc8f0000
+    m_ExpandedIDs: 000000007a5f00007c5f00007e5f0000805f0000825f0000845f0000865f0000885f00008a5f00008c5f00008e5f0000905f0000925f0000945f0000965f0000985f00009a5f00009c5f00009e5f0000a05f0000a25f0000a45f0000a65f0000a85f0000aa5f0000ac5f0000ae5f0000b05f0000b25f0000b45f0000b65f0000b85f0000ba5f0000bc5f0000be5f0000c05f0000c25f0000c45f0000c65f0000c85f0000ca5f0000cc5f0000ce5f0000d05f0000d25f0000d45f0000d65f0000d85f0000da5f0000dc5f0000de5f0000e05f0000e25f0000e45f0000e65f0000e85f0000ea5f0000ec5f0000ee5f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -6971,7 +6971,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff00000000588f00005a8f00005e8f0000648f0000668f00006c8f00006e8f0000708f0000728f0000768f0000788f00007a8f00007c8f00007e8f0000808f0000888f00008a8f00008c8f00008e8f0000908f0000928f0000948f0000968f0000988f00009c8f00009e8f0000a08f0000a28f0000a48f0000a68f0000a88f0000aa8f0000ac8f0000ae8f0000b08f0000b28f0000b48f0000b68f0000b88f0000ba8f0000bc8f0000ae900000b0900000b6900000a89100001692000074920000769200007a9200007c9200007e92000082920000fe920000409300003c960000489600004c9600004e96000074960000
+    m_ExpandedIDs: 000000007a5f00007c5f00007e5f0000805f0000825f0000845f0000865f0000885f00008a5f00008c5f00008e5f0000905f0000925f0000945f0000965f0000985f00009a5f00009c5f00009e5f0000a05f0000a25f0000a45f0000a65f0000a85f0000aa5f0000ac5f0000ae5f0000b05f0000b25f0000b45f0000b65f0000b85f0000ba5f0000bc5f0000be5f0000c05f0000c25f0000c45f0000c65f0000c85f0000ca5f0000cc5f0000ce5f0000d05f0000d25f0000d45f0000d65f0000d85f0000da5f0000dc5f0000de5f0000e05f0000e25f0000e45f0000e65f0000e85f0000ea5f0000ec5f0000ee5f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -7068,7 +7068,7 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: b2900000
+      m_SelectedIDs: 
       m_LastClickedID: 0
       m_ExpandedIDs: a2ddffff0aecffffd0ecffff8eeeffff1eefffff00f1ffff14f3ffff2cfbfffff4ffffff
       m_RenameOverlay:
@@ -7116,8 +7116,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1492
-    y: 79
+    x: 1493
+    y: 24
     width: 427
     height: 907
   m_SerializedDataModeController:
