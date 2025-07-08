@@ -34,6 +34,7 @@ namespace Rzeka
             where U : TMatter
         {
             if (maxDepth <=0) return false;
+            if (other is null) return false;
             
             foreach (TMatter circumstance in matter.Circumstances)
             {
