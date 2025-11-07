@@ -1,4 +1,4 @@
-﻿// this code is borrowed from RxOfficial(rx.codeplex.com) and modified
+// this code is borrowed from RxOfficial(rx.codeplex.com) and modified
 
 using System;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿#if UNITY_METRO
+#if UNITY_METRO
 
 using System;
 using System.Collections;

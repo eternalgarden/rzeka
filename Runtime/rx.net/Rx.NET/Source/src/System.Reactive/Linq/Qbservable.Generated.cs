@@ -1,4 +1,4 @@
-﻿/*
+/*
  * WARNING: Auto-generated file (merged on 06/13/2018)
  * Run Rx's auto-homoiconizer tool to generate this file (in the HomoIcon directory).
  */

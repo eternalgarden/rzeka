@@ -1,4 +1,4 @@
-﻿#if !(UNITY_METRO || UNITY_WP8)
+#if !(UNITY_METRO || UNITY_WP8)
 
 #if UNITY_2018_3_OR_NEWER
 #pragma warning disable CS0618

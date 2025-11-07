@@ -1,4 +1,4 @@
-﻿// defined from .NET Framework 4.0 and NETFX_CORE
+// defined from .NET Framework 4.0 and NETFX_CORE
 
 using System;
 

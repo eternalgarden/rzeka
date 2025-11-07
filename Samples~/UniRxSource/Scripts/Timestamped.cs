@@ -1,4 +1,4 @@
-﻿// original code from rx.codeplex.com
+// original code from rx.codeplex.com
 
 /* ------------------ */
 

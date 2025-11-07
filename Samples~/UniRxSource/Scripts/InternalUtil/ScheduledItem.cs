@@ -1,4 +1,4 @@
-﻿// this code is borrowed from RxOfficial(rx.codeplex.com) and modified
+// this code is borrowed from RxOfficial(rx.codeplex.com) and modified
 
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 

@@ -1,4 +1,4 @@
-﻿namespace Rzeka
+namespace Rzeka
 {
     public interface IErisConsulate
     {

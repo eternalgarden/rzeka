@@ -1,4 +1,4 @@
-﻿// original code from GitHub Reactive-Extensions/Rx.NET
+// original code from GitHub Reactive-Extensions/Rx.NET
 // some modified.
 
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.

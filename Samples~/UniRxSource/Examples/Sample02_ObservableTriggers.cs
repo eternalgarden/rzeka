@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UniRx.Triggers; // Triggers Namepsace
 using System;
 

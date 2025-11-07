@@ -1,4 +1,4 @@
-﻿// defined from .NET Framework 4.0 and NETFX_CORE
+// defined from .NET Framework 4.0 and NETFX_CORE
 // This code is basaed from mono/mcs, but some performance modified
 // 1. class to struct
 // 2. implements IEquatable<T1, T2,...>

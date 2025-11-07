@@ -1,4 +1,4 @@
-﻿using System; // require keep for Windows Universal App
+using System; // require keep for Windows Universal App
 using UnityEngine;
 
 #if !(UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5)

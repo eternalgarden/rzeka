@@ -1,4 +1,4 @@
-﻿namespace UniRx.InternalUtil
+namespace UniRx.InternalUtil
 {
 	using System;
 
