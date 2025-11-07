@@ -1,4 +1,4 @@
-﻿Reactive Extensions
+Reactive Extensions
 ======================
 
 Channel  | Rx | Ix |
