@@ -39,6 +39,7 @@ namespace Rzeka
         public virtual void Dispose()
         {
             Q.Dispose();
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
     }
 }

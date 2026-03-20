@@ -75,7 +75,7 @@ namespace Rzeka
                 Debug.LogError(ex.Message);
                 // Debug.LogError(ex.StackTrace);
 
-                throw ex;
+                throw;
 
             }
         }

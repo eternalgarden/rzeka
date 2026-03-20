@@ -37,7 +37,6 @@ namespace Rzeka.Serialization
                 builder.AppendJoin(char.Parse(","), value.GenericTypeArguments.Select(x => x.Name));
                 builder.Append(">");
                 
-                UnityEngine.Debug.Log($"<color=yellow>{builder.ToString()}</color>");
                 return builder.ToString();
             }
             else return value.Name;

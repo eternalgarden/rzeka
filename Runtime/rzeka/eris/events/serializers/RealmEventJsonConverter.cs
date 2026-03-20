@@ -76,7 +76,7 @@ namespace Rzeka.Internal
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(RealmEvent) || objectType == typeof(MatterEvent);
+            return objectType == typeof(RealmEvent) || objectType == typeof(MatterEvent) || objectType == typeof(ScrollEvent);
         }
 
         public override bool CanRead => false;

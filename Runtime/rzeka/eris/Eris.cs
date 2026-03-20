@@ -10,9 +10,9 @@ namespace Rzeka
 {
     public class Eris : IDisposable
     {
-        readonly Library _library;
-        public IErisConsulate Emanation { get; set; } // Rename to 
+        public IErisConsulate Emanation { get; set; } // Rename to
 
+        bool _isDrainingQueues;
         CollectibleDisposable Q { get; set; }
 
         Queue<ISerializableSpellOccurence> spellOccurenceQueue { get; } = new();
@@ -54,7 +54,7 @@ namespace Rzeka
             if (Environment.CurrentManagedThreadId != 1)
             {
                 // TODO this message is probably stoopid cos if it wasnt thread 1 it wont disply this message anyways
-                Debug.LogError($"<color=red>Left the main thread for Message: {messageOccurence.Message}");
+                Debug.LogError($"<color=red>Left the main thread for Message: {messageOccurence.Message}</color>");
             }
             
             // TODO Rework other serializable occurence baking like that
@@ -96,17 +96,14 @@ namespace Rzeka
                     // 2. otherwise serialize to a CRASH_LOG.txt
                     
                 })
-                .Subscribe(occ =>
-                {
-                    throw occ.Exception;
-                });
+                .Subscribe(_ => { });
         }
 
         void SubscribeMatterStream()
         {
             Q += MatterStream
                 // TODO temporary lock on high velocity matter
-                .Where(occ => occ.Matter?.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length == 0)
+                .Where(occ => occ.Matter == null || occ.Matter.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length == 0)
                 .Select<MatterOccurence, ISerializableMatterOccurence>(occ =>
                 {
                     try
@@ -139,6 +136,8 @@ namespace Rzeka
                 })
                 .Subscribe(occ =>
                 {
+                    if (occ is null) return;
+
                     if (Emanation is null)
                     {
                         matterOccurenceQueue.Enqueue(occ);
@@ -208,28 +207,22 @@ namespace Rzeka
 
         void CheckOccurenceQueues()
         {
-            if (matterOccurenceQueue.Count > 0)
+            if (_isDrainingQueues) return;
+            _isDrainingQueues = true;
+            try
             {
                 while (matterOccurenceQueue.Count > 0)
-                {
                     Emanation.ReceiveMatterOccurence(matterOccurenceQueue.Dequeue());
-                }
-            }
-            
-            if (spellOccurenceQueue.Count > 0)
-            {
+
                 while (spellOccurenceQueue.Count > 0)
-                {
                     Emanation.ReceiveSpellOccurence(spellOccurenceQueue.Dequeue());
-                }
-            }
-            
-            if (messageOccurenceQueue.Count > 0)
-            {
+
                 while (messageOccurenceQueue.Count > 0)
-                {
                     Emanation.ReceiveMessage(messageOccurenceQueue.Dequeue());
-                }
+            }
+            finally
+            {
+                _isDrainingQueues = false;
             }
         }
 
@@ -400,7 +393,7 @@ namespace Rzeka
             };
         }
 
-        [Obsolete] // TODO there is a problem with that, there are no longer ingredients list
+        // TODO there is a problem with that, there are no longer ingredients list
         private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
@@ -420,9 +413,5 @@ namespace Rzeka
             //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        void Print(string color, string head, string msg, params object[] args)
-        {
-            string text = string.Format(msg, args);
-        }
     }
 }

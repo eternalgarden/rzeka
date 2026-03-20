@@ -35,7 +35,7 @@ namespace Rzeka
         {
             _subject = CreateSubject();
 
-            long previousStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+            long previousStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds();
 
             _subjectFeeder = Observer.Create<T>(
                 onNext: next =>
@@ -66,11 +66,6 @@ namespace Rzeka
                     finally
                     {
                         previousStamp = newStamp;
-                    }
-
-                    if (typeof(T).Name.Contains("EditedNoteUpdated"))
-                    {
-                        // Debug.Log($"<color=green>whatt</color>");
                     }
 
                     _subject.OnNext(next);
@@ -139,6 +134,10 @@ namespace Rzeka
 
         public IDisposable RegisterConjurer(IObservable<T> conjurer)
         {
+            // TODO this was flagged in an audit as:
+            // causing new delegate allocation on every access and was recommended
+            // to be replaced as a readonly field
+            // but it wouldn't take care of feeding conjurer subscription into subject feeder
             IDisposable token = conjurer.Subscribe(SourceObserver);
             // _sources++;
 
@@ -160,6 +159,7 @@ namespace Rzeka
         public void Dispose()
         {
             _sourcesSubscription?.Dispose();
+            _subject.OnCompleted();
         }
     }
 }

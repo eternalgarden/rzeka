@@ -23,23 +23,19 @@ namespace Rzeka
 
         public StrandingSpell<Q> CreateConjuring<Q>(object who, IObservable<Q> spell) where Q : TMatter
         {
-            //  
-
-            return null;
+            throw new NotImplementedException("CreateConjuring is not yet implemented.");
         }
 
         public LoomingSpell<Q> CreateLoom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell) where T : TMatter where Q : TMatter
         {
             // LoomingScroll_1<T, Q> newScroll = new(who, spell, TheLibrary, Eris);
-
-            return null;
+            throw new NotImplementedException("CreateLoom is not yet implemented.");
         }
 
         public AlteringScroll<T> CreateWeaving<T>(object who, IObserver<T> spell) where T : TMatter
         {
             // LoomingScroll_1<T, Q> newScroll = new(who, spell, TheLibrary, Eris);
-
-            return null;
+            throw new NotImplementedException("CreateWeaving is not yet implemented.");
         }
 
         // -------------

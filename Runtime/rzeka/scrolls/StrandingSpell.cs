@@ -81,8 +81,8 @@ namespace Rzeka
 
         public void Dispose()
         {
-            _libraryToken.Dispose();
-            Q.Dispose();
+            _libraryToken?.Dispose();
+            Q?.Dispose();
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
         }
     }

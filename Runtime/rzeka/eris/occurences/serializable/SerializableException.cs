@@ -13,12 +13,12 @@ namespace Rzeka
         {
             if (ex is null) return new SerializableNullException();
             
-;           if (ex is RzekaException rex)
+            if (ex is RzekaException rex)
             {
                 return new SerializableException()
                 {
                     message = ex.Message,
-                    comments = rex.Comments.ToArray(),
+                    comments = rex.Comments?.ToArray(),
                     stackTrace = ex.StackTrace
                 };
             }
