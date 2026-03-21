@@ -66,6 +66,7 @@ namespace Rzeka.Tests.Occurences.Matter
             using var m1 = _rzeka.Eris.MatterOccurences
                 .Where(occ => occ.Matter.GetType() == matterType)
                 .Where(occ => occ.MatterOccurenceCategory == category)
+                .W
                 .Subscribe(_ => actual = true);
 
             using var d2 = _test.Loom_ANumber_To_AName(out _);

@@ -5,13 +5,11 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 
-using System;
-
 namespace Rzeka
 {
     public enum SpellSchool 
     { 
-        Stranding, // todo big renaming work after this // so was it done?
+        Stranding,
         Looming, 
         Weaving 
     }

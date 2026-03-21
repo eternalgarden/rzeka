@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/core/">
+    <Project Path="core/Rzeka.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Rzeka.Tests.csproj" />
+  </Folder>
+</Solution>

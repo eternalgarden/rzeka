@@ -1,4 +1,4 @@
-/* 
+/*
       |\      _,,,---,,_
 ZZZzz /,`.-'`'    -.  ;-;;,_
      |,4-  ) )-,_. ,\ (  `'-'
@@ -14,7 +14,7 @@ namespace Rzeka
         int Size { get; }
         Guid[] Guids { get; }
     }
-    
+
     public class Glyph<T1, T2> : IGlyph
         where T1 : TMatter
         where T2 : TMatter
@@ -35,7 +35,7 @@ namespace Rzeka
 
         // -------------
     }
-    
+
     public class Glyph<T1, T2, T3> : IGlyph
         where T1 : TMatter
         where T2 : TMatter
@@ -49,7 +49,7 @@ namespace Rzeka
         public T1 One { get; }
         public T2 Two { get; }
         public T3 Three { get; }
-        
+
         public Glyph(T1 one, T2 two, T3 three)
         {
             One = one;
@@ -62,3 +62,4 @@ namespace Rzeka
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
 /* 05 November 2022 🌊 */
+
