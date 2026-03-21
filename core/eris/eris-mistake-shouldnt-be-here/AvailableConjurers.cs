@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Rzeka
 {
@@ -10,7 +9,7 @@ namespace Rzeka
 
         public Type LastChangedType { get; private set; }
 
-        public void ActivateConjurer([NotNull] TStrandingSpell strandingSpell)
+        public void ActivateConjurer(TStrandingSpell strandingSpell)
         {
             /* 🦠🦴 */
 
@@ -29,7 +28,7 @@ namespace Rzeka
             /* 🦠🦴 */
         }
 
-        public void DectivateConjurer([NotNull] TStrandingSpell strandingSpell)
+        public void DectivateConjurer(TStrandingSpell strandingSpell)
         {
             /* 🧩 */
 

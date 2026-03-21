@@ -2,28 +2,18 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Rzeka.Serialization
 {
     public class TypeJsonConverter : JsonConverter<Type>
     {
-        bool IsBaseTypeSystemType(Type type)
-        {
-            Debug.Assert(type.FullName != null, "type.FullName != null");
-            return type.FullName.StartsWith("System.");
-        }
-        
-        public override void WriteJson(JsonWriter writer, Type value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, Type value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("name");
-            writer.WriteValue(GetName(value));
-            writer.WritePropertyName("namespace");
-            writer.WriteValue(value.Namespace);
-            // writer.WritePropertyName("baseTypeName");
-            // writer.WriteValue(IsBaseTypeSystemType(value) ? "None" : value.BaseType);
-            // writer.WriteValue(value.BaseType is not null ? value.BaseType.FullName : "null");
+            writer.WriteString("name", GetName(value));
+            writer.WriteString("namespace", value.Namespace);
             writer.WriteEndObject();
         }
 
@@ -31,23 +21,19 @@ namespace Rzeka.Serialization
         {
             if (value.IsGenericType)
             {
-                // UnityEngine.Debug.Log($"<color=orange>xxx</color>");
                 StringBuilder builder = new();
                 builder.Append("<");
                 builder.AppendJoin(char.Parse(","), value.GenericTypeArguments.Select(x => x.Name));
                 builder.Append(">");
-                
                 return builder.ToString();
             }
-            else return value.Name;
+            else
+                return value.Name;
         }
 
-        public override Type ReadJson(JsonReader reader, Type objectType, Type existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
+        public override Type Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException("This won't be implemented, can't be Read.");
         }
-        
-        public override bool CanRead => false;
     }
 }

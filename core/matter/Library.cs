@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using JetBrains.Annotations;
-using UnityEngine;
 
-[assembly:InternalsVisibleTo("com.rzeka.tests.playmode")]
+[assembly:InternalsVisibleTo("Rzeka.Tests")]
 
 namespace Rzeka
 {
@@ -33,7 +32,7 @@ namespace Rzeka
             return _streams.ContainsKey(key);
         }
         
-        public IDisposable RegisterConjurer<T>([NotNull] IObservable<T> strand)
+        public IDisposable RegisterConjurer<T>(IObservable<T> strand)
             where T : TMatter
         {
             if (strand == null) throw new ArgumentNullException(nameof(strand));

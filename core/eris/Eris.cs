@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using Newtonsoft.Json;
-using UnityEngine;
 
 namespace Rzeka
 {
@@ -43,7 +42,7 @@ namespace Rzeka
         {
             if (Environment.CurrentManagedThreadId != 1)
             {
-                Debug.LogError($"<color=red>Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}</color>");
+                Console.Error.WriteLine($"Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}");
             }
             
             MatterStream.OnNext(matterOccurence);
@@ -54,7 +53,7 @@ namespace Rzeka
             if (Environment.CurrentManagedThreadId != 1)
             {
                 // TODO this message is probably stoopid cos if it wasnt thread 1 it wont disply this message anyways
-                Debug.LogError($"<color=red>Left the main thread for Message: {messageOccurence.Message}</color>");
+                Console.Error.WriteLine($"Left the main thread for Message: {messageOccurence.Message}");
             }
             
             // TODO Rework other serializable occurence baking like that
@@ -75,7 +74,7 @@ namespace Rzeka
 
         public void Dispose()
         {
-            Debug.Log($"<color=#FF69B4>༼ つ ◕_◕ ༽つ Bye Eris!</color>");
+            Console.WriteLine("༼ つ ◕_◕ ༽つ Bye Eris!");
 
             Q.Dispose();
         }
@@ -85,8 +84,8 @@ namespace Rzeka
             Q += ExceptionStream
                 .Do(x =>
                 {
-                    Debug.LogError($"<color=yellow>Message: {x.Exception.Message}</color>");
-                    Debug.LogError(x.Exception.StackTrace);
+                    Console.Error.WriteLine($"Message: {x.Exception.Message}");
+                    Console.Error.WriteLine(x.Exception.StackTrace);
                     
                     // TODO add listener to update cycle
                     // queue exception throwing there in editor
@@ -130,7 +129,7 @@ namespace Rzeka
                     }
                     catch (Exception e)
                     {
-                        Debug.LogError($"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}");
+                        Console.Error.WriteLine($"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}");
                         return null;
                     }
                 })
@@ -368,30 +367,7 @@ namespace Rzeka
             return weaving;
         }
         
-        Who GetWho(TSpell source)
-        {
-            Type whosType = source.Who.GetType();
-
-            string parentGameObjectName = null;
-            if (source.Who is MonoBehaviour monoWho)
-            {
-                // try
-                // {
-                    parentGameObjectName = monoWho.gameObject.name;
-                // }
-                // catch (Exception e)
-                // {
-                //     Debug.Log($"<color=red>Illegally attempted to access gameObject info while not bein on the main thread.</color>");
-                //     parentGameObjectName = "unknown error";
-                // }
-            }
-
-            return new Who()
-            {
-                WhosType = whosType,
-                ParentGameObjectName = parentGameObjectName
-            };
-        }
+        Who GetWho(TSpell source) => new Who { WhosType = source.Who.GetType() };
 
         // TODO there is a problem with that, there are no longer ingredients list
         private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)

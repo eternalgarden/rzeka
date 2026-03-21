@@ -1,12 +1,11 @@
 using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using System.Text.Json.Serialization;
 using Rzeka.Internal;
 
 namespace Rzeka
 {
     [Flags]
-    [JsonConverter(typeof(StringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ScrollEventType
     {
         New         = 1,

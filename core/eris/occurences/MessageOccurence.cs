@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 
 namespace Rzeka
 {
@@ -11,6 +10,6 @@ namespace Rzeka
         public DateTimeOffset Timestamp { get; set; }
         public RzekaMessageType RzekaMessageType { get; set; }
         public string Message { get; set; }
-        [CanBeNull] public Exception Exception { get; set; }
+        public Exception? Exception { get; set; }
     }
 }

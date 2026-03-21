@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace Rzeka
 {
@@ -14,7 +13,7 @@ namespace Rzeka
         public Guid[] circumstances { get; set; }
         public long timestamp { get; set; }
         public string message { get; set; }
-        [CanBeNull] public SerializableException exception { get; set; }
+        public SerializableException? exception { get; set; }
 
         public static SerializableMessageOccurence FromMessageOccurence(MessageOccurence msg)
         {

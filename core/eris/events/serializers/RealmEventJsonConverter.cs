@@ -1,57 +1,47 @@
 using System;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Rzeka.Internal
 {
     /*
 
     * BE MOST CAREFUL ABOUT CHANGES HERE
-    
+
     TODO Write an automated test that would make sure an example scroll and matter event is serialized into an expected format
 
     */
-    internal class RealmEventJsonConverter : JsonConverter
+    internal class RealmEventJsonConverter : JsonConverter<RealmEvent>
     {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, RealmEvent value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("Category");
-            writer.WriteValue(value.GetType().Name);
+            writer.WriteString("Category", value.GetType().Name);
 
-            if (value is not RealmEvent realmEvent) throw new ArgumentNullException(nameof(realmEvent));
-
-            switch (realmEvent)
+            switch (value)
             {
                 case ScrollEvent scrollEvent:
-
                     /* ⭐ ---- ---- */
-                    
-                    writer.WritePropertyName("Type");
-                    writer.WriteValue(scrollEvent.EventType.ToString()); // ScrollEventType
 
-                    WriteCommonRealmEventProperties(writer, realmEvent);
-
+                    writer.WriteString("Type", scrollEvent.EventType.ToString());
+                    WriteCommonRealmEventProperties(writer, value);
                     writer.WritePropertyName("Scroll");
-                    serializer.Serialize(writer, scrollEvent.Scroll);
+                    JsonSerializer.Serialize(writer, scrollEvent.Scroll, scrollEvent.Scroll?.GetType() ?? typeof(TSpell), options);
                     break;
-                    
+
                     /* ---- ---- 🌠 */
 
                 case MatterEvent matterEvent:
-
                     /* ⭐ ---- ---- */
-                    
-                    writer.WritePropertyName("Type");
-                    writer.WriteValue(matterEvent.EventType.ToString()); // MatterEventType
 
-                    WriteCommonRealmEventProperties(writer, realmEvent);
-
+                    writer.WriteString("Type", matterEvent.EventType.ToString());
+                    WriteCommonRealmEventProperties(writer, value);
                     writer.WritePropertyName("Matter");
-                    serializer.Serialize(writer, matterEvent.Matter);
-                    writer.WritePropertyName("Scroll"); // * scroll that this matter originates from
-                    serializer.Serialize(writer, matterEvent.Scroll);
+                    JsonSerializer.Serialize(writer, matterEvent.Matter, matterEvent.Matter?.GetType() ?? typeof(TMatter), options);
+                    writer.WritePropertyName("Scroll");
+                    JsonSerializer.Serialize(writer, matterEvent.Scroll, matterEvent.Scroll?.GetType() ?? typeof(TSpell), options);
                     break;
-                    
+
                     /* ---- ---- 🌠 */
 
                 default:
@@ -61,24 +51,15 @@ namespace Rzeka.Internal
             writer.WriteEndObject();
         }
 
-        static void WriteCommonRealmEventProperties(JsonWriter writer, RealmEvent realmEvent)
+        static void WriteCommonRealmEventProperties(Utf8JsonWriter writer, RealmEvent realmEvent)
         {
-            writer.WritePropertyName("Guid");
-            writer.WriteValue(realmEvent.Guid);
-            writer.WritePropertyName("Timestamp");
-            writer.WriteValue(realmEvent.Timestamp);
+            writer.WriteString("Guid", realmEvent.Guid);
+            writer.WriteString("Timestamp", realmEvent.Timestamp);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override RealmEvent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException("This won't be implemented, can't be Read.");
         }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(RealmEvent) || objectType == typeof(MatterEvent) || objectType == typeof(ScrollEvent);
-        }
-
-        public override bool CanRead => false;
     }
 }

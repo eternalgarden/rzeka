@@ -1,28 +1,25 @@
 using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Rzeka.Serialization
 {
     public class CircumstancesJsonConverter : JsonConverter<List<TMatter>>
     {
-        
-        public override void WriteJson(JsonWriter writer, List<TMatter> value, JsonSerializer serializer)
+        public override void Write(Utf8JsonWriter writer, List<TMatter> value, JsonSerializerOptions options)
         {
             writer.WriteStartArray();
             foreach (TMatter matter in value)
             {
-                writer.WriteValue(matter.Guid);
+                writer.WriteStringValue(matter.Guid);
             }
             writer.WriteEndArray();
         }
 
-        public override List<TMatter> ReadJson(JsonReader reader, Type objectType, List<TMatter> existingValue, bool hasExistingValue,
-            JsonSerializer serializer)
+        public override List<TMatter> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException("This won't be implemented, can't be Read.");
         }
-        
-        public override bool CanRead => false;
     }
 }

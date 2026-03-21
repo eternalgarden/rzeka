@@ -1,5 +1,4 @@
 using System;
-using JetBrains.Annotations;
 
 namespace Rzeka
 {
@@ -8,7 +7,7 @@ namespace Rzeka
     public struct Who
     {
         public Type WhosType { get; set; }
-        [CanBeNull] public string ParentGameObjectName { get; set; }
+        public string? ParentGameObjectName { get; set; }
     }
     
     

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Rzeka
 {
@@ -72,7 +71,7 @@ namespace Rzeka
                 ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
 
                 // todo well well
-                Debug.LogError(ex.Message);
+                Console.Error.WriteLine(ex.Message);
                 // Debug.LogError(ex.StackTrace);
 
                 throw;

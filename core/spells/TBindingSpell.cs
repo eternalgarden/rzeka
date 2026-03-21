@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using UnityEngine;
 
 namespace Rzeka
 {
@@ -78,8 +77,8 @@ namespace Rzeka
                         CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
                     }
                     
-                }, onError: ex     => Debug.LogError($"Mana subscription error: {ex}") );
-            
+                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}") );
+
             if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
 
             Q += Eris
@@ -91,7 +90,7 @@ namespace Rzeka
                 {
                     Type type = manainfo.LastChangedType;
                     CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
-                }, onError: ex     => Debug.LogError($"Mana subscription error: {ex}") );
+                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}") );
             
             
             /* ---- ---- 🌠 */
@@ -99,7 +98,7 @@ namespace Rzeka
         
         void CheckIfHasMana(Type type, bool satisfied)
         {
-            if (RequiresIngredient(type) is false) Debug.LogError("HUH");
+            if (RequiresIngredient(type) is false) Console.Error.WriteLine("HUH");
 
             SatisfiedRequirements[type] = satisfied;
             

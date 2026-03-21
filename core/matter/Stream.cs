@@ -5,8 +5,8 @@ using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Diagnostics;
 using System.Reflection;
-using UnityEngine;
 
 namespace Rzeka
 {
@@ -56,9 +56,9 @@ namespace Rzeka
                     {
                         IsInfiniteLoopDetected(previousStamp, newStamp);
                     }
-                    catch (InfiniteLoopException e)
+                    catch (InfiniteLoopException)
                     {
-                        Debug.LogError($"LOOPIDY LOOP! {typeof(T)}");
+                        Console.Error.WriteLine($"LOOPIDY LOOP! {typeof(T)}");
                         _isOverheat = true;
                         _overheatStartTime = new DateTimeOffset(DateTime.UtcNow);
                         return;
