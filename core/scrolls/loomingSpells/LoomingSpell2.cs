@@ -11,16 +11,16 @@ namespace Rzeka
         where T2 : TMatter
     {
         public override string Title => $"Looming of {typeof(T1).Name} and {typeof(T2).Name}";
-        
-        readonly Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> _spell;
 
-        public LoomingSpell2(object who,
-            Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell,
+        readonly Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> _spell;
+
+        public LoomingSpell2(
+            object who,
+            Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> spell,
             Library library,
             Eris eris) : base(who, library, eris)
         {
-            this._spell = spell;
-
+            _spell = spell;
             InitializeLooming();
         }
 
@@ -32,38 +32,24 @@ namespace Rzeka
 
         protected override IObservable<TOut> CreateConjuring()
         {
-            var lastT1 = default(T1); // * attach last matter grabber
+            var lastT1 = default(T1);
             IObservable<T1> ingredient1 = ThisAsBinding
                 .GetObservableIngredient<T1>()
-                .Do(nextT =>
-                {
-                    lastT1 = nextT;
-                });
-            
-            var lastT2 = default(T2); // * attach last matter grabber
+                .Do(next => lastT1 = next);
+
+            var lastT2 = default(T2);
             IObservable<T2> ingredient2 = ThisAsBinding
                 .GetObservableIngredient<T2>()
-                .Do(nextT =>
-                {
-                    lastT2 = nextT;
-                });
+                .Do(next => lastT2 = next);
 
-            IObservable<Glyph<T1, T2>> observable = ingredient1
-                .CombineLatest(ingredient2)
-                .Select(anon => new Glyph<T1, T2>(anon.First, anon.Second));
-
-            var conjuring = _spell
-                .Invoke(observable)
+            return _spell
+                .Invoke(ingredient1, ingredient2)
                 .Select(matter =>
-                {   
+                {
                     matter = matter.WithCircumstances<TOut>(lastT1, lastT2);
-
                     ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
-
                     return matter;
                 });
-            
-            return conjuring;
         }
     }
 }

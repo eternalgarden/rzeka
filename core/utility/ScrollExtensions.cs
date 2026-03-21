@@ -7,12 +7,34 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 
 
 
+using System;
+using System.Reactive.Linq;
+
 // TODO move to internal namespace along with all the Spell scripts
 namespace Rzeka
 {
     public static class ScrollExtensions
     {
         // -------------
+
+        /// <summary>
+        /// Combines two streams into a tuple, emitting whenever either fires (CombineLatest).
+        /// Use when both streams are triggers — e.g. a display that updates when health OR shield changes.
+        /// </summary>
+        public static IObservable<(T1, T2)> CombineWith<T1, T2>(
+            this IObservable<T1> source,
+            IObservable<T2> other)
+            => source.CombineLatest(other, (a, b) => (a, b));
+
+        /// <summary>
+        /// Pairs each emission of source with the latest value from context (WithLatestFrom).
+        /// Use when source is the trigger and context is just "what's the current state of X".
+        /// Note: silently drops source emissions that arrive before context has emitted.
+        /// </summary>
+        public static IObservable<(T1, T2)> WithContext<T1, T2>(
+            this IObservable<T1> source,
+            IObservable<T2> context)
+            => source.WithLatestFrom(context, (a, b) => (a, b));
         
         public static bool IsConjuring(this TSpell scroll)
         {

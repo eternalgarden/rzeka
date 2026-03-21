@@ -65,6 +65,68 @@
   So if you adopt the separate-observable Loom signature, Glyphs can go away entirely. Less API surface, more flexibility, standard C# idioms.
 
 
+  ❯ Show me please an example of usage of a Loom after glyph is removed for both combinelatest and withlatestfrom situations.
+
+## Removing glyphs
+
+● WithLatestFrom — T1 is the trigger, T2 is context you query. Use when one stream drives the logic and the other is just "what's the current state of X":
+
+  // "When a raycast fires, check if we're in Freewalk, then react"
+  Q += Rzeka.Loom<RaycastActionEvoked, InputHandlerTypeState, ScrollEditingStarted>(
+      who: this,
+      spell: (raycast, inputState) => raycast
+          .DistinctUntilChanged(x => x.Guid)
+          .WithLatestFrom(inputState, (r, s) => (r, s))
+          .Where(x => x.s.CurrentInputHandlerType == InputHandlerType.Freewalk)
+          .Select(x => x.r)
+          .Where(r => r.ResultType is RaycastInteractionResultType.InteractibleHit)
+          .Select(r => new ScrollEditingStarted(r.HitObjectSoi)));
+
+  CombineLatest — both streams are triggers. Use when you genuinely want to react to changes in either, e.g. a UI element that should update whenever health OR shield changes:
+
+  // "Recompute display whenever health OR shield changes"
+  Q += Rzeka.Loom<HealthChanged, ShieldChanged, CombatDisplayUpdated>(
+      who: this,
+      spell: (health, shield) => health
+          .CombineLatest(shield, (h, s) => (h, s))
+          .Select(x => new CombatDisplayUpdated(
+              hp: x.h.CurrentValue,
+              shield: x.s.CurrentValue)));
+
+  The key difference is just which operator you open with. The Loom itself doesn't care — it hands you both streams and wraps whatever you produce with circumstance tracking.
+
+❯ Ah I see, I might have hardcoded combinelatest because it removes a lot of boilerplate for every single irzeka connection.
+
+● Right, that's a valid trade-off observation. The boilerplate reduction was the point — instead of reverting that, the answer is two small helpers in ScrollExtensions that name the patterns:
+
+  // ScrollExtensions.cs
+  public static IObservable<(T1, T2)> CombineWith<T1, T2>(
+      this IObservable<T1> source, IObservable<T2> other)
+      => source.CombineLatest(other, (a, b) => (a, b));
+
+  public static IObservable<(T1, T2)> WithContext<T1, T2>(
+      this IObservable<T1> source, IObservable<T2> context)
+      => source.WithLatestFrom(context, (a, b) => (a, b));
+
+  Then usage stays concise and the intent is explicit:
+
+  // CombineLatest — both are triggers
+  spell: (health, shield) => health
+      .CombineWith(shield)
+      .Select(x => new CombatDisplayUpdated(x.Item1.CurrentValue, x.Item2.CurrentValue))
+
+  // WithLatestFrom — raycast drives, inputState is context
+  spell: (raycast, inputState) => raycast
+      .WithContext(inputState)
+      .Where(x => x.Item2.CurrentInputHandlerType == InputHandlerType.Freewalk)
+      .Select(x => x.Item1)
+      ...
+
+  You get less boilerplate than raw Rx, the combining strategy is now a named decision rather than a hidden implementation detail, and you can still drop down to raw .CombineLatest/.WithLatestFrom for anything more exotic. The Glyph
+  .One/.Two names just become the standard .Item1/.Item2 (or you can deconstruct inline with (var r, var s) =>).
+
+
+
 
 # Loom
 

@@ -75,16 +75,16 @@ namespace Rzeka
             return Disposable.Create(newSpell.Dispose);
         }
 
-        public IDisposable Weave<T1, T2>(object who, Func<IObservable<Glyph<T1, T2>>,IDisposable> spell) where T1 : TMatter where T2 : TMatter
+        public IDisposable Weave<T1, T2>(object who, Func<IObservable<T1>, IObservable<T2>, IDisposable> spell) where T1 : TMatter where T2 : TMatter
         {
-            WeavingSpell2Glyph<T1, T2> newSpell = new WeavingSpell2Glyph<T1, T2>(who, spell, Eris, Library);
+            WeavingSpell2<T1, T2> newSpell = new WeavingSpell2<T1, T2>(who, spell, Eris, Library);
             newSpell.Cast();
             return Disposable.Create(newSpell.Dispose);
         }
 
-        public IDisposable Weave<T1, T2, T3>(object who, Func<IObservable<Glyph<T1, T2, T3>>,IDisposable> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter
+        public IDisposable Weave<T1, T2, T3>(object who, Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter
         {
-            WeavingSpell3Glyph<T1,T2,T3> newSpell = new WeavingSpell3Glyph<T1,T2,T3>(who, spell, Eris, Library);
+            WeavingSpell3<T1, T2, T3> newSpell = new WeavingSpell3<T1, T2, T3>(who, spell, Eris, Library);
             newSpell.Cast();
             return Disposable.Create(newSpell.Dispose);
         }
@@ -98,21 +98,19 @@ namespace Rzeka
             return Disposable.Create(() => newScroll.Dispose());
         }
 
-        public IDisposable Loom<T1, T2, TOut>(object who, Func<IObservable<Glyph<T1, T2>>, IObservable<TOut>> spell)
+        public IDisposable Loom<T1, T2, TOut>(object who, Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> spell)
             where T1 : TMatter
             where T2 : TMatter
             where TOut : TMatter
         {
             LoomingSpell2<T1, T2, TOut> newScroll = new LoomingSpell2<T1, T2, TOut>(who, spell, Library, Eris);
-
             return Disposable.Create(() => newScroll.Dispose());
         }
 
-        public IDisposable Loom<T1, T2, T3, TOut>(object who, Func<IObservable<Glyph<T1, T2, T3>>, IObservable<TOut>> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter where TOut : TMatter
+        public IDisposable Loom<T1, T2, T3, TOut>(object who, Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IObservable<TOut>> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter where TOut : TMatter
         {
             LoomingSpell3<T1, T2, T3, TOut> newScroll = new LoomingSpell3<T1, T2, T3, TOut>(who, spell, Library, Eris);
             return Disposable.Create(() => newScroll.Dispose());
-
         }
 
         public void Dispose()
@@ -151,7 +149,7 @@ namespace Rzeka
             return Disposable.Create(() => newScroll.Dispose());
         }
 
-        public IDisposable Loom<T, Y, Q>(object who, Func<IObservable<Glyph<T, Y>>, IObservable<Q>> spell, out LoomingSpell2<T, Y, Q> scroll)
+        public IDisposable Loom<T, Y, Q>(object who, Func<IObservable<T>, IObservable<Y>, IObservable<Q>> spell, out LoomingSpell2<T, Y, Q> scroll)
             where T : TMatter
             where Y : TMatter
             where Q : TMatter
