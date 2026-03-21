@@ -9,13 +9,12 @@ using System.Reactive.Disposables;
 
 namespace Rzeka
 {
-    public class SpringRiver : ITestableRzeka
+    public class SpringRiver : IRzeka
     {
         public Eris Eris { get; }
         public IRzekaLogFairy LogFairy { get; }
 
-        Library Library { get; }
-        Library ITestableRzeka.Library => Library;
+        internal Library Library { get; }
 
         public SpringRiver()
         {
@@ -119,49 +118,6 @@ namespace Rzeka
         }
 
         
-        //
-        // ⛺ ─── ITestableRzeka ───────────────────────────────────────────────────
-        //
-        #region ITestableRzeka
-        
-        public IDisposable Strand<Q>(object who, IObservable<Q> spell, out StrandingSpell<Q> scroll)
-            where Q : TMatter
-        {
-            StrandingSpell<Q> newScroll = new StrandingSpell<Q>(who, spell, Library, Eris);
-            scroll = newScroll;
-            return Disposable.Create(() => newScroll.Dispose());
-
-        }
-
-        public IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter
-        {
-            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, spell, Library, Eris);
-            scroll = newScroll;
-            return Disposable.Create(() => newScroll.Dispose());
-        }
-
-        public IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingSpell1<T, Q> scroll)
-            where T : TMatter
-            where Q : TMatter
-        {
-            LoomingSpell1<T, Q> newScroll = new LoomingSpell1<T, Q>(who, spell, Library, Eris);
-            scroll = newScroll;
-            return Disposable.Create(() => newScroll.Dispose());
-        }
-
-        public IDisposable Loom<T, Y, Q>(object who, Func<IObservable<T>, IObservable<Y>, IObservable<Q>> spell, out LoomingSpell2<T, Y, Q> scroll)
-            where T : TMatter
-            where Y : TMatter
-            where Q : TMatter
-        {
-            LoomingSpell2<T, Y, Q> newScroll = new LoomingSpell2<T, Y, Q>(who, spell, Library, Eris);
-            scroll = newScroll;
-            return Disposable.Create(() => newScroll.Dispose());
-        }
-        
-        #endregion // ---------------------------------- ITestableRzeka -------------------------
-
-
     }
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */

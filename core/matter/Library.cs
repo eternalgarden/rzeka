@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-
-// TODO So how do we access its instance in our Tests?
-[assembly:InternalsVisibleTo("Rzeka.Tests")]
 
 namespace Rzeka
 {

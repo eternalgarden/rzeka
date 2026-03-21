@@ -19,14 +19,6 @@ namespace Rzeka
         IDisposable Weave<T1, T2, T3>(object who, Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> spell) where T1 : TMatter where T2 : TMatter where T3 : TMatter;
     }
 
-    internal interface ITestableRzeka : IRzeka
-    {
-        Library Library { get; }
-        IDisposable Strand<Q>(object who, IObservable<Q> spell, out StrandingSpell<Q> scroll) where Q : TMatter;
-        IDisposable Loom<T, Q>(object who, Func<IObservable<T>, IObservable<Q>> spell, out LoomingSpell1<T, Q> scroll) where Q : TMatter where T : TMatter;
-        IDisposable Loom<T, Y, Q>(object who, Func<IObservable<T>, IObservable<Y>, IObservable<Q>> spell, out LoomingSpell2<T, Y, Q> scroll) where Q : TMatter where T : TMatter where Y : TMatter;
-        IDisposable Weave<T>(object who, IObserver<T> spell, out AlteringScroll<T> scroll) where T : TMatter;
-    }
 
     public interface IRzekaProposals
     {
