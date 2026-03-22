@@ -1,21 +1,76 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 
 namespace Rzeka
 {
     // TODO wouldn't it be a good idea to push entire library and eris as internal classes in the end?
-    public class Library
+    public class Library : IDisposable
     {
-        readonly Eris _eris;
-        readonly Dictionary<Type, ISpellStream> _streams;
+        Eris Eris { get; }
+        Dictionary<Type, ISpellStream> Streams { get; }
+        readonly IDisposable _conjurerAvailabilitySubscription;
 
-        internal int StreamsCount => _streams.Count;
+        internal int StreamsCount => Streams.Count;
+
+        public IObservable<IManaInformationProvideable> ConjurerAvailability { get; }
 
         public Library(Eris eris)
         {
-            _eris = eris;
-            _streams = new();
+            Eris = eris;
+            Streams = new();
+
+            IConnectableObservable<IManaInformationProvideable> availability =
+                BuildConjurerAvailability();
+            _conjurerAvailabilitySubscription = availability.Connect();
+            ConjurerAvailability = availability;
+        }
+
+        IConnectableObservable<IManaInformationProvideable> BuildConjurerAvailability() =>
+            Eris.SpellOccurences
+                .Where(occ =>
+                    occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding
+                )
+                .Where(occ =>
+                    occ.SpellOccurenceCategory
+                        is SpellOccurenceCategory.HasMana
+                            or SpellOccurenceCategory.NoMana
+                            or SpellOccurenceCategory.Forgotten
+                )
+                .Scan(
+                    (false, new AvailableConjurers()),
+                    (acc, current) =>
+                    {
+                        TStrandingSpell sourceAsStranding =
+                            current.Source as TStrandingSpell
+                            ?? throw new InvalidOperationException();
+
+                        AvailableConjurers accumulator = acc.Item2;
+                        Type conjuredType = sourceAsStranding.ConjuredType;
+                        bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+
+                        if (current.SpellOccurenceCategory is SpellOccurenceCategory.HasMana)
+                            accumulator.ActivateConjurer(sourceAsStranding);
+                        else
+                            accumulator.DectivateConjurer(sourceAsStranding);
+
+                        bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+                        bool hasAnythingChanged = wasManaAvailable != isManaAvailable;
+
+                        return (hasAnythingChanged, accumulator);
+                    }
+                )
+                .Where(accumulator => accumulator.Item1)
+                .Select(accumulator => accumulator.Item2 as IManaInformationProvideable)
+                .StartWith(new AvailableConjurers())
+                .Multicast(new ReplaySubject<IManaInformationProvideable>(1));
+
+        public void Dispose()
+        {
+            _conjurerAvailabilitySubscription.Dispose();
         }
 
         public bool WasStreamCreated<T>() where T : TMatter
@@ -26,7 +81,7 @@ namespace Rzeka
 
         public bool WasStreamCreated(Type key)
         {
-            return _streams.ContainsKey(key);
+            return Streams.ContainsKey(key);
         }
         
         public IDisposable RegisterConjurer<T>(IObservable<T> strand)
@@ -64,14 +119,14 @@ namespace Rzeka
             
             Stream<T> stream;
             
-            if (_streams.ContainsKey(key) is false)
+            if (Streams.ContainsKey(key) is false)
             {
                 stream = new();
-                _streams.Add(key, stream);
+                Streams.Add(key, stream);
             }
             else
             {
-                stream = _streams[key] as Stream<T>;
+                stream = Streams[key] as Stream<T>;
             }
             
             return stream;

@@ -64,33 +64,32 @@ namespace Rzeka
             // ListenForAppearingIngredients();
             // ListenForFadingIngredients();
 
-            using IDisposable initialManaCheck = Eris
-                .ManaProvideableObservable
+            using IDisposable initialManaCheck = Library
+                .ConjurerAvailability
                 .Subscribe(manainfo =>
                 {
                     var keys = SatisfiedRequirements
                         .Select(kvp => kvp.Key)
                         .ToArray();
-                    
+
                     foreach (Type type in keys)
                     {
                         CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
                     }
-                    
-                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}") );
+                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}"));
 
             if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
 
-            Q += Eris
-                .ManaProvideableObservable
+            Q += Library
+                .ConjurerAvailability
                 .Skip(1) // handled above
                 .Where(manainfo => RequiresIngredient(manainfo.LastChangedType))
                 .Subscribe(
                     onNext: manainfo =>
-                {
-                    Type type = manainfo.LastChangedType;
-                    CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
-                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}") );
+                    {
+                        Type type = manainfo.LastChangedType;
+                        CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
+                    }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}"));
             
             
             /* ---- ---- 🌠 */

@@ -28,6 +28,7 @@ namespace Rzeka
 
         public void Dispose()
         {
+            Library.Dispose(); // Library before Eris since Library's subscription is on Eris's stream.
             Eris.Dispose();
         }
 

@@ -33,12 +33,6 @@ namespace Rzeka
         Subject<ExceptionOccurence> ExceptionStream { get; } = new();
         Subject<MessageOccurence> MessageStream { get; } = new();
 
-        public IObservable<IManaInformationProvideable> ManaProvideableObservable
-        {
-            get;
-            private set;
-        }
-
         public void PublishSpellOccurence(SpellOccurence spellOccurence)
         {
             SpellStream.OnNext(spellOccurence);
@@ -83,8 +77,6 @@ namespace Rzeka
             Name = name;
             Role = role;
             Q = new CollectibleDisposable();
-
-            InitializeConjurerAvailability();
 
             SubscribeSpellStream();
             SubscribeMatterStream();
@@ -225,59 +217,6 @@ namespace Rzeka
 
                 SerializableMessageStream.OnNext(serializableMessage);
             });
-        }
-
-        // TODO: belongs in Library — it tracks conjurer availability which is Library's domain.
-        // Moving it requires Library to emit its own events rather than deriving from SpellStream.
-        void InitializeConjurerAvailability()
-        {
-            IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
-                .Where(occ =>
-                    occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding
-                )
-                .Where(occ =>
-                    occ.SpellOccurenceCategory
-                        is SpellOccurenceCategory.HasMana
-                            or SpellOccurenceCategory.NoMana
-                            or SpellOccurenceCategory.Forgotten
-                )
-                .Scan(
-                    (false, new AvailableConjurers()),
-                    (acc, current) =>
-                    {
-                        TStrandingSpell sourceAsStranding =
-                            current.Source as TStrandingSpell
-                            ?? throw new InvalidOperationException();
-
-                        AvailableConjurers accumulator = acc.Item2;
-                        Type conjuredType = sourceAsStranding.ConjuredType;
-                        bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
-
-                        SpellOccurenceCategory category = current.SpellOccurenceCategory;
-                        if (category is SpellOccurenceCategory.HasMana)
-                        {
-                            accumulator.ActivateConjurer(sourceAsStranding);
-                        }
-                        else
-                        {
-                            accumulator.DectivateConjurer(sourceAsStranding);
-                        }
-
-                        bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
-
-                        bool hasAnythingChanged = wasManaAvailable != isManaAvailable;
-
-                        return (hasAnythingChanged, accumulator);
-                    }
-                )
-                .Where(accumulator => accumulator.Item1)
-                .Select(accumulator => accumulator.Item2 as IManaInformationProvideable)
-                .StartWith(new AvailableConjurers())
-                .Multicast(new ReplaySubject<IManaInformationProvideable>(1));
-
-            Q += manaStream.Connect();
-
-            ManaProvideableObservable = manaStream;
         }
 
         // ? move this to the scroll so it wont have to be created each time if that makes sense
