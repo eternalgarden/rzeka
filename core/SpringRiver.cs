@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Rzeka
 {
-    public class Rzeka : IRzeka, IDisposable
+    public class SpringRiver : IRzeka, IDisposable
     {
         public IWhisper LogFairy { get; }
 
@@ -20,7 +20,7 @@ namespace Rzeka
         internal Eris Eris { get; }
         internal Library Library { get; }
 
-        public Rzeka()
+        public SpringRiver()
         {
             Eris = new Eris();
             Library = new(Eris);
