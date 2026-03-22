@@ -3,7 +3,9 @@ using System.Reactive.Subjects;
 
 namespace Rzeka
 {
-    internal class SourceContract<T> : IDisposable  where T : TMatter 
+    // TODO So this can be removed?
+    internal class SourceContract<T> : IDisposable
+        where T : TMatter
     {
         readonly IObservable<T> _source;
         readonly Subject<T> _sourceSubject;
@@ -17,7 +19,7 @@ namespace Rzeka
             _source = source;
             _sourceSubject = new();
         }
-        
+
         public void Begin()
         {
             _sourceToken = _source.Subscribe(next => _sourceSubject.OnNext(next));
@@ -30,3 +32,4 @@ namespace Rzeka
         }
     }
 }
+

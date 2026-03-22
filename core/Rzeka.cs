@@ -1,0 +1,181 @@
+/*
+      |\      _,,,---,,_
+ZZZzz /,`.-'`'    -.  ;-;;,_
+     |,4-  ) )-,_. ,\ (  `'-'
+    '---''(_/--'  `-'\_)
+*/
+using System.Reactive.Disposables;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Rzeka.Tests")]
+
+namespace Rzeka
+{
+    public class Rzeka : IRzeka, IDisposable
+    {
+        public IWhisper LogFairy { get; }
+
+        // TODO Eris was made internal, this will require reworking legacy Consultate code
+        // in unity sanctuary project, it needs to be moved here anyway.
+        internal Eris Eris { get; }
+        internal Library Library { get; }
+
+        public Rzeka()
+        {
+            Eris = new Eris();
+            Library = new(Eris);
+            LogFairy = new ErisianLogFairy(Eris);
+        }
+
+        public void Dispose()
+        {
+            Eris.Dispose();
+        }
+
+        /* 🐋🐳 */
+
+        #region IWhisper
+
+        public void Speak(string message, params TMatter[] circumstances)
+        {
+            LogFairy.Speak(message, circumstances);
+        }
+
+        public void Speak(
+            string message,
+            RzekaMessageType rzekaMessageType,
+            params TMatter[] circumstances
+        )
+        {
+            LogFairy.Speak(message, rzekaMessageType, circumstances);
+        }
+
+        public void Speak(Exception exception, params TMatter[] circumstances)
+        {
+            LogFairy.Speak(exception, circumstances);
+        }
+
+        public void Speak(string message, Exception exception, params TMatter[] circumstances)
+        {
+            LogFairy.Speak(message, exception, circumstances);
+        }
+
+        #endregion // END IWhisper
+
+        #region IRzeka
+
+        public IObservable<T> Scry<T>()
+            where T : TMatter => Library.GetConjurer<T>();
+
+        public IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
+            where TOut : TMatter
+        {
+            StrandingSpell<TOut> newScroll = new StrandingSpell<TOut>(who, spell, Library, Eris);
+
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public IDisposable Weave<T>(object who, IObserver<T> spell)
+            where T : TMatter
+        {
+            AlteringScroll<T> newScroll = new AlteringScroll<T>(who, spell, Library, Eris);
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public IDisposable Weave<T1>(object who, Func<IObservable<T1>, IDisposable> spell)
+            where T1 : TMatter
+        {
+            WeavingSpell1<T1> newSpell = new WeavingSpell1<T1>(who, spell, Eris, Library);
+            newSpell.Cast();
+            return Disposable.Create(newSpell.Dispose);
+        }
+
+        public IDisposable Weave<T1, T2>(
+            object who,
+            Func<IObservable<T1>, IObservable<T2>, IDisposable> spell
+        )
+            where T1 : TMatter
+            where T2 : TMatter
+        {
+            WeavingSpell2<T1, T2> newSpell = new WeavingSpell2<T1, T2>(who, spell, Eris, Library);
+            newSpell.Cast();
+            return Disposable.Create(newSpell.Dispose);
+        }
+
+        public IDisposable Weave<T1, T2, T3>(
+            object who,
+            Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> spell
+        )
+            where T1 : TMatter
+            where T2 : TMatter
+            where T3 : TMatter
+        {
+            WeavingSpell3<T1, T2, T3> newSpell = new WeavingSpell3<T1, T2, T3>(
+                who,
+                spell,
+                Eris,
+                Library
+            );
+            newSpell.Cast();
+            return Disposable.Create(newSpell.Dispose);
+        }
+
+        public IDisposable Loom<T1, TOut>(
+            object who,
+            Func<IObservable<T1>, IObservable<TOut>> spell
+        )
+            where T1 : TMatter
+            where TOut : TMatter
+        {
+            LoomingSpell1<T1, TOut> newScroll = new LoomingSpell1<T1, TOut>(
+                who,
+                spell,
+                Library,
+                Eris
+            );
+
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public IDisposable Loom<T1, T2, TOut>(
+            object who,
+            Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> spell
+        )
+            where T1 : TMatter
+            where T2 : TMatter
+            where TOut : TMatter
+        {
+            LoomingSpell2<T1, T2, TOut> newScroll = new LoomingSpell2<T1, T2, TOut>(
+                who,
+                spell,
+                Library,
+                Eris
+            );
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public IDisposable Loom<T1, T2, T3, TOut>(
+            object who,
+            Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IObservable<TOut>> spell
+        )
+            where T1 : TMatter
+            where T2 : TMatter
+            where T3 : TMatter
+            where TOut : TMatter
+        {
+            LoomingSpell3<T1, T2, T3, TOut> newScroll = new LoomingSpell3<T1, T2, T3, TOut>(
+                who,
+                spell,
+                Library,
+                Eris
+            );
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        #endregion // END IRzeka
+
+        /* 🐋🐳 */
+    }
+}
+/* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
+/* 06 November 2022 🌊 */

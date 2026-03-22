@@ -1,10 +1,9 @@
-/* 
+/*
       |\      _,,,---,,_
 ZZZzz /,`.-'`'    -.  ;-;;,_
      |,4-  ) )-,_. ,\ (  `'-'
     '---''(_/--'  `-'\_)
 */
-
 
 using System;
 using System.Collections;
@@ -35,7 +34,7 @@ namespace Rzeka
 
         protected override IEnumerable<Type> Types => _types;
     }
-
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
 /* 24 January 2023 🌊 */
+

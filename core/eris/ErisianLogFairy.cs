@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Rzeka
 {
-    public class ErisianLogFairy : IRzekaLogFairy
+    public class ErisianLogFairy : IWhisper
     {
         Eris Eris { get; }
 

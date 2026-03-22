@@ -1,4 +1,4 @@
-/* 
+/*
       |\      _,,,---,,_
 ZZZzz /,`.-'`'    -.  ;-;;,_
      |,4-  ) )-,_. ,\ (  `'-'
@@ -7,42 +7,12 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
 
 namespace Rzeka
 {
-    public enum SpellSchool 
-    { 
-        Stranding,
-        Looming, 
-        Weaving 
-    }
-
-    public enum OccurenceCategory
-    {
-        Spell,
-        Matter,
-        Message
-    }
-
-    public enum MatterOccurenceCategory 
-    { 
-        Shaped, 
-        Received, 
-    }
-
-    public enum SpellOccurenceCategory 
-    { 
-        Created, 
-        HasMana, 
-        NoMana, 
-        Morphed, 
-        Wispd,
-        Forgotten 
-    }
-
     public interface IOccurence
     {
         Guid Guid { get; set; }
         DateTimeOffset Timestamp { get; set; }
     }
-    
+
     // TODO get rid of this derp, using messages instead
     [Obsolete]
     [Serializable]
