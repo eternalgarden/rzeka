@@ -13,18 +13,17 @@ namespace Rzeka
 {
     public class SpringRiver : IRzeka, IDisposable
     {
-        public IWhisper LogFairy { get; }
-
         // TODO Eris was made internal, this will require reworking legacy Consultate code
         // in unity sanctuary project, it needs to be moved here anyway.
         internal Eris Eris { get; }
         internal Library Library { get; }
+        internal IWhisper Whispers { get; }
 
-        public SpringRiver()
+        public SpringRiver(string name, RzekaRole role = RzekaRole.Local)
         {
-            Eris = new Eris();
+            Eris = new Eris(name, role);
             Library = new(Eris);
-            LogFairy = new ErisianLogFairy(Eris);
+            Whispers = new Whispers(Eris);
         }
 
         public void Dispose()
@@ -36,28 +35,28 @@ namespace Rzeka
 
         #region IWhisper
 
-        public void Speak(string message, params TMatter[] circumstances)
+        public void Whisper(string message, params TMatter[] circumstances)
         {
-            LogFairy.Speak(message, circumstances);
+            Whispers.Whisper(message, circumstances);
         }
 
-        public void Speak(
+        public void Whisper(
             string message,
             RzekaMessageType rzekaMessageType,
             params TMatter[] circumstances
         )
         {
-            LogFairy.Speak(message, rzekaMessageType, circumstances);
+            Whispers.Whisper(message, rzekaMessageType, circumstances);
         }
 
-        public void Speak(Exception exception, params TMatter[] circumstances)
+        public void Whisper(Exception exception, params TMatter[] circumstances)
         {
-            LogFairy.Speak(exception, circumstances);
+            Whispers.Whisper(exception, circumstances);
         }
 
-        public void Speak(string message, Exception exception, params TMatter[] circumstances)
+        public void Whisper(string message, Exception exception, params TMatter[] circumstances)
         {
-            LogFairy.Speak(message, exception, circumstances);
+            Whispers.Whisper(message, exception, circumstances);
         }
 
         #endregion // END IWhisper

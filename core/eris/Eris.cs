@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
@@ -9,24 +8,36 @@ namespace Rzeka
 {
     public class Eris : IDisposable
     {
-        public IErisConsulate Emanation { get; set; } // Rename to
-
-        bool _isDrainingQueues;
         CollectibleDisposable Q { get; set; }
-
-        Queue<ISerializableSpellOccurence> spellOccurenceQueue { get; } = new();
-        Queue<ISerializableMatterOccurence> matterOccurenceQueue { get; } = new();
-        Queue<SerializableMessageOccurence> messageOccurenceQueue { get; } = new();
 
         public IObservable<SpellOccurence> SpellOccurences => SpellStream.AsObservable();
         public IObservable<MatterOccurence> MatterOccurences => MatterStream.AsObservable();
+
+        ReplaySubject<ISerializableSpellOccurence> SerializableSpellStream { get; } =
+            new(TimeSpan.FromMinutes(1));
+        ReplaySubject<ISerializableMatterOccurence> SerializableMatterStream { get; } =
+            new(TimeSpan.FromMinutes(1));
+        ReplaySubject<SerializableMessageOccurence> SerializableMessageStream { get; } =
+            new(TimeSpan.FromMinutes(1));
+
+
+        public IObservable<ISerializableSpellOccurence> SerializableSpellOccurences =>
+            SerializableSpellStream.AsObservable();
+        public IObservable<ISerializableMatterOccurence> SerializableMatterOccurences =>
+            SerializableMatterStream.AsObservable();
+        public IObservable<SerializableMessageOccurence> SerializableMessageOccurences =>
+            SerializableMessageStream.AsObservable();
 
         Subject<SpellOccurence> SpellStream { get; } = new();
         Subject<MatterOccurence> MatterStream { get; } = new();
         Subject<ExceptionOccurence> ExceptionStream { get; } = new();
         Subject<MessageOccurence> MessageStream { get; } = new();
 
-        public IObservable<IManaInformationProvideable> ManaProvideableObservable { get; private set; }
+        public IObservable<IManaInformationProvideable> ManaProvideableObservable
+        {
+            get;
+            private set;
+        }
 
         public void PublishSpellOccurence(SpellOccurence spellOccurence)
         {
@@ -42,9 +53,11 @@ namespace Rzeka
         {
             if (Environment.CurrentManagedThreadId != 1)
             {
-                Console.Error.WriteLine($"Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}");
+                Console.Error.WriteLine(
+                    $"Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}"
+                );
             }
-            
+
             MatterStream.OnNext(matterOccurence);
         }
 
@@ -53,15 +66,22 @@ namespace Rzeka
             if (Environment.CurrentManagedThreadId != 1)
             {
                 // TODO this message is probably stoopid cos if it wasnt thread 1 it wont disply this message anyways
-                Console.Error.WriteLine($"Left the main thread for Message: {messageOccurence.Message}");
+                Console.Error.WriteLine(
+                    $"Left the main thread for Message: {messageOccurence.Message}"
+                );
             }
-            
+
             // TODO Rework other serializable occurence baking like that
             MessageStream.OnNext(messageOccurence);
         }
 
-        public Eris()
+        public string Name { get; }
+        public RzekaRole Role { get; }
+
+        public Eris(string name, RzekaRole role)
         {
+            Name = name;
+            Role = role;
             Q = new CollectibleDisposable();
 
             InitializeManaStreamMystery();
@@ -86,14 +106,13 @@ namespace Rzeka
                 {
                     Console.Error.WriteLine($"Message: {x.Exception.Message}");
                     Console.Error.WriteLine(x.Exception.StackTrace);
-                    
+
                     // TODO add listener to update cycle
                     // queue exception throwing there in editor
                     // so that we get it to fail properly for easy debugging
-                    
+
                     // 1. if data structure loaded push a proper log
                     // 2. otherwise serialize to a CRASH_LOG.txt
-                    
                 })
                 .Subscribe(_ => { });
         }
@@ -102,7 +121,12 @@ namespace Rzeka
         {
             Q += MatterStream
                 // TODO temporary lock on high velocity matter
-                .Where(occ => occ.Matter == null || occ.Matter.GetType().GetCustomAttributes(typeof(HighVelocityAttribute), true).Length == 0)
+                .Where(occ =>
+                    occ.Matter == null
+                    || occ.Matter.GetType()
+                        .GetCustomAttributes(typeof(HighVelocityAttribute), true)
+                        .Length == 0
+                )
                 .Select<MatterOccurence, ISerializableMatterOccurence>(occ =>
                 {
                     try
@@ -122,107 +146,75 @@ namespace Rzeka
                                     occ.Guid,
                                     occ.Timestamp.ToUnixTimeSeconds(),
                                     occ.Source.Guid,
-                                    occ.Matter.Guid);
+                                    occ.Matter.Guid
+                                );
                             default:
-                                throw new Exception($"Unhandled matter occurence category {occ.MatterOccurenceCategory}");
+                                throw new Exception(
+                                    $"Unhandled matter occurence category {occ.MatterOccurenceCategory}"
+                                );
                         }
                     }
                     catch (Exception e)
                     {
-                        Console.Error.WriteLine($"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}");
+                        Console.Error.WriteLine(
+                            $"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}"
+                        );
                         return null;
                     }
                 })
                 .Subscribe(occ =>
                 {
-                    if (occ is null) return;
-
-                    if (Emanation is null)
-                    {
-                        matterOccurenceQueue.Enqueue(occ);
+                    if (occ is null)
                         return;
-                    }
-
-                    CheckOccurenceQueues();
-
-                    Emanation.ReceiveMatterOccurence(occ);
+                    SerializableMatterStream.OnNext(occ);
                 });
         }
 
         void SubscribeSpellStream()
         {
             Q += SpellStream
-                .Where(x => x.SpellOccurenceCategory 
-                    is SpellOccurenceCategory.Created or SpellOccurenceCategory.Forgotten)
+                .Where(x =>
+                    x.SpellOccurenceCategory
+                        is SpellOccurenceCategory.Created
+                            or SpellOccurenceCategory.Forgotten
+                            or SpellOccurenceCategory.HasMana
+                            or SpellOccurenceCategory.NoMana
+                )
                 .Subscribe(occ =>
-            {
-                ISerializableSpellOccurence serializableSpellOccurence;
-                
-                if (occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
                 {
-                    serializableSpellOccurence = new SerializableCreatedSpellOccurence(
-                        occ.Guid,
-                        occ.Timestamp.ToUnixTimeSeconds(),
-                        GetSerializableSpell(occ.Source));
-                }
-                else
-                {
-                    serializableSpellOccurence = new SerializableOtherSpellOccurence(
-                        occ.Guid,
-                        occ.Timestamp.ToUnixTimeSeconds(),
-                        occ.SpellOccurenceCategory,
-                        occ.Source.Guid);
-                }
+                    ISerializableSpellOccurence serializableSpellOccurence;
 
-                if (Emanation is null)
-                {
-                    spellOccurenceQueue.Enqueue(serializableSpellOccurence);
-                    return;
-                }
+                    if (occ.SpellOccurenceCategory is SpellOccurenceCategory.Created)
+                    {
+                        serializableSpellOccurence = new SerializableCreatedSpellOccurence(
+                            occ.Guid,
+                            occ.Timestamp.ToUnixTimeSeconds(),
+                            GetSerializableSpell(occ.Source)
+                        );
+                    }
+                    else
+                    {
+                        serializableSpellOccurence = new SerializableOtherSpellOccurence(
+                            occ.Guid,
+                            occ.Timestamp.ToUnixTimeSeconds(),
+                            occ.SpellOccurenceCategory,
+                            occ.Source.Guid
+                        );
+                    }
 
-                CheckOccurenceQueues();
-
-                Emanation.ReceiveSpellOccurence(serializableSpellOccurence);
-            });
+                    SerializableSpellStream.OnNext(serializableSpellOccurence);
+                });
         }
 
         void SubscribeMessageStream()
         {
             Q += MessageStream.Subscribe(occ =>
             {
-                SerializableMessageOccurence serializableMessage = SerializableMessageOccurence.FromMessageOccurence(occ);
+                SerializableMessageOccurence serializableMessage =
+                    SerializableMessageOccurence.FromMessageOccurence(occ);
 
-                if (Emanation is null)
-                {
-                    messageOccurenceQueue.Enqueue(serializableMessage);
-                    return;
-                }
-
-                CheckOccurenceQueues();
-
-                Emanation.ReceiveMessage(serializableMessage);
+                SerializableMessageStream.OnNext(serializableMessage);
             });
-        }
-
-        void CheckOccurenceQueues()
-        {
-            if (_isDrainingQueues) return;
-            _isDrainingQueues = true;
-            try
-            {
-                while (matterOccurenceQueue.Count > 0)
-                    Emanation.ReceiveMatterOccurence(matterOccurenceQueue.Dequeue());
-
-                while (spellOccurenceQueue.Count > 0)
-                    Emanation.ReceiveSpellOccurence(spellOccurenceQueue.Dequeue());
-
-                while (messageOccurenceQueue.Count > 0)
-                    Emanation.ReceiveMessage(messageOccurenceQueue.Dequeue());
-            }
-            finally
-            {
-                _isDrainingQueues = false;
-            }
         }
 
         // TODO 🧙🏻 wow this is complicated
@@ -238,38 +230,44 @@ namespace Rzeka
             // CONGRATULATIONS MARIA ON WRITING THIS BLOB
 
             IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
-                .Where(occ => occ.Source.SpellSchool
-                    is SpellSchool.Looming
-                    or SpellSchool.Stranding)
-                .Where(occ => occ.SpellOccurenceCategory // TODO why only these occurences
-                    is SpellOccurenceCategory.HasMana
-                    or SpellOccurenceCategory.NoMana
-                    or SpellOccurenceCategory.Forgotten)
-                .Scan((false, new AvailableConjurers()), (acc, current) =>
-                {
-                    TStrandingSpell sourceAsStranding =
-                        current.Source as TStrandingSpell ?? throw new InvalidOperationException();
-
-                    AvailableConjurers accumulator = acc.Item2;
-                    Type conjuredType = sourceAsStranding.ConjuredType;
-                    bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
-
-                    SpellOccurenceCategory category = current.SpellOccurenceCategory;
-                    if (category is SpellOccurenceCategory.HasMana)
+                .Where(occ =>
+                    occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding
+                )
+                .Where(occ =>
+                    occ.SpellOccurenceCategory // TODO why only these occurences
+                        is SpellOccurenceCategory.HasMana
+                            or SpellOccurenceCategory.NoMana
+                            or SpellOccurenceCategory.Forgotten
+                )
+                .Scan(
+                    (false, new AvailableConjurers()),
+                    (acc, current) =>
                     {
-                        accumulator.ActivateConjurer(sourceAsStranding);
+                        TStrandingSpell sourceAsStranding =
+                            current.Source as TStrandingSpell
+                            ?? throw new InvalidOperationException();
+
+                        AvailableConjurers accumulator = acc.Item2;
+                        Type conjuredType = sourceAsStranding.ConjuredType;
+                        bool wasManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+
+                        SpellOccurenceCategory category = current.SpellOccurenceCategory;
+                        if (category is SpellOccurenceCategory.HasMana)
+                        {
+                            accumulator.ActivateConjurer(sourceAsStranding);
+                        }
+                        else
+                        {
+                            accumulator.DectivateConjurer(sourceAsStranding);
+                        }
+
+                        bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
+
+                        bool hasAnythingChanged = wasManaAvailable != isManaAvailable;
+
+                        return (hasAnythingChanged, accumulator);
                     }
-                    else
-                    {
-                        accumulator.DectivateConjurer(sourceAsStranding);
-                    }
-
-                    bool isManaAvailable = accumulator.IsManaOfTypeAvailable(conjuredType);
-
-                    bool hasAnythingChanged = wasManaAvailable != isManaAvailable;
-
-                    return (hasAnythingChanged, accumulator);
-                })
+                )
                 .Where(accumulator => accumulator.Item1)
                 .Select(accumulator => accumulator.Item2 as IManaInformationProvideable)
                 .StartWith(new AvailableConjurers())
@@ -279,12 +277,12 @@ namespace Rzeka
 
             ManaProvideableObservable = manaStream;
 
-            Q += ManaProvideableObservable
-                .Subscribe(info =>
-                {
-                    if (info.LastChangedType == null) return;
-                    // Debug.Log($"next : {info.LastChangedType} {info.IsManaOfTypeAvailable(info.LastChangedType)}");
-                });
+            Q += ManaProvideableObservable.Subscribe(info =>
+            {
+                if (info.LastChangedType == null)
+                    return;
+                // Debug.Log($"next : {info.LastChangedType} {info.IsManaOfTypeAvailable(info.LastChangedType)}");
+            });
         }
 
         // ? move this to the scroll so it wont have to be created each time if that makes sense
@@ -326,7 +324,7 @@ namespace Rzeka
             {
                 spellSchool = SpellSchool.Stranding,
                 conjuredType = strand.ConjuredType,
-                Who = GetWho(source)
+                Who = GetWho(source),
             };
 
             return serializableStranding;
@@ -345,7 +343,7 @@ namespace Rzeka
                 ingredients = GetSerializableIngredients(binding),
                 hasMana = binding.HasMana,
                 conjuredType = stranding.ConjuredType,
-                Who = GetWho(source)
+                Who = GetWho(source),
             };
 
             return looming;
@@ -361,22 +359,22 @@ namespace Rzeka
                 spellSchool = SpellSchool.Weaving,
                 ingredients = GetSerializableIngredients(binding),
                 hasMana = binding.HasMana,
-                Who = GetWho(source)
+                Who = GetWho(source),
             };
 
             return weaving;
         }
-        
+
         Who GetWho(TSpell source) => new Who { WhosType = source.Who.GetType() };
 
         // TODO there is a problem with that, there are no longer ingredients list
         private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)
         {
             return binding
-                .SatisfiedRequirements
-                .Select(kvp => new KeyValuePair<string, bool>(
-                        key: kvp.Key.Name,
-                        value: kvp.Value) // oops
+                .SatisfiedRequirements.Select(kvp => new KeyValuePair<string, bool>(
+                    key: kvp.Key.Name,
+                    value: kvp.Value
+                ) // oops
                 )
                 .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             ;
@@ -388,6 +386,6 @@ namespace Rzeka
             //     )
             //     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
-
     }
 }
+

@@ -3,21 +3,25 @@ using System.Linq;
 
 namespace Rzeka
 {
-    public class ErisianLogFairy : IWhisper
+    public class Whispers : IWhisper
     {
         Eris Eris { get; }
 
-        public ErisianLogFairy(Eris eris)
+        public Whispers(Eris eris)
         {
             Eris = eris;
         }
 
-        public void Speak(string message, params TMatter[] circumstances)
+        public void Whisper(string message, params TMatter[] circumstances)
         {
-            Speak(message, RzekaMessageType.Hint, circumstances);
+            Whisper(message, RzekaMessageType.Hint, circumstances);
         }
 
-        public void Speak(string message, RzekaMessageType rzekaMessageType, params TMatter[] circumstances)
+        public void Whisper(
+            string message,
+            RzekaMessageType rzekaMessageType,
+            params TMatter[] circumstances
+        )
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();
@@ -26,21 +30,20 @@ namespace Rzeka
             msg.Circumstances = circumstances.Select(x => x.Guid).ToArray();
             msg.Timestamp = DateTimeOffset.Now;
             Eris.PublishMessage(msg);
-            
-            
+
 #if UNITY_EDITOR
             string color = rzekaMessageType switch
             {
                 RzekaMessageType.Hint => "#FFB6C1",
                 RzekaMessageType.Hunch => "yellow",
                 RzekaMessageType.Horror => "orange",
-                _ => ""
+                _ => "",
             };
             Debug.Log($"<color={color}>Rzeka: {rzekaMessageType.ToString()}: {message}</color>");
 #endif
         }
 
-        public void Speak(Exception exception, params TMatter[] circumstances)
+        public void Whisper(Exception exception, params TMatter[] circumstances)
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();
@@ -57,7 +60,7 @@ namespace Rzeka
 #endif
         }
 
-        public void Speak(string message, Exception exception, params TMatter[] circumstances)
+        public void Whisper(string message, Exception exception, params TMatter[] circumstances)
         {
             var msg = new MessageOccurence();
             msg.Guid = Guid.NewGuid();
