@@ -60,22 +60,9 @@ namespace Rzeka
             }
             catch (Exception ex)
             {
-                // var wispd = new SpellOccurence
-                // {
-                //     SpSchoolype = SpellType.Weaving,
-                //     SpellOccurenceCategory = SpellOccurenceCategory.Wispd,
-                //     Scroll = this,
-                //     Luggage = new ExceptionalLuggage() { Exception = ex }
-                // };
-                
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
-
-                // todo well well
+                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd, ex);
                 Console.Error.WriteLine(ex.Message);
-                // Debug.LogError(ex.StackTrace);
-
                 throw;
-
             }
         }
 

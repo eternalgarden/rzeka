@@ -51,7 +51,7 @@ namespace Rzeka
         void SendSpellOccurence(SpellOccurenceCategory occurenceCategory)
         {
             /* ⭐ ---- ---- */
-            
+
             var occurence = new SpellOccurence
             {
                 Guid = Guid.NewGuid(),
@@ -61,8 +61,22 @@ namespace Rzeka
             };
 
             Eris.PublishSpellOccurence(occurence);
-            
+
             /* ---- ---- 🌠 */
+        }
+
+        void SendSpellOccurence(SpellOccurenceCategory occurenceCategory, Exception exception)
+        {
+            var occurence = new SpellOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.Now,
+                SpellOccurenceCategory = occurenceCategory,
+                Source = this,
+                Exception = exception
+            };
+
+            Eris.PublishSpellOccurence(occurence);
         }
         
         // Reformatted to avoid the boxing of value type implementing TMatter

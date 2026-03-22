@@ -84,7 +84,7 @@ namespace Rzeka
             Role = role;
             Q = new CollectibleDisposable();
 
-            InitializeManaStreamMystery();
+            InitializeConjurerAvailability();
 
             SubscribeSpellStream();
             SubscribeMatterStream();
@@ -179,6 +179,7 @@ namespace Rzeka
                             or SpellOccurenceCategory.Forgotten
                             or SpellOccurenceCategory.HasMana
                             or SpellOccurenceCategory.NoMana
+                            or SpellOccurenceCategory.Wispd
                 )
                 .Subscribe(occ =>
                 {
@@ -190,6 +191,15 @@ namespace Rzeka
                             occ.Guid,
                             occ.Timestamp.ToUnixTimeSeconds(),
                             GetSerializableSpell(occ.Source)
+                        );
+                    }
+                    else if (occ.SpellOccurenceCategory is SpellOccurenceCategory.Wispd)
+                    {
+                        serializableSpellOccurence = new SerializableWispdSpellOccurence(
+                            occ.Guid,
+                            occ.Timestamp.ToUnixTimeSeconds(),
+                            occ.Source.Guid,
+                            SerializableException.FromException(occ.Exception)
                         );
                     }
                     else
@@ -217,24 +227,16 @@ namespace Rzeka
             });
         }
 
-        // TODO 🧙🏻 wow this is complicated
-        // TODO why?
-        // TODO add2. and why is it here, if anything, wouldn't that be better off in library, could it be there?
-        // TODO THIS IS REALLY ITCHY
-        // TODO TOTES SHOULD *NOT* BE HERE
-        // TODO mana stream is referenced by TBindingSpell !!!! ridiculous
-        // TODO add.3 one day we will understand what actually happens here
-        void InitializeManaStreamMystery()
+        // TODO: belongs in Library — it tracks conjurer availability which is Library's domain.
+        // Moving it requires Library to emit its own events rather than deriving from SpellStream.
+        void InitializeConjurerAvailability()
         {
-            // TODO 🤯 IS THIS THING USED? I HAVE NO RECOLLECTION OF WHAT IT DOES
-            // CONGRATULATIONS MARIA ON WRITING THIS BLOB
-
             IConnectableObservable<IManaInformationProvideable> manaStream = SpellStream
                 .Where(occ =>
                     occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding
                 )
                 .Where(occ =>
-                    occ.SpellOccurenceCategory // TODO why only these occurences
+                    occ.SpellOccurenceCategory
                         is SpellOccurenceCategory.HasMana
                             or SpellOccurenceCategory.NoMana
                             or SpellOccurenceCategory.Forgotten
@@ -276,13 +278,6 @@ namespace Rzeka
             Q += manaStream.Connect();
 
             ManaProvideableObservable = manaStream;
-
-            Q += ManaProvideableObservable.Subscribe(info =>
-            {
-                if (info.LastChangedType == null)
-                    return;
-                // Debug.Log($"next : {info.LastChangedType} {info.IsManaOfTypeAvailable(info.LastChangedType)}");
-            });
         }
 
         // ? move this to the scroll so it wont have to be created each time if that makes sense

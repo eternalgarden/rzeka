@@ -34,6 +34,24 @@ namespace Rzeka
         }
     }
     
+    public class SerializableWispdSpellOccurence : SerializableSpellOccurence
+    {
+        public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Wispd;
+        public Guid spellReference { get; }
+        public SerializableException exception { get; }
+
+        public SerializableWispdSpellOccurence(
+            Guid guid,
+            long timestamp,
+            Guid spellReference,
+            SerializableException exception
+        ) : base(guid, timestamp)
+        {
+            this.spellReference = spellReference;
+            this.exception = exception;
+        }
+    }
+
     public class SerializableOtherSpellOccurence : SerializableSpellOccurence
     {
         public override SpellOccurenceCategory spellOccurenceCategory { get; }
