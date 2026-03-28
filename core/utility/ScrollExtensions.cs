@@ -36,6 +36,30 @@ namespace Rzeka
             IObservable<T2> context)
             => source.WithLatestFrom(context, (a, b) => (a, b));
         
+        /// <summary>
+        /// Performs a side effect for each emission without breaking the chain.
+        /// Use inside Loom lambdas to signal intentional component reactions, not debug taps.
+        /// </summary>
+        public static IObservable<T> Reacting<T>(this IObservable<T> source, Action<T> reaction)
+            => source.Do(reaction);
+
+        /// <summary>
+        /// Reacts to each emission, produces output matter, and publishes a ReactingOccurence to Eris.
+        /// Use inside Interlace lambdas — collapses .Do() + .Select() into one explicit step.
+        /// </summary>
+        public static IObservable<TOut> Reacting<T, TOut>(
+            this IObservable<T> source,
+            LoomContext ctx,
+            Func<T, TOut> reaction)
+            where T : TMatter
+            where TOut : TMatter
+            => source.Select(trigger =>
+            {
+                TOut result = reaction(trigger);
+                ctx.PublishReacting(result);
+                return result;
+            });
+
         public static bool IsConjuring(this TSpell scroll)
         {
             bool isConjuring = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding;
