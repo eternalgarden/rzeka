@@ -25,15 +25,6 @@ namespace Rzeka
             return response.Request.Guid == request.Guid;
         }
 
-        public static T WithCircumstances<T>(this T matter, params TMatter[] circumstances)
-            where T : TMatter
-        {
-            matter.Circumstances.Clear();
-            matter.Circumstances.AddRange(circumstances);
-
-            return matter;
-        }
-
         public static bool IsCircumstancedBy<T, U>(this T matter, U other, int maxDepth = 3)
             where T : TMatter
             where U : TMatter

@@ -5,9 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace Rzeka.Serialization
 {
-    public class CircumstancesJsonConverter : JsonConverter<List<TMatter>>
+    public class CircumstancesJsonConverter : JsonConverter<IReadOnlyList<TMatter>>
     {
-        public override void Write(Utf8JsonWriter writer, List<TMatter> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IReadOnlyList<TMatter> value, JsonSerializerOptions options)
         {
             writer.WriteStartArray();
             foreach (TMatter matter in value)
@@ -17,7 +17,7 @@ namespace Rzeka.Serialization
             writer.WriteEndArray();
         }
 
-        public override List<TMatter> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IReadOnlyList<TMatter> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             throw new NotImplementedException("This won't be implemented, can't be Read.");
         }
