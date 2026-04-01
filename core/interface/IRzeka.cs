@@ -2,13 +2,27 @@ namespace Rzeka
 {
     public interface IRzeka : IWhisper
     {
-        // Scry
+        /// <summary>
+        /// Scry is used predominantly for subscriptions between different Rzeka instances. 
+        /// </summary>
         IObservable<T> Scry<T>()
             where T : TMatter;
 
         // Strand
         IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
             where TOut : TMatter;
+
+        // Pluck
+        void Pluck<T>(object who, T matter)
+            where T : TMatter;
+
+        #region Shuttle
+
+        IDisposable Shuttle<TIn, TOut>(object who, Func<IObservable<TIn>, IObservable<TOut>> spell)
+            where TIn : IRequest
+            where TOut : IResponse<TIn>;
+
+        #endregion // Shuttle
 
         #region Looms
 

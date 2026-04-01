@@ -65,6 +65,23 @@ namespace Rzeka
         public static IObservable<T> Crossing<T>(this IObservable<T> source)
             where T : TMatter => source.Select(m => m.WithCircumstances<T>());
 
+        public static IObservable<TOut> Ask<TIn, TOut>(this IRzeka rzeka, object who, TIn request)
+            where TIn : IRequest
+            where TOut : IResponse<TIn>
+        {
+            return Observable.Create<TOut>(observer =>
+            {
+                IDisposable subscription = rzeka
+                    .Scry<TOut>()
+                    .Where(r => r.IsRespondingTo(request))
+                    .Subscribe(observer);
+
+                rzeka.Pluck(who, request);
+
+                return subscription;
+            });
+        }
+
         public static IObservable<(T1, T2)> CombineWith<T1, T2>(
             this IObservable<T1> source,
             IObservable<T2> other

@@ -32,7 +32,7 @@ namespace Rzeka
         IConnectableObservable<IManaInformationProvideable> BuildConjurerAvailability() =>
             Eris.SpellOccurences
                 .Where(occ =>
-                    occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding
+                    occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding or SpellSchool.Shuttling
                 )
                 .Where(occ =>
                     occ.SpellOccurenceCategory

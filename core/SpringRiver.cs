@@ -5,6 +5,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Rzeka.Tests")]
@@ -72,6 +73,20 @@ namespace Rzeka
         {
             StrandingSpell<TOut> newScroll = new StrandingSpell<TOut>(who, spell, Library, Eris);
 
+            return Disposable.Create(() => newScroll.Dispose());
+        }
+
+        public void Pluck<T>(object who, T matter)
+            where T : TMatter
+        {
+            Library.RegisterConjurer(Observable.Return(matter)).Dispose();
+        }
+
+        public IDisposable Shuttle<TIn, TOut>(object who, Func<IObservable<TIn>, IObservable<TOut>> spell)
+            where TIn : IRequest
+            where TOut : IResponse<TIn>
+        {
+            ShuttleSpell<TIn, TOut> newScroll = new ShuttleSpell<TIn, TOut>(who, spell, Library, Eris);
             return Disposable.Create(() => newScroll.Dispose());
         }
 

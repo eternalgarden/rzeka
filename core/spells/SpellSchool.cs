@@ -12,5 +12,6 @@ namespace Rzeka
         Stranding,
         Looming,
         Weaving,
+        Shuttling,
     }
 }
