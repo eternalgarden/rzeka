@@ -1,5 +1,50 @@
 # Rzeka
 
+  What's genuinely solid:
+
+  The IRzeka API surface is clean now — Strand/Loom/Weave/Scry with clear separation, no more Glyphs forcing CombineLatest, CombineWith/WithContext giving the caller the choice. SpringRiver is thin and honest. The Eris serialization
+  pipeline moving to ReplaySubject was the right call. RzekaFactory + RzekaRole gives the debugger a clean, forward-compatible entry point without polluting IRzeka.
+
+  The real concern — ManaProvideableObservable:
+
+  This is the biggest risk in the codebase right now. The comments are self-aware: "wow this is complicated", "IS THIS THING USED? I HAVE NO RECOLLECTION", "TOTES SHOULD NOT BE HERE". It tracks which TMatter types currently have active
+  conjurers and fires when availability changes — the "mana" concept that binding spells react to. It is load-bearing (TBindingSpell wires into it), but it lives in Eris when it clearly belongs in Library which already owns
+  RegisterConjurer. This is the one area where I'd want clarity before building more on top of it.
+
+  Smaller things worth noting:
+
+  - eris-mistake-shouldnt-be-here/ — the folder name is the diagnosis. AvailableConjurers and IManaInformationProvideable belong in library/. Easy move.
+  - IRzekaProposals at the bottom of IRzeka.cs — the Answer/Ask/Pluck interface block. Is that future API or dead proposals? It needs a decision before someone tries to implement against it.
+  - The Environment.CurrentManagedThreadId != 1 thread check is Unity-specific. Worth revisiting once you know Godot's threading model.
+  - Old src/ Unity files still sitting in the repo.
+
+  Overall: the direction is right and the major surface-level cleanup from this session puts the project in a noticeably better place than it was. The one thing I'd genuinely prioritise before the next feature push is understanding and
+  relocating the mana stream — everything else is tidy-up.
+
+> ❯ Oki neat, thank you so much for all of this! It has been very helpful. So for now we keep Eris internal, but we will see how factory implementation will look like when we decide on the DI framework to be used in godot. Is it true that
+with Rzeka and DI we will be basically skipping over a lot of typical means of communication in godot between nodes?
+
+● Yes, exactly. Godot's typical node communication toolkit is:
+
+  - Signals (built-in observer pattern)
+  - GetNode<T>() / node path references (direct coupling)
+  - Groups (broadcast by string tag)
+  - Autoloads / singletons (global state)
+
+  With Rzeka + DI you bypass most of that. Nodes don't need to know about each other's paths or even that each other exist — they just publish or subscribe to typed matter through IRzeka. The DI container wires the IRzeka instance into
+  whatever needs it, same as any other dependency.
+
+  The one place where Godot's own mechanisms stay relevant is the engine lifecycle — _Ready(), _Process(), _ExitTree() are still how you hook into the scene tree. Those become your mount/dismount points for registering and disposing Rzeka
+  spells, the same role IInitializable/IDisposable played with Zenject in Unity.
+
+  Signals specifically become mostly redundant for cross-system communication. They might still make sense for intra-node things that are purely visual or engine-internal (animation finished, tween completed) where pulling Rzeka in would
+  be overkill. But anything that crosses a system boundary — game state, input intent, audio requests, UI updates driven by game data — Rzeka handles that more cleanly than Godot signals because it's typed, traceable through Eris, and not
+  coupled to the scene tree structure.
+
+  The interesting open question is the threading side — Godot has its own main thread concept and some operations must happen on it, similar to Unity. Worth keeping an eye on whether the thread-1 check in Eris needs adapting to Godot's
+  thread ID.
+
+
 ## TODO
 
 - [ ] talk abour mana
@@ -40,6 +85,277 @@
 
   That's it. From Godot's perspective Rzeka is just another project in the build graph. No manual steps, no copying DLLs around.
 <!--  -->
+
+# Emanation
+
+> Emanation / Consulate have been removed from IRzeka, instead the game should access Eris from SpringRiver
+
+##   The mana view (subscription health dashboard)
+
+  Yes, useful — especially as your system grows. Knowing at a glance that a LoomingSpell on NoteScroll is sitting with no mana because ScrollStateChanged has no active Strand is exactly the kind of thing that's currently invisible and
+  causes confusing "why isn't this reacting" bugs. The mana view would essentially be a live dependency graph: each spell as a node, colored by whether all its ingredients are satisfied. That's a significant debugger feature but the
+  underlying data (AvailableConjurers) is already mostly there — it just needs to be correctly placed in Library and properly surfaced.
+<!--  -->
+
+##   The gameplay-driven test recorder
+
+  This is the more exciting idea and worth thinking through carefully. The concept would be: while playing, you observe a sequence of matter occurences, mark it as "this sequence should produce this outcome", and Rzeka generates a test
+  from it. Since every matter emission already carries its circumstances (which spell produced it, from which ingredients), the recorder has everything it needs to reconstruct a deterministic input sequence.
+
+  The tricky part is the boundary between what Rzeka can capture and what the test needs to set up. Rzeka sees matter flowing through spells — it doesn't see the game objects, scene state, or external inputs that triggered the first matter
+   in the chain. So the recorder would produce tests that are meaningful from a certain entry point in the reactive graph, not end-to-end from player input. That's still very useful — it's essentially integration tests for your reactive
+  logic layer.
+
+  A simpler first step toward that: since Eris already records the full occurence history and you already have the WHDIG brotli dump on quit, the raw material for test generation is already being captured. The question is building tooling
+  on top of it.
+
+  Are these two things you'd want to tackle as part of the Rzeka library itself, or as separate tooling that consumes it?
+
+
+# API
+
+# IRzeka, IRzekaLogFairy, IDisposable
+
+❯ Shouldnt we move both IDisposable and IRzekaLogFairy interfaces from IRzeka directly to SpringRiver implementation (i've just renamed it to simply Rzeka), so that its this end instance that can be disposed and logged to? But on the
+other hand this will require my DI system users to know what they have beneath IRzeka to dispose it.
+
+● Two separate questions worth splitting:
+
+  IDisposable — safe to remove from IRzeka. DI containers dispose registered services by checking the concrete resolved instance for IDisposable, not the interface. So Rzeka : IDisposable without IRzeka : IDisposable works correctly. And
+  no consumer holding IRzeka through DI should be disposing it themselves — that's the container's job. The only scenario where it matters is if someone holds a concrete Rzeka reference directly, which is the owner who has the right to
+  dispose it anyway.
+
+  IRzekaLogFairy — worth keeping on IRzeka. Speak() is something every component with an IRzeka reference legitimately calls. Removing it means every consumer either needs a second injection or an ugly cast. The convenience is real and
+  it's a coherent part of the public contract — Rzeka is the component's window into the system, and logging through that same window makes sense.
+
+  So the cleaner split would be:
+
+  public interface IRzeka : IRzekaLogFairy  // no IDisposable
+  {
+      ...
+  }
+
+  public class Rzeka : IRzeka, IDisposable  // IDisposable only on concrete
+  {
+      ...
+  }
+
+  The DI consumer holds IRzeka and never thinks about disposal. The owner who creates the instance holds Rzeka (or registers it with a DI container that handles disposal automatically).
+
+## .Reacting
+
+ 
+❯ Oki, I like .Reacting, I am writing it down for later, this would solve some of the problems I think, would make things explicit. So there is nothing really wrong with having Loom doing some stuff internally with Reacting and then
+responding with new matter as a result of it? Then it functions as the mix between weave and strand while keeping the circumstance chain and avoiding race conditions when weave and strand were used separately in that same component.
+
+● Exactly right, and the race condition point is important — it's not just a convenience argument. With separate Weave + Strand:
+
+  1. Weave receives matter, updates state
+  2. Something else could emit between steps 1 and 3
+  3. Strand publishes — but now other components may have already reacted to an intermediate state
+
+  With Loom + .Reacting() it's one synchronous chain. The side effect, the state update, and the emitted matter all happen atomically from the perspective of the rest of the system. Nothing can interleave.
+
+  And you get three things for free that the Weave + Strand split would require manual work to preserve:
+
+  - Circumstance chain — output matter automatically traces back to the input that caused it
+  - Mana — one registration, one lifecycle. If the input disappears, the whole thing goes dormant together
+  - Disposal — one IDisposable, not two that need to be kept in sync
+
+  So Loom's role is clearer now than it was before: it's not a "pure transform" — it's an operation that receives matter, optionally reacts, and emits new matter as a result. The .Reacting() extension just makes the reactive part explicit
+  and honest rather than hidden in a debug operator.
+
+  Worth updating the architecture documentation to reflect this framing. Shall we move on to the next pain point you hit?
+
+
+```
+Q += Rzeka.Loom<ScrollEditingStarted, ScrollFading>(
+                this,
+                fade_me => fade_me
+                    .Where(x => x.ScrollData.NoteGuid != NoteGuid)
+                    .Where(x => IsItNearby(x.ScrollData.Position))
+                    .Do(x =>
+                    {
+                        FrontMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
+                        BackMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
+
+                        FrontCollider.enabled = false;
+                        BackCollider.enabled = false;
+
+                        _isFadedOut = true;
+                    })
+                    .Select(_ => new ScrollFading(NoteGuid)));
+
+
+```
+
+  With that constraint, the real question is narrower: what do we do about .Do()?
+
+  Mechanically, .Do() is fine. The problem is it's semantically dishonest — Rx defined it as a debug tap, so using it for real logic is a convention violation that makes the code misleading. But the pattern itself (tap into the stream, run
+   imperative code, let the stream continue) is legitimate.
+
+  The simplest fix that preserves the Rx style completely is a first-class extension method in ScrollExtensions:
+
+```
+  obs
+      .Where(x => x.ScrollData.NoteGuid != NoteGuid)
+      .Where(x => IsItNearby(x.ScrollData.Position))
+      .Reacting(x => {
+          FrontMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
+          _isFadedOut = true;
+      })
+      .Select(_ => new ScrollFading(NoteGuid))
+```
+
+> ❯ Ok thank you! Before we jump to code please give me the last honest full evalutaion of what we are about to do and tell me if it will have actual usability in internal Rzeka tests and actual game tests including our past idea to have
+automatically generated tests based on captured/serialized matter sequences.
+
+● Honest full evaluation:
+
+  ---
+  The .Reacting() as Select-variant
+  This is solid regardless of anything else. The .Do() + .Select() pattern appears repeatedly in real game code, it deserves a named concept, and collapsing it into one operator that reads as "react to this matter and produce that matter"
+  is a genuine legibility win. Low risk, clear payoff.
+
+  ReactingOccurence in internal Rzeka tests
+  Moderate value. The main thing Rzeka's own tests would use it for is asserting the mechanic works — "if a Loom with .Reacting() fires, does Eris receive a ReactingOccurence?" That's one or two tests. Not a strong driver on its own.
+
+  ReactingOccurence in game tests
+  This is where it gets interesting but also where you should be honest with yourself. The Where-gate-passed signal is the strongest argument — currently you can't distinguish "matter never arrived at the Loom" from "matter arrived but was
+   filtered before the reaction step." ReactingOccurence closes that gap.
+
+  However: for most game test assertions, if you feed deterministic input matter and assert on output matter, the intermediate reaction is implied. ReactingOccurence adds diagnostic depth, not new test capabilities. It helps most when
+  debugging a failing test, not when writing a passing one.
+
+  Auto-generated tests from captured sequences
+  This is where ReactingOccurence compounds most naturally. Captured sessions already record matter shaped/received via Eris. Adding reaction events to that capture gives you a richer trace — input matter → gate passed → reaction fired →
+  output matter — all timestamped. A generated test replaying that sequence could assert all four steps, not just input/output. The causal chain becomes verifiable, not just the endpoints.
+
+  That said: the generated tests still need human review to distinguish "this reaction sequence is the correct behavior" from "this is just what happened once." ReactingOccurence makes the generated tests richer, not more authoritative.
+
+  ---
+  Overall verdict:
+
+  Do it, but scope it tightly:
+  1. .Reacting(ctx, Func<T, TOut>) — high confidence, clear value
+  2. ReactingOccurence with input + output matter — justified, fits the Eris model, earns its place in captured sequences
+  3. Two Loom overloads (with/without LoomContext) — necessary to avoid polluting pure-transform Looms
+
+  What you're not getting is a dramatic capability unlock for game tests. You're getting better diagnostics and richer capture data. If those feel worth the implementation cost, it's a sound decision. If you're pressed for time,
+  .Reacting() alone without the Eris emission would still be a net improvement.
+
+> post restructuring
+
+  - ReactingOccurence — new struct with Triggers, Result, Source, Guid, Timestamp
+  - LoomContext — constructed inside each InterlaceSpell, carries the ingredient snapshot closure
+  - Reacting<T, TOut>(ctx, Func<T, TOut>) — new overload in ScrollExtensions
+  - Eris.ReactingOccurences — new observable stream + PublishReactingOccurence
+  - IRzeka.Interlace — three overloads (1, 2, 3 ingredients)
+  - InterlaceSpell1/2/3 — new spell classes in core/scrolls/interlaceSpells/
+  - SpringRiver — implements the three Interlace methods
+
+  Usage now looks like:
+  Q += rzeka.Interlace<RaycastActionEvoked, InputHandlerTypeState, ScrollReplantingEvoked>(
+      who: this,
+      spell: (raycast, inputState, ctx) =>
+          raycast
+              .WithContext(inputState)
+              .Where(x => x.Item2.CurrentInputHandlerType is InputHandlerType.Freewalk)
+              .Select(x => x.Item1)
+              .Where(r => r.ResultType is RaycastInteractionResultType.InteractibleHit)
+              .Reacting(ctx, r =>
+              {
+                  _startingScrollPosition = ScrollTransform.position;
+                  RegisterActiveSubscriptions();
+                  return new ScrollReplantingEvoked(ScrollDataPrinter.PrintScrollData());
+              })
+  );
+
+
+
+# Multiple Rzeka Instances
+
+## Crossing points / Scry
+
+❯   Then a meeting point is just:
+
+  _shared.Strand(this, _local.Scry<ScrollStateChanged>());
+  _local.Strand(this, _shared.Scry<ScrollStateChanged>());
+
+Works same both ways, components establishe their own bridges.
+
+This means we would just need to accept that circumstance tracking gets interrupted on Rzeka instance borders and that we won't have a cross-instance Loom. We would also probably need some factory when creating Rzeka instances so that the
+ root debugger knows of all instances of it and their respective Erisses and Libraries
+
+● Both observations are exactly right.
+
+  Circumstances at borders — this is actually acceptable by design. Internal causality (local state machine transitions causing local state changes) isn't meaningful to the shared graph's consumers. What matters is that the component is
+  deliberate about what circumstances it puts on matter before publishing it to the shared stream. ScrollEditingStarted circumstanced by the RaycastActionEvoked that caused it is meaningful to the outside world. The internal chain that led
+   to that raycast being processed is not. The border is a natural causality scope boundary.
+
+  Cross-instance Loom — correct, you'd have to bridge one side in first. That extra hop is the cost you pay for isolation, and it makes the dependency explicit rather than hidden inside a Loom signature.
+
+>  The only remaining consideration worth noting now but not acting on: Ponder creates a stream entry in the Library if one doesn't exist yet. For the shared instance that's fine. For a local instance being tapped from outside before it's had a chance to Strand anything, it means you'd get an empty stream. That's Rx-correct behaviour — it'll just emit nothing until matter flows — but worth knowing when debugging a silent meeting point.
+
+Tell me more about this please. Won't that be in the end visible in the debugger as NoMana anyway? Would it make sense to establish a convention that local rivers should publish/strand instead of parent rivers weaving intoo them?
+
+● It wouldn't show as NoMana — and that's actually worse. The mana system tracks whether a StrandingSpell exists for a given type, not whether it's emitting. A Strand from a Ponder result immediately satisfies the mana requirement for any
+  downstream Loom or Weave on the shared instance — it looks healthy while silently emitting nothing. NoMana would at least be an honest signal.
+
+  Your convention instinct is exactly right, and it has a deeper justification beyond just fixing the silent meeting point. The component should own what it exposes. If the shared river reaches into the local one via Ponder, any external
+  code can tap any local stream arbitrarily — the local instance has no encapsulation. If the convention is that the component itself establishes bridges in its own initialization:
+
+  // Component init — local processing first, bridge after
+  _local.Loom<A, B, ScrollStateChanged>(...);
+  _local.Loom<C, ScrollStateHidden>(...);
+
+  // Component decides what to expose to the shared world
+  _shared.Strand(this, _local.Ponder<ScrollStateChanged>());
+  // ScrollStateHidden intentionally not bridged — private concern
+
+  Now the component controls its own surface area, Ponder is always called after the local stream exists, and the bridge is visible and intentional. Ponder becomes an internal publication mechanism rather than an external reach-in.
+
+  So the convention would be: Ponder is only ever called by the instance's own owner, never from outside. Which essentially means the name stops mattering much — it's just "how you bridge out" — and the real constraint is architectural
+  discipline. Worth capturing that as a documented pattern when the multi-instance story gets formalized.
+
+> ❯ But if we use Scry just with GetConjurer then the Library will never be informed if that conjurer is no longer used. Is that a problem?
+
+● Not a problem. The Library only tracks sources (registered conjurers via RegisterConjurer) — it has no concept of consumers. GetConjurer<T>() just returns the subject's observable. When the consuming Strand on the shared instance
+  disposes, Rx removes that subscription from the subject's subscriber list transparently, with no Library involvement needed.
+
+  The only thing that persists is the stream entry in Library's dictionary — but that already happens by design and never gets cleaned up regardless (the existing TODO notes streams live for the application's lifetime).
+
+  So Scry is genuinely just:
+
+  public IObservable<T> Scry<T>() where T : TMatter => Library.GetConjurer<T>();
+
+  No teardown mechanism needed. Rx owns the subscriber lifecycle, Library owns the source lifecycle — they don't overlap.
+
+> ❯ For matter that travel through the boundaries wont we need to sanitize their circumstances so the debugger doesnt get confused not knowing about the referenced guids?
+
+● Yes, this is a real problem and it propagates inward. If you don't strip at the boundary, the foreign GUIDs contaminate not just the bridged matter but also the circumstances of anything the local Loom produces from it — since Loom
+  automatically sets output circumstances to the triggering matter.
+
+  The cleanest fix is a small convention marker extension:
+
+  // ScrollExtensions
+  public static IObservable<T> Crossing<T>(this IObservable<T> source)
+      where T : TMatter
+      => source.Select(m => m.WithCircumstances<T>());
+
+  Applied at every bridge point:
+
+  _local.Strand(this, _shared.Scry<RaycastActionEvoked>().Crossing());
+  _shared.Strand(this, _local.Scry<ScrollStateChanged>().Crossing());
+
+  Crossing() does two things — strips foreign circumstances so the destination Eris only sees GUIDs it knows about, and signals to the reader that this is a deliberate instance boundary. Without it, a Scry + Strand could be an internal
+  bridge or a cross-instance one; with it the intent is unambiguous.
+
+  Later, when the factory/registry exists and Eris instances can query each other, Crossing() could optionally preserve the original circumstances as metadata rather than discarding them — the destination debugger could resolve foreign
+  GUIDs by asking the source instance. But stripping is the right default for now.
+
+
+
 
 # Glyphs
 
@@ -130,66 +446,33 @@
 
 # Loom
 
-## Do side effects
-
-❯ Oki, I like .Reacting, I am writing it down for later, this would solve some of the problems I think, would make things explicit. So there is nothing really wrong with having Loom doing some stuff internally with Reacting and then
-responding with new matter as a result of it? Then it functions as the mix between weave and strand while keeping the circumstance chain and avoiding race conditions when weave and strand were used separately in that same component.
-
-● Exactly right, and the race condition point is important — it's not just a convenience argument. With separate Weave + Strand:
-
-  1. Weave receives matter, updates state
-  2. Something else could emit between steps 1 and 3
-  3. Strand publishes — but now other components may have already reacted to an intermediate state
-
-  With Loom + .Reacting() it's one synchronous chain. The side effect, the state update, and the emitted matter all happen atomically from the perspective of the rest of the system. Nothing can interleave.
-
-  And you get three things for free that the Weave + Strand split would require manual work to preserve:
-
-  - Circumstance chain — output matter automatically traces back to the input that caused it
-  - Mana — one registration, one lifecycle. If the input disappears, the whole thing goes dormant together
-  - Disposal — one IDisposable, not two that need to be kept in sync
-
-  So Loom's role is clearer now than it was before: it's not a "pure transform" — it's an operation that receives matter, optionally reacts, and emits new matter as a result. The .Reacting() extension just makes the reactive part explicit
-  and honest rather than hidden in a debug operator.
-
-  Worth updating the architecture documentation to reflect this framing. Shall we move on to the next pain point you hit?
 
 
-```
-Q += Rzeka.Loom<ScrollEditingStarted, ScrollFading>(
-                this,
-                fade_me => fade_me
-                    .Where(x => x.ScrollData.NoteGuid != NoteGuid)
-                    .Where(x => IsItNearby(x.ScrollData.Position))
-                    .Do(x =>
-                    {
-                        FrontMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
-                        BackMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
+# Debugger
 
-                        FrontCollider.enabled = false;
-                        BackCollider.enabled = false;
+## Comments
 
-                        _isFadedOut = true;
-                    })
-                    .Select(_ => new ScrollFading(NoteGuid)));
+❯ Would it make sense to add a 'comment/description' property to rzeka api calls which would be saved and could be viewed in debugger or it is an anti pattern?
 
+● It's not an anti-pattern but I think it's solving the wrong problem, for two reasons.
 
-```
+  The Title already exists for this. Every spell auto-generates a title from its types and owner. The issue isn't that spells are unlabeled — it's that the auto-generated title tells you what connects to what but not why. A freeform
+  description field would likely end up either empty (not filled in) or redundant with the types.
 
-  With that constraint, the real question is narrower: what do we do about .Do()?
+  If a spell needs a description to be understandable, that's a signal. Either the matter types are poorly named — RaycastActionEvoked producing ScrollEditingStarted is already fairly readable — or the spell is doing too much and should be
+   extracted into a named method:
 
-  Mechanically, .Do() is fine. The problem is it's semantically dishonest — Rx defined it as a debug tap, so using it for real logic is a convention violation that makes the code misleading. But the pattern itself (tap into the stream, run
-   imperative code, let the stream continue) is legitimate.
+  // instead of a description param:
+  Q += RegisterScrollEditingTrigger();
 
-  The simplest fix that preserves the Rx style completely is a first-class extension method in ScrollExtensions:
+  IDisposable RegisterScrollEditingTrigger() =>
+      Rzeka.Loom<RaycastActionEvoked, InputHandlerTypeState, ScrollEditingStarted>(
+          who: this,
+          spell: ...);
 
-```
-  obs
-      .Where(x => x.ScrollData.NoteGuid != NoteGuid)
-      .Where(x => IsItNearby(x.ScrollData.Position))
-      .Reacting(x => {
-          FrontMeshRenderer.material.DOFloat(0f, "_Alpha", 0.7f);
-          _isFadedOut = true;
-      })
-      .Select(_ => new ScrollFading(NoteGuid))
-```
+  The method name lives in the code where it's useful, not in the runtime where it becomes metadata to maintain.
+
+  Where a runtime label genuinely earns its place is if Eris grows into an actual visual debugger — a dashboard showing live spell graphs. There, being able to distinguish two Loom<RaycastActionEvoked, InputHandlerTypeState,
+  ScrollEditingStarted> registered by the same component is real value. But that's a debugger feature, not an API feature — it would sit separately, maybe as an optional fluent call:
+
+  Q += Rzeka.Loom<...>(...).Label("scroll editing trigger");
