@@ -1,0 +1,88 @@
+.flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-grow-one {
+    flex-grow: 1;
+}
+
+.gap-tiny {
+    gap: 0.125rem; /* 2px */
+}
+
+.gap-small {
+    gap: 0.25rem;
+}
+
+.gap-medium {
+    gap: 0.5rem;
+}
+
+.gap-big {
+    gap: 1rem; /* 2px */
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.align-items-baseline {
+    align-items: baseline;
+}
+
+.align-items-start {
+    align-items: flex-start;
+}
+
+.justify-items-center {
+    justify-items: center;
+}
+
+.justify-items-start {
+    justify-items: start;
+}
+
+/* self-align and self-justify */
+
+/* https://tailwindcss.com/docs/align-self */
+.align-self-center {
+    align-self: center;
+}
+
+.justify-self-center {
+    justify-self: center;
+}
+
+.justify-self-stretch {
+    justify-self: stretch;
+}
+
+/* 🎨 colour */
+
+.red {
+    color: red;
+}
+
+.green {
+    color: #00ff00;
+}
+
+/* ⛰️ font size */
+
+.small-font {
+    font-size: 0.7rem;
+}
+
+/* 📐 padding */
+
+.padding-medium {
+    padding: 0.5rem;
+}

@@ -1,0 +1,39 @@
+@font-face {
+    font-family: Fell Pica;
+    font-style: normal;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_Pica_Covile.woff2");
+}
+
+@font-face {
+    font-family: Fell Pica;
+    font-style: italic;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_DW_PICA_italic.otf");
+}
+
+/* The all-caps one */
+@font-face {
+    font-family: Fell Pica SC;
+    font-style: normal;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_Pica_SC_Covile.woff2");
+}
+
+/* Also nice, more rectangular and serious */
+@font-face {
+    font-family: Double Pica;
+    font-style: normal;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_Double_Pica.otf");
+}
+@font-face {
+    font-family: Double Pica;
+    font-style: italic;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_Double_Pica_italic.otf");
+}
+
+/* @font-face {
+    font-family: Fell Tester;
+    font-style: normal;
+    src: url("./../../../assets/fonts/IMFellTypes/IM_FELL_Three_Line_Pica.otf");
+} */
+
+/* Initials 🌸 */
+

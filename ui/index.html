@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Eris Discordia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /*
+        why?
+        https://www.fast.design/docs/fast-element/leveraging-css#hiding-undefined-elements
+         */
+        :not(:defined) {
+            visibility: hidden;
+        }
+
+        @font-face {
+            font-family: 'avara-bold';
+            src: url('/fonts/Avara-Bold.otf');
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            background-color: transparent;
+            cursor: pointer;
+            color: ghostwhite;
+            font-size: 1em;
+            font-family: 'avara-bold';
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        div.debug {
+            background-color: #1f1e20;
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: -99999;
+        }
+
+        h3.title {
+            margin-block-end: 0em;
+            margin-block-start: 0em;
+            text-align: right;
+            margin-top: 0.4em;
+            margin-right: 0.4em;
+            font-family: monospace;
+        }
+
+        #message-box>div {
+            top: 30%;
+            left: 45%;
+        }
+
+        div.background {
+            position: absolute;
+            margin: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* CURRENT GRID 🏔️ */
+        /* https://grid.layoutit.com?id=3mnDW2K */
+
+        .layout {
+            display: grid;
+            grid-template-columns: 0.2fr 1.8fr 0.1fr 2.7fr 0.2fr;
+            grid-template-rows: 0.2fr 1.8fr 0.6fr 1.8fr 1.4fr 0.2fr;
+            gap: 0px 0px;
+            grid-auto-flow: row;
+            width: 100%;
+            height: 100%;
+        }
+
+        .spells {
+            grid-area: 4 / 3 / 6 / 5;
+        }
+
+        .heading {
+            grid-area: 1 / 1 / 2 / 6;
+        }
+
+        .leftside {
+            grid-area: 2 / 1 / 6 / 2;
+        }
+
+        .rightside {
+            grid-area: 2 / 5 / 6 / 6;
+        }
+
+        .tree {
+            grid-area: 2 / 4 / 5 / 5;
+        }
+
+        .footer {
+            grid-area: 6 / 1 / 7 / 6;
+        }
+
+        .occurences {
+            grid-area: 2 / 2 / 6 / 3;
+            width: 420px;
+        }
+
+        /* END OF AUTOGEN */
+
+        .layout {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        #occurencesBox {
+            overflow-y: scroll;
+            min-height: 0;
+            align-self: stretch;
+            background: rgb(41, 50, 56);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="debug" style="visibility: hidden;"></div>
+    <div class="background">
+        <canvas id='canv' width=500, height=200>
+    </div>
+
+    <!-- made with https://grid.layoutit.com/ 🦄 -->
+    <!-- https://css-tricks.com/snippets/css/complete-guide-grid/ -->
+    <div class="layout">
+        <div class="heading">
+            <h3 class="title">🌲🌺🏕️ Sanctuary 🌅🎠🌲 Eris' Realm v0.3.1 🐛</h3>
+        </div>
+        <div id="occurencesBox" class="occurences">
+            <eris-realm-events id="eris-realm-events">
+            </eris-realm-events>
+        </div>
+        <div class="spells"></div>
+        <div class="leftside"></div>
+        <div class="rightside"></div>
+        <div class="tree"></div>
+        <div class="footer"></div>
+    </div>
+
+    <usagi-happy></usagi-happy>
+    <whdig-loader></whdig-loader>
+    <image-loader></image-loader>
+
+    <script type="module" src="/src/eris/eris.ts"></script>
+</body>
+
+</html>
