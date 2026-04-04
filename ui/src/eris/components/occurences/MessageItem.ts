@@ -7,7 +7,7 @@ import {
     observable,
     when,
 } from "@microsoft/fast-element"
-import * as moment from "moment"
+import moment from "moment"
 import { GefildeDesVorkommen } from "../GefildeDesVorkommen"
 import { Subscription, filter } from "rxjs"
 import { IRawMessageOccurence } from "../../types/occurences-raw/message/IRawMessageOccurence"

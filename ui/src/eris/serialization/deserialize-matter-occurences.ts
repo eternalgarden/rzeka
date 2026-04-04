@@ -1,4 +1,4 @@
-import * as moment from "moment"
+import moment from "moment"
 import { IRawReceivedMatterOccurence } from "../types/occurences-raw/matter/IRawReceivedMatterOccurence"
 import { IRawShapedMatterOccurence } from "../types/occurences-raw/matter/IRawShapedMatterOccurence"
 import { IRawMatterOccurence } from "../types/occurences-raw/matter/IRawMatterOccurence"

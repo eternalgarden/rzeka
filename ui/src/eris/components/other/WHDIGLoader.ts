@@ -71,7 +71,7 @@ export class WHDIGLoader extends FASTElement {
                 fileReader.onload = async function () {
                     const result = fileReader.result as string
                     const regex = new RegExp(
-                        "@rzeka_story\r\n(?<story>.*)\r\n&rzeka_story",
+                        "@rzeka_story\r?\n(?<story>.*)\r?\n&rzeka_story",
                         "s"
                     )
                     const exec = regex.exec(result)

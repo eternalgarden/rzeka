@@ -2,7 +2,7 @@ import { html, repeat, when } from "@microsoft/fast-element"
 import { MatterItem } from "../MatterItem"
 import { MatterOccurenceCategory } from "../../../types/occurence-categories/MatterOccurenceCategory"
 import { rootMatterSeparatorTemplate } from "./root-separator-template"
-import * as moment from "moment"
+import moment from "moment"
 import {
     getFewGuidCharacters,
     getFullMatterType,
