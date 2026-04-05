@@ -73,16 +73,6 @@ namespace Rzeka
             });
         }
 
-        public static IObservable<(T1, T2)> CombineWith<T1, T2>(
-            this IObservable<T1> source,
-            IObservable<T2> other
-        ) => source.CombineLatest(other, (a, b) => (a, b));
-
-        public static IObservable<(T1, T2)> WithContext<T1, T2>(
-            this IObservable<T1> source,
-            IObservable<T2> context
-        ) => source.WithLatestFrom(context, (a, b) => (a, b));
-
         // -------------
     }
 }
