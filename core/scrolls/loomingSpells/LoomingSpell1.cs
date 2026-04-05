@@ -48,9 +48,10 @@ namespace Rzeka
 
                     /* ⭐ ---- ---- */
                     
-                    // * Set circumstances to the last grabbed 
-                    // ! This means multithreading or async operators can't be used in rzeka communication
-                    matter = matter.WithCircumstances<TOut>(lastT);
+                    // Automatic circumstance tracking — only if the user hasn't already set them
+                    // (e.g. manually via .WithCircumstances() inside an async Observable.Create wrapper)
+                    if (!matter.HasCircumstances())
+                        matter = matter.WithCircumstances<TOut>(lastT);
 
                     ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
 
