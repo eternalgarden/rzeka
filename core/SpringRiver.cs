@@ -9,6 +9,7 @@ using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Rzeka.Tests")]
+[assembly: InternalsVisibleTo("Rzeka.Dev")]
 
 namespace Rzeka
 {
@@ -20,7 +21,7 @@ namespace Rzeka
         internal Library Library { get; }
         internal IWhisper Whispers { get; }
 
-        public SpringRiver(string name, RzekaRole role = RzekaRole.Local)
+        internal SpringRiver(string name, RzekaRole role = RzekaRole.Local)
         {
             Eris = new Eris(name, role);
             Library = new(Eris);

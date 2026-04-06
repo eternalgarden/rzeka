@@ -13,6 +13,7 @@ import "./components/other/Usagi.ts"
 import "./components/other/WHDIGLoader.ts"
 
 import { loadTestDataIfInDebugMode } from "./helpers/loadTestDataIfInDebugMode"
+import { connectToDebugServer } from "./connection/debugServerConnection"
 
 /* 🌋 events */
 import {
@@ -42,10 +43,10 @@ declare global {
     }
 }
 
-/* 
+/*
 HOW IT GOES?
 
-Pre-info: 
+Pre-info:
 
 The separation beween 'Occurences' and 'Archived Occurences' is
 necessary due to the original being a basically raw data-form copy from
@@ -65,7 +66,7 @@ An occurence can be of one of three categories:
 - Matter Occurence (2 sub-categories: 'Shaped' or 'Received')
 - Message Occurence (a plain log)
 
-An occurence is thus a general timep-stamped event that contains further 
+An occurence is thus a general timep-stamped event that contains further
 data about what happened.
 
 Spell Occurences define Spells.
@@ -75,8 +76,8 @@ Matter Occurences define Matter.
 - Received Matter Occurences only contain a guid of referenced Matter.
 */
 
+// Legacy: window.OnNewOccurence still works for WHDIG file loading and test data
 window.OnNewOccurence = (json: string) => {
-    // console.log("meow")
     const rawEvent = new CustomEvent(ON_NEW_RAW_OCCURENCE, { detail: json })
     document.dispatchEvent(rawEvent)
 }
@@ -93,5 +94,10 @@ window.ClearOccurences = () => {
     document.dispatchEvent(rawEvent)
 }
 
+// Connect to the live debug server (WebSocket)
+// Falls back gracefully if the game isn't running — reconnects automatically
+connectToDebugServer()
+
+// Still supports #local for loading test data from bundled JSON
 loadTestDataIfInDebugMode()
 // initiateErisDesignSystem()

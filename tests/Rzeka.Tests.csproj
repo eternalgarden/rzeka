@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../core/Rzeka.Core.csproj" />
+    <ProjectReference Include="../dev/Rzeka.Dev.csproj" />
   </ItemGroup>
 
 </Project>
