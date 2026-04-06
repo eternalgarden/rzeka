@@ -9,5 +9,6 @@ namespace Rzeka
         public TSpell Source { get; set; }
         public MatterOccurenceCategory MatterOccurenceCategory { get; set; }
         public TMatter Matter { get; set; }
+        public bool ManualCircumstances { get; set; }
     }
 }

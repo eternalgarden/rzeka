@@ -41,9 +41,10 @@ namespace Rzeka
                 .Invoke(ingredient1, ctx)
                 .Select(matter =>
                 {
-                    if (!matter.HasCircumstances())
+                    bool manualCircumstances = matter.HasCircumstances();
+                    if (!manualCircumstances)
                         matter = matter.WithCircumstances<TOut>(lastT1);
-                    ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
+                    ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                     return matter;
                 });
         }

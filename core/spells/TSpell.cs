@@ -82,11 +82,15 @@ namespace Rzeka
         // Reformatted to avoid the boxing of value type implementing TMatter
         // Since we use structs for that
         // https://stackoverflow.com/questions/3032750/structs-interfaces-and-boxing
-        void SendMatterOccurence<T>(T matter, MatterOccurenceCategory occurenceCategory)
+        void SendMatterOccurence<T>(
+            T matter,
+            MatterOccurenceCategory occurenceCategory,
+            bool manualCircumstances = false
+        )
             where T : TMatter
         {
             /* ⭐ ---- ---- */
-            
+
             // Here boxing is unavoidable
             // TODO or is it? try adding generic version again
             // or consider running a different end user version with no access to Eris
@@ -97,11 +101,12 @@ namespace Rzeka
                 Timestamp = DateTimeOffset.Now,
                 Matter = matter,
                 MatterOccurenceCategory = occurenceCategory,
-                Source = this
+                Source = this,
+                ManualCircumstances = manualCircumstances
             };
 
             Eris.PublishMatterOccurence(occurence);
-            
+
             /* ---- ---- 🌠 */
         }
 

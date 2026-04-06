@@ -48,7 +48,7 @@ namespace Rzeka
             where T3 : TMatter;
 
         #endregion // Looms
-
+ 
         #region Interlace
 
         IDisposable Interlace<T1, TOut>(
