@@ -26,8 +26,8 @@ namespace Rzeka
     {
         public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Created;
         
-        public ISerializableSpell spell { get; }
-        
+        public object spell { get; }
+
         public SerializableCreatedSpellOccurence(Guid guid, long timestamp, ISerializableSpell spell) : base(guid, timestamp)
         {
             this.spell = spell;

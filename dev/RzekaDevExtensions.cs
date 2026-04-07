@@ -2,6 +2,7 @@ using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Text.Json;
 using Fleck;
+using Rzeka.Serialization;
 
 namespace Rzeka.Dev
 {
@@ -9,7 +10,11 @@ namespace Rzeka.Dev
     {
         static readonly JsonSerializerOptions SerializerOptions = new()
         {
-            Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+            Converters =
+            {
+                new System.Text.Json.Serialization.JsonStringEnumConverter(),
+                new TypeJsonConverter()
+            }
         };
 
         public static IDisposable EnableDevServer(this Spring spring, int port = 9222)
