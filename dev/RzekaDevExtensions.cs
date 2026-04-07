@@ -7,78 +7,110 @@ namespace Rzeka.Dev
 {
     public static class RzekaDevExtensions
     {
+        static readonly JsonSerializerOptions SerializerOptions = new()
+        {
+            Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+        };
+
         public static IDisposable EnableDevServer(this Spring spring, int port = 9222)
         {
             var disposables = new CompositeDisposable();
-            var connections = new List<IWebSocketConnection>();
+            var erises = new List<Eris>();
+            var activeConnections = new List<(IWebSocketConnection socket, CompositeDisposable subscriptions)>();
 
             var server = new WebSocketServer($"ws://127.0.0.1:{port}");
 
             server.Start(socket =>
             {
+                var connectionSubscriptions = new CompositeDisposable();
+
                 socket.OnOpen = () =>
                 {
-                    connections.Add(socket);
-                    Console.WriteLine($"Eris debugger connected ({connections.Count} client(s))");
+                    try
+                    {
+                        activeConnections.Add((socket, connectionSubscriptions));
+                        Console.WriteLine("[Eris] Debugger connected");
+
+                        // Defer subscription so it doesn't fire replay synchronously inside OnOpen
+                        Task.Run(() =>
+                        {
+                            foreach (Eris eris in erises)
+                            {
+                                connectionSubscriptions.Add(SubscribeEris(eris, socket));
+                            }
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.Error.WriteLine($"[Eris] OnOpen error: {ex.Message}");
+                    }
                 };
 
                 socket.OnClose = () =>
                 {
-                    connections.Remove(socket);
-                    Console.WriteLine($"Eris debugger disconnected ({connections.Count} client(s))");
+                    Console.WriteLine("[Eris] Debugger disconnected");
+                    activeConnections.RemoveAll(c => c.socket == socket);
+                    connectionSubscriptions.Dispose();
+                };
+
+                socket.OnError = ex =>
+                {
+                    Console.Error.WriteLine($"[Eris] WebSocket error: {ex.Message}");
                 };
             });
 
             disposables.Add(Disposable.Create(() =>
             {
                 server.Dispose();
-                connections.Clear();
+                activeConnections.Clear();
             }));
 
+            // Track existing Eris instances
             foreach (Eris eris in spring.AllErises)
             {
-                disposables.Add(SubscribeEris(eris, connections));
+                erises.Add(eris);
             }
 
-            // Subscribe to future Eris instances as they're created
+            // Track future Eris instances — subscribe all active connections to the new Eris
             disposables.Add(spring.OnInstanceCreated.Subscribe(rzeka =>
             {
-                disposables.Add(SubscribeEris(rzeka.Eris, connections));
+                erises.Add(rzeka.Eris);
+
+                foreach (var (socket, subscriptions) in activeConnections)
+                {
+                    subscriptions.Add(SubscribeEris(rzeka.Eris, socket));
+                }
             }));
 
             return disposables;
         }
 
-        static IDisposable SubscribeEris(Eris eris, List<IWebSocketConnection> connections)
+        static IDisposable SubscribeEris(Eris eris, IWebSocketConnection socket)
         {
             var disposables = new CompositeDisposable();
 
             disposables.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
-                Broadcast(connections, occ)));
+                Send(socket, occ)));
 
             disposables.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
-                Broadcast(connections, occ)));
+                Send(socket, occ)));
 
             disposables.Add(eris.SerializableMessageOccurences.Subscribe(occ =>
-                Broadcast(connections, occ)));
+                Send(socket, occ)));
 
             return disposables;
         }
 
-        static readonly JsonSerializerOptions SerializerOptions = new()
+        static void Send<T>(IWebSocketConnection socket, T occurence)
         {
-            Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
-        };
-
-        static void Broadcast<T>(List<IWebSocketConnection> connections, T occurence)
-        {
-            if (connections.Count == 0) return;
-
-            string json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
-
-            foreach (var connection in connections)
+            try
             {
-                connection.Send(json);
+                string json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
+                socket.Send(json);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"[Eris] Send error: {ex.Message}");
             }
         }
     }

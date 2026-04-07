@@ -24,6 +24,9 @@ namespace Rzeka.Tests.Demo
             var Q = new CollectibleDisposable();
             int health = 100;
 
+            // --- Strand: one-off game start event ---
+            Q += rzeka.Strand(this, Observable.Return(new GameStarted()));
+
             // --- Strand: emit PlayerMoved every 500ms ---
             var random = new Random(42);
             Q += rzeka.Strand(

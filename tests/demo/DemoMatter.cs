@@ -2,6 +2,8 @@ using Rzeka;
 
 namespace Rzeka.Tests.Demo
 {
+    public class GameStarted : Matter { }
+
     public class PlayerMoved : Matter
     {
         public float X { get; }
