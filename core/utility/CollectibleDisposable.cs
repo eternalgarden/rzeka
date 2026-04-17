@@ -1,28 +1,26 @@
 using System;
 using System.Reactive.Disposables;
 
-namespace Rzeka
+namespace Rzeka;
+public class CollectibleDisposable : IDisposable
 {
-    public class CollectibleDisposable : IDisposable
+    CompositeDisposable _composite;
+
+    public void Add(IDisposable disposable)
     {
-        CompositeDisposable _composite;
-
-        public void Add(IDisposable disposable)
-        {
-            _composite ??= new();
-            _composite.Add(disposable);
-        }
-
-        public void Dispose()
-        {
-            _composite?.Dispose();
-            _composite = null;
-        }
-
-        public static CollectibleDisposable operator +(CollectibleDisposable a, IDisposable b)
-        {
-            (a ??= new ()).Add(b);
-            return a;
-        }
+        _composite ??= new();
+        _composite.Add(disposable);
     }
-} 
+
+    public void Dispose()
+    {
+        _composite?.Dispose();
+        _composite = null;
+    }
+
+    public static CollectibleDisposable operator +(CollectibleDisposable a, IDisposable b)
+    {
+        (a ??= new ()).Add(b);
+        return a;
+    }
+}

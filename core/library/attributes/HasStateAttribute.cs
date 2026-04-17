@@ -1,33 +1,31 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+public class HighVelocityAttribute : Attribute
 {
-    public class HighVelocityAttribute : Attribute
-    {
-    }
-    
-    public class HasBufferAttribute : Attribute
-    {
-        int _buffer;
-
-        public int Buffer => _buffer;
-
-        public HasBufferAttribute(int buffer)
-        {
-            // Default value
-            _buffer = buffer;
-        }
-    }
-
-    public class HasStateAttribute : HasBufferAttribute
-    {
-        readonly object _defaultValue;
-        public HasStateAttribute() : base(1) { }
-        
-        // public HasStateAttribute(object defaultValue = null) : base(1)
-        // {
-        //     if (defaultValue != null) _defaultValue = defaultValue;
-        // }
-    }
-    
 }
+
+public class HasBufferAttribute : Attribute
+{
+    int _buffer;
+
+    public int Buffer => _buffer;
+
+    public HasBufferAttribute(int buffer)
+    {
+        // Default value
+        _buffer = buffer;
+    }
+}
+
+public class HasStateAttribute : HasBufferAttribute
+{
+    readonly object _defaultValue;
+    public HasStateAttribute() : base(1) { }
+    
+    // public HasStateAttribute(object defaultValue = null) : base(1)
+    // {
+    //     if (defaultValue != null) _defaultValue = defaultValue;
+    // }
+}
+

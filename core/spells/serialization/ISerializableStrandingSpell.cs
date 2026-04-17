@@ -1,9 +1,7 @@
 using System;
 
-namespace Rzeka
-{
+namespace Rzeka;
   public interface ISerializableStrandingSpell : ISerializableSpell
-    {
-        Type conjuredType { get; set; }
-    }
+{
+    Type conjuredType { get; set; }
 }

@@ -1,89 +1,87 @@
 using System;
 using System.Reactive.Linq;
 
-namespace Rzeka
+namespace Rzeka;
+
+[Serializable] // TODO remove serializable marks ... maybe?
+public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TMatter
 {
-
-    [Serializable] // TODO remove serializable marks ... maybe?
-    public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TMatter
+    public Guid Guid { get; }
+    public object Who { get; }
+    public SpellSchool SpellSchool => SpellSchool.Stranding;
+    public string Title => $"Conjuring of {typeof(TOut).Name}";
+    public TSpell ThisAsBase { get; }
+    public TStrandingSpell<TOut> ThisAsStranding { get; }
+    public IObservable<TOut> Conjuring { get; set; }
+    public CollectibleDisposable Q { get; set; }
+    public Type ConjuredType => typeof(TOut);
+    public Library Library { get; }
+    public Eris Eris { get; }
+    
+    
+    IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
     {
-        public Guid Guid { get; }
-        public object Who { get; }
-        public SpellSchool SpellSchool => SpellSchool.Stranding;
-        public string Title => $"Conjuring of {typeof(TOut).Name}";
-        public TSpell ThisAsBase { get; }
-        public TStrandingSpell<TOut> ThisAsStranding { get; }
-        public IObservable<TOut> Conjuring { get; set; }
-        public CollectibleDisposable Q { get; set; }
-        public Type ConjuredType => typeof(TOut);
-        public Library Library { get; }
-        public Eris Eris { get; }
+        return _spell
+            .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
+    }
+
+    IDisposable _libraryToken;
+
+    bool _isChanneling;
+    bool TSpell.HasMana
+    {
+        get => _isChanneling;
+        set => _isChanneling = value;
+    }
+    
+    readonly IObservable<TOut> _spell;
+
+    public StrandingSpell(object who, IObservable<TOut> spell, Library library, Eris eris)
+    {
+        _spell = spell;
         
-        
-        IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
-        {
-            return _spell
-                .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
-        }
+        Guid = Guid.NewGuid();
+        Who = who;
+        Eris = eris;
+        Library = library;
 
-        IDisposable _libraryToken;
+        ThisAsBase = this;
+        ThisAsStranding = this;
 
-        bool _isChanneling;
-        bool TSpell.HasMana
-        {
-            get => _isChanneling;
-            set => _isChanneling = value;
-        }
-        
-        readonly IObservable<TOut> _spell;
+        ThisAsBase.InitializeSpellBase();
+        ThisAsStranding.InitializeConjuringSpell();
 
-        public StrandingSpell(object who, IObservable<TOut> spell, Library library, Eris eris)
-        {
-            _spell = spell;
-            
-            Guid = Guid.NewGuid();
-            Who = who;
-            Eris = eris;
-            Library = library;
+        // A Stranding spell is always channeling, it cant be blocked, its a pure giver
+        _isChanneling = true;
+        Cast();
+    }
 
-            ThisAsBase = this;
-            ThisAsStranding = this;
+    public void Cast()
+    {
+        /* ⭐ ---- ---- */
 
-            ThisAsBase.InitializeSpellBase();
-            ThisAsStranding.InitializeConjuringSpell();
+        if (_libraryToken is not null) throw new Exception("Was already cast 🦇");
 
-            // A Stranding spell is always channeling, it cant be blocked, its a pure giver
-            _isChanneling = true;
-            Cast();
-        }
+        // try
+        // {
+            _libraryToken = Library.RegisterConjurer(Conjuring);
+            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
+        // }
+        // catch (Exception ex)
+        // {
+        //     // todo send luggage
+        //     throw ex;
+        //     
+        //     ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
+        // }
 
-        public void Cast()
-        {
-            /* ⭐ ---- ---- */
+        /* ---- ---- 🌠 */
+    }
 
-            if (_libraryToken is not null) throw new Exception("Was already cast 🦇");
-
-            // try
-            // {
-                _libraryToken = Library.RegisterConjurer(Conjuring);
-                ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
-            // }
-            // catch (Exception ex)
-            // {
-            //     // todo send luggage
-            //     throw ex;
-            //     
-            //     ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
-            // }
-
-            /* ---- ---- 🌠 */
-        }
-
-        public void Dispose()
-        {
-            _libraryToken?.Dispose();
-            Q?.Dispose();
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
-        }
+    public void Dispose()
+    {
+        _libraryToken?.Dispose();
+        Q?.Dispose();
+        ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Forgotten);
     }
 }

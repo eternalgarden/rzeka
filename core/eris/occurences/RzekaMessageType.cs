@@ -1,9 +1,7 @@
-namespace Rzeka
+namespace Rzeka;
+public enum RzekaMessageType
 {
-    public enum RzekaMessageType
-    {
-        Hint,
-        Hunch,
-        Horror
-    }
+    Hint,
+    Hunch,
+    Horror
 }

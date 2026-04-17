@@ -1,8 +1,6 @@
-namespace Rzeka
+namespace Rzeka;
+public enum RzekaRole
 {
-    public enum RzekaRole
-    {
-        Root,
-        Local,
-    }
+    Root,
+    Local,
 }

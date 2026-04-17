@@ -1,36 +1,34 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+[Serializable]
+public class SerializableException
 {
-    [Serializable]
-    public class SerializableException
-    {
-        public string message { get; set; }
-        public string[] comments { get; set; }
-        public string stackTrace { get; set; }
+    public string message { get; set; }
+    public string[] comments { get; set; }
+    public string stackTrace { get; set; }
 
-        public static SerializableException FromException(Exception ex)
+    public static SerializableException FromException(Exception ex)
+    {
+        if (ex is null) return new SerializableNullException();
+        
+        if (ex is RzekaException rex)
         {
-            if (ex is null) return new SerializableNullException();
-            
-            if (ex is RzekaException rex)
+            return new SerializableException()
             {
-                return new SerializableException()
-                {
-                    message = ex.Message,
-                    comments = rex.Comments?.ToArray(),
-                    stackTrace = ex.StackTrace
-                };
-            }
-            else
+                message = ex.Message,
+                comments = rex.Comments?.ToArray(),
+                stackTrace = ex.StackTrace
+            };
+        }
+        else
+        {
+            return new SerializableException()
             {
-                return new SerializableException()
-                {
-                    message = ex.Message,
-                    comments = null,
-                    stackTrace = ex.StackTrace
-                };
-            }
+                message = ex.Message,
+                comments = null,
+                stackTrace = ex.StackTrace
+            };
         }
     }
 }

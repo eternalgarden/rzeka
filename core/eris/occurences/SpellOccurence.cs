@@ -1,13 +1,11 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+public struct SpellOccurence : IOccurence
 {
-    public struct SpellOccurence : IOccurence
-    {
-        public Guid Guid { get; set; }
-        public DateTimeOffset Timestamp { get; set; }
-        public TSpell Source { get; set; }
-        public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
-        public Exception? Exception { get; set; }
-    }
+    public Guid Guid { get; set; }
+    public DateTimeOffset Timestamp { get; set; }
+    public TSpell Source { get; set; }
+    public SpellOccurenceCategory SpellOccurenceCategory { get; set; }
+    public Exception? Exception { get; set; }
 }

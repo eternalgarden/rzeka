@@ -1,11 +1,9 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+public interface IManaInformationProvideable
 {
-    public interface IManaInformationProvideable
-    {
-        Type LastChangedType { get; }
-        bool IsManaOfTypeAvailable<T>() where T : TMatter;
-        bool IsManaOfTypeAvailable(Type type);
-    }
+    Type LastChangedType { get; }
+    bool IsManaOfTypeAvailable<T>() where T : TMatter;
+    bool IsManaOfTypeAvailable(Type type);
 }

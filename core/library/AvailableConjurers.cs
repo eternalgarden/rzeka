@@ -1,65 +1,63 @@
 using System;
 using System.Collections.Generic;
 
-namespace Rzeka
+namespace Rzeka;
+public class AvailableConjurers : IManaInformationProvideable
 {
-    public class AvailableConjurers : IManaInformationProvideable
+    readonly Dictionary<Type, HashSet<Guid>> _availableConjurers = new();
+
+    public Type LastChangedType { get; private set; }
+
+    public void ActivateConjurer(TStrandingSpell strandingSpell)
     {
-        readonly Dictionary<Type, HashSet<Guid>> _availableConjurers = new();
+        /* 🦠🦴 */
 
-        public Type LastChangedType { get; private set; }
+        if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
 
-        public void ActivateConjurer(TStrandingSpell strandingSpell)
+        Type key = strandingSpell.ConjuredType;
+        if (_availableConjurers.ContainsKey(key) is false)
         {
-            /* 🦠🦴 */
-
-            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
-
-            Type key = strandingSpell.ConjuredType;
-            if (_availableConjurers.ContainsKey(key) is false)
-            {
-                _availableConjurers[key] = new HashSet<Guid>();
-            }
-
-            _availableConjurers[key].Add(strandingSpell.Guid);
-
-            LastChangedType = key;
-
-            /* 🦠🦴 */
+            _availableConjurers[key] = new HashSet<Guid>();
         }
 
-        public void DectivateConjurer(TStrandingSpell strandingSpell)
-        {
-            /* 🧩 */
+        _availableConjurers[key].Add(strandingSpell.Guid);
 
-            if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
+        LastChangedType = key;
 
-            Type key = strandingSpell.ConjuredType;
+        /* 🦠🦴 */
+    }
 
-            if (_availableConjurers.ContainsKey(key) is false) return;
-            if (!_availableConjurers[key].Contains(strandingSpell.Guid)) return;
+    public void DectivateConjurer(TStrandingSpell strandingSpell)
+    {
+        /* 🧩 */
 
-            // TODO this could use some testing if things are properly removed
-            _availableConjurers[key].Remove(strandingSpell.Guid);
+        if (strandingSpell == null) throw new ArgumentNullException(nameof(strandingSpell));
 
-            LastChangedType = key;
+        Type key = strandingSpell.ConjuredType;
 
-            /* 🧩 */
-        }
+        if (_availableConjurers.ContainsKey(key) is false) return;
+        if (!_availableConjurers[key].Contains(strandingSpell.Guid)) return;
 
-        public bool IsManaOfTypeAvailable<T>() where T : TMatter
-        {
-            /* ⚒️⚗️🛠️ */
+        // TODO this could use some testing if things are properly removed
+        _availableConjurers[key].Remove(strandingSpell.Guid);
 
-            return IsManaOfTypeAvailable(typeof(T));
+        LastChangedType = key;
 
-            /* ⚒️⚗️🛠️ */
-        }
+        /* 🧩 */
+    }
 
-        public bool IsManaOfTypeAvailable(Type type)
-        {
-            // TODO rework to consider stateful matter as always available
-            return _availableConjurers.ContainsKey(type) && _availableConjurers[type].Count > 0;
-        }
+    public bool IsManaOfTypeAvailable<T>() where T : TMatter
+    {
+        /* ⚒️⚗️🛠️ */
+
+        return IsManaOfTypeAvailable(typeof(T));
+
+        /* ⚒️⚗️🛠️ */
+    }
+
+    public bool IsManaOfTypeAvailable(Type type)
+    {
+        // TODO rework to consider stateful matter as always available
+        return _availableConjurers.ContainsKey(type) && _availableConjurers[type].Count > 0;
     }
 }

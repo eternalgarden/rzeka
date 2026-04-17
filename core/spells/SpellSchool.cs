@@ -5,13 +5,11 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 
-namespace Rzeka
+namespace Rzeka;
+public enum SpellSchool
 {
-    public enum SpellSchool
-    {
-        Stranding,
-        Looming,
-        Weaving,
-        Shuttling,
-    }
+    Stranding,
+    Looming,
+    Weaving,
+    Shuttling,
 }

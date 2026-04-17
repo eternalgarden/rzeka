@@ -1,12 +1,10 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+public class NoManaException : Exception
 {
-    public class NoManaException : Exception
-    {
-    }
+}
 
-    public class SpellInterruptedException : Exception
-    {
-    }
+public class SpellInterruptedException : Exception
+{
 }

@@ -1,66 +1,64 @@
 using System;
 
-namespace Rzeka
+namespace Rzeka;
+public interface ISerializableSpellOccurence : ISerializableOccurence
 {
-    public interface ISerializableSpellOccurence : ISerializableOccurence
+    public SpellOccurenceCategory spellOccurenceCategory { get; }
+}
+
+[Serializable]
+public abstract class SerializableSpellOccurence : ISerializableSpellOccurence
+{
+    public OccurenceCategory occurenceCategory => OccurenceCategory.Spell;
+    public abstract SpellOccurenceCategory spellOccurenceCategory { get; }
+    public Guid guid { get; }
+    public long timestamp  { get; } // in unix milliseconds
+
+    public SerializableSpellOccurence(Guid guid, long timestamp)
     {
-        public SpellOccurenceCategory spellOccurenceCategory { get; }
+        this.guid = guid;
+        this.timestamp = timestamp;
     }
+}
+
+public class SerializableCreatedSpellOccurence : SerializableSpellOccurence
+{
+    public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Created;
     
-    [Serializable]
-    public abstract class SerializableSpellOccurence : ISerializableSpellOccurence
+    public object spell { get; }
+
+    public SerializableCreatedSpellOccurence(Guid guid, long timestamp, ISerializableSpell spell) : base(guid, timestamp)
     {
-        public OccurenceCategory occurenceCategory => OccurenceCategory.Spell;
-        public abstract SpellOccurenceCategory spellOccurenceCategory { get; }
-        public Guid guid { get; }
-        public long timestamp  { get; } // in unix milliseconds
-
-        public SerializableSpellOccurence(Guid guid, long timestamp)
-        {
-            this.guid = guid;
-            this.timestamp = timestamp;
-        }
+        this.spell = spell;
     }
+}
 
-    public class SerializableCreatedSpellOccurence : SerializableSpellOccurence
+public class SerializableWispdSpellOccurence : SerializableSpellOccurence
+{
+    public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Wispd;
+    public Guid spellReference { get; }
+    public SerializableException exception { get; }
+
+    public SerializableWispdSpellOccurence(
+        Guid guid,
+        long timestamp,
+        Guid spellReference,
+        SerializableException exception
+    ) : base(guid, timestamp)
     {
-        public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Created;
-        
-        public object spell { get; }
-
-        public SerializableCreatedSpellOccurence(Guid guid, long timestamp, ISerializableSpell spell) : base(guid, timestamp)
-        {
-            this.spell = spell;
-        }
+        this.spellReference = spellReference;
+        this.exception = exception;
     }
+}
+
+public class SerializableOtherSpellOccurence : SerializableSpellOccurence
+{
+    public override SpellOccurenceCategory spellOccurenceCategory { get; }
+    public Guid spellReference { get; }
     
-    public class SerializableWispdSpellOccurence : SerializableSpellOccurence
+    public SerializableOtherSpellOccurence(Guid guid, long timestamp, SpellOccurenceCategory category, Guid spellReference) : base(guid, timestamp)
     {
-        public override SpellOccurenceCategory spellOccurenceCategory => SpellOccurenceCategory.Wispd;
-        public Guid spellReference { get; }
-        public SerializableException exception { get; }
-
-        public SerializableWispdSpellOccurence(
-            Guid guid,
-            long timestamp,
-            Guid spellReference,
-            SerializableException exception
-        ) : base(guid, timestamp)
-        {
-            this.spellReference = spellReference;
-            this.exception = exception;
-        }
-    }
-
-    public class SerializableOtherSpellOccurence : SerializableSpellOccurence
-    {
-        public override SpellOccurenceCategory spellOccurenceCategory { get; }
-        public Guid spellReference { get; }
-        
-        public SerializableOtherSpellOccurence(Guid guid, long timestamp, SpellOccurenceCategory category, Guid spellReference) : base(guid, timestamp)
-        {
-            this.spellReference = spellReference;
-            this.spellOccurenceCategory = category;
-        }
+        this.spellReference = spellReference;
+        this.spellOccurenceCategory = category;
     }
 }
