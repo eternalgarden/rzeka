@@ -31,9 +31,6 @@ public class Eris : IDisposable
     Subject<MatterOccurence> MatterStream { get; } = new();
     Subject<ExceptionOccurence> ExceptionStream { get; } = new();
     Subject<MessageOccurence> MessageStream { get; } = new();
-    Subject<ReactingOccurence> ReactingStream { get; } = new();
-
-    public IObservable<ReactingOccurence> ReactingOccurences => ReactingStream.AsObservable();
 
     public void PublishSpellOccurence(SpellOccurence spellOccurence)
     {
@@ -55,11 +52,6 @@ public class Eris : IDisposable
         }
 
         MatterStream.OnNext(matterOccurence);
-    }
-
-    public void PublishReactingOccurence(ReactingOccurence occurence)
-    {
-        ReactingStream.OnNext(occurence);
     }
 
     public void PublishMessage(MessageOccurence messageOccurence)

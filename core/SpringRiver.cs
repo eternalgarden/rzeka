@@ -187,57 +187,6 @@ public class SpringRiver : IRzeka, IDisposable
         return Disposable.Create(() => newScroll.Dispose());
     }
 
-    public IDisposable Interlace<T1, TOut>(
-        object who,
-        Func<IObservable<T1>, LoomContext, IObservable<TOut>> spell
-    )
-        where T1 : TMatter
-        where TOut : TMatter
-    {
-        InterlaceSpell1<T1, TOut> newScroll = new InterlaceSpell1<T1, TOut>(
-            who,
-            spell,
-            Library,
-            Eris
-        );
-        return Disposable.Create(() => newScroll.Dispose());
-    }
-
-    public IDisposable Interlace<T1, T2, TOut>(
-        object who,
-        Func<IObservable<T1>, IObservable<T2>, LoomContext, IObservable<TOut>> spell
-    )
-        where T1 : TMatter
-        where T2 : TMatter
-        where TOut : TMatter
-    {
-        InterlaceSpell2<T1, T2, TOut> newScroll = new InterlaceSpell2<T1, T2, TOut>(
-            who,
-            spell,
-            Library,
-            Eris
-        );
-        return Disposable.Create(() => newScroll.Dispose());
-    }
-
-    public IDisposable Interlace<T1, T2, T3, TOut>(
-        object who,
-        Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, LoomContext, IObservable<TOut>> spell
-    )
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter
-        where TOut : TMatter
-    {
-        InterlaceSpell3<T1, T2, T3, TOut> newScroll = new InterlaceSpell3<T1, T2, T3, TOut>(
-            who,
-            spell,
-            Library,
-            Eris
-        );
-        return Disposable.Create(() => newScroll.Dispose());
-    }
-
     #endregion // END IRzeka
 
     /* 🐋🐳 */

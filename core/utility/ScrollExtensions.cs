@@ -5,7 +5,6 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
     '---''(_/--'  `-'\_)
 */
 
-using System;
 using System.Reactive.Linq;
 
 namespace Rzeka;
@@ -14,9 +13,9 @@ public static class ScrollExtensions
     // -------------
 
     /// <summary>
-    /// Rzeka overload of Rx CombineLatest — returns a flat tuple instead of requiring a result selector.
+    /// Rzeka overload of Rx CombineLatest - returns a flat tuple instead of requiring a result selector.
     /// Combines two streams into a tuple, emitting whenever either fires.
-    /// Use when both streams are triggers — e.g. a display that updates when health OR shield changes.
+    /// Use when both streams are triggers - e.g. a display that updates when health OR shield changes.
     /// </summary>
     public static IObservable<(T1, T2)> CombineLatest<T1, T2>(
         this IObservable<T1> source,
@@ -24,9 +23,9 @@ public static class ScrollExtensions
     ) => source.CombineLatest(other, (a, b) => (a, b));
 
     /// <summary>
-    /// Rzeka overload of Rx CombineLatest — returns a flat tuple instead of requiring a result selector.
+    /// Rzeka overload of Rx CombineLatest - returns a flat tuple instead of requiring a result selector.
     /// Combines three streams into a tuple, emitting whenever any fires.
-    /// Use when all streams are triggers — e.g. a display that updates when health, shield OR stamina changes.
+    /// Use when all streams are triggers - e.g. a display that updates when health, shield OR stamina changes.
     /// </summary>
     public static IObservable<(T1, T2, T3)> CombineLatest<T1, T2, T3>(
         this IObservable<T1> source,
@@ -35,7 +34,7 @@ public static class ScrollExtensions
     ) => source.CombineLatest(second, third, (a, b, c) => (a, b, c));
 
     /// <summary>
-    /// Rzeka overload of Rx WithLatestFrom — returns a flat tuple instead of requiring a result selector.
+    /// Rzeka overload of Rx WithLatestFrom - returns a flat tuple instead of requiring a result selector.
     /// Pairs each emission of source with the latest value from other.
     /// Use when source is the trigger and other is just "what's the current state of X".
     /// Note: silently drops source emissions that arrive before other has emitted.
@@ -46,7 +45,7 @@ public static class ScrollExtensions
     ) => source.WithLatestFrom(other, (a, b) => (a, b));
 
     /// <summary>
-    /// Rzeka overload of Rx WithLatestFrom — returns a flat tuple instead of requiring a result selector.
+    /// Rzeka overload of Rx WithLatestFrom - returns a flat tuple instead of requiring a result selector.
     /// Pairs each emission of source with the latest values from other1 and other2.
     /// Use when source is the trigger and others are just "what's the current state of X".
     /// Note: silently drops source emissions that arrive before either other has emitted.
@@ -68,22 +67,13 @@ public static class ScrollExtensions
         source.Do(reaction);
 
     /// <summary>
-    /// Reacts to each emission, produces output matter, and publishes a ReactingOccurence to Eris.
-    /// Use inside Interlace lambdas — collapses .Do() + .Select() into one explicit step.
+    /// Runs a side effect on each emission and produces output matter in one explicit step.
+    /// Sugar over .Do() + .Select() — signals the reaction happens inside the chain, not as a debug tap.
     /// </summary>
     public static IObservable<TOut> Reacting<T, TOut>(
         this IObservable<T> source,
-        LoomContext ctx,
         Func<T, TOut> reaction
-    )
-        where T : TMatter
-        where TOut : TMatter =>
-        source.Select(trigger =>
-        {
-            TOut result = reaction(trigger);
-            ctx.PublishReacting(result);
-            return result;
-        });
+    ) => source.Select(reaction);
 
     public static bool IsConjuring(this TSpell scroll)
     {

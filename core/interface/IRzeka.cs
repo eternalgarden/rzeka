@@ -48,34 +48,6 @@ public interface IRzeka : IWhisper
         where T3 : TMatter;
 
     #endregion // Looms
- 
-    #region Interlace
-
-    IDisposable Interlace<T1, TOut>(
-        object who,
-        Func<IObservable<T1>, LoomContext, IObservable<TOut>> spell
-    )
-        where TOut : TMatter
-        where T1 : TMatter;
-
-    IDisposable Interlace<T1, T2, TOut>(
-        object who,
-        Func<IObservable<T1>, IObservable<T2>, LoomContext, IObservable<TOut>> spell
-    )
-        where TOut : TMatter
-        where T1 : TMatter
-        where T2 : TMatter;
-
-    IDisposable Interlace<T1, T2, T3, TOut>(
-        object who,
-        Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, LoomContext, IObservable<TOut>> spell
-    )
-        where TOut : TMatter
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter;
-
-    #endregion // Interlace
 
     #region Weavings
 

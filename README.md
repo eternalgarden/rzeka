@@ -1,20 +1,34 @@
 # TODO
 - how to deal with whidg generation in the end, i guess rzeka users should be able to modify how the final report is generated, like lol without the ascii art for example 
 - dev server instructions, installation instructons
+- add at the end relative links to specific scripts, like Matter to IMatter implementation
+- implement .Label()
+- todo: do we really want to enforce the max 2 matter input in api methods? or we keep the 3 input matter overloads but suggest that this could be a code smell?
+- todo: do we in the end keep naming for the two extension methods: CombineLatest and WithLatestFrom since they might be misleading for Rx users.
+- todo: we need .Reacting() overloads for situations with more than one input matter type
+- todo: since we have class Spring then do we plan on making SpringRiver internal? also update docs on initializing rzeka since it should be done through Spring
 
-# Rzeka
+# rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 
-**Rzeka is a single-threaded reactive event bus.** All matter must be published and consumed on the same thread. This constraint is enforced at runtime and is by design — it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent without locks or synchronization.
+**rzeka is a single-threaded reactive event bus.** rzeka ("river" in Polish) is a C# library built on Rx.NET. All data flows as typed streams - components publish into the river and subscribe to it without holding direct references to each other.
 
-Rzeka ("river" in Polish) is built on Rx.NET. All data flows as typed streams — components publish into the river and subscribe to it without holding direct references to each other.
+Instead of subscribing directly to a shared stream, [Rzeka API](link.com) provides a set of methods that define the means and ends of communication through the river. This allows for the extensive debugging and testing of what happens within the stream, i.e. tracking the entire chains of the event emissions.
+
+All matter must be published and consumed on the same thread. This constraint is enforced at runtime and is by design - it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent without locks or synchronization. The documentation provides an example on how to handle async cases, see [Async Operations]().
+
+It was created in order to be used in the Godot game engine for the [sanctuary](addlink.com), but it can be potentially used in other environments. Unfortunately it won't work in Unity (is that true, check?).
+
+TODO: Suggest that it can be used in cojunction with with [R3](https://github.com/Cysharp/R3). Verify if true.
+
+This version of rzeka was refactored and improved from the old Unity-focused implementation with help of an LLM.
 
 ## Installation
 
-_TODO: add Unity Package Manager / Godot installation instructions._
+_TODO: add Unity Package Manager / Godot installation instructions (fill it be able to use it in unity?)._
 
-Mention that it works best with DI?
+TODO: Mention that it works best with DI?
 
 ## Events
 
@@ -22,15 +36,15 @@ Events carried through Rzeka are called **Matter**.
 
 ### Matter
 
-The base carrier of event data. Every matter has a `Guid` (its identity) and a `Circumstances` list (contextual metadata — other matter instances that provide context for this one). 
+The base carrier of event data. Every matter has a `Guid` (its identity) and a `Circumstances` list (contextual metadata - other matter instances that provide context for this one). 
 
-Guid and Circumstances attachment is handled by rzeka automatically so it can be later tracked in your integration tests and observed in the provided [Eris debugger tool](#Eris).
+Guid and Circumstances attachment is handled by rzeka automatically so it can be later tracked in your integration tests and observed through the provided [Eris debugger tool](#Eris).
 
 Matter instances are compared by `Guid`, so two separate instances of the same type are never equal.
 
 Extend `Matter` to define your own event types:
 
-```c
+```csharp
 class PlayerDied : Matter
 {
     public string Cause { get; }
@@ -43,19 +57,20 @@ class EnemyDefeated : Matter
     public EnemyDefeated(int xpReward) => XpReward = xpReward;
 }
 ```
+
 Avoid using reference types in your Matter instances.
 
 Keep your matter instances immutable.
 
 ### Request / Response
 
-A pair of Matter specialisations for request/response patterns. The response carries a reference back to the original request, so the requester can verify the response is for their specific request.
+A specialised pair of Matter for request/response patterns. The response carries a reference back to the original request, so the requester can verify the response is for their specific request.
 
 You are required to implement the `.base()` constructor call.
 
-This is what [Shuttle API method](#Shuttle) described below uses automatically under the hood.
+This is what [Shuttle API method](#Shuttle) operates on.
 
-```c
+```csharp
 class InventoryRequest : Request { }
 
 class InventoryResponse : Response<InventoryRequest>
@@ -66,11 +81,18 @@ class InventoryResponse : Response<InventoryRequest>
 }
 ```
 
+TODO: Example of checking manually if response you receive is specific to your request. Does that even make sense? Shouldnt RR be always used with Shuttle?
+```csharp
+// claude please help me with the example
+```
+
+The suggested filenaming convention (a good place for a snippet) is to keep both Request and its Response in the same `.cs` file suffixed with `RR`, like `InventoryRR`.
+
 ### Circumstances
 
 Circumstances attach context to a piece of matter. For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance, allowing you to track the causality chains through [Eris, rzeka's debugger](#Eris)
 
-```c
+```csharp
 var attack = new AttackEvent(attacker: "dragon");
 var damage = new DamageDealt(amount: 40).WithCircumstances<DamageDealt>(attack);
 
@@ -78,16 +100,16 @@ var damage = new DamageDealt(amount: 40).WithCircumstances<DamageDealt>(attack);
 bool causedByDragon = damage.IsCircumstancedBy(attack); // true
 ```
 
-##### Automatic vs Manual Circumstances
+##### Automatic vs. Manual Circumstances
 
-Rzeka tracks circumstances automatically inside **Loom** and **Interlace** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
+Rzeka tracks circumstances automatically inside **Loom** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
 
-If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom or Interlace lambda is an **active decision to override the default tracking**.
+If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom lambda is an **active decision to override the default tracking**.
 
 TODO, IMPLEMENT (Eris): Display information in Eris whether matteroccurence has manually assigned circumstances.
 
 **Where automatic tracking works:**
-- Synchronous Loom/Interlace chains — the default, no action needed
+- Synchronous Loom chains — the default, no action needed
 
 **Where you must attach circumstances manually:**
 - Inside `Pluck` calls — Pluck has no automatic tracking
@@ -103,8 +125,9 @@ TODO, IMPLEMENT (Eris): Display information in Eris whether matteroccurence has 
 
 Initialize Rzeka with:
 
-```c
+```csharp
 // TODO shouldn't we actually make springriver constructor internal and force the user to initialize it through the factory.
+
 IRzeka rzeka = new SpringRiver("MyGame");
 
 // TODO Add notes on child rivers and consider implementing at least a rzkea factory which would inform Eris about all existing rivers, also potentially implement an 
@@ -114,7 +137,7 @@ All rzeka API methods accept a `who` object (the registering owner, used for dia
 
 A common pattern is to collect them into a composite disposable:
 
-```c
+```csharp
 CollectibleDisposable Q = new();
 
 Q += rzeka.Loom<PlayerInputState, PlayerMovementState>(...)
@@ -125,9 +148,9 @@ Q.Dispose();
 
 `CollectibleDisposable` is a wrapper around [CompositeDisposable][https://learn.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh228980(v=vs.103)], it overloads `+` operator allowing you to neatly add your rzeka subscriptions to it. It does not implement `.Clear()` method of the `CompositeDisposable` because that would likely lead you to accidental memory leaks.
 
-Loom, Interlace and Weave API methods below have overloads that allow two input matter types. If you need more, pull additional streams manually via `Scry`:
+Loom and Weave API methods below have overloads that allow two input matter types. If you need more, pull additional streams manually via `Scry`:
 
-```c
+```csharp
 Q += rzeka.Loom<A, B, Out>(
     this,
     (a, b) =>
@@ -138,11 +161,11 @@ Q += rzeka.Loom<A, B, Out>(
 
 ---
 
-### Strand — Publisher
+### Strand - pure giver / publisher
 
 Registers a source `IObservable<T>` into the river. Any Loom or Weave that listens to `T` will receive these values.
 
-```c
+```csharp
 // Expose a button's click stream as PlayerJumpRequested events
 Q += rzeka.Strand(
     this,
@@ -158,16 +181,14 @@ Q += rzeka.Strand(
 
 ---
 
-### Pluck — Fire Once
+### Pluck - fire once publisher
 
 Publish a single matter value into the river imperatively, without an ongoing stream.
 
-```c
+```csharp
 rzeka.Pluck(this, new GameStarted());
 ```
 Pluck has no automatic circumstance tracking — it doesn't know what caused it. If causality matters, attach circumstances manually with `.WithCircumstances()` before plucking:
-
-<!-- EDIT: you had a note here asking for an Interlace + Pluck + WithCircumstances example — write one from a real game scenario when ready -->
 
 ```csharp
 // Inside a Weave or other context where you have the triggering matter:
@@ -176,14 +197,14 @@ rzeka.Pluck(this, new GamePaused().WithCircumstances<GamePaused>(triggeringEvent
 
 ---
 
-### Loom — Pure Transform
+### Loom - transform
 
-Listens to one or more streams and produces a new stream. No side effects — use it when you're just mapping or combining data.
+Listens to one or more streams and produces a new stream. Use it for mapping, combining, or reacting to matter. Intentional side effects belong inside `.Reacting()` (see [Reacting](#reacting)), not bare `.Do()` or `.Select(...)` with imperative bodies.
 
-Loom automatically attaches the triggering input matter as a circumstance on the output. You do not need to call `.WithCircumstances()` manually — and if you do, it will override the automatic tracking (see [Automatic vs Manual Circumstances](#automatic-vs-manual-circumstances)).
+Loom automatically attaches the triggering input matter as a circumstance on the output. You do not need to call `.WithCircumstances()` manually - and if you do, it will override the automatic tracking (see [Automatic vs Manual Circumstances](#automatic-vs-manual-circumstances)).
 
 **Single input:**
-```c
+```csharp
 // Transform health change events into UI update events
 Q += rzeka.Loom<HealthChanged, HealthBarUpdateRequested>(
     this,
@@ -191,26 +212,27 @@ Q += rzeka.Loom<HealthChanged, HealthBarUpdateRequested>(
 );
 ```
 
-**Two inputs — combine latest:**
-```c
+**Two inputs - combine latest:**
+```csharp
 // Produce a rendering update whenever position OR animation state changes
 Q += rzeka.Loom<PositionChanged, AnimationStateChanged, RenderUpdateRequested>(
     this,
     (positions, animations) =>
         positions
-            .CombineWith(animations)
+            .CombineWith(animations) // or .WithLatestFrom(...), see extension methods
             .Select(((PositionChanged pos, AnimationStateChanged anim) pair) =>
                 new RenderUpdateRequested(pair.pos.Position, pair.anim.Clip))
 );
 ```
 
+// todo: remove if we don't keep threee input api methods
 **Three inputs:**
-```c
+```csharp
 Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
     this,
     (inputs, physics, game) =>
         inputs
-            .WithContext(physics)
+            .WithContext(physics) // todo: this uses the old naming for CombineWith
             .WithContext(game)
             .Select(/* ... */)
 );
@@ -218,32 +240,9 @@ Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
 
 ---
 
-### Interlace — Reacting Transform
+### Weave - pure taker / subscriber
 
-Like Loom, but receives a `LoomContext` that lets you report side effects to the Eris debugger. Use this instead of Loom when the transform causes a visible component reaction (e.g. playing a sound, triggering an animation), so it shows up in the diagnostics stream.
-
-Same automatic circumstance tracking as Loom applies — see [Automatic vs Manual Circumstances](#automatic-vs-manual-circumstances).
-
-```csharp
-// When the player takes damage, shake the camera and emit a screen effect event
-Q += rzeka.Interlace<DamageReceived, ScreenShakeRequested>(
-    this,
-    (damage, ctx) =>
-        damage.Reacting(ctx, e =>
-        {
-            _camera.Shake(e.Amount); // side effect, tracked by ctx
-            return new ScreenShakeRequested(e.Amount);
-        })
-);
-```
-
-The `.Reacting(ctx, reaction)` extension collapses `.Do()` + `.Select()` into one step and publishes a `ReactingOccurence` to Eris so the effect is visible in the debugger.
-
----
-
-### Weave — Subscriber
-
-Terminal subscriber — consumes streams and produces nothing. Use for final effects: rendering, audio, persistence, etc.
+Final subscriber - consumes streams and produces nothing. Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet (todo: is this worth mentioning?).
 
 **Single stream:**
 ```csharp
@@ -272,9 +271,9 @@ Q += rzeka.Weave<GameClockTick>(this, _clockDisplay);
 
 ---
 
-### Shuttle — Request/Response Provider
+### Shuttle - Request/Response
 
-Like Loom, but works exclusively with `IRequest` / `IResponse<T>` types. Register a handler that answers incoming requests. Pair it with [`Ask`](#ask) on the requester side.
+Like Loom, but works exclusively with `IRequest` / `IResponse<T>` types. Register a handler that answers incoming requests. Pair it with [`Ask` extension method](#ask) on the requester side.
 
 ```c
 // Simple sync query
@@ -285,6 +284,7 @@ Q += rzeka.Shuttle<PlayerStatsRequest, PlayerStatsResponse>(
 );
 
 // Async: each request triggers an async operation
+// TODO: since we mentioned rzeka operates on single-thread, is this a correct example with respec to how we describe dealing with async situations?
 Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
     this,
     reqs => reqs.SelectMany(req =>
@@ -293,13 +293,13 @@ Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
 );
 ```
 
-> **Note:** Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle — this can lead to race conditions since the response stream is shared.
+> **Note:** Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
 
 ---
 
-### Scry — Raw Observable
+### Scry - raw observable
 
-Returns the raw `IObservable<T>` for a matter type, without registering a spell. Primarily used to bridge between multiple Rzeka instances.
+Returns the raw `IObservable<T>` for a matter type, without registering a spell. Primarily used to bridge between multiple Rzeka instances. (todo: add: since it is breaking circumstance tracking? or will we handle the cross-rzeka-instance matter ttracking?)
 
 ```csharp
 IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
@@ -312,20 +312,18 @@ Q += otherRzeka.Strand(this, rzeka.Scry<GameStateChanged>());
 
 ## Eris
 
-Eris is Rzeka's internal diagnostics bus. It records every spell lifecycle event (created, has mana, no mana, forgotten), every matter emission (shaped, received), and every message/exception — all timestamped and serialized. This runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps (WHDIG files).
-
-<!-- EDIT: expand on WHDIG format and how to load dumps when that's finalized -->
+Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten (todo: write notes on spell lifecycle events)), every matter emission (shaped, received), and every message/exception - all timestamped and serialized. This runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps ([WHDIG files](localing.com)).
 
 ### Live Debugger
 
-Rzeka ships with a browser-based debugger that connects to your game over WebSocket. It shows live spell states, matter flow, and messages in real time — no in-game UI needed.
+Rzeka ships with a browser-based debugger that connects to your game over WebSocket. It shows matter flow, messages and live spell status (TODO, not impelemnted yet.) in real time - no in-game UI needed.
 
 **Setup:**
 
 1. Add a reference to `Rzeka.Dev` in your game project (dev builds only) TODO: show people with no big experience with net how to do it in their csproj 
 2. In your game initialization:
 
-```c
+```csharp
 var spring = new Spring();
 spring.EnableDevServer(); // starts WebSocket on ws://127.0.0.1:9222
 
@@ -334,7 +332,7 @@ IRzeka rzeka = spring.Create("MyGame");
 
 3. Start the Eris UI:
 
-```
+```csharp
 cd rzeka/ui
 npm install   # first time only
 npm run dev
@@ -350,15 +348,25 @@ The `Rzeka.Dev` package is the only part that adds an external dependency (Fleck
 
 A demo test is included that spins up Rzeka with sample spells and emits matter on timers, useful for developing the UI or verifying the debug pipeline:
 
-Terminal 1 — start the UI
+Terminal 1 - start the UI
 - `cd rzeka/ui`
 - `npm run dev`
 
-Terminal 2 — run the demo (30 seconds)
+Terminal 2 - run the demo (30 seconds)
 - `cd rzeka/tests`
 - `dotnet test --filter "FullyQualifiedName~DebugServerDemo" -- xUnit.MaxParallelThreads=1`
 
 <!-- EDIT: add a screenshot of the Eris UI showing the demo output -->
+
+TODO: at the very end check if demo is working still
+
+### Speak
+
+todo: write a note on using .Speak to manually log messages and errors to Eris
+
+### WHDIG
+
+<!-- EDIT: expand on WHDIG format and how to load dumps when that's finalized -->
 
 ## Attributes
 
@@ -368,7 +376,7 @@ A very important rzeka attribute that you will be using for your matter types th
 
 The suggested naming convention for stateful matter types is adding *State* suffix to them.
 
-```c
+```csharp
 [HasState]
 class PlayerInputState : Matter
 {
@@ -381,20 +389,20 @@ class PlayerInputState : Matter
 
 ### Ask
 
-Send a request into the river and receive an observable that emits only the response to *your specific* request — not responses to other concurrent requests of the same type.
+Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
 
 ```csharp
 // Inside a Loom: on level completion, save then show results
 Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
     this,
-    events => events.SelectMany(evt =>
+    levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
         rzeka.Ask<SaveGameRequest, SaveGameResponse>(this, new SaveGameRequest())
              .Take(1)
              .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
 );
 ```
 
-#### Nested Asks — Sequential
+#### Nested Asks - Sequential
 
 Each ask waits for its response before the next one fires.
 
@@ -413,7 +421,7 @@ Q += rzeka.Loom<StartupRequest, UIReadyEvent>(
 );
 ```
 
-#### Nested Asks — Independent
+#### Nested Asks - Independent
 
 Both asks fire at the same time; the Loom waits for both before producing output.
 
@@ -433,18 +441,35 @@ Q += rzeka.Loom<StartupRequest, UIReadyEvent>(
 
 ### Reacting
 
-`.Reacting(action)` is a side-effect operator for use inside Loom chains. It wraps `.Do()` to make intentional reactions explicit and readable.
+`.Reacting()` is the explicit operator for intentional side effects inside Loom chains. It reads as what it is — "react to this matter" — rather than abusing Rx's `.Do()` (a debug tap) or hiding logic inside `.Select()`.
+
+Two overloads:
+
+- `.Reacting(Action<T>)` — run a side effect, pass matter through unchanged. Sugar over `.Do()`.
+- `.Reacting(Func<T, TOut>)` — run a side effect and produce output matter in one step. Sugar over `.Select()`.
 
 ```csharp
+// Side effect only — matter flows on unchanged
 Q += rzeka.Loom<EnemyDefeated, XpGranted>(
     this,
     events => events
-        .Reacting(e => _combatLog.Record(e))   // side effect
+        .Reacting(e => _combatLog.Record(e))
         .Select(e => new XpGranted(e.XpReward))
+);
+
+// Side effect + transform in one step
+Q += rzeka.Loom<DamageReceived, ScreenShakeRequested>(
+    this,
+    damage => damage
+        .Where(dmg => dmg.Amount > 15f)
+        .Reacting(e =>
+        {
+            _camera.Shake(e.Amount);
+            return new ScreenShakeRequested(e.Amount);
+        })
 );
 ```
 
-`.Reacting(ctx, reaction)` is the Interlace variant — see [Interlace](#interlace--reacting-transform).
 
 ---
 
