@@ -11,7 +11,7 @@ public class Whispers : IWhisper
         Eris = eris;
     }
 
-    public void Whisper(string message, params TMatter[] circumstances)
+    public void Whisper(string message, params IMatter[] circumstances)
     {
         Whisper(message, RzekaMessageType.Hint, circumstances);
     }
@@ -19,7 +19,7 @@ public class Whispers : IWhisper
     public void Whisper(
         string message,
         RzekaMessageType rzekaMessageType,
-        params TMatter[] circumstances
+        params IMatter[] circumstances
     )
     {
         var msg = new MessageOccurence();
@@ -42,7 +42,7 @@ public class Whispers : IWhisper
 #endif
     }
 
-    public void Whisper(Exception exception, params TMatter[] circumstances)
+    public void Whisper(Exception exception, params IMatter[] circumstances)
     {
         var msg = new MessageOccurence();
         msg.Guid = Guid.NewGuid();
@@ -59,7 +59,7 @@ public class Whispers : IWhisper
 #endif
     }
 
-    public void Whisper(string message, Exception exception, params TMatter[] circumstances)
+    public void Whisper(string message, Exception exception, params IMatter[] circumstances)
     {
         var msg = new MessageOccurence();
         msg.Guid = Guid.NewGuid();

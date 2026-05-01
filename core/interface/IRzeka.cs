@@ -6,15 +6,15 @@ public interface IRzeka : IWhisper
     /// Scry is used predominantly for subscriptions between different Rzeka instances. 
     /// </summary>
     IObservable<T> Scry<T>()
-        where T : TMatter;
+        where T : IMatter;
 
     // Strand
     IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
-        where TOut : TMatter;
+        where TOut : IMatter;
 
     // Pluck
     void Pluck<T>(object who, T matter)
-        where T : TMatter;
+        where T : IMatter;
 
     #region Shuttle
 
@@ -27,50 +27,50 @@ public interface IRzeka : IWhisper
     #region Looms
 
     IDisposable Loom<T1, TOut>(object who, Func<IObservable<T1>, IObservable<TOut>> spell)
-        where TOut : TMatter
-        where T1 : TMatter;
+        where TOut : IMatter
+        where T1 : IMatter;
 
     IDisposable Loom<T1, T2, TOut>(
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> spell
     )
-        where TOut : TMatter
-        where T1 : TMatter
-        where T2 : TMatter;
+        where TOut : IMatter
+        where T1 : IMatter
+        where T2 : IMatter;
 
     IDisposable Loom<T1, T2, T3, TOut>(
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IObservable<TOut>> spell
     )
-        where TOut : TMatter
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter;
+        where TOut : IMatter
+        where T1 : IMatter
+        where T2 : IMatter
+        where T3 : IMatter;
 
     #endregion // Looms
 
     #region Weavings
 
     IDisposable Weave<T>(object who, IObserver<T> spell)
-        where T : TMatter;
+        where T : IMatter;
 
     IDisposable Weave<T1>(object who, Func<IObservable<T1>, IDisposable> spell)
-        where T1 : TMatter;
+        where T1 : IMatter;
 
     IDisposable Weave<T1, T2>(
         object who,
         Func<IObservable<T1>, IObservable<T2>, IDisposable> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter;
+        where T1 : IMatter
+        where T2 : IMatter;
 
     IDisposable Weave<T1, T2, T3>(
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter;
+        where T1 : IMatter
+        where T2 : IMatter
+        where T3 : IMatter;
 
     #endregion // Weavings
 }

@@ -14,7 +14,7 @@ internal class InfiniteLoopException : Exception
 }
 
 public class Stream<T> : ISpellStream
-    where T : TMatter
+    where T : IMatter
 {
     const int MAX_TICK_COUNT_PER_SECOND = 100;
 

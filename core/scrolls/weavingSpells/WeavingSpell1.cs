@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Rzeka;
 public class WeavingSpell1<T1> : WeavingBase
-    where T1: TMatter
+    where T1: IMatter
 {
     readonly Func<IObservable<T1>,IDisposable> _spell;
 

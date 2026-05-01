@@ -19,10 +19,10 @@ public enum ScrollEventType
 [JsonConverter(typeof(RealmEventJsonConverter))]
 public class ScrollEvent : RealmEvent
 {
-    public readonly TSpell Scroll;
+    public readonly ISpell Scroll;
     public readonly ScrollEventType EventType;
     
-    public ScrollEvent(TSpell scroll, ScrollEventType eventType) : base()
+    public ScrollEvent(ISpell scroll, ScrollEventType eventType) : base()
     {
         Scroll = scroll;
         EventType = eventType;

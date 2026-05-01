@@ -16,11 +16,11 @@ public enum MatterEventType
 [JsonConverter(typeof(RealmEventJsonConverter))]
 public class MatterEvent : RealmEvent
 {
-    public readonly TSpell Scroll;
-    public readonly TMatter Matter;
+    public readonly ISpell Scroll;
+    public readonly IMatter Matter;
     public readonly MatterEventType EventType;
     
-    public MatterEvent(TMatter matter, TSpell scroll, MatterEventType eventType) : base()
+    public MatterEvent(IMatter matter, ISpell scroll, MatterEventType eventType) : base()
     {
         Matter = matter;
         Scroll = scroll;

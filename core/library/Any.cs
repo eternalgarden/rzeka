@@ -26,8 +26,8 @@ public abstract class Any : IEnumerable<Type>
 }
 
 public class Any<TOne, TTwo> : Any
-    where TOne : TMatter
-    where TTwo : TMatter
+    where TOne : IMatter
+    where TTwo : IMatter
 {
     readonly Type[] _types = { typeof(TOne), typeof(TTwo) };
 

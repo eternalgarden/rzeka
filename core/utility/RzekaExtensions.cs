@@ -25,15 +25,15 @@ public static class RzekaExtensions
     }
 
     public static bool IsCircumstancedBy<T, U>(this T matter, U other, int maxDepth = 3)
-        where T : TMatter
-        where U : TMatter
+        where T : IMatter
+        where U : IMatter
     {
         if (maxDepth <= 0)
             return false;
         if (other is null)
             return false;
 
-        foreach (TMatter circumstance in matter.Circumstances)
+        foreach (IMatter circumstance in matter.Circumstances)
         {
             if (other.Equals(circumstance))
             {
@@ -41,7 +41,7 @@ public static class RzekaExtensions
             }
         }
 
-        foreach (TMatter circumstance in matter.Circumstances)
+        foreach (IMatter circumstance in matter.Circumstances)
         {
             if (circumstance.IsCircumstancedBy(other, maxDepth - 1))
             {
@@ -53,7 +53,7 @@ public static class RzekaExtensions
     }
 
     public static IObservable<T> Crossing<T>(this IObservable<T> source)
-        where T : TMatter => source.Select(m => m.WithCircumstances<T>());
+        where T : IMatter => source.Select(m => m.WithCircumstances<T>());
 
     public static IObservable<TOut> Ask<TIn, TOut>(this IRzeka rzeka, object who, TIn request)
         where TIn : IRequest

@@ -4,7 +4,7 @@ using System.Reactive.Subjects;
 namespace Rzeka;
 // TODO So this can be removed?
 internal class SourceContract<T> : IDisposable
-    where T : TMatter
+    where T : IMatter
 {
     readonly IObservable<T> _source;
     readonly Subject<T> _sourceSubject;

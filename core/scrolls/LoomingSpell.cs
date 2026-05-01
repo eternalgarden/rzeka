@@ -15,8 +15,8 @@ Looming Scroll will always have *at least* one dependency
 * 
 TODO basically all t
 */
-public abstract class LoomingSpell<TOut> : TLoomingSpell<TOut>
-    where TOut : TMatter
+public abstract class LoomingSpell<TOut> : ILoomingSpell<TOut>
+    where TOut : IMatter
 {
     public Guid Guid { get; }
     public object Who { get; }
@@ -24,19 +24,19 @@ public abstract class LoomingSpell<TOut> : TLoomingSpell<TOut>
     public Eris Eris { get; }
     public virtual SpellSchool SpellSchool => SpellSchool.Looming;
     public abstract string Title { get; }
-    public TSpell ThisAsBase  { get; }
-    public TBindingSpell ThisAsBinding { get; }
-    public TStrandingSpell<TOut> ThisAsStranding { get; }
+    public ISpell ThisAsBase  { get; }
+    public IBindingSpell ThisAsBinding { get; }
+    public IStrandingSpell<TOut> ThisAsStranding { get; }
 
-    IObservable<TOut> TStrandingSpell<TOut>.Conjuring { get; set; }
+    IObservable<TOut> IStrandingSpell<TOut>.Conjuring { get; set; }
 
-    IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
+    IObservable<TOut> IStrandingSpell<TOut>.CreateConjuring()
     {
         return CreateConjuring();
     }
     public CollectibleDisposable Q { get; set; }
     public Type ConjuredType => typeof(TOut);
-    bool TSpell.HasMana { get; set; }
+    bool ISpell.HasMana { get; set; }
 
     // public bool WasCast => _conjurerLibraryToken is not null; // TODO rework maybe as 'IsActive' alon with the OnLostMana thing
     

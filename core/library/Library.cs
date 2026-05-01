@@ -43,8 +43,8 @@ public class Library : IDisposable
                 (false, new AvailableConjurers()),
                 (acc, current) =>
                 {
-                    TStrandingSpell sourceAsStranding =
-                        current.Source as TStrandingSpell
+                    IStrandingSpell sourceAsStranding =
+                        current.Source as IStrandingSpell
                         ?? throw new InvalidOperationException();
 
                     AvailableConjurers accumulator = acc.Item2;
@@ -72,7 +72,7 @@ public class Library : IDisposable
         _conjurerAvailabilitySubscription.Dispose();
     }
 
-    public bool WasStreamCreated<T>() where T : TMatter
+    public bool WasStreamCreated<T>() where T : IMatter
     {
         Type key = typeof(T);
         return WasStreamCreated(key);
@@ -84,7 +84,7 @@ public class Library : IDisposable
     }
     
     public IDisposable RegisterConjurer<T>(IObservable<T> strand)
-        where T : TMatter
+        where T : IMatter
     {
         if (strand == null) throw new ArgumentNullException(nameof(strand));
         
@@ -97,7 +97,7 @@ public class Library : IDisposable
         return registrationToken;
     }
 
-    public IObservable<T> GetConjurer<T>() where T : TMatter
+    public IObservable<T> GetConjurer<T>() where T : IMatter
     {
         Stream<T> stream = GetStream<T>();
         IObservable<T> conjurer = stream.GetStreamAsObservable();
@@ -112,7 +112,7 @@ public class Library : IDisposable
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <returns></returns>
-    Stream<T> GetStream<T>() where T : TMatter
+    Stream<T> GetStream<T>() where T : IMatter
     {
         Type key = typeof(T);
         

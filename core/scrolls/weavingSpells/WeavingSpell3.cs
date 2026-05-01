@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Rzeka;
 public class WeavingSpell3<T1, T2, T3> : WeavingBase
-    where T1 : TMatter
-    where T2 : TMatter
-    where T3 : TMatter
+    where T1 : IMatter
+    where T2 : IMatter
+    where T3 : IMatter
 {
     readonly Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> _spell;
 

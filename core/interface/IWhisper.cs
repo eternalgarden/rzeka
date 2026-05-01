@@ -3,7 +3,7 @@ using System;
 namespace Rzeka;
 public interface IWhisper
 {
-    void Whisper(string message, params TMatter[] circumstances);
+    void Whisper(string message, params IMatter[] circumstances);
 
     /// <summary>
     ///
@@ -15,8 +15,8 @@ public interface IWhisper
     void Whisper(
         string message,
         RzekaMessageType rzekaMessageType,
-        params TMatter[] circumstances
+        params IMatter[] circumstances
     );
-    void Whisper(Exception exception, params TMatter[] circumstances);
-    void Whisper(string message, Exception exception, params TMatter[] circumstances);
+    void Whisper(Exception exception, params IMatter[] circumstances);
+    void Whisper(string message, Exception exception, params IMatter[] circumstances);
 }

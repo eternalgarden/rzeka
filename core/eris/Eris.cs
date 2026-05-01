@@ -219,7 +219,7 @@ public class Eris : IDisposable
     }
 
     // ? move this to the scroll so it wont have to be created each time if that makes sense
-    ISerializableSpell GetSerializableSpell(TSpell source)
+    ISerializableSpell GetSerializableSpell(ISpell source)
     {
         ISerializableSpell spell;
 
@@ -247,9 +247,9 @@ public class Eris : IDisposable
         return spell;
     }
 
-    SerializableStranding GetSerializableStranding(TSpell source)
+    SerializableStranding GetSerializableStranding(ISpell source)
     {
-        TStrandingSpell strand = source as TStrandingSpell;
+        IStrandingSpell strand = source as IStrandingSpell;
 
         Debug.Assert(strand != null, nameof(strand) + " != null");
 
@@ -263,10 +263,10 @@ public class Eris : IDisposable
         return serializableStranding;
     }
 
-    private SerializableLooming GetSerializableLooming(TSpell source)
+    private SerializableLooming GetSerializableLooming(ISpell source)
     {
-        TBindingSpell binding = source as TBindingSpell;
-        TStrandingSpell stranding = source as TStrandingSpell;
+        IBindingSpell binding = source as IBindingSpell;
+        IStrandingSpell stranding = source as IStrandingSpell;
 
         Debug.Assert(binding != null, nameof(binding) + " != null");
         Debug.Assert(stranding != null, nameof(stranding) + " != null");
@@ -282,9 +282,9 @@ public class Eris : IDisposable
         return looming;
     }
 
-    private SerializableWeaving GetSerializableWeaving(TSpell source)
+    private SerializableWeaving GetSerializableWeaving(ISpell source)
     {
-        TBindingSpell binding = source as TBindingSpell;
+        IBindingSpell binding = source as IBindingSpell;
 
         Debug.Assert(binding != null, nameof(binding) + " != null");
         SerializableWeaving weaving = new SerializableWeaving()
@@ -298,10 +298,10 @@ public class Eris : IDisposable
         return weaving;
     }
 
-    Who GetWho(TSpell source) => new Who { WhosType = source.Who.GetType() };
+    Who GetWho(ISpell source) => new Who { WhosType = source.Who.GetType() };
 
     // TODO there is a problem with that, there are no longer ingredients list
-    private Dictionary<string, bool> GetSerializableIngredients(TBindingSpell binding)
+    private Dictionary<string, bool> GetSerializableIngredients(IBindingSpell binding)
     {
         return binding
             .SatisfiedRequirements.Select(kvp => new KeyValuePair<string, bool>(

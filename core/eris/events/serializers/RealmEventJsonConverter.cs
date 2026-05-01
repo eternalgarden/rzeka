@@ -25,7 +25,7 @@ internal class RealmEventJsonConverter : JsonConverter<RealmEvent>
                 writer.WriteString("Type", scrollEvent.EventType.ToString());
                 WriteCommonRealmEventProperties(writer, value);
                 writer.WritePropertyName("Scroll");
-                JsonSerializer.Serialize(writer, scrollEvent.Scroll, scrollEvent.Scroll?.GetType() ?? typeof(TSpell), options);
+                JsonSerializer.Serialize(writer, scrollEvent.Scroll, scrollEvent.Scroll?.GetType() ?? typeof(ISpell), options);
                 break;
 
                 /* ---- ---- 🌠 */
@@ -36,9 +36,9 @@ internal class RealmEventJsonConverter : JsonConverter<RealmEvent>
                 writer.WriteString("Type", matterEvent.EventType.ToString());
                 WriteCommonRealmEventProperties(writer, value);
                 writer.WritePropertyName("Matter");
-                JsonSerializer.Serialize(writer, matterEvent.Matter, matterEvent.Matter?.GetType() ?? typeof(TMatter), options);
+                JsonSerializer.Serialize(writer, matterEvent.Matter, matterEvent.Matter?.GetType() ?? typeof(IMatter), options);
                 writer.WritePropertyName("Scroll");
-                JsonSerializer.Serialize(writer, matterEvent.Scroll, matterEvent.Scroll?.GetType() ?? typeof(TSpell), options);
+                JsonSerializer.Serialize(writer, matterEvent.Scroll, matterEvent.Scroll?.GetType() ?? typeof(ISpell), options);
                 break;
 
                 /* ---- ---- 🌠 */

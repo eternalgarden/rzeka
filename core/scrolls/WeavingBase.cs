@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 
 namespace Rzeka;
-public abstract class WeavingBase : TWeavingSpell
+public abstract class WeavingBase : IWeavingSpell
 {
     public Guid Guid { get; }
     public object Who { get; }
     public Library Library { get; }
     public Eris Eris { get; }
-    public TSpell ThisAsBase  { get; }
-    bool TSpell.HasMana { get; set; }
-    public TBindingSpell ThisAsBinding { get; }
+    public ISpell ThisAsBase  { get; }
+    bool ISpell.HasMana { get; set; }
+    public IBindingSpell ThisAsBinding { get; }
     public SpellSchool SpellSchool => SpellSchool.Weaving;
     public CollectibleDisposable Q { get; set; }
     

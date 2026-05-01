@@ -5,9 +5,9 @@ using System.Reactive.Linq;
 namespace Rzeka;
 [Serializable]
 public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
-    where TOut : TMatter
-    where T1 : TMatter
-    where T2 : TMatter
+    where TOut : IMatter
+    where T1 : IMatter
+    where T2 : IMatter
 {
     public override string Title => $"Looming of {typeof(T1).Name} and {typeof(T2).Name}";
 

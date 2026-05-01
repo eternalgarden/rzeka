@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace Rzeka;
 [Serializable]
-public sealed class AlteringScroll<T1> : TWeavingSpell
-    where T1 : TMatter
+public sealed class AlteringScroll<T1> : IWeavingSpell
+    where T1 : IMatter
 {
     readonly IObserver<T1> _spell;
     IDisposable _subscriptionDisposable;
@@ -14,8 +14,8 @@ public sealed class AlteringScroll<T1> : TWeavingSpell
     public Eris Eris { get; }
     public CollectibleDisposable Q { get; set; }
     public object Who { get; }
-    public TSpell ThisAsBase  { get; }
-    public TBindingSpell ThisAsBinding { get; }
+    public ISpell ThisAsBase  { get; }
+    public IBindingSpell ThisAsBinding { get; }
     public SpellSchool SpellSchool => SpellSchool.Weaving;
     public string Title => $"{Who.GetType().Name}'s Weaving of {typeof(T1).Name}";
     
@@ -65,7 +65,7 @@ public sealed class AlteringScroll<T1> : TWeavingSpell
         }
     }
 
-    bool TSpell.HasMana
+    bool ISpell.HasMana
     {
         get => _isChanneling;
         set => _isChanneling = value;

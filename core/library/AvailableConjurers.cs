@@ -8,7 +8,7 @@ public class AvailableConjurers : IManaInformationProvideable
 
     public Type LastChangedType { get; private set; }
 
-    public void ActivateConjurer(TStrandingSpell strandingSpell)
+    public void ActivateConjurer(IStrandingSpell strandingSpell)
     {
         /* 🦠🦴 */
 
@@ -27,7 +27,7 @@ public class AvailableConjurers : IManaInformationProvideable
         /* 🦠🦴 */
     }
 
-    public void DectivateConjurer(TStrandingSpell strandingSpell)
+    public void DectivateConjurer(IStrandingSpell strandingSpell)
     {
         /* 🧩 */
 
@@ -46,7 +46,7 @@ public class AvailableConjurers : IManaInformationProvideable
         /* 🧩 */
     }
 
-    public bool IsManaOfTypeAvailable<T>() where T : TMatter
+    public bool IsManaOfTypeAvailable<T>() where T : IMatter
     {
         /* ⚒️⚗️🛠️ */
 

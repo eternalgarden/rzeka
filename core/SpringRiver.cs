@@ -37,7 +37,7 @@ public class SpringRiver : IRzeka, IDisposable
 
     #region IWhisper
 
-    public void Whisper(string message, params TMatter[] circumstances)
+    public void Whisper(string message, params IMatter[] circumstances)
     {
         Whispers.Whisper(message, circumstances);
     }
@@ -45,18 +45,18 @@ public class SpringRiver : IRzeka, IDisposable
     public void Whisper(
         string message,
         RzekaMessageType rzekaMessageType,
-        params TMatter[] circumstances
+        params IMatter[] circumstances
     )
     {
         Whispers.Whisper(message, rzekaMessageType, circumstances);
     }
 
-    public void Whisper(Exception exception, params TMatter[] circumstances)
+    public void Whisper(Exception exception, params IMatter[] circumstances)
     {
         Whispers.Whisper(exception, circumstances);
     }
 
-    public void Whisper(string message, Exception exception, params TMatter[] circumstances)
+    public void Whisper(string message, Exception exception, params IMatter[] circumstances)
     {
         Whispers.Whisper(message, exception, circumstances);
     }
@@ -66,10 +66,10 @@ public class SpringRiver : IRzeka, IDisposable
     #region IRzeka
 
     public IObservable<T> Scry<T>()
-        where T : TMatter => Library.GetConjurer<T>();
+        where T : IMatter => Library.GetConjurer<T>();
 
     public IDisposable Strand<TOut>(object who, IObservable<TOut> spell)
-        where TOut : TMatter
+        where TOut : IMatter
     {
         StrandingSpell<TOut> newScroll = new StrandingSpell<TOut>(who, spell, Library, Eris);
 
@@ -77,7 +77,7 @@ public class SpringRiver : IRzeka, IDisposable
     }
 
     public void Pluck<T>(object who, T matter)
-        where T : TMatter
+        where T : IMatter
     {
         Library.RegisterConjurer(Observable.Return(matter)).Dispose();
     }
@@ -91,14 +91,14 @@ public class SpringRiver : IRzeka, IDisposable
     }
 
     public IDisposable Weave<T>(object who, IObserver<T> spell)
-        where T : TMatter
+        where T : IMatter
     {
         AlteringScroll<T> newScroll = new AlteringScroll<T>(who, spell, Library, Eris);
         return Disposable.Create(() => newScroll.Dispose());
     }
 
     public IDisposable Weave<T1>(object who, Func<IObservable<T1>, IDisposable> spell)
-        where T1 : TMatter
+        where T1 : IMatter
     {
         WeavingSpell1<T1> newSpell = new WeavingSpell1<T1>(who, spell, Eris, Library);
         newSpell.Cast();
@@ -109,8 +109,8 @@ public class SpringRiver : IRzeka, IDisposable
         object who,
         Func<IObservable<T1>, IObservable<T2>, IDisposable> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter
+        where T1 : IMatter
+        where T2 : IMatter
     {
         WeavingSpell2<T1, T2> newSpell = new WeavingSpell2<T1, T2>(who, spell, Eris, Library);
         newSpell.Cast();
@@ -121,9 +121,9 @@ public class SpringRiver : IRzeka, IDisposable
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IDisposable> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter
+        where T1 : IMatter
+        where T2 : IMatter
+        where T3 : IMatter
     {
         WeavingSpell3<T1, T2, T3> newSpell = new WeavingSpell3<T1, T2, T3>(
             who,
@@ -139,8 +139,8 @@ public class SpringRiver : IRzeka, IDisposable
         object who,
         Func<IObservable<T1>, IObservable<TOut>> spell
     )
-        where T1 : TMatter
-        where TOut : TMatter
+        where T1 : IMatter
+        where TOut : IMatter
     {
         LoomingSpell1<T1, TOut> newScroll = new LoomingSpell1<T1, TOut>(
             who,
@@ -156,9 +156,9 @@ public class SpringRiver : IRzeka, IDisposable
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<TOut>> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter
-        where TOut : TMatter
+        where T1 : IMatter
+        where T2 : IMatter
+        where TOut : IMatter
     {
         LoomingSpell2<T1, T2, TOut> newScroll = new LoomingSpell2<T1, T2, TOut>(
             who,
@@ -173,10 +173,10 @@ public class SpringRiver : IRzeka, IDisposable
         object who,
         Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IObservable<TOut>> spell
     )
-        where T1 : TMatter
-        where T2 : TMatter
-        where T3 : TMatter
-        where TOut : TMatter
+        where T1 : IMatter
+        where T2 : IMatter
+        where T3 : IMatter
+        where TOut : IMatter
     {
         LoomingSpell3<T1, T2, T3, TOut> newScroll = new LoomingSpell3<T1, T2, T3, TOut>(
             who,

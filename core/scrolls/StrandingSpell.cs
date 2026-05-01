@@ -4,14 +4,14 @@ using System.Reactive.Linq;
 namespace Rzeka;
 
 [Serializable] // TODO remove serializable marks ... maybe?
-public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TMatter
+public sealed class StrandingSpell<TOut> : IStrandingSpell<TOut> where TOut : IMatter
 {
     public Guid Guid { get; }
     public object Who { get; }
     public SpellSchool SpellSchool => SpellSchool.Stranding;
     public string Title => $"Conjuring of {typeof(TOut).Name}";
-    public TSpell ThisAsBase { get; }
-    public TStrandingSpell<TOut> ThisAsStranding { get; }
+    public ISpell ThisAsBase { get; }
+    public IStrandingSpell<TOut> ThisAsStranding { get; }
     public IObservable<TOut> Conjuring { get; set; }
     public CollectibleDisposable Q { get; set; }
     public Type ConjuredType => typeof(TOut);
@@ -19,7 +19,7 @@ public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TM
     public Eris Eris { get; }
     
     
-    IObservable<TOut> TStrandingSpell<TOut>.CreateConjuring()
+    IObservable<TOut> IStrandingSpell<TOut>.CreateConjuring()
     {
         return _spell
             .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
@@ -28,7 +28,7 @@ public sealed class StrandingSpell<TOut> : TStrandingSpell<TOut> where TOut : TM
     IDisposable _libraryToken;
 
     bool _isChanneling;
-    bool TSpell.HasMana
+    bool ISpell.HasMana
     {
         get => _isChanneling;
         set => _isChanneling = value;

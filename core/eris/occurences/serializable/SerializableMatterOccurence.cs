@@ -27,7 +27,7 @@ public abstract class SerializableMatterOccurence : ISerializableMatterOccurence
     public long timestamp  { get; } // in unix seconds
     // public ISerializableSpell spell { get; set; } // TODO rework to just Guid
     // [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; set; } // * we use a custom serializer for Type
-    // public TMatter matter { get; set; } // TODO rework so only matter emission contains this
+    // public IMatter matter { get; set; } // TODO rework so only matter emission contains this
 
     public SerializableMatterOccurence(Guid guid, long timestamp, Guid spellGuid)
     {
@@ -43,14 +43,14 @@ public class SerializableShapedMatter : SerializableMatterOccurence
 {
     public override MatterOccurenceCategory matterOccurenceCategory => MatterOccurenceCategory.Shaped;
     [JsonConverter(typeof(TypeJsonConverter))] public Type matterType { get; } // * we use a custom serializer for Type
-    public TMatter matter { get; }
+    public IMatter matter { get; }
 
     public SerializableShapedMatter(
         Guid guid, 
         long timestamp, 
         Type matterType,
         Guid spellGuid,
-        TMatter matter) 
+        IMatter matter) 
         : base(guid, timestamp, spellGuid)
     {
         this.matter = matter;

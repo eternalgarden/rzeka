@@ -19,7 +19,7 @@ public class ExceptionOccurence : IOccurence
 {
     public Guid Guid { get; set; }
     public DateTimeOffset Timestamp { get; set; }
-    public TSpell Source { get; set; }
+    public ISpell Source { get; set; }
     public Exception Exception { get; set; }
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
