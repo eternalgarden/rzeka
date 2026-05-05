@@ -5,10 +5,10 @@ using System.Reactive.Linq;
 
 namespace Rzeka;
 
-  public interface TBindingSpell : TSpell
+  public interface IBindingSpell : ISpell
 {
     Dictionary<Type, bool> SatisfiedRequirements { get; }
-    TBindingSpell ThisAsBinding { get; }
+    IBindingSpell ThisAsBinding { get; }
 
     //
     // ⛺ ─── Default Imlementation ───────────────────────────────────────────────────
@@ -25,7 +25,7 @@ namespace Rzeka;
         return RequiresIngredient(key) && SatisfiedRequirements[key] is false;
     }
 
-    IObservable<T> GetObservableIngredient<T>() where T : TMatter
+    IObservable<T> GetObservableIngredient<T>() where T : IMatter
     {
        /* ⭐ ---- ---- */
        

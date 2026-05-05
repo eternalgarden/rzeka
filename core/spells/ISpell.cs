@@ -26,7 +26,7 @@ public interface ISerializableSpell
     
 }
 
-public interface TSpell : IDisposable // TODO Rename to TSpell
+public interface ISpell : IDisposable // TODO Rename to ISpell
 {
     // TODO this is rather unsafe
     public const float POST_CREATION_MANA_CHECK_DELAY = .3f; // in seconds
@@ -35,7 +35,7 @@ public interface TSpell : IDisposable // TODO Rename to TSpell
     /// This is because unity implemented default interfaces in a non-flat way ugh.
     /// And otherwise any time you would like to refer to it's defined methods you would have to cast it.
     /// </summary>
-    TSpell ThisAsBase { get; } 
+    ISpell ThisAsBase { get; } 
     SpellSchool SpellSchool { get; }
     Guid Guid { get; }
     object Who { get; }
@@ -78,7 +78,7 @@ public interface TSpell : IDisposable // TODO Rename to TSpell
         Eris.PublishSpellOccurence(occurence);
     }
     
-    // Reformatted to avoid the boxing of value type implementing TMatter
+    // Reformatted to avoid the boxing of value type implementing IMatter
     // Since we use structs for that
     // https://stackoverflow.com/questions/3032750/structs-interfaces-and-boxing
     void SendMatterOccurence<T>(
@@ -86,7 +86,7 @@ public interface TSpell : IDisposable // TODO Rename to TSpell
         MatterOccurenceCategory occurenceCategory,
         bool manualCircumstances = false
     )
-        where T : TMatter
+        where T : IMatter
     {
         /* ⭐ ---- ---- */
 

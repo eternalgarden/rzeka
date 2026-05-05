@@ -1,14 +1,14 @@
 using System;
 
 namespace Rzeka;
-public interface TStrandingSpell : TSpell
+public interface IStrandingSpell : ISpell
 {
     Type ConjuredType { get; }
 }
 
-public interface TStrandingSpell<TOut> : TStrandingSpell where TOut : TMatter
+public interface IStrandingSpell<TOut> : IStrandingSpell where TOut : IMatter
 {
-    TStrandingSpell<TOut> ThisAsStranding { get; }
+    IStrandingSpell<TOut> ThisAsStranding { get; }
     
     // ND: this is getting obsolete because of library being the provider of conjurings
     // nd or is it?
@@ -22,7 +22,7 @@ public interface TStrandingSpell<TOut> : TStrandingSpell where TOut : TMatter
     
     // ND: obsolete because of the above
 
-    // bool TSpell.WasCast => ConjuredSpell is not null;
+    // bool ISpell.WasCast => ConjuredSpell is not null;
     protected IObservable<TOut> CreateConjuring();
 
     //
@@ -52,7 +52,7 @@ public interface TStrandingSpell<TOut> : TStrandingSpell where TOut : TMatter
         //     .Where(_ => this.WasCast)
         //     .Where(i => i.SpellOccurenceCategory is SpellOccurenceCategory.Created)
         //     .Where(i => i.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving)
-        //     .Select(i => i.Source as TBindingSpell)
+        //     .Select(i => i.Source as IBindingSpell)
         //     .Where(scroll => scroll.WouldPossiblyLike<TOut>())
         //     .Subscribe(scroll => {
         //         scroll.ProvideIngredient<TOut>(this);

@@ -4,59 +4,50 @@ using System.Text.Json.Serialization;
 using Rzeka.Serialization;
 
 namespace Rzeka;
-public interface TMatter : IEquatable<TMatter>
+public interface IMatter : IEquatable<IMatter>
 {
     Guid Guid { get; }
-    IReadOnlyList<TMatter> Circumstances { get; }
+    IReadOnlyList<IMatter> Circumstances { get; }
 
-    TMatter Clone();
-    TMatter Clone(params TMatter[] circumstances);
+    IMatter Clone();
+    IMatter Clone(params IMatter[] circumstances);
 
     public bool HasCircumstances() => Circumstances.Count > 0;
 
-    public T WithCircumstances<T>(params TMatter[] circumstances)
-        where T : TMatter
+    public T WithCircumstances<T>(params IMatter[] circumstances)
+        where T : IMatter
         => (T)Clone(circumstances);
 }
 
-public interface IRequest : TMatter { }
-
-public interface IResponse<out T> : TMatter
-    where T : IRequest
-{
-    T Request { get; }
-    bool WasSuccessful { get; }
-}
-
-public class Matter : TMatter
+public class Matter : IMatter
 {
     public Guid Guid { get; } = Guid.NewGuid();
 
-    private List<TMatter> _circumstances = new();
+    private List<IMatter> _circumstances = new();
 
     /// <summary>
     /// This JsonConverter is super important to prevent wild serialization blobbing +20MB text file wildness
     /// </summary>
     [JsonConverter(typeof(CircumstancesJsonConverter))]
-    public IReadOnlyList<TMatter> Circumstances => _circumstances;
+    public IReadOnlyList<IMatter> Circumstances => _circumstances;
 
-    public virtual TMatter Clone()
+    public virtual IMatter Clone()
     {
         var clone = (Matter)MemberwiseClone();
-        clone._circumstances = new List<TMatter>(_circumstances);
+        clone._circumstances = new List<IMatter>(_circumstances);
         return clone;
     }
 
-    public virtual TMatter Clone(params TMatter[] circumstances)
+    public virtual IMatter Clone(params IMatter[] circumstances)
     {
         var clone = (Matter)MemberwiseClone();
-        clone._circumstances = new List<TMatter>(circumstances);
+        clone._circumstances = new List<IMatter>(circumstances);
         return clone;
     }
 
-    #region IEquatable<TMatter>
+    #region IEquatable<IMatter>
 
-    public bool Equals(TMatter other)
+    public bool Equals(IMatter other)
     {
         if (ReferenceEquals(null, other))
             return false;
@@ -82,19 +73,4 @@ public class Matter : TMatter
     }
 
     #endregion
-}
-
-public abstract class Request : Matter, IRequest { }
-
-public abstract class Response<T> : Matter, IResponse<T>
-    where T : IRequest
-{
-    public T Request { get; }
-    public bool WasSuccessful { get; }
-
-    protected Response(T request, bool wasSuccessful)
-    {
-        Request = request;
-        WasSuccessful = wasSuccessful;
-    }
 }

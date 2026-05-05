@@ -1,3 +1,3 @@
 namespace Rzeka;
-  public interface TLoomingSpell<TOut> : TBindingSpell, TStrandingSpell<TOut> 
-    where TOut : TMatter { }
+  public interface ILoomingSpell<TOut> : IBindingSpell, IStrandingSpell<TOut> 
+    where TOut : IMatter { }
