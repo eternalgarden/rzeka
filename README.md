@@ -1,3 +1,7 @@
+# NOTE
+
+This is the legacy version of rzeka that was used in Sanctuary (Unity3D), it was a private repo then, none readme actually, 🧨 don't use this branch, it will be removed when the port of Sanctuary to Godot engine is shipped.
+
 # Reactive Extensions
 
 - https://github.com/dotnet/reactive
