@@ -1,13 +1,3 @@
-# TODO
-- how to deal with whidg generation in the end, i guess rzeka users should be able to modify how the final report is generated, like lol without the ascii art for example 
-- dev server instructions, installation instructons
-- add at the end relative links to specific scripts, like Matter to IMatter implementation
-- implement .Label()
-- todo: do we really want to enforce the max 2 matter input in api methods? or we keep the 3 input matter overloads but suggest that this could be a code smell?
-- todo: do we in the end keep naming for the two extension methods: CombineLatest and WithLatestFrom since they might be misleading for Rx users.
-- todo: we need .Reacting() overloads for situations with more than one input matter type
-- todo: since we have class Spring then do we plan on making SpringRiver internal? also update docs on initializing rzeka since it should be done through Spring
-
 # rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
@@ -27,8 +17,6 @@ This version of rzeka was refactored and improved from the old Unity-focused imp
 ## Installation
 
 _TODO: add Unity Package Manager / Godot installation instructions (fill it be able to use it in unity?)._
-
-TODO: Mention that it works best with DI?
 
 ## Events
 
