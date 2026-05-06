@@ -16,7 +16,48 @@ This version of rzeka was refactored and improved from the old Unity-focused imp
 
 ## Installation
 
-_TODO: add Unity Package Manager / Godot installation instructions (fill it be able to use it in unity?)._
+Rzeka targets `net8.0` and depends only on `System.Reactive`.
+
+```bash
+dotnet add package EternalGarden.Rzeka
+```
+
+Initialize a river once at startup and pass the `IRzeka` reference to the systems that need it:
+
+```csharp
+IRzeka rzeka = new Spring().Create("MyApp");
+```
+
+### Godot 4
+
+`System.Reactive` is a transitive dependency of rzeka, but some project types (such as Godot) do not automatically handle those, so apart from `EternalGarden.Rzeka` you need to add it manually:
+
+```bash
+dotnet add package System.Reactive
+```
+
+Then you can just create a River [Autoload](https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html) that owns the river instance:
+
+```csharp
+using Godot;
+using Rzeka;
+
+public partial class River : Node
+{
+    public static IRzeka Rzeka { get; private set; }
+
+    public override void _Ready()
+    {
+        Rzeka = new Spring().Create("MyGame");
+    }
+}
+```
+
+Nodes access the river via `River.Rzeka`. In larger projects you may want to wire `IRzeka` through a DI container instead.
+
+All Godot lifecycle callbacks (`_Ready`, `_Process`, `_PhysicsProcess`, etc.) run on the main thread, so Strand, Pluck, Loom, and Weave all work without any extra setup. Async operations crossing a thread boundary need manual circumstance handling — see [Async Operations](#async-operations).
+
+For the live debugger during development, see [Eris](#eris).
 
 ## Events
 
