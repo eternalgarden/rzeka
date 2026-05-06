@@ -1,6 +1,7 @@
 # rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
+[![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 
 **rzeka is a single-threaded reactive event bus.** rzeka ("river" in Polish) is a C# library built on Rx.NET. All data flows as typed streams - components publish into the river and subscribe to it without holding direct references to each other.
 
@@ -8,11 +9,7 @@ Instead of subscribing directly to a shared stream, [Rzeka API](link.com) provid
 
 All matter must be published and consumed on the same thread. This constraint is enforced at runtime and is by design - it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent without locks or synchronization. The documentation provides an example on how to handle async cases, see [Async Operations]().
 
-It was created in order to be used in the Godot game engine for the [sanctuary](addlink.com), but it can be potentially used in other environments. Unfortunately it won't work in Unity (is that true, check?).
-
-TODO: Suggest that it can be used in cojunction with with [R3](https://github.com/Cysharp/R3). Verify if true.
-
-This version of rzeka was refactored and improved from the old Unity-focused implementation with help of an LLM.
+It was created for the Godot game engine for the [sanctuary](addlink.com), but it can be used in any .NET environment.
 
 ## Installation
 
@@ -155,11 +152,7 @@ TODO, IMPLEMENT (Eris): Display information in Eris whether matteroccurence has 
 Initialize Rzeka with:
 
 ```csharp
-// TODO shouldn't we actually make springriver constructor internal and force the user to initialize it through the factory.
-
-IRzeka rzeka = new SpringRiver("MyGame");
-
-// TODO Add notes on child rivers and consider implementing at least a rzkea factory which would inform Eris about all existing rivers, also potentially implement an 
+IRzeka rzeka = new Spring().Create("MyGame");
 ```
 
 All rzeka API methods accept a `who` object (the registering owner, used for diagnostics) and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
