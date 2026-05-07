@@ -7,11 +7,23 @@
 
 rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus or pub/sub library is causal tracking: every event automatically carries a record of the events that caused it. You can ask any event "_what triggered you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
+What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what triggered you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
 
-rzeka is single-threaded by design. This is the constraint that makes everything else possible: causal links between events are unambiguous without locks, race conditions, or synchronisation. Async operations are handled at well-defined boundaries - see [Async Operations](addlink).
+rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](addlink).
 
-*Status*: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside Sanctuary's port to Godot. The core API is stable; the Godot integration and Eris UI are actively evolving.
+**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
+
+## Grimoire
+
+rzeka uses river, textile and magic vocabulary throughout:
+- events are **Matter**
+- transformations are **Spells**
+- a Spell's required Matter types fulfillment is called **Mana**
+- Spell-defining methods (Strand, Loom, Shuttle, Weave, Pluck) follow textile-production vocabulary, inspired by [Zeros and Ones by Sadie Plant](https://www.goodreads.com/en/book/show/927879.Zeros_and_Ones))
+
+**Eris**, the debugger, borrows its name from the Greek goddess of discord.
+
+The metaphor is consistent and once you internalise it, the API becomes self-describing.
 
 ## Installation
 
