@@ -3,13 +3,15 @@
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 
-**rzeka is a single-threaded reactive event bus.** rzeka ("river" in Polish) is a C# library built on Rx.NET. All data flows as typed streams - components publish into the river and subscribe to it without holding direct references to each other.
+**A reactive event bus for C# that tracks causality.**
 
-Instead of subscribing directly to a shared stream, [Rzeka API](link.com) provides a set of methods that define the means and ends of communication through the river. This allows for the extensive debugging and testing of what happens within the stream, i.e. tracking the entire chains of the event emissions.
+rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
 
-All matter must be published and consumed on the same thread. This constraint is enforced at runtime and is by design - it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent without locks or synchronization. The documentation provides an example on how to handle async cases, see [Async Operations]().
+What makes rzeka different from a typical event bus or pub/sub library is causal tracking: every event automatically carries a record of the events that caused it. You can ask any event "_what triggered you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
 
-It was created for the Godot game engine for the [sanctuary](addlink.com), but it can be used in any .NET environment.
+rzeka is single-threaded by design. This is the constraint that makes everything else possible: causal links between events are unambiguous without locks, race conditions, or synchronisation. Async operations are handled at well-defined boundaries - see [Async Operations](addlink).
+
+*Status*: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside Sanctuary's port to Godot. The core API is stable; the Godot integration and Eris UI are actively evolving.
 
 ## Installation
 
