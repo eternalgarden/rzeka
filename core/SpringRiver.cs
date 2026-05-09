@@ -12,25 +12,32 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Rzeka.Dev")]
 
 namespace Rzeka;
-public class SpringRiver : IRzeka, IDisposable
+internal sealed class SpringRiver : IRzeka, IDisposable
 {
-    // TODO Eris was made internal, this will require reworking legacy Consultate code
-    // in unity sanctuary project, it needs to be moved here anyway.
     internal Eris Eris { get; }
     internal Library Library { get; }
     internal IWhisper Whispers { get; }
+    internal string Name { get; }
 
-    internal SpringRiver(string name, RzekaRole role = RzekaRole.Local)
+    readonly Spring _spring;
+    bool _disposed;
+
+    internal SpringRiver(string name, Spring spring)
     {
-        Eris = new Eris(name, role);
+        Name = name;
+        _spring = spring;
+        Eris = new Eris(name);
         Library = new(Eris);
         Whispers = new Whispers(Eris);
     }
 
     public void Dispose()
     {
+        if (_disposed) return;
+        _disposed = true;
         Library.Dispose(); // Library before Eris since Library's subscription is on Eris's stream.
         Eris.Dispose();
+        _spring.NotifyDisposed(this);
     }
 
     /* 🐋🐳 */
@@ -79,7 +86,7 @@ public class SpringRiver : IRzeka, IDisposable
     public void Pluck<T>(object who, T matter)
         where T : IMatter
     {
-        Library.RegisterConjurer(Observable.Return(matter)).Dispose();
+        _ = new PluckingSpell<T>(who, matter, Library, Eris);
     }
 
     public IDisposable Shuttle<TIn, TOut>(object who, Func<IObservable<TIn>, IObservable<TOut>> spell)

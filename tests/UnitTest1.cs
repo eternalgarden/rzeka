@@ -7,7 +7,7 @@ namespace Rzeka.Tests
         [Fact]
         public void Test1()
         {
-            IRzeka rzeka = new SpringRiver("moew", RzekaRole.Root);
+            IRzeka rzeka = new Spring().Create("moew");
         }
     }
 }

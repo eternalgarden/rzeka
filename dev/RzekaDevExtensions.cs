@@ -70,21 +70,20 @@ namespace Rzeka.Dev
                 activeConnections.Clear();
             }));
 
-            // Track existing Eris instances
-            foreach (Eris eris in spring.AllErises)
+            // Track existing + future Eris instances — subscribe all active connections to each.
+            disposables.Add(spring.Watch().Subscribe(river =>
             {
-                erises.Add(eris);
-            }
-
-            // Track future Eris instances — subscribe all active connections to the new Eris
-            disposables.Add(spring.OnInstanceCreated.Subscribe(rzeka =>
-            {
-                erises.Add(rzeka.Eris);
+                erises.Add(river.Eris);
 
                 foreach (var (socket, subscriptions) in activeConnections)
                 {
-                    subscriptions.Add(SubscribeEris(rzeka.Eris, socket));
+                    subscriptions.Add(SubscribeEris(river.Eris, socket));
                 }
+            }));
+
+            disposables.Add(spring.OnDisposed.Subscribe(river =>
+            {
+                erises.Remove(river.Eris);
             }));
 
             return disposables;

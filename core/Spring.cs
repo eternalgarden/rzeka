@@ -1,21 +1,39 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
 namespace Rzeka;
-public class Spring
+public sealed class Spring
 {
+    readonly object _lock = new();
     readonly List<SpringRiver> _instances = new();
-    readonly Subject<SpringRiver> _instanceCreated = new();
+    readonly Subject<SpringRiver> _created = new();
+    readonly Subject<SpringRiver> _disposed = new();
 
-    public IRzeka Create(string name, RzekaRole role = RzekaRole.Local)
+    public IRzeka Create(string name)
     {
-        var rzeka = new SpringRiver(name, role);
-        _instances.Add(rzeka);
-        _instanceCreated.OnNext(rzeka);
-        return rzeka;
+        var river = new SpringRiver(name, this);
+        lock (_lock) _instances.Add(river);
+        _created.OnNext(river);
+        return river;
     }
 
-    internal IEnumerable<Eris> AllErises => _instances.Select(r => r.Eris);
-    internal IObservable<SpringRiver> OnInstanceCreated => _instanceCreated;
+    internal IObservable<SpringRiver> OnCreated => _created.AsObservable();
+    internal IObservable<SpringRiver> OnDisposed => _disposed.AsObservable();
+
+    /// <summary>Snapshot of currently-alive rivers, then every future creation. Pair with OnDisposed.</summary>
+    internal IObservable<SpringRiver> Watch() => Observable.Defer(() =>
+    {
+        SpringRiver[] snapshot;
+        lock (_lock) snapshot = _instances.ToArray();
+        return snapshot.ToObservable().Concat(_created);
+    });
+
+    internal void NotifyDisposed(SpringRiver river)
+    {
+        bool removed;
+        lock (_lock) removed = _instances.Remove(river);
+        if (removed) _disposed.OnNext(river);
+    }
 }

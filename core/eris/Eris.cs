@@ -69,12 +69,10 @@ public class Eris : IDisposable
     }
 
     public string Name { get; }
-    public RzekaRole Role { get; }
 
-    public Eris(string name, RzekaRole role)
+    public Eris(string name)
     {
         Name = name;
-        Role = role;
         Q = new CollectibleDisposable();
 
         SubscribeSpellStream();
@@ -231,6 +229,10 @@ public class Eris : IDisposable
         {
             spell = GetSerializableStranding(source);
         }
+        else if (source.SpellSchool is SpellSchool.Plucking)
+        {
+            spell = GetSerializablePlucking(source);
+        }
         else
         {
             spell = GetSerializableWeaving(source);
@@ -261,6 +263,20 @@ public class Eris : IDisposable
         };
 
         return serializableStranding;
+    }
+
+    SerializableStranding GetSerializablePlucking(ISpell source)
+    {
+        IStrandingSpell strand = source as IStrandingSpell;
+
+        Debug.Assert(strand != null, nameof(strand) + " != null");
+
+        return new SerializableStranding()
+        {
+            spellSchool = SpellSchool.Plucking,
+            conjuredType = strand.ConjuredType,
+            Who = GetWho(source),
+        };
     }
 
     private SerializableLooming GetSerializableLooming(ISpell source)

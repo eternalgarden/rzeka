@@ -28,7 +28,7 @@ public interface IRzeka : IWhisper
     #region Looms
 
     IDisposable Loom<T1, TOut>(object who, Func<IObservable<T1>, IObservable<TOut>> spell)
-        where TOut : IMatter
+            where TOut : IMatter
         where T1 : IMatter;
 
     IDisposable Loom<T1, T2, TOut>(

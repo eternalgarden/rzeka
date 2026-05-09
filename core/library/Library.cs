@@ -30,6 +30,8 @@ public class Library : IDisposable
 
     IConnectableObservable<IManaInformationProvideable> BuildConjurerAvailability() =>
         Eris.SpellOccurences
+            // Plucking is intentionally excluded — a pluck is a one-shot emit, not a sustained
+            // source. Including it would cause HasMana/NoMana flicker per pluck.
             .Where(occ =>
                 occ.Source.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding or SpellSchool.Shuttling
             )

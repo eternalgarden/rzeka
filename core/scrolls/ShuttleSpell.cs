@@ -38,8 +38,15 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
             .Invoke(ingredient)
             .Select(matter =>
             {
-                matter = matter.WithCircumstances<TOut>(lastTIn);
-                ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped);
+                // Mirror LoomingSpell1: only auto-stamp [request] when the responder hasn't
+                // stamped manually. Required for the multi-context Shuttle pattern, where the
+                // responder uses Scry<T>() inside the lambda and stamps [req, scryedA, ...]
+                // on the response themselves.
+                bool manualCircumstances = matter.HasCircumstances();
+                if (!manualCircumstances)
+                    matter = matter.WithCircumstances<TOut>(lastTIn);
+
+                ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
             });
     }

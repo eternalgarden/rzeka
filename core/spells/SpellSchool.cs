@@ -12,4 +12,5 @@ public enum SpellSchool
     Looming,
     Weaving,
     Shuttling,
+    Plucking,
 }
