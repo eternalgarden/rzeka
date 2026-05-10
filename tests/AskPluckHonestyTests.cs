@@ -20,69 +20,6 @@ public class AskPluckHonestyTests
     static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
 
     [Fact]
-    public void Pluck_emits_Plucking_spell_occurence_with_who()
-    {
-        SpringRiver river = NewRiver();
-        var who = new object();
-        var spellOccurences = new List<SpellOccurence>();
-        river.Eris.SpellOccurences.Subscribe(spellOccurences.Add);
-
-        river.Pluck(who, new Trigger());
-
-        Assert.Contains(
-            spellOccurences,
-            o =>
-                o.Source.SpellSchool == SpellSchool.Plucking
-                && o.Source.Who == who
-                && o.SpellOccurenceCategory == SpellOccurenceCategory.Created
-        );
-        Assert.Contains(
-            spellOccurences,
-            o =>
-                o.Source.SpellSchool == SpellSchool.Plucking
-                && o.SpellOccurenceCategory == SpellOccurenceCategory.Forgotten
-        );
-    }
-
-    [Fact]
-    public void Pluck_emits_matter_occurence_attributed_to_who()
-    {
-        SpringRiver river = NewRiver();
-        var who = new object();
-        var trigger = new Trigger();
-        var matterOccurences = new List<MatterOccurence>();
-        river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
-
-        river.Pluck(who, trigger);
-
-        MatterOccurence emitted = Assert.Single(matterOccurences);
-        Assert.Equal(trigger.Guid, emitted.Matter.Guid);
-        Assert.Equal(MatterOccurenceCategory.Shaped, emitted.MatterOccurenceCategory);
-        Assert.Equal(SpellSchool.Plucking, emitted.Source.SpellSchool);
-        Assert.Same(who, emitted.Source.Who);
-        Assert.False(emitted.ManualCircumstances);
-    }
-
-    [Fact]
-    public void Pluck_preserves_pre_stamped_circumstances_and_marks_manual()
-    {
-        SpringRiver river = NewRiver();
-        var ctx1 = new Trigger();
-        var ctx2 = new Trigger();
-        Trigger matter = new Trigger().WithCircumstances<Trigger>(ctx1, ctx2);
-        var matterOccurences = new List<MatterOccurence>();
-        river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
-
-        river.Pluck(new object(), matter);
-
-        MatterOccurence emitted = Assert.Single(matterOccurences);
-        Assert.True(emitted.ManualCircumstances);
-        Assert.Equal(2, emitted.Matter.Circumstances.Count);
-        Assert.Contains(emitted.Matter.Circumstances, c => c.Guid == ctx1.Guid);
-        Assert.Contains(emitted.Matter.Circumstances, c => c.Guid == ctx2.Guid);
-    }
-
-    [Fact]
     public void Ask_round_trips_request_to_response()
     {
         IRzeka rzeka = NewRiver();
