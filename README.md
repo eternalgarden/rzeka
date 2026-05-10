@@ -321,26 +321,18 @@ The response carries a reference back to the original request so rzeka can route
 Register a handler that answers incoming requests with `Shuttle`. Pair it with the [`Ask` extension method](#ask) on the requester side. Shuttle stays single-input by design - when a responder needs additional matter context, pull it through `Scry` inside the lambda (see "Multi-context response" below).
 
 ```csharp
-// Simple sync query
 Q += rzeka.Shuttle<PlayerStatsRequest, PlayerStatsResponse>(
     this,
     reqs => reqs.Select(req =>
         new PlayerStatsResponse(req, _player.Health, wasSuccessful: true))
 );
-
-// Async: each request triggers an async operation
-// TODO: since we mentioned rzeka operates on single-thread, is this a correct example with respec to how we describe dealing with async situations?
-Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
-    this,
-    reqs => reqs.SelectMany(req =>
-        _saveSystem.SaveAsync()
-                   .Select(success => new SaveGameResponse(req, success)))
-);
 ```
+
+📜🧭 For async operations inside a Shuttle handler (save/load, network calls, etc.), follow the same pattern as [Async Operations](#async-operations) - wrap in `Observable.Create` and stamp the request as a circumstance on the response manually while it is still in scope.
 
 #### Multi-context response using Scry
 
-When the response depends on more than just the request, pull the additional streams in via `Scry` inside the lambda. The request remains the trigger; everything else is read as ambient context.
+> 📜 When the response depends on more than just the request, pull the additional streams in via `Scry` inside the lambda. The request remains the trigger, everything else is read as ambient context.
 
 ```csharp
 Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
@@ -358,26 +350,31 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 );
 ```
 
-**Stamping rule for Shuttle responses.** If you stamp circumstances manually on the response, **include the request yourself** — Shuttle leaves your manual stamp alone. If you do *not* stamp manually, Shuttle automatically stamps `[request]` for you. Either path works; the manual route is the only way to also record the additional context that shaped the response. Forgetting the request in a manual stamp does not break `Ask` correlation (that uses `response.Request.Guid` directly), but it does orphan the response from its triggering request in the Eris matter graph view.
+**Stamping rule for Shuttle responses.** If you stamp circumstances manually on the response, **include the request yourself** — Shuttle leaves your manual stamp alone. If you do *not* stamp anything manually, Shuttle automatically stamps `[request]` for you.
+- The manual route is the only way to also record the additional context that shaped the response. 
+- Forgetting the request in a manual stamp does not break `Ask` request/response casuality, but it does orphan the response from its triggering request in the Eris matter graph view.
 
-> **Note:** Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
+> 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
 
 #### Ask - request side
 
-> 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type. 
+> 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
 
-Ask is implemented over a one-shot Weave (for the response) plus a Pluck (for the request), so both halves of the round-trip are visible to Eris and attributed to the `who` you pass in. Cardinality is caller-controlled - use `.Take(1)` for a single-shot exchange or omit it to observe correlated responses as a stream.
+📜🧨 When Ask(ing) you have to manually stamp the request matter circumstances with `.WithCircumstances(...circumstances)`.
 
 ```csharp
 // Inside a Loom: on level completion, save then show results
 Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
     this,
     levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
-        rzeka.Ask<SaveGameRequest, SaveGameResponse>(this, new SaveGameRequest())
-             .Take(1)
+        rzeka.Ask<SaveGameRequest, SaveGameResponse>(
+                this, 
+                new SaveGameRequest().WithCircumstances(evt))
              .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
 );
 ```
+
+📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
 
 ##### Tracking circumstances when Ask(ing)
 
@@ -399,7 +396,6 @@ Q += rzeka.Loom<LoadSplashScreenRequest, LoadSplashScreenResponse>(
 The pre-stamped circumstances flow with the request as it enters the river; Shuttle's response then auto-stamps `[request]`, completing the chain.
 TODO: shouldny this prestamping 
 
-📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
 
 ---
 
