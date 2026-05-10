@@ -313,16 +313,15 @@ class SaveGameRequest : Request { }
 class SaveGameResponse : Response<SaveGameRequest>
 {
     public SaveGameResponse(SaveGameRequest request, bool wasSuccessful)
+        // The `: base(request, wasSuccessful)` constructor call is required.
         : base(request, wasSuccessful) { }
 }
 ```
 
-The response carries a reference back to the original request so rzeka can route replies to the correct caller. The `: base(request, wasSuccessful)` constructor call is required.
+> 📜🧭 The suggested naming convention is to keep both types in the same `.cs` file suffixed with `RR`, like `SaveGameRR`.
 
-> 📜🧭 The suggested convention is to keep both types in the same `.cs` file suffixed with `RR`, like `SaveGameRR`.
-
-Register a handler with `Shuttle`. Because Shuttle's primary use case crosses an async boundary, wrap the operation in `Observable.Create` and stamp the request as a circumstance on the response manually while it is still in scope - the same rule as [Async Operations](#async-operations):
-
+**Usage**: Register a handler with `Shuttle`. Because Shuttle's primary use case crosses an async boundary, wrap the operation in `Observable.Create` and stamp the request as a circumstance on the response manually - the same rule as [Async Operations](#async-operations):
+⚗️
 ```csharp
 Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
     this,
@@ -342,9 +341,14 @@ Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
     )
 );
 ```
-#### Ask - request side
+
+---
+
+#### Ask - Request Side
 
 > 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
+
+When Ask(ing) you also have to manually stamp the request matter circumstances with `.WithCircumstances(...circumstances)`.
 
 ```csharp
 // Inside a Loom: on level completion, save then show results
@@ -358,60 +362,38 @@ Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
 );
 ```
 
-> 📜🧨 When Ask(ing) you have to manually stamp the request matter circumstances with `.WithCircumstances(...circumstances)`.
-
 > 📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
 
-##### Tracking circumstances when Ask(ing)
+---
 
-Inside a Loom, pre-stamp the request with the triggering matter so the full causal chain remains walkable in Eris:
+#### Multi-context Response using Scry
 
-```csharp
-Q += rzeka.Loom<LoadSplashScreenRequest, LoadSplashScreenResponse>(
-    this,
-    splashReqs => splashReqs.SelectMany(splashReq =>
-        rzeka.Ask<LoadSceneRequest, LoadSceneResponse>(
-                this,
-                new LoadSceneRequest(splashReq.SceneType)
-                    .WithCircumstances<LoadSceneRequest>(splashReq))
-             .Take(1)
-             .Select(r => new LoadSplashScreenResponse(splashReq, r.WasSuccessful)))
-);
-```
-
-The pre-stamped circumstances flow with the request as it enters the river; Shuttle's response then auto-stamps `[request]`, completing the chain.
-TODO: shouldny this prestamping 
-
-
-#### Multi-context response using Scry
-
-> 📜 When the response depends on more than just the request, pull the additional streams in via `Scry` inside the lambda. The request remains the trigger, everything else is read as ambient context.
+> 📜 When the response depends on more than just the request, pull the additional matter in via `Scry` inside the lambda.
 
 ```csharp
 Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
     this,
     reqs => reqs
+        // The request remains the trigger, Scry'd matter is read as ambient context
         .WithLatestFrom(rzeka.Scry<GameState>(), rzeka.Scry<Settings>())
         .Select(ctx =>
         {
             var (req, state, settings) = ctx;
             // Stamp manually so the response carries [request, state, settings]
             // as circumstances.
-            return new LoadSceneResponse(req, /* shape from state */, wasSuccessful: true)
+            return new LoadSceneResponse(req, wasSuccessful: true)
                 .WithCircumstances<LoadSceneResponse>(req, state, settings);
         })
 );
 ```
 
-**Stamping rule for Shuttle responses.** If you stamp circumstances manually on the response, **include the request yourself** — Shuttle leaves your manual stamp alone. If you do *not* stamp anything manually, Shuttle automatically stamps `[request]` for you.
+**Stamping rule for Shuttle responses.** If you stamp circumstances manually on the response, **include the request yourself**. If you do *not* stamp anything manually, Shuttle automatically stamps `[request]` for you.
 - The manual route is the only way to also record the additional context that shaped the response. 
-- Forgetting the request in a manual stamp does not break `Ask` request/response casuality, but it does orphan the response from its triggering request in the Eris matter graph view.
+- Forgetting the request in a manual stamp does not break `Ask` request/response casuality (but it does orphan the response from its triggering request in Eris matter graph view)
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
 
-
 ---
-
 
 ## 🏹 Eris
 
