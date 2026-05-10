@@ -15,7 +15,7 @@ rzeka is single-threaded by design. This is the constraint that makes everything
 
 ## 🕯️ Grimoire
 
-rzeka uses river, textile and magic vocabulary throughout:
+rzeka uses river, textile and magic themed naming system:
 - events are **Matter**
 - transformations are **Spells**
 - a Spell's required Matter types fulfillment status is called **Mana**
@@ -85,9 +85,7 @@ Once you summoned your rzeka, you are ready to shape Matter.
 
 ## 🪽 Matter - Events
 
-### Base
-
-Matter is the base carrier of event data. Every matter has a `Guid` (its unique identity) and a list of `Circumstances` (a collection of matter that led to the emission of this one). 
+> 📜 Matter is the base carrier of event data. Every matter has a `Guid` (its unique identity) and a list of `Circumstances` (a collection of matter that led to the emission of this one). 
 
 Guid and Circumstances attachment is handled by rzeka automatically so it can be later observed through the provided [Eris debugger tool](#Eris).
 
@@ -107,7 +105,7 @@ class EnemyDefeated : Matter
 }
 ```
 
-📜🧨 Keep your Matter instances immutable - avoid mutable reference type fields. `WithCircumstances<T>()` works by cloning, Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
+📜🧨 Keep your Matter instances immutable - avoid mutable reference type fields. Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
 
 ### Circumstances
 
@@ -125,13 +123,13 @@ bool causedByDragon = damage.IsCircumstancedBy(attack); // true
 
 #### Automatic vs. Manual Circumstances
 
-Rzeka tracks circumstances automatically inside **Loom** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
+Rzeka tracks circumstances automatically inside **Loom** (todo: isnt this misleading, arent we tracking circumstances in all main api methods?) - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
 
 If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom lambda is an **active decision to override the default tracking**.
 
 **Where automatic tracking works:**
 - Synchronous Loom chains - the default, no action needed
-- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context streams), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---requestresponse).
+- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context matter), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---requestresponse).
 
 **Where you must attach circumstances manually:**
 - Inside `Pluck` and `Ask` calls - pre-stamp the matter via `.WithCircumstances<T>(trigger)` when you have the triggering matter in scope
@@ -144,13 +142,9 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 ## 🧬 API
 
-Initialize Rzeka with:
+> 📜 Communciation through rzeka is carried through a set of specialised API methods.
 
-```csharp
-IRzeka rzeka = new Spring().Create("MyGame");
-```
-
-All rzeka API methods accept a `who` object (the registering owner, used for diagnostics) and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
+All API methods accept a `who` object (the registering owner, used for diagnostics) and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
 
 A common pattern is to collect them into a composite disposable:
 
@@ -175,12 +169,13 @@ Q += rzeka.Loom<A, B, Out>(
          .Select((aVal, bVal, cVal) => new Out(...))
 );
 ```
-
 ---
 
 ### 🧬 Strand - publisher
 
-Registers a source `IObservable<T>` into the river. Any Loom or Weave that listens to `T` will receive these values.
+> 📜 Registers a source `IObservable<T>` into the river.
+
+Any Loom or Weave that listens to `T` will receive these values.
 
 ```csharp
 // Expose a button's click stream as PlayerJumpRequested events
@@ -200,7 +195,9 @@ Q += rzeka.Strand(
 
 ### 🧬 Pluck - fire once publisher
 
-Publish a single matter value into the river imperatively, without an ongoing stream. Pluck is fully visible to Eris — it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
+> 📜 Publish a single matter value into the river imperatively, without an ongoing stream.
+
+Pluck is fully visible to Eris — it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
 
 ```csharp
 rzeka.Pluck(this, new GameStarted());
@@ -217,7 +214,9 @@ rzeka.Pluck(this, new GamePaused().WithCircumstances<GamePaused>(triggeringEvent
 
 ### 🧬 Loom - transform
 
-Listens to one or more streams and produces a new stream. Use it for mapping, combining, or reacting to matter. Intentional side effects belong inside `.Reacting()` (see [Reacting](#reacting)), not bare `.Do()` or `.Select(...)` with imperative bodies.
+> 📜 Listens to one or more streams and produces a new stream. 
+
+Use it for mapping, combining, or reacting to matter. Intentional side effects belong inside `.Reacting()` (see [Reacting](#reacting)), not bare `.Do()` or `.Select(...)` with imperative bodies.
 
 Loom automatically attaches the triggering input matter as a circumstance on the output. You do not need to call `.WithCircumstances()` manually - and if you do, it will override the automatic tracking (see [Automatic vs Manual Circumstances](#automatic-vs-manual-circumstances)).
 
@@ -259,7 +258,9 @@ For neither Loom or Weave overloads with more than three input-matter types
 
 ### 🧬 Weave - subscriber
 
-Final subscriber - consumes streams and produces nothing. Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet (todo: is this worth mentioning?).
+> 📜 Final subscriber - consumes streams and produces nothing. 
+
+Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet (todo: is this worth mentioning?).
 
 **Single stream:**
 ```csharp
@@ -290,7 +291,7 @@ Q += rzeka.Weave<GameClockTick>(this, _clockDisplay);
 
 ### 🧬 Scry - raw observable
 
-TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
+> 📜 TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
 
 ```csharp
 IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
@@ -300,7 +301,7 @@ IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
 
 ### 🧬 Shuttle - Request/Response
 
-📜🐇 Shuttle is rzeka's request/response API. It operates on two specialised Matter types - extend them to define your round-trip pair:
+> 📜 Shuttle is rzeka's request/response API. It operates on two specialised Matter types - extend them to define your `Request/Response` round-trip pair:
 
 ```csharp
 class InventoryRequest : Request { }
@@ -317,7 +318,7 @@ The response carries a reference back to the original request so rzeka can route
 
 📜🧭 The suggested convention is to keep both types in the same `.cs` file suffixed with `RR`, like `GetInventoryRR`.
 
-Register a handler that answers incoming requests with `Shuttle`. Pair it with the [`Ask` extension method](#ask) on the requester side. Shuttle stays single-input by design - when a responder needs additional matter context, pull it through `Scry` inside the lambda (see "Multi-context responder" below).
+Register a handler that answers incoming requests with `Shuttle`. Pair it with the [`Ask` extension method](#ask) on the requester side. Shuttle stays single-input by design - when a responder needs additional matter context, pull it through `Scry` inside the lambda (see "Multi-context response" below).
 
 ```csharp
 // Simple sync query
@@ -363,7 +364,7 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 
 #### Ask - request side
 
-📜🌱 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type. 
+> 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type. 
 
 Ask is implemented over a one-shot Weave (for the response) plus a Pluck (for the request), so both halves of the round-trip are visible to Eris and attributed to the `who` you pass in. Cardinality is caller-controlled - use `.Take(1)` for a single-shot exchange or omit it to observe correlated responses as a stream.
 
@@ -405,11 +406,13 @@ TODO: shouldny this prestamping
 
 ## 🏹 Eris
 
-Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten (todo: write notes on spell lifecycle events)), every matter emission (shaped, received), and every message/exception - all timestamped and serialized. This runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps ([WHDIG files](localing.com)).
+> 📜 Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten), every matter emission (shaped, received) along with their Circumstances, and every message/exception - all timestamped and serialized.
+
+Eris runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps ([WHDIG files](localing.com)).
 
 ### Live Debugger
 
-Rzeka ships with a browser-based debugger that connects to your game over WebSocket. It shows matter flow, messages and live spell status (TODO, not impelemnted yet.) in real time - no in-game UI needed.
+Rzeka ships with a browser-based debugger (not included in builds) that connects to your game over WebSocket. It shows matter flow, messages and live spell status (TODO, not impelemnted yet.) in real time - no in-game UI needed.
 
 **Setup:**
 
@@ -452,6 +455,10 @@ Terminal 2 - run the demo (30 seconds)
 <!-- EDIT: add a screenshot of the Eris UI showing the demo output -->
 
 TODO: at the very end check if demo is working still
+
+### Lifecycle & Mana
+
+todo: add mana section
 
 ### Speak
 
