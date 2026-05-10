@@ -49,7 +49,7 @@ Create a single river at startup and share its IRzeka reference with the systems
 IRzeka rzeka = new Spring().Create("Nile");
 ```
 
-📜🧨 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#Circumstances).
+> 📜💎 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#Circumstances).
 
 Multi-rzeka topologies are considered for a v2 version. 
 
@@ -105,11 +105,13 @@ class EnemyDefeated : Matter
 }
 ```
 
-📜🧨 Keep your Matter instances immutable - avoid mutable reference type fields. Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
+> 📜🧨 Keep your Matter instances **immutable** - avoid mutable reference type fields. Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
 
 ### Circumstances
 
-Circumstances attach context to a piece of matter. For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance.
+> 📜 Circumstances describe context of a given matter emission.
+
+For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance.
 
 This allows you to track the causality chains through [Eris, rzeka's debugger](#Eris) or to check in your game logic if a given matter is caused by another (`damage_dealt.IsCircumstancedBy(wizard_fireball_attack)`). 
 
@@ -123,7 +125,7 @@ bool causedByDragon = damage.IsCircumstancedBy(attack); // true
 
 #### Automatic vs. Manual Circumstances
 
-Rzeka tracks circumstances automatically inside **Loom** (todo: isnt this misleading, arent we tracking circumstances in all main api methods?) - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
+> 📜 Rzeka tracks circumstance attachment automatically inside **Loom** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work.
 
 If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom lambda is an **active decision to override the default tracking**.
 
@@ -146,7 +148,7 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 All API methods accept a `who` object (the registering owner, used for diagnostics) and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
 
-A common pattern is to collect them into a composite disposable:
+A common pattern is to collect them into rzeka's `CollectibleDisposable`:
 
 ```csharp
 CollectibleDisposable Q = new();
@@ -187,7 +189,7 @@ Q += rzeka.Strand(
 // Expose a timer tick as a recurring event
 Q += rzeka.Strand(
     this,
-    Observable.Interval(TimeSpan.FromSeconds(1)).Select(_ => new GameClockTick())
+    Observable.Interval(TimeSpan.FromSeconds(1)).Select(_ => new GameClockTick()) //TODO is interval running on the main thread?
 );
 ```
 
@@ -195,15 +197,15 @@ Q += rzeka.Strand(
 
 ### 🧬 Pluck - fire once publisher
 
-> 📜 Publish a single matter value into the river imperatively, without an ongoing stream.
+> 📜 Publish a single matter value into rzeka imperatively, without an ongoing stream.
 
-Pluck is fully visible to Eris — it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
+Pluck is fully visible to Eris - it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
 
 ```csharp
 rzeka.Pluck(this, new GameStarted());
 ```
 
-Pluck has no automatic upstream tracking — it does not know what caused it. When you *do* know (inside a Loom or Weave lambda where the triggering matter is in scope), pre-stamp the matter via `.WithCircumstances<T>()`:
+Pluck has no automatic upstream tracking - it does not know what caused it. When you *do* know (inside a Loom or Weave where the triggering matter is in scope), pre-stamp the matter via `.WithCircumstances<T>()`:
 
 ```csharp
 // Inside a Weave or other context where you have the triggering matter:
@@ -234,22 +236,18 @@ Q += rzeka.Loom<HealthChanged, HealthBarUpdateRequested>(
 // Produce a rendering update whenever position OR animation state changes
 Q += rzeka.Loom<PositionChanged, AnimationStateChanged, RenderUpdateRequested>(
     this,
-    (positions, animations) =>
-        positions
-            .CombineWith(animations) // or .WithLatestFrom(...), see extension methods
-            .Select(((PositionChanged pos, AnimationStateChanged anim) pair) =>
-                new RenderUpdateRequested(pair.pos.Position, pair.anim.Clip))
+    (positions, animations) => positions.CombineWith(animations) // or .WithLatestFrom(...), see extension methods
+        .Select(((PositionChanged pos, AnimationStateChanged anim) pair) =>
+            new RenderUpdateRequested(pair.pos.Position, pair.anim.Clip))
 );
 ```
 **Three inputs:**
 ```csharp
 Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
     this,
-    (inputs, physics, game) =>
-        inputs
-            .WithContext(physics) // todo: this uses the old naming for CombineWith
-            .WithContext(game)
-            .Select(/* ... */)
+    (inputs, physics, game) => inputs
+        .CombineLatest(physics, game)
+        .Select(/* ... */)
 );
 ```
 For neither Loom or Weave overloads with more than three input-matter types
@@ -260,7 +258,7 @@ For neither Loom or Weave overloads with more than three input-matter types
 
 > 📜 Final subscriber - consumes streams and produces nothing. 
 
-Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet (todo: is this worth mentioning?).
+Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet.
 
 **Single stream:**
 ```csharp
@@ -270,21 +268,21 @@ Q += rzeka.Weave<PlayerDied>(
 );
 ```
 
-**Two streams — react when both have values:**
+**Two streams - react when both have values:**
 ```csharp
 Q += rzeka.Weave<EquipmentChanged, PlayerStats>(
     this,
-    (equipment, stats) =>
-        equipment
-            .WithContext(stats)
-            .Subscribe(((EquipmentChanged eq, PlayerStats s) pair) =>
-                UpdateEquipmentUI(pair.eq, pair.s))
+    (equipment, stats) => equipment.WithContext(stats)
+        .Subscribe(((EquipmentChanged eq, PlayerStats s) pair) =>
+            UpdateEquipmentUI(pair.eq, pair.s))
 );
 ```
 
 **Raw observer:**
 ```csharp
-Q += rzeka.Weave<GameClockTick>(this, _clockDisplay);
+Q += rzeka.Weave<GameClockTick>(this, _clockDisplayObserver);
+
+TODO: add a potential pseudocode for how such observer is implemented
 ```
 
 ---
@@ -321,7 +319,7 @@ class SaveGameResponse : Response<SaveGameRequest>
 > 📜🧭 The suggested naming convention is to keep both types in the same `.cs` file suffixed with `RR`, like `SaveGameRR`.
 
 **Usage**: Register a handler with `Shuttle`. Because Shuttle's primary use case crosses an async boundary, wrap the operation in `Observable.Create` and stamp the request as a circumstance on the response manually - the same rule as [Async Operations](#async-operations):
-⚗️
+
 ```csharp
 Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
     this,
