@@ -7,13 +7,13 @@
 
 rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what triggered you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
+What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
 
 rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](addlink).
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
 
-## Grimoire
+## 🕯️ Grimoire
 
 rzeka uses river, textile and magic vocabulary throughout:
 - events are **Matter**
@@ -41,7 +41,7 @@ Godot does not resolve transitive NuGet dependencies, so add System.Reactive exp
 dotnet add package System.Reactive
 ```
 
-## Getting Started
+## 🌱 Getting Started
 
 Create a single river at startup and share its IRzeka reference with the systems that need it:
 
@@ -83,7 +83,7 @@ For the live debugger during development, see [Eris](#eris).
 
 Once you summoned your rzeka, you are ready to shape Matter.
 
-## Matter - Events
+## 🪽 Matter - Events
 
 ### Base
 
@@ -142,7 +142,7 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 ---
 
-## API
+## 🧬 API
 
 Initialize Rzeka with:
 
@@ -178,7 +178,7 @@ Q += rzeka.Loom<A, B, Out>(
 
 ---
 
-### Strand - pure giver / publisher
+### 🧬 Strand - publisher
 
 Registers a source `IObservable<T>` into the river. Any Loom or Weave that listens to `T` will receive these values.
 
@@ -198,7 +198,7 @@ Q += rzeka.Strand(
 
 ---
 
-### Pluck - fire once publisher
+### 🧬 Pluck - fire once publisher
 
 Publish a single matter value into the river imperatively, without an ongoing stream. Pluck is fully visible to Eris — it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
 
@@ -215,7 +215,7 @@ rzeka.Pluck(this, new GamePaused().WithCircumstances<GamePaused>(triggeringEvent
 
 ---
 
-### Loom - transform
+### 🧬 Loom - transform
 
 Listens to one or more streams and produces a new stream. Use it for mapping, combining, or reacting to matter. Intentional side effects belong inside `.Reacting()` (see [Reacting](#reacting)), not bare `.Do()` or `.Select(...)` with imperative bodies.
 
@@ -257,7 +257,7 @@ For neither Loom or Weave overloads with more than three input-matter types
 
 ---
 
-### Weave - pure taker / subscriber
+### 🧬 Weave - subscriber
 
 Final subscriber - consumes streams and produces nothing. Use for final effects: rendering, audio, persistence, etc. Other publishing/transforming rzeka methods will already work on their own even if the final `.Weave()` subscriber is not active yet (todo: is this worth mentioning?).
 
@@ -288,7 +288,7 @@ Q += rzeka.Weave<GameClockTick>(this, _clockDisplay);
 
 ---
 
-### Scry - raw observable
+### 🧬 Scry - raw observable
 
 TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
 
@@ -298,7 +298,7 @@ IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
 
 ---
 
-### Shuttle - Request/Response
+### 🧬 Shuttle - Request/Response
 
 📜🐇 Shuttle is rzeka's request/response API. It operates on two specialised Matter types - extend them to define your round-trip pair:
 
@@ -403,7 +403,7 @@ TODO: shouldny this prestamping
 ---
 
 
-## Eris
+## 🏹 Eris
 
 Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten (todo: write notes on spell lifecycle events)), every matter emission (shaped, received), and every message/exception - all timestamped and serialized. This runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps ([WHDIG files](localing.com)).
 
@@ -461,7 +461,7 @@ todo: write a note on using .Speak to manually log messages and errors to Eris
 
 <!-- EDIT: expand on WHDIG format and how to load dumps when that's finalized -->
 
-## Attributes
+## 🪧 Attributes
 
 ### HasState
 
@@ -478,7 +478,7 @@ class PlayerInputState : Matter
 }
 ```
 
-## Extension Methods
+## 🧼 Extension Methods
 
 ### Reacting
 
@@ -563,7 +563,7 @@ Prefer `Ask` for the standard request/response round-trip — it bundles the Wea
 
 ---
 
-## Async Operations
+## 🖇️ Async Operations
 
 Rzeka is single-threaded, but your game will have async operations — resource loading, network calls, save/load, etc. The pattern for handling these is:
 
