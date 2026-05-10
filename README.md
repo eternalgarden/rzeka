@@ -13,7 +13,7 @@ rzeka is single-threaded by design. This is the constraint that makes everything
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
 
-## 🕯️ Grimoire
+## 🪞 Grimoire
 
 rzeka uses river, textile and magic themed naming system:
 - events are **Matter**
@@ -25,11 +25,11 @@ rzeka uses river, textile and magic themed naming system:
 
 The metaphor is consistent and once you let it work its magic, the API becomes self-describing.
 
-## Installation
+## 💾 Installation
 
 Rzeka targets `net8.0` and depends only on `System.Reactive`.
 
-```bash
+```python
 dotnet add package EternalGarden.Rzeka
 ```
 
@@ -37,7 +37,7 @@ dotnet add package EternalGarden.Rzeka
 
 Godot does not resolve transitive NuGet dependencies, so add System.Reactive explicitly:
 
-```bash
+```python
 dotnet add package System.Reactive
 ```
 
@@ -139,8 +139,6 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 **Where circumstances are not touched:**
 - `Strand` - it is used for root matter emissions (eg. caused by user input)
-
----
 
 ## 🧬 API
 
@@ -390,8 +388,6 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 - Forgetting the request in a manual stamp does not break `Ask` request/response casuality (but it does orphan the response from its triggering request in Eris matter graph view)
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
-
----
 
 ## 🏹 Eris
 
