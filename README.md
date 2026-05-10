@@ -18,12 +18,12 @@ rzeka is single-threaded by design. This is the constraint that makes everything
 rzeka uses river, textile and magic vocabulary throughout:
 - events are **Matter**
 - transformations are **Spells**
-- a Spell's required Matter types fulfillment is called **Mana**
-- Spell-defining methods (Strand, Loom, Shuttle, Weave, Pluck) follow textile-production vocabulary, inspired by [Zeros and Ones by Sadie Plant](https://www.goodreads.com/en/book/show/927879.Zeros_and_Ones))
+- a Spell's required Matter types fulfillment status is called **Mana**
+- Spell-defining methods (_Strand, Loom, Shuttle, Weave, Pluck_) follow textile-production vocabulary, inspired by [Zeros and Ones by Sadie Plant](https://www.goodreads.com/en/book/show/927879.Zeros_and_Ones))
 
-**Eris**, the debugger, borrows its name from the Greek goddess of discord.
+**Eris**, the debugger, borrows her name from the Greek goddess of discord.
 
-The metaphor is consistent and once you internalise it, the API becomes self-describing.
+The metaphor is consistent and once you let it work its magic, the API becomes self-describing.
 
 ## Installation
 
@@ -33,22 +33,31 @@ Rzeka targets `net8.0` and depends only on `System.Reactive`.
 dotnet add package EternalGarden.Rzeka
 ```
 
-Initialize a river once at startup and pass the `IRzeka` reference to the systems that need it:
-
-```csharp
-IRzeka rzeka = new Spring().Create("MyApp");
-```
-
 ### Godot 4
 
-`System.Reactive` is a transitive dependency of rzeka, but some project types (such as Godot) do not automatically handle those, so apart from `EternalGarden.Rzeka` you need to add it manually:
+Godot does not resolve transitive NuGet dependencies, so add System.Reactive explicitly:
 
 ```bash
 dotnet add package System.Reactive
 ```
 
-Then you can just create a River [Autoload](https://docs.godotengine.org/en/stable/tutorials/scripting/singletons_autoload.html) that owns the river instance:
+## Getting Started
 
+Create a single river at startup and share its IRzeka reference with the systems that need it:
+
+```csharp
+IRzeka rzeka = new Spring().Create("Nile");
+```
+
+📜🧨 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#Circumstances).
+
+Multi-rzeka topologies are considered for a v2 version. 
+
+The name passed to Create serves currently a purely mythical role, it has no direct usage in rzeka codebase, but one should have the capacity to name the river that they live along.
+
+### Hosting rzeka in Godot
+
+The simplest pattern is a Autoload that owns the river instance:
 ```csharp
 using Godot;
 using Rzeka;
@@ -64,23 +73,23 @@ public partial class River : Node
 }
 ```
 
-Nodes access the river via `River.Rzeka`. In larger projects you may want to wire `IRzeka` through a DI container instead.
+Nodes access the river via `River.Rzeka`. In larger projects you may want to wire `IRzeka` through a DI container.
 
-All Godot lifecycle callbacks (`_Ready`, `_Process`, `_PhysicsProcess`, etc.) run on the main thread, so Strand, Pluck, Loom, and Weave all work without any extra setup. Async operations crossing a thread boundary need manual circumstance handling — see [Async Operations](#async-operations).
+All Godot lifecycle callbacks (`_Ready`, `_Process`, `_PhysicsProcess`, etc.) run on the main thread, so Strand, Pluck, Loom, and Weave all work without any extra setup. 
+
+Async operations crossing a thread boundary need manual circumstance handling - see [Async Operations](#async-operations).
 
 For the live debugger during development, see [Eris](#eris).
 
-## Events
+Once you summoned your rzeka, you are ready to shape Matter.
 
-Events carried through Rzeka are called **Matter**.
+## Matter - Events
 
-### Matter
+### Base
 
-The base carrier of event data. Every matter has a `Guid` (its identity) and a `Circumstances` list (contextual metadata - other matter instances that provide context for this one). 
+Matter is the base carrier of event data. Every matter has a `Guid` (its unique identity) and a list of `Circumstances` (a collection of matter that led to the emission of this one). 
 
-Guid and Circumstances attachment is handled by rzeka automatically so it can be later tracked in your integration tests and observed through the provided [Eris debugger tool](#Eris).
-
-Matter instances are compared by `Guid`, so two separate instances of the same type are never equal.
+Guid and Circumstances attachment is handled by rzeka automatically so it can be later observed through the provided [Eris debugger tool](#Eris).
 
 Extend `Matter` to define your own event types:
 
@@ -98,39 +107,13 @@ class EnemyDefeated : Matter
 }
 ```
 
-Avoid using reference types in your Matter instances.
-
-Keep your matter instances immutable.
-
-### Request / Response
-
-A specialised pair of Matter for request/response patterns. The response carries a reference back to the original request, so the requester can verify the response is for their specific request.
-
-You are required to implement the `.base()` constructor call.
-
-This is what [Shuttle API method](#Shuttle) operates on.
-
-```csharp
-class InventoryRequest : Request { }
-
-class InventoryResponse : Response<InventoryRequest>
-{
-    public IReadOnlyList<Item> Items { get; }
-    public InventoryResponse(InventoryRequest request, IReadOnlyList<Item> items, bool wasSuccessful)
-        : base(request, wasSuccessful) => Items = items;
-}
-```
-
-TODO: Example of checking manually if response you receive is specific to your request. Does that even make sense? Shouldnt RR be always used with Shuttle?
-```csharp
-// claude please help me with the example
-```
-
-The suggested filenaming convention (a good place for a snippet) is to keep both Request and its Response in the same `.cs` file suffixed with `RR`, like `InventoryRR`.
+📜🧨 Keep your Matter instances immutable - avoid mutable reference type fields. `WithCircumstances<T>()` works by cloning, Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
 
 ### Circumstances
 
-Circumstances attach context to a piece of matter. For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance, allowing you to track the causality chains through [Eris, rzeka's debugger](#Eris)
+Circumstances attach context to a piece of matter. For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance.
+
+This allows you to track the causality chains through [Eris, rzeka's debugger](#Eris) or to check in your game logic if a given matter is caused by another (`damage_dealt.IsCircumstancedBy(wizard_fireball_attack)`). 
 
 ```csharp
 var attack = new AttackEvent(attacker: "dragon");
@@ -140,24 +123,22 @@ var damage = new DamageDealt(amount: 40).WithCircumstances<DamageDealt>(attack);
 bool causedByDragon = damage.IsCircumstancedBy(attack); // true
 ```
 
-##### Automatic vs. Manual Circumstances
+#### Automatic vs. Manual Circumstances
 
 Rzeka tracks circumstances automatically inside **Loom** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work. This relies on the single-threaded guarantee: the causal link between input and output is always unambiguous.
 
 If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom lambda is an **active decision to override the default tracking**.
 
-TODO, IMPLEMENT (Eris): Display information in Eris whether matteroccurence has manually assigned circumstances.
-
 **Where automatic tracking works:**
-- Synchronous Loom chains — the default, no action needed
+- Synchronous Loom chains - the default, no action needed
+- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context streams), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---requestresponse).
 
 **Where you must attach circumstances manually:**
-- Inside `Pluck` calls — Pluck has no automatic tracking
+- Inside `Pluck` and `Ask` calls - pre-stamp the matter via `.WithCircumstances<T>(trigger)` when you have the triggering matter in scope
 - Inside async boundaries within Loom (see [Async Operations](#async-operations) below)
-- On matter passed to external systems outside Rzeka (What do you mean by that Calude?)
 
 **Where circumstances are not touched:**
-- `Strand` — passes matter through to the Library as-is
+- `Strand` - it is used for root matter emissions (eg. caused by user input)
 
 ---
 
@@ -219,12 +200,13 @@ Q += rzeka.Strand(
 
 ### Pluck - fire once publisher
 
-Publish a single matter value into the river imperatively, without an ongoing stream.
+Publish a single matter value into the river imperatively, without an ongoing stream. Pluck is fully visible to Eris — it appears as a `Plucking` spell with a `Created → Shaped → Forgotten` lifecycle attributed to the `who` you pass in.
 
 ```csharp
 rzeka.Pluck(this, new GameStarted());
 ```
-Pluck has no automatic circumstance tracking — it doesn't know what caused it. If causality matters, attach circumstances manually with `.WithCircumstances()` before plucking:
+
+Pluck has no automatic upstream tracking — it does not know what caused it. When you *do* know (inside a Loom or Weave lambda where the triggering matter is in scope), pre-stamp the matter via `.WithCircumstances<T>()`:
 
 ```csharp
 // Inside a Weave or other context where you have the triggering matter:
@@ -260,8 +242,6 @@ Q += rzeka.Loom<PositionChanged, AnimationStateChanged, RenderUpdateRequested>(
                 new RenderUpdateRequested(pair.pos.Position, pair.anim.Clip))
 );
 ```
-
-// todo: remove if we don't keep threee input api methods
 **Three inputs:**
 ```csharp
 Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
@@ -273,6 +253,7 @@ Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
             .Select(/* ... */)
 );
 ```
+For neither Loom or Weave overloads with more than three input-matter types
 
 ---
 
@@ -307,11 +288,38 @@ Q += rzeka.Weave<GameClockTick>(this, _clockDisplay);
 
 ---
 
+### Scry - raw observable
+
+TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
+
+```csharp
+IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
+```
+
+---
+
 ### Shuttle - Request/Response
 
-Like Loom, but works exclusively with `IRequest` / `IResponse<T>` types. Register a handler that answers incoming requests. Pair it with [`Ask` extension method](#ask) on the requester side.
+📜🐇 Shuttle is rzeka's request/response API. It operates on two specialised Matter types - extend them to define your round-trip pair:
 
-```c
+```csharp
+class InventoryRequest : Request { }
+
+class InventoryResponse : Response<InventoryRequest>
+{
+    public IReadOnlyList<Item> Items { get; }
+    public InventoryResponse(InventoryRequest request, IReadOnlyList<Item> items, bool wasSuccessful)
+        : base(request, wasSuccessful) => Items = items;
+}
+```
+
+The response carries a reference back to the original request so rzeka can route replies to the correct caller - you don't need to handle correlation, but the `: base(request, wasSuccessful)` constructor call is required.
+
+📜🧭 The suggested convention is to keep both types in the same `.cs` file suffixed with `RR`, like `GetInventoryRR`.
+
+Register a handler that answers incoming requests with `Shuttle`. Pair it with the [`Ask` extension method](#ask) on the requester side. Shuttle stays single-input by design - when a responder needs additional matter context, pull it through `Scry` inside the lambda (see "Multi-context responder" below).
+
+```csharp
 // Simple sync query
 Q += rzeka.Shuttle<PlayerStatsRequest, PlayerStatsResponse>(
     this,
@@ -329,22 +337,71 @@ Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
 );
 ```
 
-> **Note:** Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
+#### Multi-context response using Scry
 
----
-
-### Scry - raw observable
-
-Returns the raw `IObservable<T>` for a matter type, without registering a spell. Primarily used to bridge between multiple Rzeka instances. (todo: add: since it is breaking circumstance tracking? or will we handle the cross-rzeka-instance matter ttracking?)
+When the response depends on more than just the request, pull the additional streams in via `Scry` inside the lambda. The request remains the trigger; everything else is read as ambient context.
 
 ```csharp
-IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
-
-// Bridge: re-strand events from one river into another
-Q += otherRzeka.Strand(this, rzeka.Scry<GameStateChanged>());
+Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
+    this,
+    reqs => reqs
+        .WithLatestFrom(rzeka.Scry<GameState>(), rzeka.Scry<Settings>())
+        .Select(ctx =>
+        {
+            var (req, state, settings) = ctx;
+            // Stamp manually so the response carries [request, state, settings]
+            // as circumstances.
+            return new LoadSceneResponse(req, /* shape from state */, wasSuccessful: true)
+                .WithCircumstances<LoadSceneResponse>(req, state, settings);
+        })
+);
 ```
 
+**Stamping rule for Shuttle responses.** If you stamp circumstances manually on the response, **include the request yourself** — Shuttle leaves your manual stamp alone. If you do *not* stamp manually, Shuttle automatically stamps `[request]` for you. Either path works; the manual route is the only way to also record the additional context that shaped the response. Forgetting the request in a manual stamp does not break `Ask` correlation (that uses `response.Request.Guid` directly), but it does orphan the response from its triggering request in the Eris matter graph view.
+
+> **Note:** Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
+
+#### Ask - request side
+
+📜🌱 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type. 
+
+Ask is implemented over a one-shot Weave (for the response) plus a Pluck (for the request), so both halves of the round-trip are visible to Eris and attributed to the `who` you pass in. Cardinality is caller-controlled - use `.Take(1)` for a single-shot exchange or omit it to observe correlated responses as a stream.
+
+```csharp
+// Inside a Loom: on level completion, save then show results
+Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
+    this,
+    levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
+        rzeka.Ask<SaveGameRequest, SaveGameResponse>(this, new SaveGameRequest())
+             .Take(1)
+             .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
+);
+```
+
+##### Tracking circumstances when Ask(ing)
+
+Inside a Loom, pre-stamp the request with the triggering matter so the full causal chain remains walkable in Eris:
+
+```csharp
+Q += rzeka.Loom<LoadSplashScreenRequest, LoadSplashScreenResponse>(
+    this,
+    splashReqs => splashReqs.SelectMany(splashReq =>
+        rzeka.Ask<LoadSceneRequest, LoadSceneResponse>(
+                this,
+                new LoadSceneRequest(splashReq.SceneType)
+                    .WithCircumstances<LoadSceneRequest>(splashReq))
+             .Take(1)
+             .Select(r => new LoadSplashScreenResponse(splashReq, r.WasSuccessful)))
+);
+```
+
+The pre-stamped circumstances flow with the request as it enters the river; Shuttle's response then auto-stamps `[request]`, completing the chain.
+TODO: shouldny this prestamping 
+
+📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
+
 ---
+
 
 ## Eris
 
@@ -423,58 +480,6 @@ class PlayerInputState : Matter
 
 ## Extension Methods
 
-### Ask
-
-Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
-
-```csharp
-// Inside a Loom: on level completion, save then show results
-Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
-    this,
-    levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
-        rzeka.Ask<SaveGameRequest, SaveGameResponse>(this, new SaveGameRequest())
-             .Take(1)
-             .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
-);
-```
-
-#### Nested Asks - Sequential
-
-Each ask waits for its response before the next one fires.
-
-```csharp
-Q += rzeka.Loom<StartupRequest, UIReadyEvent>(
-    this,
-    reqs => reqs.SelectMany(req =>
-        rzeka.Ask<LoadConfigRequest, LoadConfigResponse>(this, new LoadConfigRequest())
-             .Take(1)
-             .SelectMany(config =>
-                 rzeka.Ask<LoadPlayerRequest, LoadPlayerResponse>(
-                         this,
-                         new LoadPlayerRequest(config.Profile))
-                      .Take(1)
-                      .Select(player => new UIReadyEvent(player.Data))))
-);
-```
-
-#### Nested Asks - Independent
-
-Both asks fire at the same time; the Loom waits for both before producing output.
-
-```csharp
-Q += rzeka.Loom<StartupRequest, UIReadyEvent>(
-    this,
-    reqs => reqs.SelectMany(req =>
-        rzeka.Ask<LoadConfigRequest, LoadConfigResponse>(this, new LoadConfigRequest())
-             .Take(1)
-             .Zip(
-                 rzeka.Ask<LoadPlayerRequest, LoadPlayerResponse>(this, new LoadPlayerRequest()),
-                 (config, player) => new UIReadyEvent(config.Settings, player.Data)))
-);
-```
-
----
-
 ### Reacting
 
 `.Reacting()` is the explicit operator for intentional side effects inside Loom chains. It reads as what it is — "react to this matter" — rather than abusing Rx's `.Do()` (a debug tap) or hiding logic inside `.Select()`.
@@ -541,17 +546,20 @@ Q += rzeka.Loom<ExternalInputEvent, InputCommand>(
 
 ### IsRespondingTo
 
-Check whether a response corresponds to a specific request. Used internally by `Ask`, but can also be used manually inside Weave chains.
+Check whether a response corresponds to a specific request — `Ask` uses this predicate internally to filter the response stream. Reach for it directly when you need a different lifecycle than Ask provides (e.g. observing every response to a long-lived request, or correlating inside a Weave you already own):
 
 ```csharp
 var myRequest = new InventoryRequest();
-rzeka.Scry<InventoryResponse>()
-     .Where(r => r.IsRespondingTo(myRequest))
-     .Take(1)
-     .Subscribe(r => ShowInventory(r.Items));
-
+Q += rzeka.Weave<InventoryResponse>(
+    this,
+    responses => responses
+        .Where(r => r.IsRespondingTo(myRequest))
+        .Subscribe(r => ShowInventory(r.Items))
+);
 rzeka.Pluck(this, myRequest);
 ```
+
+Prefer `Ask` for the standard request/response round-trip — it bundles the Weave + Pluck pair and the `IsRespondingTo` filter for you.
 
 ---
 
