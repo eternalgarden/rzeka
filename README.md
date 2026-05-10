@@ -299,36 +299,89 @@ IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
 
 ---
 
-### 🧬 Shuttle - Request/Response
+### 🧬 Shuttle - Async Request/Response
 
-> 📜 Shuttle is rzeka's request/response API. It operates on two specialised Matter types - extend them to define your `Request/Response` round-trip pair:
+> 📜 Shuttle is rzeka's pattern for triggering operations and awaiting their outcomes - save/load, network calls, path computation, anything with latency or a success/failure result. Pair it with [`Ask`](#ask) on the caller side.
+
+For sync live state (player health, game settings, etc.), prefer [`[HasState]`](#hasstate) matter types instead.
+
+Shuttle operates on two specialised Matter types - extend them to define your round-trip pair:
 
 ```csharp
-class InventoryRequest : Request { }
+class SaveGameRequest : Request { }
 
-class InventoryResponse : Response<InventoryRequest>
+class SaveGameResponse : Response<SaveGameRequest>
 {
-    public IReadOnlyList<Item> Items { get; }
-    public InventoryResponse(InventoryRequest request, IReadOnlyList<Item> items, bool wasSuccessful)
-        : base(request, wasSuccessful) => Items = items;
+    public SaveGameResponse(SaveGameRequest request, bool wasSuccessful)
+        : base(request, wasSuccessful) { }
 }
 ```
 
-The response carries a reference back to the original request so rzeka can route replies to the correct caller - you don't need to handle correlation, but the `: base(request, wasSuccessful)` constructor call is required.
+The response carries a reference back to the original request so rzeka can route replies to the correct caller. The `: base(request, wasSuccessful)` constructor call is required.
 
-📜🧭 The suggested convention is to keep both types in the same `.cs` file suffixed with `RR`, like `GetInventoryRR`.
+> 📜🧭 The suggested convention is to keep both types in the same `.cs` file suffixed with `RR`, like `SaveGameRR`.
 
-Register a handler that answers incoming requests with `Shuttle`. Pair it with the [`Ask` extension method](#ask) on the requester side. Shuttle stays single-input by design - when a responder needs additional matter context, pull it through `Scry` inside the lambda (see "Multi-context response" below).
+Register a handler with `Shuttle`. Because Shuttle's primary use case crosses an async boundary, wrap the operation in `Observable.Create` and stamp the request as a circumstance on the response manually while it is still in scope - the same rule as [Async Operations](#async-operations):
 
 ```csharp
-Q += rzeka.Shuttle<PlayerStatsRequest, PlayerStatsResponse>(
+Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
     this,
-    reqs => reqs.Select(req =>
-        new PlayerStatsResponse(req, _player.Health, wasSuccessful: true))
+    reqs => reqs.SelectMany(req =>
+        Observable.Create<SaveGameResponse>(observer =>
+        {
+            _saveSystem.SaveAsync(success =>
+            {
+                // Async boundary — stamp manually while req is still in scope
+                observer.OnNext(
+                    new SaveGameResponse(req, success)
+                        .WithCircumstances<SaveGameResponse>(req));
+                observer.OnCompleted();
+            });
+            return Disposable.Empty;
+        })
+    )
+);
+```
+#### Ask - request side
+
+> 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
+
+```csharp
+// Inside a Loom: on level completion, save then show results
+Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
+    this,
+    levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
+        rzeka.Ask<SaveGameRequest, SaveGameResponse>(
+                this, 
+                new SaveGameRequest().WithCircumstances(evt))
+             .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
 );
 ```
 
-📜🧭 For async operations inside a Shuttle handler (save/load, network calls, etc.), follow the same pattern as [Async Operations](#async-operations) - wrap in `Observable.Create` and stamp the request as a circumstance on the response manually while it is still in scope.
+> 📜🧨 When Ask(ing) you have to manually stamp the request matter circumstances with `.WithCircumstances(...circumstances)`.
+
+> 📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
+
+##### Tracking circumstances when Ask(ing)
+
+Inside a Loom, pre-stamp the request with the triggering matter so the full causal chain remains walkable in Eris:
+
+```csharp
+Q += rzeka.Loom<LoadSplashScreenRequest, LoadSplashScreenResponse>(
+    this,
+    splashReqs => splashReqs.SelectMany(splashReq =>
+        rzeka.Ask<LoadSceneRequest, LoadSceneResponse>(
+                this,
+                new LoadSceneRequest(splashReq.SceneType)
+                    .WithCircumstances<LoadSceneRequest>(splashReq))
+             .Take(1)
+             .Select(r => new LoadSplashScreenResponse(splashReq, r.WasSuccessful)))
+);
+```
+
+The pre-stamped circumstances flow with the request as it enters the river; Shuttle's response then auto-stamps `[request]`, completing the chain.
+TODO: shouldny this prestamping 
+
 
 #### Multi-context response using Scry
 
@@ -355,46 +408,6 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 - Forgetting the request in a manual stamp does not break `Ask` request/response casuality, but it does orphan the response from its triggering request in the Eris matter graph view.
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
-
-#### Ask - request side
-
-> 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
-
-📜🧨 When Ask(ing) you have to manually stamp the request matter circumstances with `.WithCircumstances(...circumstances)`.
-
-```csharp
-// Inside a Loom: on level completion, save then show results
-Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
-    this,
-    levelCompletedEvent => levelCompletedEvent.SelectMany(evt =>
-        rzeka.Ask<SaveGameRequest, SaveGameResponse>(
-                this, 
-                new SaveGameRequest().WithCircumstances(evt))
-             .Select(save => new ResultsScreenRequest(evt.Score, save.WasSuccessful)))
-);
-```
-
-📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
-
-##### Tracking circumstances when Ask(ing)
-
-Inside a Loom, pre-stamp the request with the triggering matter so the full causal chain remains walkable in Eris:
-
-```csharp
-Q += rzeka.Loom<LoadSplashScreenRequest, LoadSplashScreenResponse>(
-    this,
-    splashReqs => splashReqs.SelectMany(splashReq =>
-        rzeka.Ask<LoadSceneRequest, LoadSceneResponse>(
-                this,
-                new LoadSceneRequest(splashReq.SceneType)
-                    .WithCircumstances<LoadSceneRequest>(splashReq))
-             .Take(1)
-             .Select(r => new LoadSplashScreenResponse(splashReq, r.WasSuccessful)))
-);
-```
-
-The pre-stamped circumstances flow with the request as it enters the river; Shuttle's response then auto-stamps `[request]`, completing the chain.
-TODO: shouldny this prestamping 
 
 
 ---
