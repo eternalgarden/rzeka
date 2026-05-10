@@ -4,7 +4,7 @@ namespace Rzeka;
 public interface IRzeka : IWhisper
 {
     /// <summary>
-    /// Scry is used predominantly for subscriptions between different Rzeka instances. 
+    /// Scry is used predominantly to attach additional matter context to other API methods.
     /// </summary>
     IObservable<T> Scry<T>()
         where T : IMatter;

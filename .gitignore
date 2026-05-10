@@ -1,5 +1,6 @@
 *.meta
 
 # .NET build output
-bin/
+# nuget package 
+bin/ 
 obj/

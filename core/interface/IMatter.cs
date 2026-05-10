@@ -19,7 +19,7 @@ public interface IMatter : IEquatable<IMatter>
         => (T)Clone(circumstances);
 }
 
-public class Matter : IMatter
+public abstract class Matter : IMatter
 {
     public Guid Guid { get; } = Guid.NewGuid();
 
