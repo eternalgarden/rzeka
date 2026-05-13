@@ -75,32 +75,6 @@ public static class ScrollExtensions
         Func<T, TOut> reaction
     ) => source.Select(reaction);
 
-    public static bool IsConjuring(this ISpell scroll)
-    {
-        bool isConjuring = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding;
-        return isConjuring;
-    }
-
-    public static bool IsConjuring(this ISpell scroll, out IStrandingSpell asStranding)
-    {
-        bool isConjuring = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Stranding;
-        asStranding = isConjuring ? scroll as IStrandingSpell : null;
-        return isConjuring;
-    }
-
-    public static bool IsBinding(this ISpell scroll)
-    {
-        bool isBinding = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving;
-        return isBinding;
-    }
-
-    public static bool IsBinding(this ISpell scroll, out IBindingSpell asBinding)
-    {
-        bool isBinding = scroll.SpellSchool is SpellSchool.Looming or SpellSchool.Weaving;
-        asBinding = isBinding ? scroll as IBindingSpell : null;
-        return isBinding;
-    }
-
     // -------------
 }
 /* dreamy guardian ASCII kitty by Felix Lee, found at asciiart.eu 🐱‍👤 */
