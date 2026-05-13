@@ -27,6 +27,8 @@ public class Stream<T> : ISpellStream
     int _secondsCount = 0;
     bool _isOverheat;
     bool _isHighVelocity;
+    bool _isStateful;
+    int _activeSourceCount;
 
     DateTimeOffset _overheatStartTime;
 
@@ -57,7 +59,7 @@ public class Stream<T> : ISpellStream
                 }
                 catch (InfiniteLoopException)
                 {
-_isOverheat = true;
+                    _isOverheat = true;
                     _overheatStartTime = new DateTimeOffset(DateTime.UtcNow);
                     return;
                 }
@@ -77,7 +79,6 @@ _isOverheat = true;
 
         if (newStamp - previousStamp < 1000)
         {
-            // Debug.Log($"<color=yellow>ere</color>");
             _secondsCount++;
 
             if (_secondsCount > MAX_TICK_COUNT_PER_SECOND)
@@ -107,6 +108,7 @@ _isOverheat = true;
         if (attrs.Any(attr => attr is HasStateAttribute))
         {
             subject = new ReplaySubject<T>(1, Scheduler.CurrentThread);
+            _isStateful = true;
         }
         else if (attrs.Any(attr => attr is HasBufferAttribute))
         {
@@ -132,18 +134,28 @@ _isOverheat = true;
 
     public IDisposable RegisterConjurer(IObservable<T> conjurer)
     {
+        // Single-writer guard for [HasState] matter: only one active source allowed.
+        // See CLAUDE.md "State evolution convention" and README "Evolving State".
+        if (_isStateful && _activeSourceCount > 0)
+        {
+            throw new InvalidOperationException(
+                $"{typeof(T).Name} is [HasState] and already has an active writer. "
+                + "Single-writer is required for stateful matter — dispose the existing "
+                + "writer before registering a new one."
+            );
+        }
+
         // TODO this was flagged in an audit as:
         // causing new delegate allocation on every access and was recommended
         // to be replaced as a readonly field
         // but it wouldn't take care of feeding conjurer subscription into subject feeder
         IDisposable token = conjurer.Subscribe(SourceObserver);
-        // _sources++;
+        _activeSourceCount++;
 
         return Disposable.Create(() =>
         {
-            // TODO THIS IS SHADY
             token.Dispose();
-            // _sources--;
+            _activeSourceCount--;
         });
     }
 
