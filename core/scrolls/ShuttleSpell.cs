@@ -48,6 +48,7 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
-            });
+            })
+            .WhisperOnError(this);
     }
 }

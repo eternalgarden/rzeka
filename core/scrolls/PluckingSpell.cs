@@ -36,7 +36,8 @@ public sealed class PluckingSpell<TOut> : IStrandingSpell<TOut> where TOut : IMa
         bool manual = _matter.HasCircumstances();
         return Observable
             .Return(_matter)
-            .Do(m => ThisAsBase.SendMatterOccurence(m, MatterOccurenceCategory.Shaped, manual));
+            .Do(m => ThisAsBase.SendMatterOccurence(m, MatterOccurenceCategory.Shaped, manual))
+            .WhisperOnError(this);
     }
 
     public PluckingSpell(object who, TOut matter, Library library, Eris eris)

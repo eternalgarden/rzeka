@@ -59,7 +59,8 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
 
                 /* ---- ---- 🌠 */
 
-            });
+            })
+            .WhisperOnError(this);
             // nd
             // TODO this will be deleted since Library will handle that
             // .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives

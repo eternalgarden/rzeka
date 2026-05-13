@@ -22,7 +22,8 @@ public sealed class StrandingSpell<TOut> : IStrandingSpell<TOut> where TOut : IM
     IObservable<TOut> IStrandingSpell<TOut>.CreateConjuring()
     {
         return _spell
-            .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped));
+            .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
+            .WhisperOnError(this);
     }
 
     IDisposable _libraryToken;

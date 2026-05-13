@@ -31,9 +31,11 @@ public class Stream<T> : ISpellStream
             .Create<T>(onNext: next => _subject.OnNext(next))
             .NotifyOn(Scheduler.CurrentThread);
 
-        // Per-conjurer isolation: this observer swallows OnError/OnCompleted from any
-        // individual source so one misbehaving conjurer can't shut down the river's
-        // subject. Only OnNext is forwarded to the scheduled feeder.
+        // OnNext-only forwarder to the scheduled feeder. The real error boundary lives
+        // upstream in each spell's CreateConjuring (.WhisperOnError on the conjurer),
+        // so OnError isn't expected here. If one ever sneaks through (a non-spell
+        // registration bypassing the boundary), Observer.Create's default OnError
+        // rethrows on the source thread — loud, not silent.
         _sourceObserver = Observer.Create<T>(onNext: next => _subjectFeeder.OnNext(next));
     }
 

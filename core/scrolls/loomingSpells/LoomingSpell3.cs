@@ -58,6 +58,7 @@ public class LoomingSpell3<T1, T2, T3, TOut> : LoomingSpell<TOut>
                     matter = matter.WithCircumstances<TOut>(lastT1, lastT2, lastT3);
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
-            });
+            })
+            .WhisperOnError(this);
     }
 }

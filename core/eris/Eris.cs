@@ -86,13 +86,6 @@ public class Eris : IDisposable
     void SubscribeMatterStream()
     {
         Q += MatterStream
-            // TODO temporary lock on high velocity matter
-            .Where(occ =>
-                occ.Matter == null
-                || occ.Matter.GetType()
-                    .GetCustomAttributes(typeof(HighVelocityAttribute), true)
-                    .Length == 0
-            )
             .Select<MatterOccurence, ISerializableMatterOccurence>(occ =>
             {
                 try
