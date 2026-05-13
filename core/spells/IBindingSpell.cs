@@ -75,7 +75,7 @@ namespace Rzeka;
                 {
                     CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
                 }
-            }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}"));
+            }, onError: ThisAsBase.SendMatterExceptionOccurence);
 
         if (HasMana is false) ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.NoMana);
 
@@ -88,7 +88,7 @@ namespace Rzeka;
                 {
                     Type type = manainfo.LastChangedType;
                     CheckIfHasMana(type, manainfo.IsManaOfTypeAvailable(type));
-                }, onError: ex => Console.Error.WriteLine($"Mana subscription error: {ex}"));
+                }, onError: ThisAsBase.SendMatterExceptionOccurence);
         
         
         /* ---- ---- 🌠 */
@@ -96,7 +96,7 @@ namespace Rzeka;
     
     void CheckIfHasMana(Type type, bool satisfied)
     {
-        if (RequiresIngredient(type) is false) Console.Error.WriteLine("HUH");
+        if (RequiresIngredient(type) is false) return;
 
         SatisfiedRequirements[type] = satisfied;
         

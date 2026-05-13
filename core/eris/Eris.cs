@@ -29,7 +29,6 @@ public class Eris : IDisposable
 
     Subject<SpellOccurence> SpellStream { get; } = new();
     Subject<MatterOccurence> MatterStream { get; } = new();
-    Subject<ExceptionOccurence> ExceptionStream { get; } = new();
     Subject<MessageOccurence> MessageStream { get; } = new();
 
     public void PublishSpellOccurence(SpellOccurence spellOccurence)
@@ -37,18 +36,18 @@ public class Eris : IDisposable
         SpellStream.OnNext(spellOccurence);
     }
 
-    public void PublishExceptionOccurence(ExceptionOccurence exceptionOccurence)
-    {
-        ExceptionStream.OnNext(exceptionOccurence);
-    }
-
     public void PublishMatterOccurence(MatterOccurence matterOccurence)
     {
         if (Environment.CurrentManagedThreadId != 1)
         {
-            Console.Error.WriteLine(
-                $"Left the main thread for {matterOccurence.MatterOccurenceCategory} matter type {matterOccurence.Matter.GetType().Name} at a {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType()}"
-            );
+            PublishMessage(new MessageOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.Now,
+                RzekaMessageType = RzekaMessageType.Horror,
+                Message =
+                    $"Off-thread matter: {matterOccurence.Matter.GetType().Name} ({matterOccurence.MatterOccurenceCategory}) via {matterOccurence.Source.SpellSchool} spell by {matterOccurence.Source.Who.GetType().Name}",
+            });
         }
 
         MatterStream.OnNext(matterOccurence);
@@ -56,15 +55,6 @@ public class Eris : IDisposable
 
     public void PublishMessage(MessageOccurence messageOccurence)
     {
-        if (Environment.CurrentManagedThreadId != 1)
-        {
-            // TODO this message is probably stoopid cos if it wasnt thread 1 it wont disply this message anyways
-            Console.Error.WriteLine(
-                $"Left the main thread for Message: {messageOccurence.Message}"
-            );
-        }
-
-        // TODO Rework other serializable occurence baking like that
         MessageStream.OnNext(messageOccurence);
     }
 
@@ -77,33 +67,20 @@ public class Eris : IDisposable
 
         SubscribeSpellStream();
         SubscribeMatterStream();
-        SubscribeExceptionStream();
         SubscribeMessageStream();
     }
 
     public void Dispose()
     {
-        Console.WriteLine("༼ つ ◕_◕ ༽つ Bye Eris!");
+        PublishMessage(new MessageOccurence
+        {
+            Guid = Guid.NewGuid(),
+            Timestamp = DateTimeOffset.Now,
+            RzekaMessageType = RzekaMessageType.Hint,
+            Message = "༼ つ ◕_◕ ༽つ Bye Eris!",
+        });
 
         Q.Dispose();
-    }
-
-    void SubscribeExceptionStream()
-    {
-        Q += ExceptionStream
-            .Do(x =>
-            {
-                Console.Error.WriteLine($"Message: {x.Exception.Message}");
-                Console.Error.WriteLine(x.Exception.StackTrace);
-
-                // TODO add listener to update cycle
-                // queue exception throwing there in editor
-                // so that we get it to fail properly for easy debugging
-
-                // 1. if data structure loaded push a proper log
-                // 2. otherwise serialize to a CRASH_LOG.txt
-            })
-            .Subscribe(_ => { });
     }
 
     void SubscribeMatterStream()
@@ -145,9 +122,6 @@ public class Eris : IDisposable
                 }
                 catch (Exception e)
                 {
-                    Console.Error.WriteLine(
-                        $"Matter serialization error for {occ.Matter.GetType().Name} at {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType()}"
-                    );
                     return null;
                 }
             })

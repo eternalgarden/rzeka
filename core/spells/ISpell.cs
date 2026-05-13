@@ -112,17 +112,18 @@ public interface ISpell : IDisposable // TODO Rename to ISpell
     void SendMatterExceptionOccurence(Exception ex)
     {
         /* ⭐ ---- ---- */
-        
-        var occurence = new ExceptionOccurence()
+
+        var occurence = new MessageOccurence()
         {
             Guid = Guid.NewGuid(),
             Timestamp = DateTimeOffset.Now,
-            Source = this,
-            Exception = ex
+            RzekaMessageType = RzekaMessageType.Horror,
+            Message = ex.Message,
+            Exception = ex,
         };
 
-        Eris.PublishExceptionOccurence(occurence);
-        
+        Eris.PublishMessage(occurence);
+
         /* ---- ---- 🌠 */
     }
 

@@ -445,9 +445,36 @@ TODO: at the very end check if demo is working still
 
 todo: add mana section
 
-### Speak
+### Whisper
 
-todo: write a note on using .Speak to manually log messages and errors to Eris
+`IRzeka` exposes a `Whisper` method for emitting structured log messages into Eris from your game code. All whispers appear in the Eris UI alongside matter flow and spell lifecycle events.
+
+Three severity levels are available via `RzekaMessageType`:
+- `Hint` — informational
+- `Hunch` — warning
+- `Horror` — error
+
+```csharp
+// Simple info log (defaults to Hint)
+rzeka.Whisper("Player respawned");
+
+// With explicit severity
+rzeka.Whisper("Save slot full", RzekaMessageType.Hunch);
+
+// Exception — automatically Horror severity
+rzeka.Whisper(exception);
+
+// Exception with a message
+rzeka.Whisper("Failed to load scene", exception);
+```
+
+You can optionally attach `IMatter` instances as circumstances, linking the message to the causal graph:
+
+```csharp
+rzeka.Whisper("Invalid state reached", RzekaMessageType.Horror, triggeringMatter);
+```
+
+Rzeka itself uses `Whisper` internally for thread violations and stream errors, so they appear in Eris alongside your own messages.
 
 ### WHDIG
 

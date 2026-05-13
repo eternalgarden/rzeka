@@ -57,8 +57,7 @@ public class Stream<T> : ISpellStream
                 }
                 catch (InfiniteLoopException)
                 {
-                    Console.Error.WriteLine($"LOOPIDY LOOP! {typeof(T)}");
-                    _isOverheat = true;
+_isOverheat = true;
                     _overheatStartTime = new DateTimeOffset(DateTime.UtcNow);
                     return;
                 }

@@ -60,7 +60,6 @@ public sealed class AlteringScroll<T1> : IWeavingSpell
         catch (Exception ex)
         {
             ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd, ex);
-            Console.Error.WriteLine(ex.Message);
             throw;
         }
     }
