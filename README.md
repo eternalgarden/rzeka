@@ -13,6 +13,25 @@ rzeka is single-threaded by design. This is the constraint that makes everything
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
 <br><br>
+## 🗺️ Contents
+
+- [🪞 Grimoire](#-grimoire)
+- [💾 Installation](#-installation)
+- [🌱 Getting Started](#-getting-started)
+- [🪽 Matter - Events](#-matter---events)
+- [🧬 API](#-api)
+  - [Strand](#-strand---publisher)
+  - [Pluck](#-pluck---fire-once-publisher)
+  - [Loom](#-loom---transform)
+  - [Weave](#-weave---subscriber)
+  - [Scry](#-scry---raw-observable)
+  - [Shuttle](#-shuttle---async-requestresponse)
+- [🏹 Eris](#-eris)
+- [🪧 Attributes](#-attributes)
+- [🧼 Extension Methods](#-extension-methods)
+- [🛟 Error Boundary](#-error-boundary)
+- [🖇️ Async Operations](#-async-operations)
+<br><br>
 ## 🪞 Grimoire
 
 rzeka uses river, textile and magic themed naming system:
