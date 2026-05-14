@@ -12,7 +12,7 @@ What makes rzeka different from a typical event bus or pub/sub library is **caus
 rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](addlink).
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
-
+<br><br>
 ## 🪞 Grimoire
 
 rzeka uses river, textile and magic themed naming system:
@@ -24,7 +24,7 @@ rzeka uses river, textile and magic themed naming system:
 **Eris**, the debugger, borrows her name from the Greek goddess of discord.
 
 The metaphor is consistent and once you let it work its magic, the API becomes self-describing.
-
+<br><br>
 ## 💾 Installation
 
 Rzeka targets `net8.0` and depends only on `System.Reactive`.
@@ -40,7 +40,7 @@ Godot does not resolve transitive NuGet dependencies, so add System.Reactive exp
 ```python
 dotnet add package System.Reactive
 ```
-
+<br><br>
 ## 🌱 Getting Started
 
 Create a single river at startup and share its IRzeka reference with the systems that need it:
@@ -95,7 +95,7 @@ Async operations that return on a background thread need manual circumstance han
 For the live debugger during development, see [Eris](#eris).
 
 Once you summoned your rzeka, you are ready to shape Matter.
-
+<br><br>
 ## 🪽 Matter - Events
 
 > 📜 Matter is the base carrier of event data. Every matter has a `Guid` (its unique identity) and a list of `Circumstances` (a collection of matter that led to the emission of this one). 
@@ -152,7 +152,7 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 **Where circumstances are not touched:**
 - `Strand` - it is used for root matter emissions (eg. caused by user input)
-
+<br><br>
 ## 🧬 API
 
 > 📜 Communciation through rzeka is carried through a set of specialised API methods.
@@ -182,7 +182,6 @@ Q += rzeka.Loom<A, B, Out>(
          .Select((aVal, bVal, cVal) => new Out(...))
 );
 ```
----
 
 ### 🧬 Strand - publisher
 
@@ -206,8 +205,6 @@ Q += rzeka.Strand(
 );
 ```
 
----
-
 ### 🧬 Pluck - fire once publisher
 
 > 📜 Publish a single matter value into rzeka imperatively, without an ongoing stream.
@@ -224,8 +221,6 @@ Pluck has no automatic upstream tracking - it does not know what caused it. When
 // Inside a Weave or other context where you have the triggering matter:
 rzeka.Pluck(this, new GamePaused().WithCircumstances(triggeringEvent));
 ```
-
----
 
 ### 🧬 Loom - transform
 
@@ -266,8 +261,6 @@ Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
 ```
 For neither Loom or Weave overloads with more than three input-matter types
 
----
-
 ### 🧬 Weave - subscriber
 
 > 📜 Final subscriber - consumes streams and produces nothing. 
@@ -299,8 +292,6 @@ Q += rzeka.Weave<GameClockTick>(this, _clockDisplayObserver);
 TODO: add a potential pseudocode for how such observer is implemented
 ```
 
----
-
 ### 🧬 Scry - raw observable
 
 > 📜 TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
@@ -308,8 +299,6 @@ TODO: add a potential pseudocode for how such observer is implemented
 ```csharp
 IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
 ```
-
----
 
 ### 🧬 Shuttle - Async Request/Response
 
@@ -354,8 +343,6 @@ Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
 );
 ```
 
----
-
 #### Ask - Request Side
 
 > 📜 Send a request into the river and receive an observable that emits only the response to *your specific* request - not responses to other concurrent requests of the same type.
@@ -375,8 +362,6 @@ Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
 ```
 
 > 📜🧨 **Avoid nesting Asks.** Multi-step chains written as nested `SelectMany` / `Zip` inside a single Loom are hard to read and fight rzeka's model. Decompose them into separate Looms and Shuttles instead - each step stays readable, owns one responsibility, and causality flows automatically through the river.
-
----
 
 #### Multi-context Response using Scry
 
@@ -403,7 +388,7 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 - Forgetting the request in a manual stamp does not break `Ask` request/response casuality (but it does orphan the response from its triggering request in Eris matter graph view)
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
-
+<br><br>
 ## 🏹 Eris
 
 > 📜 Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten), every matter emission (shaped, received) along with their Circumstances, and every message/exception - all timestamped and serialized.
@@ -486,9 +471,7 @@ rzeka.Whisper("Invalid state reached", RzekaMessageType.Horror, triggeringMatter
 ```
 
 Rzeka itself uses `Whisper` internally for thread violations and stream errors, so they appear in Eris alongside your own messages.
-
----
-
+<br><br>
 ## 🪧 Attributes
 
 ### HasState
@@ -524,7 +507,7 @@ Q += rzeka.Loom<PlayerHealthState, DamageReceived, PlayerHealthState>(
 > 📜🧨 **Event triggers state - not the other way around.** Use `WithLatestFrom` with the event as the source, not `CombineLatest`. With `CombineLatest`, every new state emission re-fires the Loom against the latest event and emits state again - an infinite self-feedback loop. Rzeka's stream overheat detector catches it at runtime, but treat that as a smoke alarm signalling a wrong combinator choice, not as a design.
 
 > 📜🧭 **State matter is single-writer.** Rzeka enforces this at registration: attempting to register a second active writer for a `[HasState]` type throws `InvalidOperationException`. Pluck can still seed an initial value before a long-lived writer exists (its registration is disposed synchronously), but Pluck against a `[HasState]` type while a Loom or Strand already owns it will also throw. Dispose the existing writer first if you need to hand ownership over.
-
+<br><br>
 ## 🧼 Extension Methods
 
 ### Reacting
@@ -588,9 +571,7 @@ rzeka.Pluck(this, myRequest);
 ```
 
 Prefer `Ask` for the standard request/response round-trip - it bundles the Weave + Pluck pair and the `IsRespondingTo` filter for you.
-
----
-
+<br><br>
 ## 🛟 Error Boundary
 
 > 📜 Every publishing spell - Strand, Pluck, Loom, Shuttle - registers your observable behind a per-spell error boundary. `OnError` that reaches rzeka without being handled upstream is caught, whispered to Eris as a Horror message with the spell's title and owner, and the conjurer completes cleanly. The river survives; other sources keep flowing.
@@ -627,9 +608,7 @@ The callback receives the spell that produced the error (`spell.Title`, `spell.W
 The whisper to Eris always runs first, the callback is *additional* behavior, not a replacement.
 
 The boundary applies only to publishing spells. `Weave` is a final terminal subscriber - if your subscribe function throws, that's your own `try`/`catch` responsibility.
-
----
-
+<br><br>
 ## 🖇️ Async Operations
 
 Rzeka is single-threaded, but your game will have async operations - resource loading, network calls, save/load, etc. The pattern for handling these is:
