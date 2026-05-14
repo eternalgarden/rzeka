@@ -7,7 +7,7 @@
 
 rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal history of anything that happens in your system - live, in a browser, while the game runs.
+What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal chain of anything that happens in your system - live, in a browser, while the game runs.
 
 rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](addlink).
 
@@ -57,7 +57,7 @@ The name passed to Create serves currently a purely mythical role, it has no dir
 
 ### Hosting rzeka in Godot
 
-The simplest pattern is a Autoload that owns the river instance and a main-thread scheduler:
+The simplest pattern is a [Autoload](https://docs.godotengine.org/en/latest/tutorials/scripting/singletons_autoload.html) that owns the river instance and a main-thread scheduler:
 ```csharp
 using Godot;
 using Rzeka;
