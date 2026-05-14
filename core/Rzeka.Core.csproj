@@ -4,7 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>EternalGarden.Rzeka</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Maria Aurelia Heine</Authors>
+    <Description>A single-threaded reactive event bus for C# game projects. Built on Rx.NET.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/eternal-garden/rzeka</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Reactive" Version="6.1.0" />
