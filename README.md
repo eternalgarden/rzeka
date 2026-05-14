@@ -88,6 +88,8 @@ Multi-rzeka topologies are considered for a v2 version.
 
 The name passed to Create serves currently a purely mythical role, it has no direct usage in rzeka codebase, but one should have the capacity to name the river that they live along.
 
+Rzeka normally lives for the application's lifetime, so you rarely dispose it. If you do need to do that - tests, hot-reload, multi-scene cleanup - `rzeka.Dispose()` releases Library and Eris cleanly.
+
 ### Hosting rzeka in Godot
 
 The simplest pattern is a [Autoload](https://docs.godotengine.org/en/latest/tutorials/scripting/singletons_autoload.html) that owns the river instance and a main-thread scheduler:
@@ -190,7 +192,9 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 > 📜 Communciation through rzeka is carried through a set of specialised API methods.
 
-All API methods accept a `who` object (the registering owner, used for diagnostics) and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
+All API methods accept a `who` object and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
+
+`who` is the component that owns the subscription. Eris records it on every spell occurrence so the debugger can group spells under their source, and it's what shows up when you're tracing which part of your codebase produced a given matter. Passing `this` from inside a Node or component is the default; for static helpers or singletons, pass a stable object that won't disappear before the subscription does.
 
 A common pattern is to collect them into rzeka's `CollectibleDisposable`:
 
@@ -464,7 +468,7 @@ Eris runs in core and is always active, even in release builds.
 
 Rzeka ships with a browser-based debugger (not included in builds) that connects to your game over WebSocket. It shows matter flow and messages in real time - no in-game UI needed.
 
-> 📜🚧 Live spell status visualisation is planned but not yet implemented in the UI.
+> 📜🚧 Live spell status visualisation - including mana state and lifecycle transitions - is planned but not yet implemented in the UI. The occurrences are still recorded internally; only the in-browser visualisation is pending.
 
 **Setup:**
 
@@ -522,7 +526,7 @@ This means you can register spells in any order without worrying about wiring. A
 
 Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
 
-> 📜🧨 A spell stuck in `NoMana` is the most common rzeka bug shape - usually a typo in a matter type name, a missing Strand registration, or an autoload that initialised after its consumers. If a Weave is silent and you can't tell why, check its mana state in Eris first.
+> 📜🧨 A spell stuck in `NoMana` is a common rzeka bug - usually a missing Strand registration, or an autoload that initialised after its consumers.
 
 ### Whisper
 
