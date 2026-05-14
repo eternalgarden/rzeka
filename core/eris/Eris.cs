@@ -60,6 +60,12 @@ public class Eris : IDisposable
 
     public string Name { get; }
 
+    // Optional user hook invoked after the boundary whispers an unhandled source error.
+    // Set at river creation via Spring.Create(name, onUnhandledSourceError: ...).
+    // If the callback throws, the throw propagates as OnError into the river's pipeline
+    // (Stream<T>'s default observer rethrows on the source thread — i.e. crash loudly).
+    internal Action<ISpell, Exception>? OnUnhandledSourceError { get; set; }
+
     public Eris(string name)
     {
         Name = name;

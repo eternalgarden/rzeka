@@ -28,6 +28,12 @@ internal static class ConjuringErrorBoundary
                     Timestamp = DateTimeOffset.Now,
                 }
             );
+
+            // Optional user hook. Whisper always runs first so visibility is uniform; the
+            // callback is opt-in additional behavior. If it throws, the throw propagates as
+            // OnError back into the pipeline — that's the crash-on-error path.
+            spell.Eris.OnUnhandledSourceError?.Invoke(spell, ex);
+
             return Observable.Empty<T>();
         });
     }

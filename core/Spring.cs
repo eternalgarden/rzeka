@@ -9,9 +9,11 @@ public sealed class Spring
     readonly Subject<SpringRiver> _created = new();
     readonly Subject<SpringRiver> _disposed = new();
 
-    public IRzeka Create(string name)
+    public IRzeka Create(string name, Action<ISpell, Exception>? onUnhandledSourceError = null)
     {
         var river = new SpringRiver(name, this);
+        if (onUnhandledSourceError is not null)
+            river.Eris.OnUnhandledSourceError = onUnhandledSourceError;
         lock (_lock) _instances.Add(river);
         _created.OnNext(river);
         return river;
