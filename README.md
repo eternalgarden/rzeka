@@ -57,27 +57,40 @@ The name passed to Create serves currently a purely mythical role, it has no dir
 
 ### Hosting rzeka in Godot
 
-The simplest pattern is a Autoload that owns the river instance:
+The simplest pattern is a Autoload that owns the river instance and a main-thread scheduler:
 ```csharp
 using Godot;
 using Rzeka;
+using System.Reactive.Concurrency;
+using System.Threading;
 
 public partial class River : Node
 {
     public static IRzeka Rzeka { get; private set; }
+    public static IScheduler MainThread { get; private set; }
 
     public override void _Ready()
     {
+        SynchronizationContext.SetSynchronizationContext(new GodotMainThreadContext());
+        MainThread = new SynchronizationContextScheduler(SynchronizationContext.Current);
+
         Rzeka = new Spring().Create("MyGame");
+    }
+
+    // Posts callbacks to Godot's main thread via CallDeferred - backs the MainThread scheduler above.
+    private sealed class GodotMainThreadContext : SynchronizationContext
+    {
+        public override void Post(SendOrPostCallback d, object state) =>
+            Callable.From(() => d(state)).CallDeferred();
     }
 }
 ```
 
-Nodes access the river via `River.Rzeka`. In larger projects you may want to wire `IRzeka` through a DI container.
+Nodes access the river via `River.Rzeka` and the main-thread scheduler via `River.MainThread`. In larger projects you may want to wire both through a DI container.
 
 All Godot lifecycle callbacks (`_Ready`, `_Process`, `_PhysicsProcess`, etc.) run on the main thread, so Strand, Pluck, Loom, and Weave all work without any extra setup. 
 
-Async operations crossing a thread boundary need manual circumstance handling - see [Async Operations](#async-operations).
+Async operations that return on a background thread need manual circumstance handling *and* must marshal back through `River.MainThread` before their results re-enter the river - see [Async Operations](#async-operations).
 
 For the live debugger during development, see [Eris](#eris).
 
@@ -187,7 +200,9 @@ Q += rzeka.Strand(
 // Expose a timer tick as a recurring event
 Q += rzeka.Strand(
     this,
-    Observable.Interval(TimeSpan.FromSeconds(1)).Select(_ => new GameClockTick()) //TODO is interval running on the main thread?
+    Observable
+        .Interval(TimeSpan.FromSeconds(1))
+        .Select(_ => new GameClockTick()) //TODO is interval running on the main thread?
 );
 ```
 
@@ -207,7 +222,7 @@ Pluck has no automatic upstream tracking - it does not know what caused it. When
 
 ```csharp
 // Inside a Weave or other context where you have the triggering matter:
-rzeka.Pluck(this, new GamePaused().WithCircumstances<GamePaused>(triggeringEvent));
+rzeka.Pluck(this, new GamePaused().WithCircumstances(triggeringEvent));
 ```
 
 ---
@@ -231,6 +246,7 @@ Q += rzeka.Loom<HealthChanged, HealthBarUpdateRequested>(
 
 **Two inputs - combine latest:**
 ```csharp
+//TODO can we simplify this example, explicit types in select make it less readable i think
 // Produce a rendering update whenever position OR animation state changes
 Q += rzeka.Loom<PositionChanged, AnimationStateChanged, RenderUpdateRequested>(
     this,
@@ -270,7 +286,7 @@ Q += rzeka.Weave<PlayerDied>(
 ```csharp
 Q += rzeka.Weave<EquipmentChanged, PlayerStats>(
     this,
-    (equipment, stats) => equipment.WithContext(stats)
+    (equipment, stats) => equipment.WithContext(stats) //todo this is still using old withcontext, replace
         .Subscribe(((EquipmentChanged eq, PlayerStats s) pair) =>
             UpdateEquipmentUI(pair.eq, pair.s))
 );
@@ -326,7 +342,7 @@ Q += rzeka.Shuttle<SaveGameRequest, SaveGameResponse>(
         {
             _saveSystem.SaveAsync(success =>
             {
-                // Async boundary — stamp manually while req is still in scope
+                // Async boundary - stamp manually while req is still in scope
                 observer.OnNext(
                     new SaveGameResponse(req, success)
                         .WithCircumstances<SaveGameResponse>(req));
@@ -369,9 +385,8 @@ Q += rzeka.Loom<LevelCompletedEvent, ResultsScreenRequest>(
 ```csharp
 Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
     this,
-    reqs => reqs
-        // The request remains the trigger, Scry'd matter is read as ambient context
-        .WithLatestFrom(rzeka.Scry<GameState>(), rzeka.Scry<Settings>())
+    // The request remains the trigger, Scry'd matter is read as ambient context
+    reqs => reqs.WithLatestFrom(rzeka.Scry<GameState>(), rzeka.Scry<Settings>())
         .Select(ctx =>
         {
             var (req, state, settings) = ctx;
@@ -405,7 +420,7 @@ Rzeka ships with a browser-based debugger (not included in builds) that connects
 2. In your game initialization:
 
 ```csharp
-var spring = new Spring();
+var spring = new Spring(); // TODO hold on, current Spring class does not have enabledevserver method
 spring.EnableDevServer(); // starts WebSocket on ws://127.0.0.1:9222
 
 IRzeka rzeka = spring.Create("MyGame");
@@ -423,7 +438,7 @@ npm run dev
 
 The debugger auto-connects to the game's WebSocket server. If the game isn't running, it reconnects automatically every 3 seconds. All Rzeka instances created through the factory are picked up automatically.
 
-The `Rzeka.Dev` package is the only part that adds an external dependency (Fleck for WebSocket). Core remains dependency-free beyond `System.Reactive`. Remove the `Rzeka.Dev` reference for release builds — Eris continues recording internally, the WebSocket server simply isn't started.
+The `Rzeka.Dev` package is the only part that adds an external dependency (Fleck for WebSocket). Core remains dependency-free beyond `System.Reactive`. Remove the `Rzeka.Dev` reference for release builds - Eris continues recording internally, the WebSocket server simply isn't started.
 
 ### Running the Demo
 
@@ -437,10 +452,6 @@ Terminal 2 - run the demo (30 seconds)
 - `cd rzeka/tests`
 - `dotnet test --filter "FullyQualifiedName~DebugServerDemo" -- xUnit.MaxParallelThreads=1`
 
-<!-- EDIT: add a screenshot of the Eris UI showing the demo output -->
-
-TODO: at the very end check if demo is working still
-
 ### Lifecycle & Mana
 
 todo: add mana section
@@ -450,9 +461,9 @@ todo: add mana section
 `IRzeka` exposes a `Whisper` method for emitting structured log messages into Eris from your game code. All whispers appear in the Eris UI alongside matter flow and spell lifecycle events.
 
 Three severity levels are available via `RzekaMessageType`:
-- `Hint` — informational
-- `Hunch` — warning
-- `Horror` — error
+- `Hint` - informational
+- `Hunch` - warning
+- `Horror` - error
 
 ```csharp
 // Simple info log (defaults to Hint)
@@ -461,7 +472,7 @@ rzeka.Whisper("Player respawned");
 // With explicit severity
 rzeka.Whisper("Save slot full", RzekaMessageType.Hunch);
 
-// Exception — automatically Horror severity
+// Exception - automatically Horror severity
 rzeka.Whisper(exception);
 
 // Exception with a message
@@ -476,9 +487,7 @@ rzeka.Whisper("Invalid state reached", RzekaMessageType.Horror, triggeringMatter
 
 Rzeka itself uses `Whisper` internally for thread violations and stream errors, so they appear in Eris alongside your own messages.
 
-### WHDIG
-
-<!-- EDIT: expand on WHDIG format and how to load dumps when that's finalized -->
+---
 
 ## 🪧 Attributes
 
@@ -497,19 +506,38 @@ class PlayerInputState : Matter
 }
 ```
 
+#### Evolving State
+
+> 📜 State evolves via a Loom that reads the current state, listens to an event that influences it, and emits the new state back into the same stream.
+
+The signature is a reducer: `(state, event) → state`.
+
+```csharp
+Q += rzeka.Loom<PlayerHealthState, DamageReceived, PlayerHealthState>(
+    this,
+    (health, damage) => damage.WithLatestFrom(health)
+        .Select(((DamageReceived d, PlayerHealthState s) pair) =>
+            new PlayerHealthState(pair.s.Hp - pair.d.Amount))
+);
+```
+
+> 📜🧨 **Event triggers state - not the other way around.** Use `WithLatestFrom` with the event as the source, not `CombineLatest`. With `CombineLatest`, every new state emission re-fires the Loom against the latest event and emits state again - an infinite self-feedback loop. Rzeka's stream overheat detector catches it at runtime, but treat that as a smoke alarm signalling a wrong combinator choice, not as a design.
+
+> 📜🧭 **State matter is single-writer.** Rzeka enforces this at registration: attempting to register a second active writer for a `[HasState]` type throws `InvalidOperationException`. Pluck can still seed an initial value before a long-lived writer exists (its registration is disposed synchronously), but Pluck against a `[HasState]` type while a Loom or Strand already owns it will also throw. Dispose the existing writer first if you need to hand ownership over.
+
 ## 🧼 Extension Methods
 
 ### Reacting
 
-`.Reacting()` is the explicit operator for intentional side effects inside Loom chains. It reads as what it is — "react to this matter" — rather than abusing Rx's `.Do()` (a debug tap) or hiding logic inside `.Select()`.
+`.Reacting()` is the explicit operator for intentional side effects inside Loom chains. It reads as what it is - "react to this matter" - rather than abusing Rx's `.Do()` (a debug tap) or hiding logic inside `.Select()`.
 
 Two overloads:
 
-- `.Reacting(Action<T>)` — run a side effect, pass matter through unchanged. Sugar over `.Do()`.
-- `.Reacting(Func<T, TOut>)` — run a side effect and produce output matter in one step. Sugar over `.Select()`.
+- `.Reacting(Action<T>)` - run a side effect, pass matter through unchanged. Sugar over `.Do()`.
+- `.Reacting(Func<T, TOut>)` - run a side effect and produce output matter in one step. Sugar over `.Select()`.
 
 ```csharp
-// Side effect only — matter flows on unchanged
+// Side effect only - matter flows on unchanged
 Q += rzeka.Loom<EnemyDefeated, XpGranted>(
     this,
     events => events
@@ -529,13 +557,9 @@ Q += rzeka.Loom<DamageReceived, ScreenShakeRequested>(
         })
 );
 ```
-
-
----
-
 ### WithLatestFrom / CombineLatest
 
-Tuple-returning convenience overloads defined in `ScrollExtensions`, named after the standard Rx operators they wrap. Unlike the standard Rx versions, these take no result selector and always return a flat tuple — so if you see `.CombineLatest(other)` returning `(T1, T2)`, it's these overloads, not the standard Rx ones.
+Tuple-returning convenience overloads defined in `ScrollExtensions`, named after the standard Rx operators they wrap. Unlike the standard Rx versions, these take no result selector and always return a flat tuple - so if you see `.CombineLatest(other)` returning `(T1, T2)`, it's these overloads, not the standard Rx ones.
 
 ```csharp
 // WithLatestFrom: source is the trigger, other is "the current value of X"
@@ -548,24 +572,9 @@ streamA.CombineLatest(streamB) // → IObservable<(T1, T2)>
 streamA.CombineLatest(streamB, streamC) // → IObservable<(T1, T2, T3)>
 ```
 
----
-
-### Crossing
-
-Strips circumstances from matter as it passes through a chain — useful when forwarding events across system boundaries where the original context is not relevant.
-
-```csharp
-Q += rzeka.Loom<ExternalInputEvent, InputCommand>(
-    this,
-    events => events.Crossing().Select(e => new InputCommand(e.Key))
-);
-```
-
----
-
 ### IsRespondingTo
 
-Check whether a response corresponds to a specific request — `Ask` uses this predicate internally to filter the response stream. Reach for it directly when you need a different lifecycle than Ask provides (e.g. observing every response to a long-lived request, or correlating inside a Weave you already own):
+Check whether a response corresponds to a specific request - `Ask` uses this internally to filter the response stream. Use it directly when you need a different lifecycle than Ask provides (e.g. observing every response to a long-lived request, or correlating inside a Weave you already own):
 
 ```csharp
 var myRequest = new InventoryRequest();
@@ -578,21 +587,60 @@ Q += rzeka.Weave<InventoryResponse>(
 rzeka.Pluck(this, myRequest);
 ```
 
-Prefer `Ask` for the standard request/response round-trip — it bundles the Weave + Pluck pair and the `IsRespondingTo` filter for you.
+Prefer `Ask` for the standard request/response round-trip - it bundles the Weave + Pluck pair and the `IsRespondingTo` filter for you.
+
+---
+
+## 🛟 Error Boundary
+
+> 📜 Every publishing spell - Strand, Pluck, Loom, Shuttle - registers your observable behind a per-spell error boundary. `OnError` that reaches rzeka without being handled upstream is caught, whispered to Eris as a Horror message with the spell's title and owner, and the conjurer completes cleanly. The river survives; other sources keep flowing.
+
+User-side error handling runs first - `.Catch`, `.Retry`, `.OnErrorResumeNext` work as usual. The boundary only sees errors that fall through them:
+
+```csharp
+// User handles upstream - boundary never sees the error
+Q += rzeka.Strand(
+    this,
+    flakySource
+        .Retry(3)
+        .Catch<Reading, TimeoutException>(_ => Observable.Empty<Reading>())
+);
+
+// User doesn't handle - boundary catches, whispers to Eris with attribution,
+// the river keeps running
+Q += rzeka.Strand(this, flakySource);
+```
+
+### Crash-on-error (opt-in)
+
+The boundary makes errors *visible* in Eris, not fatal. If you want unhandled source errors to crash the process - typical for dev builds - supply a callback when you create the river:
+
+```csharp
+IRzeka rzeka = new Spring().Create(
+    "Nile",
+    onUnhandledSourceError: (spell, ex) => throw ex
+);
+```
+
+The callback receives the spell that produced the error (`spell.Title`, `spell.Who`, `spell.SpellSchool`, `spell.Guid`) and the exception. You can filter - e.g. crash only on `Shuttling` spells, log others. Throwing from the callback propagates the exception as `OnError` back into the river's source observer, which rethrows on the source thread.
+
+The whisper to Eris always runs first, the callback is *additional* behavior, not a replacement.
+
+The boundary applies only to publishing spells. `Weave` is a final terminal subscriber - if your subscribe function throws, that's your own `try`/`catch` responsibility.
 
 ---
 
 ## 🖇️ Async Operations
 
-Rzeka is single-threaded, but your game will have async operations — resource loading, network calls, save/load, etc. The pattern for handling these is:
+Rzeka is single-threaded, but your game will have async operations - resource loading, network calls, save/load, etc. The pattern for handling these is:
 
 1. Wrap the async API in `Observable.Create` to bring it into Rx
 2. Inside that wrapper, **manually attach circumstances** with `.WithCircumstances()` while you still have the triggering matter in scope
-3. The result re-enters the synchronous Rx chain as a normal emission
+3. **Return to the main thread** with `.ObserveOn(mainThreadScheduler)` before the result re-enters the rzeka chain
 
-Rzeka's automatic circumstance tracking cannot follow across an async boundary. Inside `Observable.Create`, the async callback fires later — potentially after other emissions have passed through the chain. By attaching circumstances manually at the point where you still hold the original trigger, you preserve the causal link.
+Rzeka's automatic circumstance tracking cannot follow across an async boundary. Inside `Observable.Create`, the async callback fires later - potentially after other emissions have passed through the chain. By attaching circumstances manually at the point where you still hold the original trigger, you preserve the causal link.
 
-<!-- EDIT: the example below is adapted from your Unity scene loader (SceneLoaderObservable.cs) — rewrite it to use Godot equivalents when the port is ready, but the pattern is identical -->
+The same boundary also breaks rzeka's single-thread requirement. The async callback fires on a background thread, so emitting from inside it sends downstream spells off-thread and trips Eris's off-thread guard. `.ObserveOn(scheduler)` shifts emissions back to the main thread before they re-enter the river - see [Hosting rzeka in Godot](#hosting-rzeka-in-godot) for where the scheduler comes from.
 
 ```csharp
 // Wrap an async engine operation as an Observable
@@ -600,7 +648,8 @@ internal static class ResourceLoaderObservable
 {
     public static IObservable<LoadSceneResponse> ObservableAsyncSceneLoad(
         this IObservable<LoadSceneRequest> source,
-        SceneArchive sceneArchive)
+        SceneArchive sceneArchive,
+        IScheduler mainThread)
     {
         return Observable.Create<LoadSceneResponse>(observer =>
         {
@@ -609,33 +658,36 @@ internal static class ResourceLoaderObservable
                 SceneDescriptor descriptor = sceneArchive
                     .GetSceneDescriptor(request.SceneType, request.SceneVersion);
 
-                // Async boundary — this callback fires later
+                // Async boundary - this callback fires later, on whatever
+                // thread the engine's loader returns on
                 BeginAsyncSceneLoad(descriptor, handle =>
                 {
                     LoadSceneResponse response = handle.Succeeded
                         ? new LoadSceneResponse(request, handle.Result)
                         : new LoadSceneResponse(request);
 
-                    // Manually attach circumstances — we still have `request` in scope
+                    // Manually attach circumstances - we still have `request` in scope
                     response = response.WithCircumstances<LoadSceneResponse>(request);
 
                     observer.OnNext(response);
                 });
             });
-        });
+        })
+        // Shift emissions back to the main thread before re-entering the river
+        .ObserveOn(mainThread);
     }
 }
 ```
 
-Then use it inside a Loom normally:
+Then use it inside a Loom normally, passing in the main-thread scheduler your hosting layer provides:
 
 ```csharp
 Q += rzeka.Loom<LoadSceneRequest, LoadSceneResponse>(
     this,
-    requests => requests.ObservableAsyncSceneLoad(sceneArchive)
+    requests => requests.ObservableAsyncSceneLoad(sceneArchive, River.MainThread)
 );
 ```
 
 Because the output matter already has circumstances attached, Loom's automatic tracking steps aside and preserves them.
 
-> **Important:** Only use this pattern when crossing a genuine async boundary. For synchronous Loom chains, let Rzeka handle circumstances automatically — don't attach them manually "just in case", as that silently disables the automatic tracking for that emission.
+> 📜🧨 **Important:** Only use this pattern when crossing a genuine async boundary. For synchronous Loom chains, let Rzeka handle circumstances automatically - don't attach them manually "just in case", as that silently disables the automatic tracking for that emission.

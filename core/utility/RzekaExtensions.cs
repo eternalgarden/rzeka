@@ -63,9 +63,6 @@ public static class RzekaExtensions
         return false;
     }
 
-    public static IObservable<T> Crossing<T>(this IObservable<T> source)
-        where T : IMatter => source.Select(m => m.WithCircumstances<T>());
-
     /// <summary>
     /// Dispatch a request and observe correlated responses.
     /// Subscribes a Weave to the response stream BEFORE plucking the request, so the registration
