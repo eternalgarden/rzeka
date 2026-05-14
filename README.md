@@ -1,6 +1,8 @@
 # rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
+[![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/eternalgarden/rzeka/branch/main/graph/badge.svg)](https://codecov.io/gh/eternalgarden/rzeka)
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 
 **A reactive event bus for C# that tracks causality.**
@@ -9,28 +11,29 @@ rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Comp
 
 What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal chain of anything that happens in your system - live, in a browser, while the game runs.
 
-rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](addlink).
+rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
 <br><br>
 ## 🗺️ Contents
 
-- [🪞 Grimoire](#-grimoire)
-- [💾 Installation](#-installation)
-- [🌱 Getting Started](#-getting-started)
-- [🪽 Matter - Events](#-matter---events)
-- [🧬 API](#-api)
-  - [Strand](#-strand---publisher)
-  - [Pluck](#-pluck---fire-once-publisher)
-  - [Loom](#-loom---transform)
-  - [Weave](#-weave---subscriber)
-  - [Scry](#-scry---raw-observable)
-  - [Shuttle](#-shuttle---async-requestresponse)
-- [🏹 Eris](#-eris)
-- [🪧 Attributes](#-attributes)
-- [🧼 Extension Methods](#-extension-methods)
-- [🛟 Error Boundary](#-error-boundary)
-- [🖇️ Async Operations](#-async-operations)
+- [🪞 Grimoire](#grimoire)
+- [💾 Installation](#installation)
+- [🌱 Getting Started](#getting-started)
+- [🪽 Matter - Events](#matter---events)
+- [🧬 API](#api)
+  - [Strand](#strand---publisher)
+  - [Pluck](#pluck---fire-once-publisher)
+  - [Loom](#loom---transform)
+  - [Weave](#weave---subscriber)
+  - [Scry](#scry---raw-observable)
+  - [Shuttle](#shuttle---async-requestresponse)
+- [🏹 Eris](#eris)
+- [🪧 Attributes](#attributes)
+- [🧼 Extension Methods](#extension-methods)
+- [🛟 Error Boundary](#error-boundary)
+- [🖇️ Async Operations](#async-operations)
+
 <br><br>
 ## 🪞 Grimoire
 
@@ -68,7 +71,7 @@ Create a single river at startup and share its IRzeka reference with the systems
 IRzeka rzeka = new Spring().Create("Nile");
 ```
 
-> 📜💎 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#Circumstances).
+> 📜💎 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#circumstances).
 
 Multi-rzeka topologies are considered for a v2 version. 
 
@@ -119,7 +122,7 @@ Once you summoned your rzeka, you are ready to shape Matter.
 
 > 📜 Matter is the base carrier of event data. Every matter has a `Guid` (its unique identity) and a list of `Circumstances` (a collection of matter that led to the emission of this one). 
 
-Guid and Circumstances attachment is handled by rzeka automatically so it can be later observed through the provided [Eris debugger tool](#Eris).
+Guid and Circumstances attachment is handled by rzeka automatically so it can be later observed through the provided [Eris debugger tool](#eris).
 
 Extend `Matter` to define your own event types:
 
@@ -145,7 +148,7 @@ class EnemyDefeated : Matter
 
 For example, a `DamageDealt` event could carry the `AttackEvent` that triggered it as a circumstance.
 
-This allows you to track the causality chains through [Eris, rzeka's debugger](#Eris) or to check in your game logic if a given matter is caused by another (`damage_dealt.IsCircumstancedBy(wizard_fireball_attack)`). 
+This allows you to track the causality chains through [Eris, rzeka's debugger](#eris) or to check in your game logic if a given matter is caused by another (`damage_dealt.IsCircumstancedBy(wizard_fireball_attack)`). 
 
 ```csharp
 var attack = new AttackEvent(attacker: "dragon");
@@ -163,7 +166,7 @@ If your output matter already has circumstances attached (via `.WithCircumstance
 
 **Where automatic tracking works:**
 - Synchronous Loom chains - the default, no action needed
-- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context matter), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---requestresponse).
+- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context matter), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---async-requestresponse).
 
 **Where you must attach circumstances manually:**
 - Inside `Pluck` and `Ask` calls - pre-stamp the matter via `.WithCircumstances<T>(trigger)` when you have the triggering matter in scope
