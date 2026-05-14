@@ -4,7 +4,20 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <PackageId>EternalGarden.Rzeka.Dev</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Maria Aurelia Heine</Authors>
+    <Description>Eris WebSocket debugger server for rzeka. Streams spell, matter, and message occurrences to the Eris browser UI for live causality debugging. Add to dev builds only.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/eternalgarden/rzeka</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Fleck" Version="1.2.0" />

@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Extract version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore --configuration Release /p:Version=${{ steps.version.outputs.version }}
+
+      - name: Test
+        run: dotnet test --no-build --configuration Release
+
+      - name: Pack core
+        run: dotnet pack core/Rzeka.Core.csproj --no-build --configuration Release /p:Version=${{ steps.version.outputs.version }} --output ./artifacts
+
+      - name: Pack dev
+        run: dotnet pack dev/Rzeka.Dev.csproj --no-build --configuration Release /p:Version=${{ steps.version.outputs.version }} --output ./artifacts
+
+      - name: Push core to NuGet
+        run: |
+          dotnet nuget push ./artifacts/EternalGarden.Rzeka.${{ steps.version.outputs.version }}.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+
+      - name: Push dev to NuGet
+        run: |
+          dotnet nuget push ./artifacts/EternalGarden.Rzeka.Dev.${{ steps.version.outputs.version }}.nupkg \
+            --api-key ${{ secrets.NUGET_API_KEY }} \
+            --source https://api.nuget.org/v3/index.json \
+            --skip-duplicate
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            ./artifacts/*.nupkg \
+            --title "$GITHUB_REF_NAME" \
+            --generate-notes

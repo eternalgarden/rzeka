@@ -55,12 +55,21 @@ Rzeka targets `net8.0` and depends only on `System.Reactive`.
 dotnet add package EternalGarden.Rzeka
 ```
 
+### Eris debugger (optional)
+
+For the browser-based [Eris](#eris) debugger, also install the dev server package - add it to dev builds only so the WebSocket server (Fleck) doesn't ship in release:
+
+```python
+dotnet add package EternalGarden.Rzeka.Dev
+```
+
 ### Godot 4
 
-Godot does not resolve transitive NuGet dependencies, so add System.Reactive explicitly:
+Godot does not resolve transitive NuGet dependencies, so add `System.Reactive` explicitly. If you also installed `EternalGarden.Rzeka.Dev`, add `Fleck` too.
 
 ```python
 dotnet add package System.Reactive
+dotnet add package Fleck  # only if using EternalGarden.Rzeka.Dev
 ```
 <br><br>
 ## 🌱 Getting Started
@@ -423,11 +432,11 @@ Rzeka ships with a browser-based debugger (not included in builds) that connects
 
 **Setup:**
 
-1. Add a reference to `Rzeka.Dev` in your game project (dev builds only) TODO: show people with no big experience with net how to do it in their csproj 
-2. In your game initialization:
+1. Install the `EternalGarden.Rzeka.Dev` package in your game project (dev builds only - see [Installation](#installation)).
+2. In your game initialization, call `EnableDevServer` on the `Spring` before creating the river:
 
 ```csharp
-var spring = new Spring(); // TODO hold on, current Spring class does not have enabledevserver method
+var spring = new Spring();
 spring.EnableDevServer(); // starts WebSocket on ws://127.0.0.1:9222
 
 IRzeka rzeka = spring.Create("MyGame");

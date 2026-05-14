@@ -10,7 +10,7 @@
     <Authors>Maria Aurelia Heine</Authors>
     <Description>A single-threaded reactive event bus for C# game projects. Built on Rx.NET.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryUrl>https://github.com/eternal-garden/rzeka</RepositoryUrl>
+    <RepositoryUrl>https://github.com/eternalgarden/rzeka</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
