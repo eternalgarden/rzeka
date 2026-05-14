@@ -4,6 +4,8 @@
 [![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/eternalgarden/rzeka/branch/main/graph/badge.svg)](https://codecov.io/gh/eternalgarden/rzeka)
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
+<!-- [![Downloads](https://img.shields.io/nuget/dt/EternalGarden.Rzeka?label=downloads)](https://www.nuget.org/packages/EternalGarden.Rzeka) -->
+
 
 **A reactive event bus for C# that tracks causality.**
 
@@ -232,7 +234,8 @@ Q += rzeka.Strand(
     this,
     Observable
         .Interval(TimeSpan.FromSeconds(1))
-        .Select(_ => new GameClockTick()) //TODO is interval running on the main thread?
+        .ObserveOn(_mainThreadScheduler) // Observable.Interval defaults to Scheduler.Default (thread pool)
+        .Select(_ => new GameClockTick())
 );
 ```
 
@@ -272,13 +275,11 @@ Q += rzeka.Loom<HealthChanged, HealthBarUpdateRequested>(
 
 **Two inputs - combine latest:**
 ```csharp
-//TODO can we simplify this example, explicit types in select make it less readable i think
 // Produce a rendering update whenever position OR animation state changes
 Q += rzeka.Loom<PositionChanged, AnimationStateChanged, RenderUpdateRequested>(
     this,
-    (positions, animations) => positions.CombineWith(animations) // or .WithLatestFrom(...), see extension methods
-        .Select(((PositionChanged pos, AnimationStateChanged anim) pair) =>
-            new RenderUpdateRequested(pair.pos.Position, pair.anim.Clip))
+    (positions, animations) => positions.CombineLatest(animations)
+        .Select(t => new RenderUpdateRequested(t.Item1.Position, t.Item2.Clip))
 );
 ```
 **Three inputs:**
@@ -310,26 +311,55 @@ Q += rzeka.Weave<PlayerDied>(
 ```csharp
 Q += rzeka.Weave<EquipmentChanged, PlayerStats>(
     this,
-    (equipment, stats) => equipment.WithContext(stats) //todo this is still using old withcontext, replace
-        .Subscribe(((EquipmentChanged eq, PlayerStats s) pair) =>
-            UpdateEquipmentUI(pair.eq, pair.s))
+    (equipment, stats) => equipment.WithLatestFrom(stats)
+        .Subscribe(t => UpdateEquipmentUI(t.Item1, t.Item2))
 );
 ```
 
 **Raw observer:**
 ```csharp
 Q += rzeka.Weave<GameClockTick>(this, _clockDisplayObserver);
+```
 
-TODO: add a potential pseudocode for how such observer is implemented
+`_clockDisplayObserver` is anything that implements `IObserver<GameClockTick>`:
+
+```csharp
+class ClockDisplayObserver : IObserver<GameClockTick>
+{
+    readonly ClockDisplay _display;
+    public ClockDisplayObserver(ClockDisplay display) => _display = display;
+
+    public void OnNext(GameClockTick tick) => _display.Update(tick);
+    public void OnError(Exception _) { }
+    public void OnCompleted() { }
+}
 ```
 
 ### 🧬 Scry - raw observable
 
-> 📜 TODO: Add Scry notes, they were incorrectly desciribng multi-rzeka situation which we suspended for v2.
+> 📜 Returns the raw `IObservable<T>` for a matter type - read-only access to the underlying stream, without registering a spell or holding ownership.
+
+Unlike the other API methods, Scry takes no `who` and returns no `IDisposable`. It is anonymous to Eris and doesn't do automatic circumstance tracking. Think of it a tool for reading additional matter from inside another spell.
 
 ```csharp
 IObservable<PlayerDied> deaths = rzeka.Scry<PlayerDied>();
 ```
+
+**Main use - reading ambient context inside a Shuttle responder.** Shuttle has only one input slot (the request), so any state the handler needs to consult - game state, settings, world snapshot - has to come in via Scry:
+
+```csharp
+Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
+    this,
+    reqs => reqs.WithLatestFrom(rzeka.Scry<GameState>(), rzeka.Scry<Settings>())
+        .Select(ctx => /* build response from request + ambient context */)
+);
+```
+
+See the full pattern at [Multi-context Response using Scry](#multi-context-response-using-scry).
+
+Scry also works inside Loom and Weave when you've exhausted their 3-input overloads and need a fourth stream, but that's rare in practice - Shuttle is the main raison d'être of Scry.
+
+> 📜🧨 Subscribing directly to a Scry'd stream is allowed but bypasses rzeka's lifecycle: the subscription is anonymous to Eris and you own its `IDisposable`. For anything that conceptually belongs to a `who`, prefer `Weave` so Eris can attribute and clean up properly.
 
 ### 🧬 Shuttle - Async Request/Response
 
@@ -424,11 +454,17 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 
 > 📜 Eris is rzeka's internal debugger realm. It records every spell lifecycle event (created, has mana, no mana, forgotten), every matter emission (shaped, received) along with their Circumstances, and every message/exception - all timestamped and serialized.
 
-Eris runs in core and is always active, even in release builds, so that diagnostic data is available for crash dumps ([WHDIG files](localing.com)).
+Eris runs in core and is always active, even in release builds.
+
+<!-- TODO: re-enable once WHDIG crash-dump format is properly implemented.
+"...so that diagnostic data is available for crash dumps ([WHDIG files](url))." -->
+
 
 ### Live Debugger
 
-Rzeka ships with a browser-based debugger (not included in builds) that connects to your game over WebSocket. It shows matter flow, messages and live spell status (TODO, not impelemnted yet.) in real time - no in-game UI needed.
+Rzeka ships with a browser-based debugger (not included in builds) that connects to your game over WebSocket. It shows matter flow and messages in real time - no in-game UI needed.
+
+> 📜🚧 Live spell status visualisation is planned but not yet implemented in the UI.
 
 **Setup:**
 
@@ -470,7 +506,23 @@ Terminal 2 - run the demo (30 seconds)
 
 ### Lifecycle & Mana
 
-todo: add mana section
+> 📜 Mana is a spell's dependency satisfaction status. A spell *has mana* when every matter type it consumes has an active publisher in the river. It *loses mana* when one of its required types goes dark - no Strand, no Pluck source, no upstream Loom producing it.
+
+This means you can register spells in any order without worrying about wiring. A Loom that consumes `HealthChanged` will sit dormant in `NoMana` until something starts publishing `HealthChanged`, then transitions to `HasMana` and begins processing. If the publisher later disposes, the Loom transitions back to `NoMana` and waits - it does *not* error or vanish, just stops emitting until its ingredients reappear.
+
+**Spell lifecycle states** (emitted as `SpellOccurence`s on Eris's diagnostic stream):
+
+| State | Meaning |
+|-------|---------|
+| `Created` | Spell registered with the river. Required ingredients not yet checked. |
+| `HasMana` | All required matter types have active publishers - the spell is live. |
+| `NoMana` | At least one required matter type has no publisher - the spell is dormant but still registered. |
+| `Wispd` | The spell's `Cast()` raised - error state in Eris (exception details not yet attached). |
+| `Forgotten` | The spell's `IDisposable` was disposed - the spell is gone from the river. |
+
+Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
+
+> 📜🧨 A spell stuck in `NoMana` is the most common rzeka bug shape - usually a typo in a matter type name, a missing Strand registration, or an autoload that initialised after its consumers. If a Weave is silent and you can't tell why, check its mana state in Eris first.
 
 ### Whisper
 
