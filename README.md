@@ -30,16 +30,18 @@ rzeka is single-threaded by design. This is the constraint that makes everything
   - [Weave](#weave---subscriber)
   - [Scry](#scry---raw-observable)
   - [Shuttle](#shuttle---async-requestresponse)
+  - [Stamping rules](#stamping-rules)
+- [⚗️ Mana & Lifecycle](#mana--lifecycle)
 - [🏹 Eris](#eris)
 - [🪧 Attributes](#attributes)
-- [🧼 Extension Methods](#extension-methods)
+- [🧩 Extension Methods](#extension-methods)
 - [🛟 Error Boundary](#error-boundary)
 - [🖇️ Async Operations](#async-operations)
 
 <br><br>
 ## 🪞 Grimoire
 
-rzeka uses river, textile and magic themed naming system:
+rzeka uses a river, textile and magic themed naming system:
 - events are **Matter**
 - transformations are **Spells**
 - a Spell's required Matter types fulfillment status is called **Mana**
@@ -171,22 +173,7 @@ var damage = new DamageDealt(amount: 40).WithCircumstances<DamageDealt>(attack);
 bool causedByDragon = damage.IsCircumstancedBy(attack); // true
 ```
 
-#### Automatic vs. Manual Circumstances
-
-> 📜 Rzeka tracks circumstance attachment automatically inside **Loom** - when your spell produces output matter, the input matter that triggered it is attached as a circumstance. You don't need to do anything for this to work.
-
-If your output matter already has circumstances attached (via `.WithCircumstances()`), Rzeka will leave them alone and skip the automatic tracking. This means `.WithCircumstances()` inside a Loom lambda is an **active decision to override the default tracking**.
-
-**Where automatic tracking works:**
-- Synchronous Loom chains - the default, no action needed
-- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context matter), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---async-requestresponse).
-
-**Where you must attach circumstances manually:**
-- Inside `Pluck` and `Ask` calls - pre-stamp the matter via `.WithCircumstances<T>(trigger)` when you have the triggering matter in scope
-- Inside async boundaries within Loom (see [Async Operations](#async-operations) below)
-
-**Where circumstances are not touched:**
-- `Strand` - it is used for root matter emissions (eg. caused by user input)
+Rzeka attaches circumstances automatically inside Loom and Shuttle, but requires manual stamping inside Pluck, Ask, and async boundaries. See [Stamping rules](#stamping-rules) for the full reference.
 <br><br>
 ## 🧬 API
 
@@ -266,7 +253,7 @@ rzeka.Pluck(this, new GamePaused().WithCircumstances(triggeringEvent));
 
 Use it for mapping, combining, or reacting to matter. Intentional side effects belong inside `.Reacting()` (see [Reacting](#reacting)), not bare `.Do()` or `.Select(...)` with imperative bodies.
 
-Loom automatically attaches the triggering input matter as a circumstance on the output. You do not need to call `.WithCircumstances()` manually - and if you do, it will override the automatic tracking (see [Automatic vs Manual Circumstances](#automatic-vs-manual-circumstances)).
+Loom automatically attaches the triggering input matter as a circumstance on the output. You do not need to call `.WithCircumstances()` manually - and if you do, it will override the automatic tracking (see [Stamping rules](#stamping-rules)).
 
 **Single input:**
 ```csharp
@@ -453,6 +440,43 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 - Forgetting the request in a manual stamp does not break `Ask` request/response casuality (but it does orphan the response from its triggering request in Eris matter graph view)
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
+
+### Stamping rules
+
+> 📜 Quick reference for when rzeka attaches circumstances automatically vs when you must attach them yourself.
+
+**Where automatic tracking works:**
+- Synchronous Loom chains - the default, no action needed.
+- `Shuttle` responses - if the responder does not stamp manually, Shuttle attaches the triggering request as the circumstance for you. If the responder *does* stamp manually (e.g. to thread Scry'd context matter), Shuttle leaves your stamp alone - see the [Shuttle stamping rule](#shuttle---async-requestresponse).
+
+**Where you must attach circumstances manually:**
+- Inside `Pluck` and `Ask` calls - pre-stamp the matter via `.WithCircumstances<T>(trigger)` when you have the triggering matter in scope.
+- Inside async boundaries within Loom - see [Async Operations](#async-operations).
+
+**Where circumstances are not touched:**
+- `Strand` - it is used for root matter emissions (e.g. caused by user input).
+
+Manual stamping inside a Loom lambda (via `.WithCircumstances()`) is an **active decision to override the default tracking** - rzeka detects pre-attached circumstances and skips its automatic step.
+<br><br>
+## ⚗️ Mana & Lifecycle
+
+> 📜 Mana is a spell's dependency satisfaction status. A spell *has mana* when every matter type it consumes has an active publisher in the river. It *loses mana* when one of its required types goes dark - no Strand, no Pluck source, no upstream Loom producing it.
+
+This means you can register spells in any order without worrying about wiring. A Loom that consumes `HealthChanged` will sit dormant in `NoMana` until something starts publishing `HealthChanged`, then transitions to `HasMana` and begins processing. If the publisher later disposes, the Loom transitions back to `NoMana` and waits - it does *not* error or vanish, just stops emitting until its ingredients reappear.
+
+**Spell lifecycle states** (emitted as `SpellOccurence`s on Eris's diagnostic stream):
+
+| State | Meaning |
+|-------|---------|
+| `Created` | Spell registered with the river. Required ingredients not yet checked. |
+| `HasMana` | All required matter types have active publishers - the spell is live. |
+| `NoMana` | At least one required matter type has no publisher - the spell is dormant but still registered. |
+| `Wispd` | The spell's `Cast()` raised - error state in Eris (exception details not yet attached). |
+| `Forgotten` | The spell's `IDisposable` was disposed - the spell is gone from the river. |
+
+Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
+
+> 📜🧨 A spell stuck in `NoMana` is a common rzeka bug - usually a missing Strand registration, or an autoload that initialised after its consumers.
 <br><br>
 ## 🏹 Eris
 
@@ -507,26 +531,6 @@ Terminal 1 - start the UI
 Terminal 2 - run the demo (30 seconds)
 - `cd rzeka/tests`
 - `dotnet test --filter "FullyQualifiedName~DebugServerDemo" -- xUnit.MaxParallelThreads=1`
-
-### Lifecycle & Mana
-
-> 📜 Mana is a spell's dependency satisfaction status. A spell *has mana* when every matter type it consumes has an active publisher in the river. It *loses mana* when one of its required types goes dark - no Strand, no Pluck source, no upstream Loom producing it.
-
-This means you can register spells in any order without worrying about wiring. A Loom that consumes `HealthChanged` will sit dormant in `NoMana` until something starts publishing `HealthChanged`, then transitions to `HasMana` and begins processing. If the publisher later disposes, the Loom transitions back to `NoMana` and waits - it does *not* error or vanish, just stops emitting until its ingredients reappear.
-
-**Spell lifecycle states** (emitted as `SpellOccurence`s on Eris's diagnostic stream):
-
-| State | Meaning |
-|-------|---------|
-| `Created` | Spell registered with the river. Required ingredients not yet checked. |
-| `HasMana` | All required matter types have active publishers - the spell is live. |
-| `NoMana` | At least one required matter type has no publisher - the spell is dormant but still registered. |
-| `Wispd` | The spell's `Cast()` raised - error state in Eris (exception details not yet attached). |
-| `Forgotten` | The spell's `IDisposable` was disposed - the spell is gone from the river. |
-
-Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
-
-> 📜🧨 A spell stuck in `NoMana` is a common rzeka bug - usually a missing Strand registration, or an autoload that initialised after its consumers.
 
 ### Whisper
 
@@ -595,7 +599,7 @@ Q += rzeka.Loom<PlayerHealthState, DamageReceived, PlayerHealthState>(
 
 > 📜🧭 **State matter is single-writer.** Rzeka enforces this at registration: attempting to register a second active writer for a `[HasState]` type throws `InvalidOperationException`. Pluck can still seed an initial value before a long-lived writer exists (its registration is disposed synchronously), but Pluck against a `[HasState]` type while a Loom or Strand already owns it will also throw. Dispose the existing writer first if you need to hand ownership over.
 <br><br>
-## 🧼 Extension Methods
+## 🧩 Extension Methods
 
 ### Reacting
 
