@@ -73,10 +73,14 @@ const styles = css`
         font-size: 0.7rem;
     }
 
+    /* margin-left matches .children so the details border-left is a
+       continuous extension of the children indentation line (both at
+       0.5rem under the toggle). padding-left then pushes the actual
+       content inward for readability. */
     .details {
-        margin-left: 1.6rem;
-        padding: 0.3rem 0.6rem;
-        border-left: 1px dashed #777;
+        margin-left: 0.5rem;
+        padding: 0.3rem 0.6rem 0.3rem 1.1rem;
+        border-left: 1px dashed #444;
         background-color: #00000033;
         color: aliceblue;
     }
@@ -95,7 +99,7 @@ const styles = css`
 
     .details ul {
         list-style-type: square;
-        color: #ffe300;
+        color: #b5d4c8;
         padding-inline-start: 1.2rem;
         margin: 0.2rem 0;
     }
@@ -112,10 +116,15 @@ const styles = css`
         color: #ff4040;
     }
 
+    /* The border-left lives at margin-left from the parent's left edge.
+       Toggle button is 1rem wide and the +/− character is centered, so
+       centering the line at 0.5rem makes it appear directly under the
+       toggle. padding-left then pushes child content to the same column
+       as the parent's type name (toggle 1rem + row-gap 0.4rem = 1.4rem). */
     .children {
-        margin-left: 1.2rem;
+        margin-left: 0.5rem;
         border-left: 1px dashed #444;
-        padding-left: 0.6rem;
+        padding-left: 0.9rem;
     }
 `
 
