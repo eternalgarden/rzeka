@@ -1,6 +1,10 @@
-import { Observable, combineLatest, filter, map, merge, of, tap } from "rxjs"
+import { Observable, filter, map, tap } from "rxjs"
 import { ArchivedMatter } from "../common/matter/ArchivedMatter"
-import { ArchivedMatterOccurence, ArchivedReceivedMatterOccurence, ArchivedShapedMatterOccurence } from "../occurences-archived/ArchivedMatterOccurence"
+import {
+    ArchivedMatterOccurence,
+    ArchivedReceivedMatterOccurence,
+    ArchivedShapedMatterOccurence,
+} from "../occurences-archived/ArchivedMatterOccurence"
 import { MatterData } from "../common/matter/MatterData"
 import { Type } from "../common/Type"
 import { MatterOccurenceCategory } from "../occurence-categories/MatterOccurenceCategory"
@@ -9,193 +13,110 @@ import { IRawReceivedMatterOccurence } from "../occurences-raw/matter/IRawReceiv
 import { IRawShapedMatterOccurence } from "../occurences-raw/matter/IRawShapedMatterOccurence"
 import { IRawMatterOccurence } from "../occurences-raw/matter/IRawMatterOccurence"
 import { IRawOccurence } from "../occurences-raw/IRawOccurence"
-import { IArchivedMatterOccurence } from "../occurences-archived/IArchivedMatterOccurence"
 
 export class MatterArchive {
-    private matterMap: Map<string, ArchivedMatter> = new Map<
-        string,
-        ArchivedMatter
-    >()
-
-    // TODO to keep last stateful matter
-    private lastMatterOfState: Map<Type, string> = new Map<Type, string>()
-
-    private lastArchivedMatterOccurence: ArchivedMatterOccurence
+    private matterMap: Map<string, ArchivedMatter> = new Map()
+    private lastArchivedMatterOccurence: ArchivedMatterOccurence | undefined
 
     newMatterOccurenceProcessed: Observable<ArchivedMatterOccurence>
 
     constructor(newOccurenceObservable: Observable<IRawOccurence>) {
-        const rawMatterOccurenceObservable = newOccurenceObservable.pipe(
-            filter(occ => occ.occurenceCategory == OccurenceCategory.Matter),
-            map(occ => {
-                return occ as IRawMatterOccurence
-            })
-        )
-
-        const processedShapedMatterObservable =
-            this.processShapedMatterOccurences(rawMatterOccurenceObservable)
-
-        const processedReceivedMatterObservable =
-            this.processReceivedMatterOccurences(rawMatterOccurenceObservable)
-
-        this.newMatterOccurenceProcessed = merge(
-            processedShapedMatterObservable,
-            processedReceivedMatterObservable
-        ).pipe(tap(occ => (this.lastArchivedMatterOccurence = occ)))
-    }
-
-    private processReceivedMatterOccurences(
-        newMatterOccurenceObservable: Observable<IRawMatterOccurence>
-    ): Observable<ArchivedMatterOccurence> {
-        return newMatterOccurenceObservable.pipe(
-            filter(_ => this.lastArchivedMatterOccurence !== undefined),
-            filter(
-                occ =>
-                    occ.matterOccurenceCategory ==
-                    MatterOccurenceCategory.Received
-            ),
-            map(occ => occ as IRawReceivedMatterOccurence),
-            filter(occ => occ !== undefined),
-            map(occ => {
-                const matterGuid = occ.receivedMatterGuid
-
-                const canBeCollapsed =
-                    this.lastArchivedMatterOccurence.matterOccurenceCategory ===
-                        MatterOccurenceCategory.Received &&
-                    this.lastArchivedMatterOccurence.matterGuid === matterGuid
-
-                return { occ, canBeCollapsed, matterGuid }
-            }),
-            tap(x => {
-                this.addReceivedBy(x.matterGuid, x.occ.spellGuid)
-
-                if (x.canBeCollapsed === true)
-                {
-                    const receivedOccurence = 
-                        this.lastArchivedMatterOccurence as ArchivedReceivedMatterOccurence
-
-                    receivedOccurence.addReceivingSpell(x.occ.spellGuid)
-                }
-            }),
-            filter(x => x.canBeCollapsed === false),
-            map(x => {
-                const processedMatterOccurence = new ArchivedReceivedMatterOccurence(
-                    x.occ.guid,
-                    x.occ.timestamp,
-                    x.occ.matterOccurenceCategory,
-                    x.matterGuid,
-                    x.occ.spellGuid,
-                )
-
-                return processedMatterOccurence
-            })
+        this.newMatterOccurenceProcessed = newOccurenceObservable.pipe(
+            filter(occ => occ.occurenceCategory === OccurenceCategory.Matter),
+            map(occ => this.process(occ as IRawMatterOccurence)),
+            filter((occ): occ is ArchivedMatterOccurence => occ !== null),
+            tap(occ => (this.lastArchivedMatterOccurence = occ)),
         )
     }
 
-    private addMatter(
-        matterGuid: string,
-        matterType: Type,
-        matter: MatterData,
-        shapingSpellReference: string
-    ) {
-        const knownMatter: ArchivedMatter = new ArchivedMatter(
-            matterType,
-            matter,
-            shapingSpellReference
-        )
-
-        this.matterMap.set(matterGuid, knownMatter)
+    private process(occ: IRawMatterOccurence): ArchivedMatterOccurence | null {
+        switch (occ.matterOccurenceCategory) {
+            case MatterOccurenceCategory.Shaped:
+                return this.processShaped(occ as IRawShapedMatterOccurence)
+            case MatterOccurenceCategory.Received:
+                return this.processReceived(occ as IRawReceivedMatterOccurence)
+            default:
+                return null
+        }
     }
 
-    private processShapedMatterOccurences(
-        newMatterOccurenceObservable: Observable<IRawMatterOccurence>
-    ): Observable<ArchivedMatterOccurence> {
-        return newMatterOccurenceObservable.pipe(
-            filter(
-                occ =>
-                    occ.matterOccurenceCategory ==
-                    MatterOccurenceCategory.Shaped
-            ),
-            map(occ => occ as IRawShapedMatterOccurence),
-            filter(occ => occ !== undefined),
-            tap(occ => {
-                /* 🌄🗃️ SIDE EFFECTS */
-                // Before new Matter Occurence can be rendered it needs to be saved here
-
-                const matterGuid = occ.matter.guid
-
-                this.addMatter(
-                    matterGuid,
-                    occ.matterType,
-                    occ.matter,
-                    occ.spellGuid
-                )
-            }),
-            map(occ => {
-                const matterGuid = occ.matter.guid
-
-                const newArchivedMatterOccurence = new ArchivedShapedMatterOccurence(
-                    occ.guid,
-                    occ.timestamp,
-                    occ.matterOccurenceCategory,
-                    matterGuid,
-                    occ.spellGuid,
-                )
-
-                return newArchivedMatterOccurence
-            })
+    private processShaped(
+        occ: IRawShapedMatterOccurence,
+    ): ArchivedShapedMatterOccurence {
+        this.matterMap.set(
+            occ.matter.guid,
+            new ArchivedMatter(occ.matterType, occ.matter, occ.spellGuid),
+        )
+        return new ArchivedShapedMatterOccurence(
+            occ.guid,
+            occ.timestamp,
+            occ.matterOccurenceCategory,
+            occ.matter.guid,
+            occ.spellGuid,
         )
     }
 
-    private getKnownMatter(matterGuid: string): ArchivedMatter | undefined {
-        const knownMatter = this.matterMap.get(matterGuid)
+    private processReceived(
+        occ: IRawReceivedMatterOccurence,
+    ): ArchivedReceivedMatterOccurence | null {
+        // Skip received occurrences that arrive before any shaped occurrence —
+        // there is no last occurrence to collapse against and nothing has been
+        // archived yet for them to reference.
+        if (this.lastArchivedMatterOccurence === undefined) return null
 
-        if (knownMatter === undefined) {
+        const matterGuid = occ.receivedMatterGuid
+        this.matterMap.get(matterGuid)?.addReceivingSpell(occ.spellGuid)
+
+        // 🐖 the collapsing functions in the main matter list window as a little anti-spam step
+        // instead of listing every single receival of a given shaped matter, a little counter
+        // will be displayed on the received matter slot + when unfolded will also show a list
+        // of all spells that received it before another matter occurence happened in rzeka
+        const last = this.lastArchivedMatterOccurence
+        if (
+            last.matterOccurenceCategory === MatterOccurenceCategory.Received &&
+            last.matterGuid === matterGuid
+        ) {
+            const lastReceived = last as ArchivedReceivedMatterOccurence
+            lastReceived.addReceivingSpell(occ.spellGuid)
+            return null
         }
 
-        return knownMatter
-    }
-
-    deleteMatter(matterGuid: string) {
-        this.matterMap.delete(matterGuid)
-    }
-
-    addReceivedBy(matterGuid: string, occurenceGuid: string) {
-        this.matterMap.get(matterGuid)?.addReceivedBy(occurenceGuid)
+        return new ArchivedReceivedMatterOccurence(
+            occ.guid,
+            occ.timestamp,
+            occ.matterOccurenceCategory,
+            matterGuid,
+            occ.spellGuid,
+        )
     }
 
     getMatterType(matterGuid: string): Type {
         const matter = this.matterMap.get(matterGuid)
         if (matter === undefined) {
-            return new Type(
-                "UNDEFINED",
-                `Unknown namespace for matter guid: ${matterGuid}`
+            console.error(
+                `MatterArchive: type lookup for unknown matter ${matterGuid}`,
             )
-        } else {
-            return matter.matterType
+            return new Type(
+                "⚠ MISSING",
+                `No archived matter for guid ${matterGuid}`,
+            )
         }
+        return matter.matterType
     }
 
     getMatterData(matterGuid: string): MatterData {
         const matter = this.matterMap.get(matterGuid)
         if (matter === undefined) {
+            console.error(
+                `MatterArchive: data lookup for unknown matter ${matterGuid}`,
+            )
             return {
                 guid: matterGuid,
-                description: "Unknown",
+                description: "⚠ MISSING",
                 circumstances: [],
                 content: {},
             }
-        } else {
-            return matter.matterData
         }
-    }
-
-    getMatterReceivedCountObservable(matterGuid: string): Observable<number> {
-        const matter = this.matterMap.get(matterGuid)
-        if (matter === undefined) {
-            return of(-1)
-        } else {
-            return matter.receivedCountObservable
-        }
+        return matter.matterData
     }
 }

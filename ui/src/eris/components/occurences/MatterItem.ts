@@ -60,7 +60,6 @@ export class MatterItem extends FASTElement {
     @observable matterContent: any
     @observable isVisible: boolean
     @observable containsSearchedText: boolean
-    @observable receivedCount: number
 
     /* 🐺🗃️🗝️ Two shady 'situational' fields */
     /* Clean solution would be to split MatterItem into two separate Elements */

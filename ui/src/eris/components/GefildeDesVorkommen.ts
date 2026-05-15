@@ -194,13 +194,13 @@ export class GefildeDesVorkommen extends FASTElement {
 
         this.lifecycleSubscriptions.push(
             fromEvent(document, ON_SET_FOCUS_TO_SEARCHBAR).subscribe(
-                _ => this.setFocusToSearchbar
+                _ => this.setFocusToSearchbar()
             )
         )
 
         this.lifecycleSubscriptions.push(
             fromEvent(document, ON_CLEAR_OCCURENCES).subscribe(
-                _ => this.clearOccurences
+                _ => this.clearOccurences()
             )
         )
     }
@@ -305,5 +305,7 @@ export class GefildeDesVorkommen extends FASTElement {
         this.searchbar.focus()
     }
 
-    clearOccurences() {}
+    clearOccurences() {
+        this.listedOccurences = []
+    }
 }
