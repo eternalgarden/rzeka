@@ -21,6 +21,34 @@ sanctuary-foldout::part(title) {
     font-family: 'Fell Pica'
 }
 
+:host([selected]) .matter-row {
+    outline: 2px solid #ffe300;
+    outline-offset: -2px;
+}
+
+.matter-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
+.select-pin {
+    flex: 0 0 auto;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0 0.3rem;
+    font-size: 0.9rem;
+    opacity: 0.35;
+    transition: opacity 0.15s;
+}
+
+.matter-row:hover .select-pin,
+:host([selected]) .select-pin {
+    opacity: 1;
+}
+
 ::part(start) {
     padding: 0.1rem;
 }

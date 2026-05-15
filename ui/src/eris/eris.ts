@@ -9,6 +9,7 @@ import "./components/other/ImageLoader.ts"
 import "./components/occurences/MatterItem.ts"
 import "./components/occurences/MessageItem.ts"
 import "./components/GefildeDesVorkommen.ts"
+import "./components/causality/CausalityTree.ts"
 import "./components/other/Usagi.ts"
 import "./components/other/WHDIGLoader.ts"
 

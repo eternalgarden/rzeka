@@ -90,6 +90,10 @@ export class MatterArchive {
         )
     }
 
+    hasMatter(matterGuid: string): boolean {
+        return this.matterMap.has(matterGuid)
+    }
+
     getMatterType(matterGuid: string): Type {
         const matter = this.matterMap.get(matterGuid)
         if (matter === undefined) {

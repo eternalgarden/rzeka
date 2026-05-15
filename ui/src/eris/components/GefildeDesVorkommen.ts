@@ -172,6 +172,10 @@ export class GefildeDesVorkommen extends FASTElement {
     occurenceArchive: OccurencesArchive
     newFilterObservable: Observable<MatterOccurenceFilter>
 
+    // 🎯 Currently selected matter guid — drives the causality tree window.
+    // Null means nothing is selected.
+    readonly selectedMatterGuid$ = new BehaviorSubject<string | null>(null)
+
     private lifecycleSubscriptions: Subscription[] = []
 
     constructor() {

@@ -50,6 +50,7 @@ export class MatterItem extends FASTElement {
     // 🌲 Attributes
     @attr gefilde: GefildeDesVorkommen
     @attr occurence: ArchivedMatterOccurence
+    @attr({ mode: "boolean" }) selected: boolean = false
 
     // ☔ Passed matter occurence elements
     @observable matterOccurenceCategory: MatterOccurenceCategory
@@ -72,6 +73,7 @@ export class MatterItem extends FASTElement {
 
     filterSubscription: Subscription
     receivedSubscription: Subscription | undefined
+    selectionSubscription: Subscription
 
     wildcardSubscription: Subscription
 
@@ -110,6 +112,10 @@ export class MatterItem extends FASTElement {
             this.wildcardSubscription = this.getReceivalSubscription()
         }
 
+        this.selectionSubscription = this.gefilde.selectedMatterGuid$.subscribe(
+            guid => (this.selected = guid === this.matterGuid),
+        )
+
         // console.log(this.matterType)
 
         super.connectedCallback()
@@ -119,8 +125,15 @@ export class MatterItem extends FASTElement {
         this.filterSubscription?.unsubscribe()
         this.receivedSubscription?.unsubscribe()
         this.wildcardSubscription?.unsubscribe()
+        this.selectionSubscription?.unsubscribe()
 
         super.disconnectedCallback()
+    }
+
+    selectThisMatter(event: Event) {
+        event.stopPropagation()
+        const subject = this.gefilde.selectedMatterGuid$
+        subject.next(subject.value === this.matterGuid ? null : this.matterGuid)
     }
 
     hasShapedMatterCircumstances() {

@@ -14,11 +14,18 @@ import { IArchivedMatterOccurence } from "../../../types/occurences-archived/IAr
 
 const EMOJI: string = "🪴"
 
-export const ShapedMatterOccurenceTemplate = html<MatterItem>`<sanctuary-foldout
-        ?hidden="${x => !x.isVisible}"
+export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
+        class="matter-row"
+        ?hidden="${x => !x.isVisible}">
+    <button
+        class="select-pin"
+        title="Pin as causality tree focus"
+        @click="${(x, c) => x.selectThisMatter(c.event)}">📍</button>
+    <sanctuary-foldout
         class="
             matter-item
             shaped-occurence
+            flex-grow-one
             ${x => getStringFilterMatchClass(x.containsSearchedText)}"
         tabindex="-1">
         <!-- /* 🔥 what is this for? */ -->
@@ -74,6 +81,7 @@ export const ShapedMatterOccurenceTemplate = html<MatterItem>`<sanctuary-foldout
             </span>
         </div>
     </sanctuary-foldout>
+    </div>
 
     <!-- 🌄 ROOT MATTER SEPARATOR -->
     ${when(

@@ -11,12 +11,19 @@ import {
 
 const EMOJI: string = "🎯"
 
-export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<sanctuary-foldout
-    ?hidden="${x => !x.isVisible}"
+export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<div
+    class="matter-row"
+    ?hidden="${x => !x.isVisible}">
+    <button
+        class="select-pin"
+        title="Pin as causality tree focus"
+        @click="${(x, c) => x.selectThisMatter(c.event)}">📍</button>
+    <sanctuary-foldout
     id="root"
     class="
             matter-item
             received-occurence
+            flex-grow-one
             ${x => getStringFilterMatchClass(x.containsSearchedText)}"
     tabindex="-1">
     <div
@@ -81,4 +88,5 @@ export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<sanctuary-foldo
             ${x => moment.unix(x.timestamp).format("MMMM Do YYYY, h:mm:ss a")}
         </span>
     </div>
-</sanctuary-foldout>`
+</sanctuary-foldout>
+</div>`
