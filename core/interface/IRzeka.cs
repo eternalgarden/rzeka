@@ -1,6 +1,5 @@
 namespace Rzeka;
 
-// TODO Add proper api method summaries after finishing the readme.
 public interface IRzeka : IWhisper, IDisposable
 {
     /// <summary>

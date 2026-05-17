@@ -84,9 +84,7 @@ Create a single river at startup and share its IRzeka reference with the systems
 IRzeka rzeka = new Spring().Create("Nile");
 ```
 
-> 📜💎 You should have **one rzeka** per application - v1 is designed around single instance. Running multiple instances will break [circumstance chain tracking](#circumstances).
-
-Multi-rzeka topologies are considered for a v2 version. 
+> 📜💎 **One rzeka per application.** `Spring` enforces this - calling `Create` a second time throws. Circumstance chain tracking relies on a single shared context; multiple rivers would produce disconnected causal graphs.
 
 The name passed to Create serves currently a purely mythical role, it has no direct usage in rzeka codebase, but one should have the capacity to name the river that they live along.
 

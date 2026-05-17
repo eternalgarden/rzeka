@@ -24,7 +24,7 @@ namespace Rzeka.Dev
         public static IDisposable EnableDevServer(this Spring spring, int port = 9222)
         {
             var disposables = new CompositeDisposable();
-            var erises = new List<Eris>();
+            Eris? currentEris = null;
             var activeConnections = new List<(IWebSocketConnection socket, CompositeDisposable subscriptions)>();
 
             var server = new WebSocketServer($"ws://127.0.0.1:{port}");
@@ -41,13 +41,11 @@ namespace Rzeka.Dev
                         Console.WriteLine("[Eris] Debugger connected");
 
                         // Defer subscription so it doesn't fire replay synchronously inside OnOpen
-                        Task.Run(() =>
+                        if (currentEris is not null)
                         {
-                            foreach (Eris eris in erises)
-                            {
-                                connectionSubscriptions.Add(SubscribeEris(eris, socket));
-                            }
-                        });
+                            var eris = currentEris;
+                            Task.Run(() => connectionSubscriptions.Add(SubscribeEris(eris, socket)));
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -74,21 +72,16 @@ namespace Rzeka.Dev
                 activeConnections.Clear();
             }));
 
-            // Track existing + future Eris instances — subscribe all active connections to each.
-            disposables.Add(spring.Watch().Subscribe(river =>
+            disposables.Add(spring.OnCreated.Subscribe(river =>
             {
-                erises.Add(river.Eris);
-
+                currentEris = river.Eris;
                 foreach (var (socket, subscriptions) in activeConnections)
                 {
                     subscriptions.Add(SubscribeEris(river.Eris, socket));
                 }
             }));
 
-            disposables.Add(spring.OnDisposed.Subscribe(river =>
-            {
-                erises.Remove(river.Eris);
-            }));
+            disposables.Add(spring.OnDisposed.Subscribe(_ => currentEris = null));
 
             return disposables;
         }
