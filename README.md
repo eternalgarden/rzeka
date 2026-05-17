@@ -492,7 +492,18 @@ Eris runs in core and is always active, even in release builds.
 
 Rzeka ships with a browser-based debugger (not included in builds) that connects to your game over WebSocket. It shows matter flow and messages in real time - no in-game UI needed.
 
-> 📜🚧 Live spell status visualisation - including mana state and lifecycle transitions - is planned but not yet implemented in the UI. The occurrences are still recorded internally; only the in-browser visualisation is pending.
+> 📜🚧 Live spell status visualisation - including mana state and lifecycle transitions - is planned but not yet implemented in the UI. The occurrences are still recorded internally, only the in-browser visualisation is pending.
+
+> 📜 **Per-instance discrimination via `describeOwner`.** By default Eris groups `who`s by type only - 50 instances of the same class look identical in the debugger. Pass a `describeOwner` lambda to `Spring.Create` to give each instance a label:
+>
+> ```csharp
+> IRzeka rzeka = spring.Create(
+>     name: "MyGame",
+>     describeOwner: who => (who as Node)?.Name   // Godot
+> );
+> ```
+>
+> The hook is engine-specific - Unity callers can instead use `MonoBehaviour.gameObject.name`, plain C# callers can leave the hook off or implement something like a custom INamedOwner interface with a name getter.
 
 **Setup:**
 
