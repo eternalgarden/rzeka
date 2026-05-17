@@ -29,17 +29,29 @@ export function deserializeSpell(spellData: any): ISerializableSpell {
     if (spellSchool == SpellSchool.Stranding) {
         const { conjuredType }: { conjuredType: Type } = spellData
 
-        const strandingSpell: SerializableStranding = {
+        deserializedSpell = {
             conjuredType,
-            spellSchool: SpellSchool.Stranding,
+            spellSchool,
             guid,
             title,
             whosName,
             wasCast: false,
             Who,
-        }
+        } as SerializableStranding
+    } else if (spellSchool == SpellSchool.Plucking) {
+        // PluckingSpell implements IStrandingSpell on the C# side, so the wire
+        // payload is identical to Stranding — only the spellSchool tag differs.
+        const { conjuredType }: { conjuredType: Type } = spellData
 
-        deserializedSpell = strandingSpell
+        deserializedSpell = {
+            conjuredType,
+            spellSchool,
+            guid,
+            title,
+            whosName,
+            wasCast: false,
+            Who,
+        } as SerializableStranding
     } else if (spellSchool == SpellSchool.Weaving) {
         const {
             hasMana,
@@ -70,7 +82,7 @@ export function deserializeSpell(spellData: any): ISerializableSpell {
 
         const ingredients: Dictionary<Boolean> = deserializeIngredients(xoxo)
 
-        const loomingSpell: SerializableLooming = {
+        deserializedSpell = {
             hasMana,
             ingredients,
             conjuredType,
@@ -80,14 +92,32 @@ export function deserializeSpell(spellData: any): ISerializableSpell {
             whosName,
             wasCast: false,
             Who,
-        }
+        } as SerializableLooming
+    } else if (spellSchool == SpellSchool.Shuttling) {
+        // ShuttleSpell extends LoomingSpell on the C# side, so the wire payload
+        // is identical to Looming — only the spellSchool tag differs.
+        const { conjuredType }: { conjuredType: Type } = spellData
+        const {
+            hasMana,
+            ingredients: xoxo,
+        }: { hasMana: boolean; ingredients: any } = spellData
 
-        deserializedSpell = loomingSpell
+        const ingredients: Dictionary<Boolean> = deserializeIngredients(xoxo)
+
+        deserializedSpell = {
+            hasMana,
+            ingredients,
+            conjuredType,
+            spellSchool: SpellSchool.Shuttling,
+            guid,
+            title,
+            whosName,
+            wasCast: false,
+            Who,
+        } as SerializableLooming
     } else {
-        throw new Error("ERRER wait whatttt!!!!!!!!!!!!!!!!!!")
+        throw new Error(`🧨 Unknown spell school: ${spellSchool}, can't deserialize.`)
     }
-
-    if (deserializeSpell === null) throw new Error("ERRER NULL SPELL")
 
     const baseSpell: ISerializableSpell =
         deserializedSpell as ISerializableSpell

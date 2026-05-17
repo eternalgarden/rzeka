@@ -214,6 +214,10 @@ public class Eris : IDisposable
         {
             spell = GetSerializablePlucking(source);
         }
+        else if (source.SpellSchool is SpellSchool.Shuttling)
+        {
+            spell = GetSerializableShuttling(source);
+        }
         else
         {
             spell = GetSerializableWeaving(source);
@@ -258,6 +262,24 @@ public class Eris : IDisposable
         {
             spellSchool = SpellSchool.Plucking,
             conjuredType = strand.ConjuredType,
+            Who = GetWho(source),
+        };
+    }
+
+    SerializableLooming GetSerializableShuttling(ISpell source)
+    {
+        IBindingSpell binding = source as IBindingSpell;
+        IStrandingSpell stranding = source as IStrandingSpell;
+
+        Debug.Assert(binding != null, nameof(binding) + " != null");
+        Debug.Assert(stranding != null, nameof(stranding) + " != null");
+
+        return new SerializableLooming()
+        {
+            spellSchool = SpellSchool.Shuttling,
+            ingredients = GetSerializableIngredients(binding),
+            hasMana = binding.HasMana,
+            conjuredType = stranding.ConjuredType,
             Who = GetWho(source),
         };
     }

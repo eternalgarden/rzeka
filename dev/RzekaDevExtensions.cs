@@ -13,7 +13,11 @@ namespace Rzeka.Dev
             Converters =
             {
                 new System.Text.Json.Serialization.JsonStringEnumConverter(),
-                new TypeJsonConverter()
+                new TypeJsonConverter(),
+                // Without this, IMatter's [JsonConverter] attribute (declared on Matter, not
+                // the interface) doesn't fire when matter is serialized via interface members,
+                // so Circumstances ship as nested objects instead of guid strings.
+                new CircumstancesJsonConverter(),
             }
         };
 
