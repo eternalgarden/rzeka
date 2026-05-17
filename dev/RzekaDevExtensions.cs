@@ -19,6 +19,10 @@ namespace Rzeka.Dev
                 // CircumstancesJsonConverter — once we dispatch to the concrete type the
                 // [JsonConverter] attribute on Matter.Circumstances fires for the list.
                 new MatterJsonConverter(),
+                // MatterJsonConverter dispatches to the concrete type, so the [JsonConverter]
+                // attribute on Matter.Circumstances now fires and handles this. Kept as a
+                // fallback for any IReadOnlyList<IMatter> that reaches the serializer outside
+                // that path.
                 new CircumstancesJsonConverter(),
             }
         };
