@@ -14,9 +14,11 @@ namespace Rzeka.Dev
             {
                 new System.Text.Json.Serialization.JsonStringEnumConverter(),
                 new TypeJsonConverter(),
-                // Without this, IMatter's [JsonConverter] attribute (declared on Matter, not
-                // the interface) doesn't fire when matter is serialized via interface members,
-                // so Circumstances ship as nested objects instead of guid strings.
+                // Delegates IMatter serialization to the concrete runtime type so user-defined
+                // properties (ScenePath, GameTitle, …) appear in the output. Must come before
+                // CircumstancesJsonConverter — once we dispatch to the concrete type the
+                // [JsonConverter] attribute on Matter.Circumstances fires for the list.
+                new MatterJsonConverter(),
                 new CircumstancesJsonConverter(),
             }
         };
