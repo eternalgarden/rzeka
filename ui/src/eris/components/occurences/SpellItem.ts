@@ -74,11 +74,11 @@
 //                 Namespace: ${x => x.spellOccurence.spell.Who.WhosType.namespace}
 //             </li>
 //             <li>
-//                 GameObject:
+//                 Instance:
 //                 ${x =>
-//                     x.spellOccurence.spell.Who.ParentGameObjectName != undefined
-//                         ? x.spellOccurence.spell.Who.ParentGameObjectName
-//                         : "not a mono"}
+//                     x.spellOccurence.spell.Who.WhosDescription != undefined
+//                         ? x.spellOccurence.spell.Who.WhosDescription
+//                         : "unnamed"}
 //             </li>
 //         </ul>
 //     </div>

@@ -66,6 +66,14 @@ public class Eris : IDisposable
     // (Stream<T>'s default observer rethrows on the source thread — i.e. crash loudly).
     internal Action<ISpell, Exception>? OnUnhandledSourceError { get; set; }
 
+    // Optional user hook to extract an instance-level label from a `who` object.
+    // Set at river creation via Spring.Create(name, describeOwner: ...). The engine
+    // adapter owns the extraction logic — Godot callers unwrap (who as Node)?.Name,
+    // Unity callers unwrap MonoBehaviour.gameObject.name, plain C# callers can leave
+    // the hook off. When null, Who carries only its type information and the
+    // debugger sees instances of the same type as identical.
+    internal Func<object, string?>? DescribeOwner { get; set; }
+
     public Eris(string name)
     {
         Name = name;
@@ -213,14 +221,16 @@ public class Eris : IDisposable
 
         spell.guid = source.Guid;
         spell.title = source.Title;
-        // spell.whosName = source.Who is MonoBehaviour
-        //     ? $"{(source.Who as MonoBehaviour).gameObject.name}'s {source.Who.GetType().Name}"
-        //     : source.Who.GetType().Name;
-        spell.whosName = GetWho(source).WhosType.Name;
+        spell.whosName = ComposeWhosName(GetWho(source));
         spell.hasMana = source.HasMana;
 
         return spell;
     }
+
+    static string ComposeWhosName(Who who) =>
+        who.WhosDescription is null
+            ? who.WhosType.Name
+            : $"{who.WhosType.Name} ({who.WhosDescription})";
 
     SerializableStranding GetSerializableStranding(ISpell source)
     {
@@ -287,7 +297,11 @@ public class Eris : IDisposable
         return weaving;
     }
 
-    Who GetWho(ISpell source) => new Who { WhosType = source.Who.GetType() };
+    Who GetWho(ISpell source) => new Who
+    {
+        WhosType = source.Who.GetType(),
+        WhosDescription = DescribeOwner?.Invoke(source.Who),
+    };
 
     // TODO there is a problem with that, there are no longer ingredients list
     private Dictionary<string, bool> GetSerializableIngredients(IBindingSpell binding)

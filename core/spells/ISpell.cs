@@ -6,7 +6,7 @@ namespace Rzeka;
 public struct Who
 {
     public Type WhosType { get; set; }
-    public string? ParentGameObjectName { get; set; }
+    public string? WhosDescription { get; set; }
 }
 
 
