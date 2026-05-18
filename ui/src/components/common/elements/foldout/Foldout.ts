@@ -52,8 +52,7 @@ const styles = css`
     }
 
     div.icon {
-        width: 40px;
-        text-align: center;
+        min-width: 40px;
     }
 `
 

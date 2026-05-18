@@ -62,7 +62,7 @@ export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
             </div>
 
             <div class="pls">
-                <p class="who">Spell information:</p>
+                <p class="label">Spell information:</p>
                 <ul>
                     <li>${x => getFullMatterType(x.matterType)}</li>
                     <li>

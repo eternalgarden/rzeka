@@ -174,7 +174,7 @@ namespace Rzeka.Dev
                             Guid = Guid.NewGuid(),
                             Timestamp = DateTimeOffset.Now,
                             RzekaMessageType = RzekaMessageType.Horror,
-                            Message = $"Failed to serialize {DescribeOccurence(occurence!)}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace. Message: {ex.Message}.",
+                            Message = $"Failed to serialize {DescribeOccurence(occurence!)}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.",
                             Exception = ex,
                             Circumstances = Array.Empty<Guid>(),
                         });

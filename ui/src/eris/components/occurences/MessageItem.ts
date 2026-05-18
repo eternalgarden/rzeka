@@ -17,15 +17,18 @@ import matterStyles from "./styles/matter.css?raw"
 
 const messageTypeStyles = css`
     .Hint {
-        background-color: rgb(93, 118, 255);
+        background-color: transparent;
+        border: 1px dashed rgb(135, 182, 255, 0.50);
     }
 
     .Hunch {
-        background-color: yellow;
+        background-color: transparent;
+        border: 1px dashed rgb(255, 242, 138, 0.50);
     }
 
     .Horror {
-        background-color: #ff4d6c;
+        background-color: transparent;
+        border: 1px dashed rgb(255, 137, 137, 0.80);
     }
 `
 
@@ -34,15 +37,15 @@ const styles = css`
     ${matterStyles}
 
     .message-item {
-        border-bottom: calc(var(--stroke-width) * 1px) solid #000000;
-        color: black;
+        border: 1px dashed #ffffff4f;
+        margin-top: 2px;
     }
 
     ::part(toggle-button) {
         padding: 2px;
         height: auto;
-        min-height: 44px;
-        align-items: flex-start;
+        min-height: 33px;
+        align-items: center;
     }
 
     ::part(heading):hover {
@@ -60,7 +63,8 @@ const styles = css`
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-left: 0.8rem;
+        padding-left: 0.3rem;
+        width: 40px;
     }
 
     .details {
@@ -131,7 +135,7 @@ const template = html<MessageItem>`
             <span class="message-title">${x => truncateForTitle(x.occurence.message)}</span>
         </div>
         <span slot="collapsed-icon">-</span>
-        <span slot="expanded-icon">✨</span>
+        <span slot="expanded-icon">📜</span>
         <div slot="content" class="region-content">
             <p class="full-message">${x => x.occurence.message}</p>
             ${when(
@@ -208,9 +212,9 @@ export class MessageItem extends FASTElement {
 function selectItemEmoji(messageType: MessageType): string {
     let emoji = ""
 
-    if (messageType == MessageType.Hint) emoji += "📮"
-    if (messageType == MessageType.Hunch) emoji += "⚠️"
-    if (messageType == MessageType.Horror) emoji += "👻"
+    if (messageType == MessageType.Hint) emoji += "🐇🪽"
+    if (messageType == MessageType.Hunch) emoji += "⚠️🐖"
+    if (messageType == MessageType.Horror) emoji += "🧨👻"
 
     return emoji
 }

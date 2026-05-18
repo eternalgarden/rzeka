@@ -22,14 +22,13 @@ const styles = css`
         height: 100%;
         color: aliceblue;
         font-family: "Fell Pica";
-        background-color: #17131385;
+        background: rgba(52, 52, 52, 0.83);
+        border: 1px solid rgba(156, 156, 156, 0.5);
     }
 
     .header {
         padding: 0.4rem 0.6rem;
         font-family: monospace;
-        color: #00ffc6;
-        border-bottom: 1px dashed #444;
     }
 
     .body {
@@ -45,7 +44,7 @@ const styles = css`
 `
 
 const template = html<CausalityTree>`
-    <div class="header">🧶 causality tree</div>
+    <div class="header">🏹🧭🧬 causality tree</div>
     <div class="body">
         ${when(
             x => x.rootNode === null,

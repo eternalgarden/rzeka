@@ -48,7 +48,7 @@ export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<div
         </div>
     </div>
     <span slot="collapsed-icon">-</span>
-    <span slot="expanded-icon">🛸</span>
+    <span slot="expanded-icon">📜</span>
     <div slot="content" class="region-content">
         <div>
             <p class="label">Received by:</p>

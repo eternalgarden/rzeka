@@ -26,6 +26,7 @@ import {
 /* 🎨 styles */
 import "../components/common/styles/font.css"
 import "../components/common/styles/fontsMediengestaltung.css"
+import rzekaBackground from "../assets/images/rzeka.jpeg"
 
 /* 📜 Components */
 import "./components/other/WHDIGLoader"
@@ -43,6 +44,8 @@ declare global {
         ClearOccurences: () => void
     }
 }
+
+document.body.style.backgroundImage = `url(${rzekaBackground})`
 
 /*
 HOW IT GOES?
@@ -93,6 +96,11 @@ window.ClearOccurences = () => {
     gefildeDesVorkommen.clearOccurences()
     const rawEvent = new CustomEvent(ON_CLEAR_OCCURENCES)
     document.dispatchEvent(rawEvent)
+}
+
+// <usagi-happy> is decorative and opt-in via the #usagi URL hash.
+if (!window.location.hash.includes("usagi")) {
+    document.querySelector("usagi-happy")?.remove()
 }
 
 // Connect to the live debug server (WebSocket)

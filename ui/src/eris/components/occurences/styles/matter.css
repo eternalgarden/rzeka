@@ -1,14 +1,13 @@
 sanctuary-foldout::part(title) {
     flex-grow: 1;
 }
-
-
-    
     
 .shaped-occurence {
-    background-color: #4c53f5;
-    border-style: double;
-    border-width: 0.2rem;
+    background-color: rgba(245, 187, 76, 0.14);
+    border-style: dotted;
+    border-width: 1px;
+    border-color: rgba(143, 143, 143, 0.77);
+    padding: 3px;
 }
 
 .received-occurence {
@@ -22,11 +21,11 @@ sanctuary-foldout::part(title) {
 }
 
 :host([selected]) .matter-row {
-    outline: 2px solid #ffe300;
-    outline-offset: -2px;
+    outline: rgb(255, 251, 0) solid 2px;
+    outline: rgb(255, 227, 0) solid 1px;
 }
 
-.matter-row {
+.matter-row { 
     display: flex;
     flex-direction: row;
     align-items: stretch;
@@ -59,9 +58,8 @@ sanctuary-foldout::part(title) {
 
 ::part(heading):hover {
     backdrop-filter: contrast(40%);
-    background-color: #f54c4c;
 }
-
+ 
 ::part(heading-content) {
     flex-grow: 1;
     align-items: baseline;

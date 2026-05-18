@@ -37,6 +37,10 @@ const STYLES = css`
         color: aliceblue;
     }
 
+    .header {
+        font-family: monospace;
+    }
+
     .menu {
         position: sticky;
         top: 0;
@@ -45,20 +49,21 @@ const STYLES = css`
         display: flex;
         flex-direction: column;
         background-color: #17131385;
-        color: #00ffc6;
         backdrop-filter: sepia(90%);
+        backdrop-filter: blur(2px);
         padding: 0.3rem;
         font-family: monospace;
     }
 
     div.options {
         display: flex;
+        margin-top: 0.2rem;
     }
 
     input.searchbar {
         height: 22px;
         background-color: transparent;
-        color: #ffef00;
+        color: antiquewhite;
         border: none;
         outline: none;
     }
@@ -116,8 +121,8 @@ const occurenceTemplates = {
 // its probably a good practice but honestly it does a bit occlude the code
 const LITTLE_TEMPLATE: ViewTemplate<GefildeDesVorkommen> = html<GefildeDesVorkommen>`
     <div class="menu">
+    <div class="header">😼🗝️🗃️ occurences</div>
         <div class="options">
-            <span>😼🗝️🗃️ </span>
             <input
                 ${ref("shapedMatterCheckbox")}
                 type="checkbox"
@@ -135,7 +140,8 @@ const LITTLE_TEMPLATE: ViewTemplate<GefildeDesVorkommen> = html<GefildeDesVorkom
             class="searchbar"
             ${ref("searchbar")}
             type="text"
-            tabindex="0" />
+            tabindex="0" 
+            placeholder="filter..." />
     </div>
     <div class="occurences">
         ${repeat(

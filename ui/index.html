@@ -30,6 +30,7 @@
 
         body {
             background-color: #262626;
+            background-size: cover;
             cursor: pointer;
             color: ghostwhite;
             font-size: 1em;
@@ -39,13 +40,14 @@
             width: 100vw;
         }
 
-        h3.title {
+        h2.title {
             margin-block-end: 0em;
             margin-block-start: 0em;
             text-align: right;
             margin-top: 0.4em;
             margin-right: 0.4em;
-            font-family: monospace;
+            font-family: 'avara-bold';
+            font-size: 1rem;
         }
 
         #message-box>div {
@@ -58,6 +60,7 @@
             margin: 0;
             height: 100vh;
             width: 100vw;
+            backdrop-filter: blur(2px);
         }
 
         /* CURRENT GRID 🏔️ */
@@ -114,21 +117,21 @@
             overflow-y: scroll;
             min-height: 0;
             align-self: stretch;
-            background: rgb(41, 50, 56);
+            padding: 3px;
+            background: rgba(52, 52, 52, 0.83);
+            border: 1px solid rgba(156, 156, 156, 0.5);
         }
     </style>
 </head>
 
 <body>
-    <div class="background">
-        <canvas id='canv' width=500, height=200>
-    </div>
+    <div class="background"></div>
 
     <!-- made with https://grid.layoutit.com/ 🦄 -->
     <!-- https://css-tricks.com/snippets/css/complete-guide-grid/ -->
     <div class="layout">
         <div class="heading">
-            <h3 class="title">🌲🌺🏕️ Sanctuary 🌅🎠🌲 Eris' Realm v0.3.1 🐛</h3>
+            <h2 class="title">🌲🏕️ Eris' Realm of Rzeka 🎠🐛</h3>
         </div>
         <div id="occurencesBox" class="occurences">
             <eris-realm-events id="eris-realm-events">
@@ -144,8 +147,8 @@
     </div>
 
     <usagi-happy></usagi-happy>
-    <whdig-loader></whdig-loader>
-    <image-loader></image-loader>
+    <!-- <whdig-loader></whdig-loader> -->
+    <!-- <image-loader></image-loader> -->
 
     <script type="module" src="/src/eris/eris.ts"></script>
 </body>
