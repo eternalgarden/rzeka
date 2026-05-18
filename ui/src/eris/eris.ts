@@ -13,7 +13,7 @@ import "./components/causality/CausalityTree.ts"
 import "./components/other/Usagi.ts"
 import "./components/other/WHDIGLoader.ts"
 
-import { loadTestDataIfInDebugMode } from "./helpers/loadTestDataIfInDebugMode"
+import { loadTestDataIfLocal } from "./helpers/loadTestDataIfLocal"
 import { connectToDebugServer } from "./connection/debugServerConnection"
 
 /* 🌋 events */
@@ -96,9 +96,9 @@ window.ClearOccurences = () => {
 }
 
 // Connect to the live debug server (WebSocket)
-// Falls back gracefully if the game isn't running — reconnects automatically
+// Falls back gracefully if the game isn't running - reconnects automatically
 connectToDebugServer()
 
 // Still supports #local for loading test data from bundled JSON
-loadTestDataIfInDebugMode()
+loadTestDataIfLocal()
 // initiateErisDesignSystem()

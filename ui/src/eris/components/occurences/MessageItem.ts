@@ -38,9 +38,11 @@ const styles = css`
         color: black;
     }
 
-    ::part(button) {
+    ::part(toggle-button) {
         padding: 2px;
         height: auto;
+        min-height: 44px;
+        align-items: flex-start;
     }
 
     ::part(heading):hover {
@@ -72,6 +74,28 @@ const styles = css`
         justify-items: center;
         color: #ffffff;
         text-align: left;
+        min-width: 0;
+    }
+
+    .message-title {
+        display: block;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+    .full-message {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin: 0;
+    }
+
+    pre.stack-trace {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin: 0;
+        font-family: inherit;
+        font-size: 0.85em;
+        opacity: 0.85;
     }
 
     .who {
@@ -92,6 +116,8 @@ const styles = css`
     ${messageTypeStyles}
 `
 
+const TITLE_MAX_CHARS = 100
+
 const template = html<MessageItem>`
     <sanctuary-foldout
         class="message-item ${x => x.messageTypeClass} ${x => x.filterClass}"
@@ -101,17 +127,31 @@ const template = html<MessageItem>`
             class="emojiguid">
             <span>${x => selectItemEmoji(x.occurence.messageType)}</span>
         </div>
-        <span slot="title">
-            <div class="heading">
-                <span>${x => getMessage(x.occurence)}</span>
-            </div>
-        </span>
+        <div slot="title" class="heading">
+            <span class="message-title">${x => truncateForTitle(x.occurence.message)}</span>
+        </div>
         <span slot="collapsed-icon">-</span>
         <span slot="expanded-icon">✨</span>
-        <div class="region-content">
+        <div slot="content" class="region-content">
+            <p class="full-message">${x => x.occurence.message}</p>
             ${when(
-                x => x.occurence.messageType == MessageType.Horror,
+                x => x.occurence.messageType == MessageType.Horror && hasExceptionMessage(x.occurence),
                 html<MessageItem>`
+                    <p class="label">Exception:</p>
+                    <p class="full-message">${x => x.occurence.exception.message}</p>
+                `
+            )}
+            ${when(
+                x => x.occurence.messageType == MessageType.Horror && hasStackTrace(x.occurence),
+                html<MessageItem>`
+                    <p class="label">Stack trace:</p>
+                    <pre class="stack-trace">${x => x.occurence.exception.stackTrace}</pre>
+                `
+            )}
+            ${when(
+                x => x.occurence.messageType == MessageType.Horror && hasComments(x.occurence),
+                html<MessageItem>`
+                    <p class="label">Notes:</p>
                     <ul>
                         ${repeat(
                             x => x.occurence.exception.comments,
@@ -147,8 +187,6 @@ export class MessageItem extends FASTElement {
         super.connectedCallback()
 
         this.messageTypeClass = this.occurence.messageType
-
-        console.log(getMessage(this.occurence))
     }
 
     containerChanged(_: GefildeDesVorkommen, container: GefildeDesVorkommen) {
@@ -177,24 +215,24 @@ function selectItemEmoji(messageType: MessageType): string {
     return emoji
 }
 
-function getMessage(occurence: IRawMessageOccurence): string {
-    let message = ""
+function truncateForTitle(message: string | undefined): string {
+    const full = message ?? ""
+    if (full.length <= TITLE_MAX_CHARS) return full
+    return full.slice(0, TITLE_MAX_CHARS).trimEnd() + "..."
+}
 
-    const messageType = occurence.messageType
+function hasExceptionMessage(occurence: IRawMessageOccurence): boolean {
+    return !!occurence.exception && !!occurence.exception.message
+}
 
-    message = occurence.message
+function hasStackTrace(occurence: IRawMessageOccurence): boolean {
+    return !!occurence.exception && !!occurence.exception.stackTrace
+}
 
-    // if (messageType == MessageType.Hint) message = occurence.message
-    // if (messageType == MessageType.Hunch) message = occurence.message
-    // if (messageType == MessageType.Horror)
-    //     message =
-    //         occurence.exception != null
-    //             ? occurence.exception.message
-    //             : "EXCEPTION NULL"
-
-    console.log(message)
-
-    return message
+function hasComments(occurence: IRawMessageOccurence): boolean {
+    return !!occurence.exception
+        && Array.isArray(occurence.exception.comments)
+        && occurence.exception.comments.length > 0
 }
 
 // function getContent(occurence: MessageOccurence): string {

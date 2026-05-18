@@ -155,6 +155,8 @@ class EnemyDefeated : Matter
 
 > 📜🧨 Keep your Matter instances **immutable** - avoid mutable reference type fields. Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
 
+> 📜🧨 **Mark non-serializable matter properties with `[JsonIgnore]`** (from `System.Text.Json.Serialization`). Eris's dev wire serializes the full matter instance; engine-native handles, IO objects, and throwing getters break serialization. The Shaped occurrence is dropped from the wire and a Horror surfaces in Eris instead.
+
 ### Circumstances
 
 > 📜 Circumstances describe context of a given matter emission.
