@@ -15,6 +15,7 @@ export class MessageArchive {
                 occ =>
                     new ArchivedMessageOccurence(
                         occ.guid,
+                        occ.timestamp,
                         occ.messageType,
                         occ.message,
                         occ.exception

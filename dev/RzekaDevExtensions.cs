@@ -28,7 +28,7 @@ namespace Rzeka.Dev
             }
         };
 
-        public static IDisposable EnableDevServer(this Spring spring, int port = 9222)
+        public static IDisposable EnableDevServer(this Spring spring, int port = 10470)
         {
             var disposables = new CompositeDisposable();
             WireStreams? currentWires = null;
@@ -106,11 +106,7 @@ namespace Rzeka.Dev
 
         static IDisposable SubscribeSocket(WireStreams wires, IWebSocketConnection socket)
         {
-            var disposables = new CompositeDisposable();
-            disposables.Add(wires.Spells.Subscribe(json => SendRaw(socket, json)));
-            disposables.Add(wires.Matters.Subscribe(json => SendRaw(socket, json)));
-            disposables.Add(wires.Messages.Subscribe(json => SendRaw(socket, json)));
-            return disposables;
+            return wires.Occurrences.Subscribe(json => SendRaw(socket, json));
         }
 
         static void SendRaw(IWebSocketConnection socket, string json)
@@ -135,25 +131,26 @@ namespace Rzeka.Dev
         // Per-Eris pre-serialized wire stream. Serializes each occurrence exactly once
         // and multicasts the resulting JSON to every connected socket, so serialization
         // failures publish their Horror once, not once per connected viewer.
+        //
+        // All three categories funnel into a single ReplaySubject so replay preserves
+        // the original chronological interleave — a message emitted before a matter
+        // replays before the matter, instead of all spells then all matters then all
+        // messages (which is what three separate buckets produce).
         sealed class WireStreams : IDisposable
         {
-            readonly ReplaySubject<string> _spells = new(TimeSpan.FromMinutes(1));
-            readonly ReplaySubject<string> _matters = new(TimeSpan.FromMinutes(1));
-            readonly ReplaySubject<string> _messages = new(TimeSpan.FromMinutes(1));
+            readonly ReplaySubject<string> _occurrences = new(TimeSpan.FromMinutes(1));
             readonly CompositeDisposable _sources = new();
 
-            public IObservable<string> Spells => _spells.AsObservable();
-            public IObservable<string> Matters => _matters.AsObservable();
-            public IObservable<string> Messages => _messages.AsObservable();
+            public IObservable<string> Occurrences => _occurrences.AsObservable();
 
             public WireStreams(Eris eris)
             {
                 _sources.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
-                    Serialize(eris, occ, _spells)));
+                    Serialize(eris, occ, _occurrences)));
                 _sources.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
-                    Serialize(eris, occ, _matters)));
+                    Serialize(eris, occ, _occurrences)));
                 _sources.Add(eris.SerializableMessageOccurences.Subscribe(occ =>
-                    Serialize(eris, occ, _messages)));
+                    Serialize(eris, occ, _occurrences)));
             }
 
             static void Serialize<T>(Eris eris, T occurence, ReplaySubject<string> sink)
@@ -189,9 +186,7 @@ namespace Rzeka.Dev
             public void Dispose()
             {
                 _sources.Dispose();
-                _spells.OnCompleted();
-                _matters.OnCompleted();
-                _messages.OnCompleted();
+                _occurrences.OnCompleted();
             }
         }
     }

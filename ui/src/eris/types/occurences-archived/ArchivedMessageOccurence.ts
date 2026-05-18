@@ -13,11 +13,13 @@ export class ArchivedMessageOccurence implements IArchivedOccurence {
 
     constructor(
         guid: string,
+        timestamp: number,
         messageType: MessageType,
         message: string,
         exception: MessageException | null
     ) {
         this.guid = guid
+        this.timestamp = timestamp
         this.messageType = messageType
         this.message = message
         this.exception = exception
