@@ -1,5 +1,6 @@
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Text.Json;
 using Fleck;
 using Rzeka.Serialization;
@@ -30,7 +31,7 @@ namespace Rzeka.Dev
         public static IDisposable EnableDevServer(this Spring spring, int port = 9222)
         {
             var disposables = new CompositeDisposable();
-            Eris? currentEris = null;
+            WireStreams? currentWires = null;
             var activeConnections = new List<(IWebSocketConnection socket, CompositeDisposable subscriptions)>();
 
             var server = new WebSocketServer($"ws://127.0.0.1:{port}");
@@ -46,11 +47,11 @@ namespace Rzeka.Dev
                         activeConnections.Add((socket, connectionSubscriptions));
                         Console.WriteLine("[Eris] Debugger connected");
 
-                        // Defer subscription so it doesn't fire replay synchronously inside OnOpen
-                        if (currentEris is not null)
+                        // Defer subscription so the replay doesn't fire synchronously inside OnOpen
+                        if (currentWires is not null)
                         {
-                            var eris = currentEris;
-                            Task.Run(() => connectionSubscriptions.Add(SubscribeEris(eris, socket)));
+                            var wires = currentWires;
+                            Task.Run(() => connectionSubscriptions.Add(SubscribeSocket(wires, socket)));
                         }
                     }
                     catch (Exception ex)
@@ -80,62 +81,40 @@ namespace Rzeka.Dev
 
             disposables.Add(spring.OnCreated.Subscribe(river =>
             {
-                currentEris = river.Eris;
+                // Dispose the previous river's wire streams if a new river is appearing without
+                // an explicit disposal of the old. Otherwise serialization keeps running against
+                // a dead Eris and the streams leak.
+                currentWires?.Dispose();
+
+                var wires = new WireStreams(river.Eris);
+                currentWires = wires;
+
                 foreach (var (socket, subscriptions) in activeConnections)
                 {
-                    subscriptions.Add(SubscribeEris(river.Eris, socket));
+                    subscriptions.Add(SubscribeSocket(wires, socket));
                 }
             }));
 
-            disposables.Add(spring.OnDisposed.Subscribe(_ => currentEris = null));
+            disposables.Add(spring.OnDisposed.Subscribe(_ =>
+            {
+                currentWires?.Dispose();
+                currentWires = null;
+            }));
 
             return disposables;
         }
 
-        static IDisposable SubscribeEris(Eris eris, IWebSocketConnection socket)
+        static IDisposable SubscribeSocket(WireStreams wires, IWebSocketConnection socket)
         {
             var disposables = new CompositeDisposable();
-
-            disposables.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
-                Send(eris, socket, occ)));
-
-            disposables.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
-                Send(eris, socket, occ)));
-
-            disposables.Add(eris.SerializableMessageOccurences.Subscribe(occ =>
-                Send(eris, socket, occ)));
-
+            disposables.Add(wires.Spells.Subscribe(json => SendRaw(socket, json)));
+            disposables.Add(wires.Matters.Subscribe(json => SendRaw(socket, json)));
+            disposables.Add(wires.Messages.Subscribe(json => SendRaw(socket, json)));
             return disposables;
         }
 
-        static void Send<T>(Eris eris, IWebSocketConnection socket, T occurence)
+        static void SendRaw(IWebSocketConnection socket, string json)
         {
-            string json;
-            try
-            {
-                json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
-            }
-            catch (Exception ex)
-            {
-                // Surface the failure through Eris so the dev UI sees it instead of silently
-                // dropping the occurrence. Skip republishing if a Message itself failed -
-                // that would recurse forever on the same broken payload.
-                if (occurence is not SerializableMessageOccurence)
-                {
-                    eris.PublishMessage(new MessageOccurence
-                    {
-                        Guid = Guid.NewGuid(),
-                        Timestamp = DateTimeOffset.Now,
-                        RzekaMessageType = RzekaMessageType.Horror,
-                        Message = $"Failed to serialize {DescribeOccurence(occurence!)} - {ex.Message}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.",
-                        Exception = ex,
-                        Circumstances = Array.Empty<Guid>(),
-                    });
-                }
-                Console.Error.WriteLine($"[Eris] Send error: {ex.Message}");
-                return;
-            }
-
             try
             {
                 socket.Send(json);
@@ -152,5 +131,68 @@ namespace Rzeka.Dev
             SerializableReceivedMatter rm => $"Received matter {rm.receivedMatterGuid}",
             _ => occurence.GetType().Name,
         };
+
+        // Per-Eris pre-serialized wire stream. Serializes each occurrence exactly once
+        // and multicasts the resulting JSON to every connected socket, so serialization
+        // failures publish their Horror once, not once per connected viewer.
+        sealed class WireStreams : IDisposable
+        {
+            readonly ReplaySubject<string> _spells = new(TimeSpan.FromMinutes(1));
+            readonly ReplaySubject<string> _matters = new(TimeSpan.FromMinutes(1));
+            readonly ReplaySubject<string> _messages = new(TimeSpan.FromMinutes(1));
+            readonly CompositeDisposable _sources = new();
+
+            public IObservable<string> Spells => _spells.AsObservable();
+            public IObservable<string> Matters => _matters.AsObservable();
+            public IObservable<string> Messages => _messages.AsObservable();
+
+            public WireStreams(Eris eris)
+            {
+                _sources.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
+                    Serialize(eris, occ, _spells)));
+                _sources.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
+                    Serialize(eris, occ, _matters)));
+                _sources.Add(eris.SerializableMessageOccurences.Subscribe(occ =>
+                    Serialize(eris, occ, _messages)));
+            }
+
+            static void Serialize<T>(Eris eris, T occurence, ReplaySubject<string> sink)
+            {
+                string json;
+                try
+                {
+                    json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
+                }
+                catch (Exception ex)
+                {
+                    // Skip republishing if a Message itself failed - that would recurse forever
+                    // on the same broken payload.
+                    if (occurence is not SerializableMessageOccurence)
+                    {
+                        eris.PublishMessage(new MessageOccurence
+                        {
+                            Guid = Guid.NewGuid(),
+                            Timestamp = DateTimeOffset.Now,
+                            RzekaMessageType = RzekaMessageType.Horror,
+                            Message = $"Failed to serialize {DescribeOccurence(occurence!)}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace. Message: {ex.Message}.",
+                            Exception = ex,
+                            Circumstances = Array.Empty<Guid>(),
+                        });
+                    }
+                    Console.Error.WriteLine($"[Eris] Serialize error: {ex.Message}");
+                    return;
+                }
+
+                sink.OnNext(json);
+            }
+
+            public void Dispose()
+            {
+                _sources.Dispose();
+                _spells.OnCompleted();
+                _matters.OnCompleted();
+                _messages.OnCompleted();
+            }
+        }
     }
 }
