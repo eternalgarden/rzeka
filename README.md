@@ -512,7 +512,7 @@ Rzeka ships with a browser-based debugger (not included in builds) that connects
 
 ```csharp
 var spring = new Spring();
-spring.EnableDevServer(); // starts WebSocket on ws://127.0.0.1:9222
+spring.EnableDevServer(); // starts WebSocket on ws://127.0.0.1:10470
 
 IRzeka rzeka = spring.Create("MyGame");
 ```

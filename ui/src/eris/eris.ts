@@ -12,6 +12,7 @@ import "./components/GefildeDesVorkommen.ts"
 import "./components/causality/CausalityTree.ts"
 import "./components/other/Usagi.ts"
 import "./components/other/WHDIGLoader.ts"
+import "./components/other/ConnectionStatus.ts"
 
 import { loadTestDataIfLocal } from "./helpers/loadTestDataIfLocal"
 import { connectToDebugServer } from "./connection/debugServerConnection"
@@ -103,9 +104,18 @@ if (!window.location.hash.includes("usagi")) {
     document.querySelector("usagi-happy")?.remove()
 }
 
+function getPortFromHash(): number | undefined {
+    const match = window.location.hash.match(/port(\d{1,5})/i)
+    if (!match) return undefined
+    const port = parseInt(match[1], 10)
+    return port >= 1 && port <= 65535 ? port : undefined
+}
+
 // Connect to the live debug server (WebSocket)
-// Falls back gracefully if the game isn't running - reconnects automatically
-connectToDebugServer()
+// Falls back gracefully if the game isn't running - reconnects automatically.
+// Port can be overridden via #portNNNN in the URL (e.g. #port10470) to match
+// a custom Spring.EnableDevServer(port: N) on the game side.
+connectToDebugServer(getPortFromHash())
 
 // Still supports #local for loading test data from bundled JSON
 loadTestDataIfLocal()

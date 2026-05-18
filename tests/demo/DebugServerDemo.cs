@@ -75,7 +75,7 @@ namespace Rzeka.Tests.Demo
             );
 
             // --- Let it run ---
-            Console.WriteLine("Debug server running on ws://127.0.0.1:9222");
+            Console.WriteLine("Debug server running on ws://127.0.0.1:10470");
             Console.WriteLine("Open Eris UI (cd ui && npm run dev) to see live data.");
             Console.WriteLine("Waiting 30 seconds...");
 
