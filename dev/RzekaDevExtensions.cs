@@ -97,28 +97,60 @@ namespace Rzeka.Dev
             var disposables = new CompositeDisposable();
 
             disposables.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
-                Send(socket, occ)));
+                Send(eris, socket, occ)));
 
             disposables.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
-                Send(socket, occ)));
+                Send(eris, socket, occ)));
 
             disposables.Add(eris.SerializableMessageOccurences.Subscribe(occ =>
-                Send(socket, occ)));
+                Send(eris, socket, occ)));
 
             return disposables;
         }
 
-        static void Send<T>(IWebSocketConnection socket, T occurence)
+        static void Send<T>(Eris eris, IWebSocketConnection socket, T occurence)
         {
+            string json;
             try
             {
-                string json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
+                json = JsonSerializer.Serialize(occurence, occurence!.GetType(), SerializerOptions);
+            }
+            catch (Exception ex)
+            {
+                // Surface the failure through Eris so the dev UI sees it instead of silently
+                // dropping the occurrence. Skip republishing if a Message itself failed -
+                // that would recurse forever on the same broken payload.
+                if (occurence is not SerializableMessageOccurence)
+                {
+                    eris.PublishMessage(new MessageOccurence
+                    {
+                        Guid = Guid.NewGuid(),
+                        Timestamp = DateTimeOffset.Now,
+                        RzekaMessageType = RzekaMessageType.Horror,
+                        Message = $"Failed to serialize {DescribeOccurence(occurence!)} - {ex.Message}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.",
+                        Exception = ex,
+                        Circumstances = Array.Empty<Guid>(),
+                    });
+                }
+                Console.Error.WriteLine($"[Eris] Send error: {ex.Message}");
+                return;
+            }
+
+            try
+            {
                 socket.Send(json);
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine($"[Eris] Send error: {ex.Message}");
+                Console.Error.WriteLine($"[Eris] Socket send error: {ex.Message}");
             }
         }
+
+        static string DescribeOccurence(object occurence) => occurence switch
+        {
+            SerializableShapedMatter sm => $"Shaped {sm.matterType.Name} (matter {sm.matter.Guid})",
+            SerializableReceivedMatter rm => $"Received matter {rm.receivedMatterGuid}",
+            _ => occurence.GetType().Name,
+        };
     }
 }
