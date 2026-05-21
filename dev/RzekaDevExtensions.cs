@@ -106,6 +106,11 @@ namespace Rzeka.Dev
 
         static IDisposable SubscribeSocket(WireStreams wires, IWebSocketConnection socket)
         {
+            // Session marker first, then the replay+live stream. Pushed per-subscription
+            // (not into the replay buffer itself) so it reaches every fresh socket — including
+            // connects more than a minute after game start, when the marker would otherwise
+            // have aged out of the 1-minute window.
+            SendRaw(socket, wires.SessionStartedJson);
             return wires.Occurrences.Subscribe(json => SendRaw(socket, json));
         }
 
@@ -143,8 +148,24 @@ namespace Rzeka.Dev
 
             public IObservable<string> Occurrences => _occurrences.AsObservable();
 
+            // Session marker carrying a fresh guid per river. Browser tracks the last
+            // seen guid and clears its occurrence list when this changes — i.e. when the
+            // game was stopped and restarted while the UI tab stayed open.
+            public string SessionStartedJson { get; }
+
             public WireStreams(Eris eris)
             {
+                SessionStartedJson = JsonSerializer.Serialize(
+                    new
+                    {
+                        type = "session-started",
+                        sessionGuid = Guid.NewGuid(),
+                        riverName = eris.Name,
+                        timestamp = DateTimeOffset.Now.ToUnixTimeSeconds(),
+                    },
+                    SerializerOptions
+                );
+
                 _sources.Add(eris.SerializableSpellOccurences.Subscribe(occ =>
                     Serialize(eris, occ, _occurrences)));
                 _sources.Add(eris.SerializableMatterOccurences.Subscribe(occ =>
@@ -171,7 +192,7 @@ namespace Rzeka.Dev
                             Guid = Guid.NewGuid(),
                             Timestamp = DateTimeOffset.Now,
                             RzekaMessageType = RzekaMessageType.Horror,
-                            Message = $"Failed to serialize {DescribeOccurence(occurence!)}. Check for non-serializable properties on matter (engine-native handles, IO objects, throwing getters). Please mark them with [JsonIgnore] from System.Text.Json.Serialization namespace.",
+                            Message = $"Failed to serialize {DescribeOccurence(occurence!)}: {ex.Message}. Eris loses this matter - downstream Received occurrences and any circumstance references will display as MISSING and causality breaks. Mark engine-native handles, IO objects, and throwing getters with [JsonIgnore] (System.Text.Json.Serialization). The rest of the matter still serializes.",
                             Exception = ex,
                             Circumstances = Array.Empty<Guid>(),
                         });
