@@ -8,13 +8,13 @@ public class ScrollExtensionTests
     // ── CombineLatest (pair) ──────────────────────────────────────────────────
 
     [Fact]
-    public void CombineLatest_pair_emits_tuple_when_left_fires_after_both_have_emitted()
+    public void CombineLatestMatter_pair_emits_tuple_when_left_fires_after_both_have_emitted()
     {
         var left = new Subject<int>();
         var right = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = left.CombineLatest(right).Subscribe(received.Add);
+        using var _ = left.CombineLatestMatter(right).Subscribe(received.Add);
 
         right.OnNext("a");
         left.OnNext(1);
@@ -26,13 +26,13 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void CombineLatest_pair_emits_tuple_when_right_fires_after_both_have_emitted()
+    public void CombineLatestMatter_pair_emits_tuple_when_right_fires_after_both_have_emitted()
     {
         var left = new Subject<int>();
         var right = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = left.CombineLatest(right).Subscribe(received.Add);
+        using var _ = left.CombineLatestMatter(right).Subscribe(received.Add);
 
         left.OnNext(1);
         right.OnNext("a");
@@ -44,13 +44,13 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void CombineLatest_pair_does_not_emit_until_both_have_fired()
+    public void CombineLatestMatter_pair_does_not_emit_until_both_have_fired()
     {
         var left = new Subject<int>();
         var right = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = left.CombineLatest(right).Subscribe(received.Add);
+        using var _ = left.CombineLatestMatter(right).Subscribe(received.Add);
 
         left.OnNext(1);
         left.OnNext(2);
@@ -66,14 +66,14 @@ public class ScrollExtensionTests
     // ── CombineLatest (triple) ────────────────────────────────────────────────
 
     [Fact]
-    public void CombineLatest_triple_emits_tuple_when_any_fires_after_all_have_emitted()
+    public void CombineLatestMatter_triple_emits_tuple_when_any_fires_after_all_have_emitted()
     {
         var first = new Subject<int>();
         var second = new Subject<string>();
         var third = new Subject<bool>();
         var received = new List<(int, string, bool)>();
 
-        using var _ = first.CombineLatest(second, third).Subscribe(received.Add);
+        using var _ = first.CombineLatestMatter(second, third).Subscribe(received.Add);
 
         first.OnNext(1);
         second.OnNext("a");
@@ -91,14 +91,14 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void CombineLatest_triple_does_not_emit_until_all_three_have_fired()
+    public void CombineLatestMatter_triple_does_not_emit_until_all_three_have_fired()
     {
         var first = new Subject<int>();
         var second = new Subject<string>();
         var third = new Subject<bool>();
         var received = new List<(int, string, bool)>();
 
-        using var _ = first.CombineLatest(second, third).Subscribe(received.Add);
+        using var _ = first.CombineLatestMatter(second, third).Subscribe(received.Add);
 
         first.OnNext(1);
         second.OnNext("a");
@@ -114,13 +114,13 @@ public class ScrollExtensionTests
     // ── WithLatestFrom (pair) ─────────────────────────────────────────────────
 
     [Fact]
-    public void WithLatestFrom_pair_emits_tuple_pairing_source_with_latest_other()
+    public void WithLatestFromMatter_pair_emits_tuple_pairing_source_with_latest_other()
     {
         var source = new Subject<int>();
         var other = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = source.WithLatestFrom(other).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other).Subscribe(received.Add);
 
         other.OnNext("a");
         source.OnNext(1);
@@ -133,13 +133,13 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void WithLatestFrom_pair_does_not_emit_when_other_fires()
+    public void WithLatestFromMatter_pair_does_not_emit_when_other_fires()
     {
         var source = new Subject<int>();
         var other = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = source.WithLatestFrom(other).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other).Subscribe(received.Add);
 
         other.OnNext("a");
         other.OnNext("b");
@@ -149,13 +149,13 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void WithLatestFrom_pair_drops_source_emissions_before_other_has_emitted()
+    public void WithLatestFromMatter_pair_drops_source_emissions_before_other_has_emitted()
     {
         var source = new Subject<int>();
         var other = new Subject<string>();
         var received = new List<(int, string)>();
 
-        using var _ = source.WithLatestFrom(other).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other).Subscribe(received.Add);
 
         source.OnNext(1);
         source.OnNext(2);
@@ -172,14 +172,14 @@ public class ScrollExtensionTests
     // ── WithLatestFrom (triple) ───────────────────────────────────────────────
 
     [Fact]
-    public void WithLatestFrom_triple_emits_tuple_pairing_source_with_latest_from_both_others()
+    public void WithLatestFromMatter_triple_emits_tuple_pairing_source_with_latest_from_both_others()
     {
         var source = new Subject<int>();
         var other1 = new Subject<string>();
         var other2 = new Subject<bool>();
         var received = new List<(int, string, bool)>();
 
-        using var _ = source.WithLatestFrom(other1, other2).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other1, other2).Subscribe(received.Add);
 
         other1.OnNext("a");
         other2.OnNext(true);
@@ -194,14 +194,14 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void WithLatestFrom_triple_does_not_emit_when_either_other_fires()
+    public void WithLatestFromMatter_triple_does_not_emit_when_either_other_fires()
     {
         var source = new Subject<int>();
         var other1 = new Subject<string>();
         var other2 = new Subject<bool>();
         var received = new List<(int, string, bool)>();
 
-        using var _ = source.WithLatestFrom(other1, other2).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other1, other2).Subscribe(received.Add);
 
         other1.OnNext("a");
         other1.OnNext("b");
@@ -212,14 +212,14 @@ public class ScrollExtensionTests
     }
 
     [Fact]
-    public void WithLatestFrom_triple_drops_source_emissions_before_either_other_has_emitted()
+    public void WithLatestFromMatter_triple_drops_source_emissions_before_either_other_has_emitted()
     {
         var source = new Subject<int>();
         var other1 = new Subject<string>();
         var other2 = new Subject<bool>();
         var received = new List<(int, string, bool)>();
 
-        using var _ = source.WithLatestFrom(other1, other2).Subscribe(received.Add);
+        using var _ = source.WithLatestFromMatter(other1, other2).Subscribe(received.Add);
 
         other1.OnNext("a");
         source.OnNext(1); // other2 hasn't emitted yet — should be dropped
