@@ -11,7 +11,8 @@ public sealed class Spring
     public IRzeka Create(
         string name,
         Action<ISpell, Exception>? onUnhandledSourceError = null,
-        Func<object, string?>? describeOwner = null
+        Func<object, string?>? describeOwner = null,
+        Func<bool>? isOnMainThread = null
     )
     {
         if (_hasRiver)
@@ -24,6 +25,8 @@ public sealed class Spring
             river.Eris.OnUnhandledSourceError = onUnhandledSourceError;
         if (describeOwner is not null)
             river.Eris.DescribeOwner = describeOwner;
+        if (isOnMainThread is not null)
+            river.Eris.IsOnMainThread = isOnMainThread;
         _created.OnNext(river);
         return river;
     }

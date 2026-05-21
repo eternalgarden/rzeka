@@ -19,7 +19,7 @@ namespace Rzeka.Tests.Demo
             // --- Setup ---
             var spring = new Spring();
             using var debugServer = spring.EnableDevServer();
-            var rzeka = spring.Create("Demo");
+            var rzeka = spring.Create("Demo", isOnMainThread: () => true);
 
             var Q = new CollectibleDisposable();
             int health = 100;

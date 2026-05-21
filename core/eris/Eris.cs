@@ -38,7 +38,7 @@ public class Eris : IDisposable
 
     public void PublishMatterOccurence(MatterOccurence matterOccurence)
     {
-        if (Environment.CurrentManagedThreadId != 1)
+        if (IsOnMainThread is not null && !IsOnMainThread())
         {
             PublishMessage(new MessageOccurence
             {
@@ -73,6 +73,12 @@ public class Eris : IDisposable
     // the hook off. When null, Who carries only its type information and the
     // debugger sees instances of the same type as identical.
     internal Func<object, string?>? DescribeOwner { get; set; }
+
+    // Optional engine-adapter hook that returns true when the caller is on the main thread.
+    // Set at river creation via Spring.Create(name, isOnMainThread: ...). When null,
+    // the check is skipped entirely - no off-thread warnings are emitted. Godot callers
+    // pass () => Engine.IsMainThread(), Unity callers pass () => UnityMainThreadDispatcher.IsMainThread().
+    internal Func<bool>? IsOnMainThread { get; set; }
 
     public Eris(string name)
     {
