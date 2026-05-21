@@ -6,22 +6,18 @@ import {
     css,
     observable,
     repeat,
+    when,
     ref,
 } from "@microsoft/fast-element"
 
-import { MatterOccurenceCategory } from "../types/occurence-categories/MatterOccurenceCategory"
 import { OccurenceCategory } from "../types/occurence-categories/OccurenceCategory"
-import {
-    BehaviorSubject,
-    Observable,
-    Subscription,
-    combineLatest,
-    fromEvent,
-} from "rxjs"
-import { filter, map, scan, share } from "rxjs/operators"
+import { BehaviorSubject, Subscription, fromEvent } from "rxjs"
+import { map } from "rxjs/operators"
 import { IArchivedOccurence } from "../types/occurences-archived/IArchivedOccurence"
+import { IArchivedMatterOccurence } from "../types/occurences-archived/IArchivedMatterOccurence"
 import { OccurencesArchive } from "../types/archives/OccurencesArchive"
-import { MatterOccurenceFilter } from "./MatterOccurenceFilter"
+
+type WhoDescriptionOption = { value: string; label: string }
 import {
     ON_CLEAR_OCCURENCES,
     ON_SET_FOCUS_TO_SEARCHBAR,
@@ -55,8 +51,9 @@ const STYLES = css`
         font-family: monospace;
     }
 
-    div.options {
+    .who-filter {
         display: flex;
+        gap: 0.3rem;
         margin-top: 0.2rem;
     }
 
@@ -81,10 +78,16 @@ const STYLES = css`
     select {
         outline: none;
         border: none;
+        background-color: #1e2a2a;
+        color: antiquewhite;
+        font-family: monospace;
+        font-size: 0.8rem;
+        max-width: 12rem;
+        cursor: pointer;
     }
 
     option {
-        background-color: transparent;
+        background-color: #1e2a2a;
     }
 `
 
@@ -121,27 +124,38 @@ const occurenceTemplates = {
 // its probably a good practice but honestly it does a bit occlude the code
 const LITTLE_TEMPLATE: ViewTemplate<GefildeDesVorkommen> = html<GefildeDesVorkommen>`
     <div class="menu">
-    <div class="header">😼🗝️🗃️ occurences</div>
-        <div class="options">
-            <input
-                ${ref("shapedMatterCheckbox")}
-                type="checkbox"
-                name="shapedMatter"
-                checked />
-            <label for="shapedMatter">shaped</label>
-            <input
-                ${ref("receivedMatterCheckbox")}
-                type="checkbox"
-                name="receivedMatter"
-                checked />
-            <label for="receivedMatter">received</label>
+        <div class="header">😼🗝️🗃️ occurences</div>
+        <div class="who-filter">
+            <select ${ref("whoTypeSelect")}>
+                <option value="">all owners</option>
+                ${repeat(
+                    x => x.whoTypeOptions,
+                    html<string>`<option value="${x => x}">${x => x}</option>`
+                )}
+            </select>
+            ${when(
+                x => !!x.whoTypeFilter,
+                html<GefildeDesVorkommen>`
+                    <select
+                        ${ref("whoDescriptionSelect")}
+                        @change="${(x, c) => x.onDescriptionSelectChange(c.event)}">
+                        <option value="">all instances</option>
+                        ${repeat(
+                            x => x.whoDescriptionOptions,
+                            html<WhoDescriptionOption>`
+                                <option value="${x => x.value}">${x => x.label}</option>
+                            `
+                        )}
+                    </select>
+                `
+            )}
         </div>
         <input
             class="searchbar"
             ${ref("searchbar")}
             type="text"
-            tabindex="0" 
-            placeholder="filter..." />
+            tabindex="0"
+            placeholder="filter by type..." />
     </div>
     <div class="occurences">
         ${repeat(
@@ -161,22 +175,23 @@ const LITTLE_TEMPLATE: ViewTemplate<GefildeDesVorkommen> = html<GefildeDesVorkom
 })
 export class GefildeDesVorkommen extends FASTElement {
     // 🪞 Template html references
-    shapedMatterCheckbox: HTMLInputElement
-    receivedMatterCheckbox: HTMLInputElement
     searchbar: HTMLInputElement
+    whoTypeSelect: HTMLSelectElement
+    whoDescriptionSelect: HTMLSelectElement
 
     // 🕊️ Displayed occurences
     @observable listedOccurences: IArchivedOccurence[] = []
+    private allOccurences: IArchivedOccurence[] = []
+    private searchTerm: string = ""
 
-    // 💎 Filtering
-    private filter: MatterOccurenceFilter
-    private shapedMatterFilter: Observable<boolean>
-    private receivedMatterFilter: Observable<boolean>
-    private searchbarFilter: Observable<string>
+    // 💎 Who filter
+    @observable whoTypeOptions: string[] = []
+    @observable whoDescriptionOptions: WhoDescriptionOption[] = []
+    @observable whoTypeFilter: string = ""
+    private whoDescriptionFilter: string = ""
 
     // 🦄 Purposefully public
     occurenceArchive: OccurencesArchive
-    newFilterObservable: Observable<MatterOccurenceFilter>
 
     // 🎯 Currently selected matter guid — drives the causality tree window.
     // Null means nothing is selected.
@@ -225,87 +240,102 @@ export class GefildeDesVorkommen extends FASTElement {
     }
 
     private registerFilterListeners() {
-        this.shapedMatterFilter = fromEvent(
-            this.shapedMatterCheckbox,
-            "click"
-        ).pipe(
-            map(_ => {
-                // console.log(this.shapedMatterCheckbox.checked)
-                return this.shapedMatterCheckbox.checked
-            }),
-            share({
-                connector: () =>
-                    new BehaviorSubject(this.shapedMatterCheckbox.checked),
+        this.lifecycleSubscriptions.push(
+            fromEvent(this.searchbar, "input").pipe(
+                map(x => (x.target as HTMLInputElement).value.toLowerCase())
+            ).subscribe(term => {
+                this.searchTerm = term
+                this.applyFilter()
             })
         )
 
-        this.receivedMatterFilter = fromEvent(
-            this.receivedMatterCheckbox,
-            "click"
-        ).pipe(
-            map(_ => {
-                // console.log(this.receivedMatterCheckbox.checked)
-                return this.receivedMatterCheckbox.checked
-            }),
-            share({
-                connector: () =>
-                    new BehaviorSubject(this.receivedMatterCheckbox.checked),
+        this.lifecycleSubscriptions.push(
+            fromEvent(this.whoTypeSelect, "change").pipe(
+                map(e => (e.target as HTMLSelectElement).value)
+            ).subscribe(val => {
+                this.whoTypeFilter = val
+                this.whoDescriptionFilter = ""
+                this.refreshWhoDescriptionOptions()
+                this.applyFilter()
             })
         )
 
-        this.searchbarFilter = fromEvent(this.searchbar, "input").pipe(
-            map(x => {
-                const value = (x.target as HTMLInputElement).value
-                console.log(value)
-                return value
-            }),
-            share({
-                connector: () => new BehaviorSubject(""),
-            })
-        )
-
-        const accumulatorSeed = new MatterOccurenceFilter()
-
-        this.newFilterObservable = combineLatest([
-            this.shapedMatterFilter,
-            this.receivedMatterFilter,
-            this.searchbarFilter,
-        ]).pipe(
-            scan((acc, next) => {
-                const [isDisplayShaped, isDisplayReceived, searchFilter] = next
-
-                acc.setMatterOccurenceDisplay(
-                    MatterOccurenceCategory.Shaped,
-                    isDisplayShaped
-                )
-                acc.setMatterOccurenceDisplay(
-                    MatterOccurenceCategory.Received,
-                    isDisplayReceived
-                )
-                acc.setFilteredString(searchFilter)
-                return acc
-            }, accumulatorSeed),
-            share({
-                connector: () => new BehaviorSubject(accumulatorSeed),
-                resetOnError: false,
-                resetOnComplete: false,
-                resetOnRefCountZero: false,
+        // Refresh type list whenever a new spell is registered
+        this.lifecycleSubscriptions.push(
+            this.occurenceArchive.spellsArchive.newSpellOccurenceProcessed.subscribe(() => {
+                this.refreshWhoTypeOptions()
+                if (this.whoTypeFilter) this.refreshWhoDescriptionOptions()
             })
         )
     }
 
+    onDescriptionSelectChange(event: Event) {
+        this.whoDescriptionFilter = (event.target as HTMLSelectElement).value
+        this.applyFilter()
+    }
+
+    private refreshWhoTypeOptions() {
+        this.whoTypeOptions = this.occurenceArchive.spellsArchive.getDistinctWhoTypes()
+    }
+
+    private refreshWhoDescriptionOptions() {
+        const descs = this.occurenceArchive.spellsArchive.getWhoDescriptionsForType(this.whoTypeFilter)
+        this.whoDescriptionOptions = descs.map(d =>
+            d === null
+                ? { value: "__unnamed__", label: "unnamed" }
+                : { value: d, label: d }
+        )
+    }
+
+    private applyFilter() {
+        this.listedOccurences = this.allOccurences.filter(occ =>
+            this.matchesSearch(occ)
+        )
+    }
+
+    private matchesSearch(occ: IArchivedOccurence): boolean {
+        if (!this.matchesWhoFilter(occ)) return false
+        if (occ.occurenceCategory !== OccurenceCategory.Matter) return true
+        if (!this.searchTerm) return true
+        const matterOcc = occ as IArchivedMatterOccurence
+        const archive = this.occurenceArchive.matterArchive
+        if (!archive.hasMatter(matterOcc.matterGuid)) return true
+        return archive
+            .getMatterType(matterOcc.matterGuid)
+            .name.toLowerCase()
+            .includes(this.searchTerm)
+    }
+
+    private matchesWhoFilter(occ: IArchivedOccurence): boolean {
+        if (!this.whoTypeFilter) return true
+        if (occ.occurenceCategory !== OccurenceCategory.Matter) return true
+
+        const matterOcc = occ as IArchivedMatterOccurence
+        const spellGuid = this.occurenceArchive.matterArchive.getMatterShapingSpellGuid(
+            matterOcc.matterGuid
+        )
+        if (!spellGuid) return true
+
+        const who = this.occurenceArchive.spellsArchive.getSpellWho(spellGuid)
+        if (!who) return true
+
+        if (who.WhosType.name !== this.whoTypeFilter) return false
+        if (!this.whoDescriptionFilter) return true
+        if (this.whoDescriptionFilter === "__unnamed__") return !who.WhosDescription
+        return who.WhosDescription === this.whoDescriptionFilter
+    }
+
     private registerOccurenceArchiveListeners() {
         const sub: Subscription = this.occurenceArchive.newProcessedOccurence
-            .pipe(
-                // TODO currently only handling matter and message occurences
-                filter(
-                    x =>
-                        x.occurenceCategory === OccurenceCategory.Matter ||
-                        x.occurenceCategory === OccurenceCategory.Message
-                )
-            )
             .subscribe(occ => {
-                const count = this.listedOccurences.unshift(occ)
+                if (
+                    occ.occurenceCategory !== OccurenceCategory.Matter &&
+                    occ.occurenceCategory !== OccurenceCategory.Message
+                )
+                    return
+                this.allOccurences.unshift(occ)
+                if (this.matchesSearch(occ))
+                    this.listedOccurences = [occ, ...this.listedOccurences]
             })
 
         this.lifecycleSubscriptions.push(sub)
@@ -316,6 +346,7 @@ export class GefildeDesVorkommen extends FASTElement {
     }
 
     clearOccurences() {
+        this.allOccurences = []
         this.listedOccurences = []
     }
 }

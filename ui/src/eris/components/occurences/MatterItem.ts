@@ -59,9 +59,6 @@ export class MatterItem extends FASTElement {
     @observable matterData: MatterData
     @observable matterGuid: string
     @observable matterContent: any
-    @observable isVisible: boolean
-    @observable containsSearchedText: boolean
-
     /* 🐺🗃️🗝️ Two shady 'situational' fields */
     /* Clean solution would be to split MatterItem into two separate Elements */
     /* But it is still quite readable and there won't be more matter occurence types. */
@@ -71,7 +68,6 @@ export class MatterItem extends FASTElement {
     spellArchive: SpellArchive
     matterArchive: MatterArchive
 
-    filterSubscription: Subscription
     receivedSubscription: Subscription | undefined
     selectionSubscription: Subscription
 
@@ -94,20 +90,6 @@ export class MatterItem extends FASTElement {
 
         this.matterContent = this.matterData.content
 
-        // 🪞 Filter subscription
-        this.filterSubscription = this.gefilde.newFilterObservable.subscribe(
-            filter => {
-                this.isVisible = filter.isMatterCategoryDisplayed(
-                    this.matterOccurenceCategory
-                )
-                if (!this.isVisible) return
-
-                this.containsSearchedText =
-                    filter.hasFilterString() &&
-                    containsText(filter.getFilterString(), this.matterType)
-            }
-        )
-
         if (this.matterOccurenceCategory === MatterOccurenceCategory.Received) {
             this.wildcardSubscription = this.getReceivalSubscription()
         }
@@ -122,7 +104,6 @@ export class MatterItem extends FASTElement {
     }
 
     disconnectedCallback(): void {
-        this.filterSubscription?.unsubscribe()
         this.receivedSubscription?.unsubscribe()
         this.wildcardSubscription?.unsubscribe()
         this.selectionSubscription?.unsubscribe()
@@ -155,6 +136,3 @@ export class MatterItem extends FASTElement {
     }
 }
 
-function containsText(text: string, matterType: Type) {
-    return matterType.name.toLowerCase().includes(text)
-}

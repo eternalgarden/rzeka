@@ -5,10 +5,6 @@ export function getFullMatterType(matterType: Type | undefined): string {
     return `${matterType.namespace}.${matterType.name}`
 }
 
-export function getStringFilterMatchClass(matchesFilter: boolean) {
-    return matchesFilter ? "filterMatch" : ""
-}
-
 export function getFewGuidCharacters(guid: string): string {
   return guid.substring(0, 6);
 }

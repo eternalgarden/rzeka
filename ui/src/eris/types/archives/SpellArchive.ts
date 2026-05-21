@@ -1,4 +1,5 @@
 import { Observable, filter, map } from "rxjs"
+import { Who } from "../common/Who"
 import { ArchivedSpell } from "../common/spells/ArchivedSpell"
 import { ArchivedSpellOccurence } from "../occurences-archived/ArchivedSpellOccurence"
 import { IArchivedOccurence } from "../occurences-archived/IArchivedOccurence"
@@ -133,6 +134,30 @@ export class SpellArchive {
         } else {
             return knownSpell.spell.whosName
         }
+    }
+
+    getSpellWho(spellGuid: string): Who | undefined {
+        return this.getKnownSpell(spellGuid)?.spell.Who
+    }
+
+    getDistinctWhoTypes(): string[] {
+        const types = new Set<string>()
+        for (const s of this.activeSpells.values())
+            types.add(s.spell.Who.WhosType.name)
+        for (const s of this.forgottenSpells.values())
+            types.add(s.spell.Who.WhosType.name)
+        return Array.from(types).sort()
+    }
+
+    getWhoDescriptionsForType(typeName: string): (string | null)[] {
+        const descs = new Set<string | null>()
+        const check = (s: ArchivedSpell) => {
+            if (s.spell.Who.WhosType.name === typeName)
+                descs.add(s.spell.Who.WhosDescription ?? null)
+        }
+        for (const s of this.activeSpells.values()) check(s)
+        for (const s of this.forgottenSpells.values()) check(s)
+        return Array.from(descs)
     }
 
     getSpellTitle(spellGuid: string): string {

@@ -90,6 +90,10 @@ export class MatterArchive {
         )
     }
 
+    getMatterShapingSpellGuid(matterGuid: string): string | undefined {
+        return this.matterMap.get(matterGuid)?.spellReference
+    }
+
     hasMatter(matterGuid: string): boolean {
         return this.matterMap.has(matterGuid)
     }

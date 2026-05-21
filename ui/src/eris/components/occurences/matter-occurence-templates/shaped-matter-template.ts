@@ -7,7 +7,6 @@ import {
     getFewGuidCharacters,
     getFullMatterType,
     getObjectContents,
-    getStringFilterMatchClass,
 } from "./common-occurence"
 import { ArchivedShapedMatterOccurence } from "../../../types/occurences-archived/ArchivedMatterOccurence"
 import { IArchivedMatterOccurence } from "../../../types/occurences-archived/IArchivedMatterOccurence"
@@ -15,8 +14,7 @@ import { IArchivedMatterOccurence } from "../../../types/occurences-archived/IAr
 const EMOJI: string = "🪴"
 
 export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
-        class="matter-row"
-        ?hidden="${x => !x.isVisible}">
+        class="matter-row">
     <button
         class="select-pin"
         title="Pin as causality tree focus"
@@ -25,8 +23,7 @@ export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
         class="
             matter-item
             shaped-occurence
-            flex-grow-one
-            ${x => getStringFilterMatchClass(x.containsSearchedText)}"
+            flex-grow-one"
         tabindex="-1">
         <!-- /* 🔥 what is this for? */ -->
         <div

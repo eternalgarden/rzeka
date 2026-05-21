@@ -6,14 +6,12 @@ import moment from "moment"
 import {
     getFewGuidCharacters,
     getFullMatterType,
-    getStringFilterMatchClass,
 } from "./common-occurence"
 
 const EMOJI: string = "🎯"
 
 export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<div
-    class="matter-row"
-    ?hidden="${x => !x.isVisible}">
+    class="matter-row">
     <button
         class="select-pin"
         title="Pin as causality tree focus"
@@ -23,8 +21,7 @@ export const ReceivedMatterOccurenceTemplate = html<MatterItem>`<div
     class="
             matter-item
             received-occurence
-            flex-grow-one
-            ${x => getStringFilterMatchClass(x.containsSearchedText)}"
+            flex-grow-one"
     tabindex="-1">
     <div
         slot="start"
