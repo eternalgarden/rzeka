@@ -1,4 +1,4 @@
-import { Observable, filter, map, tap } from "rxjs"
+import { Observable, filter, map } from "rxjs"
 import { ArchivedMatter } from "../common/matter/ArchivedMatter"
 import {
     ArchivedMatterOccurence,
@@ -16,7 +16,7 @@ import { IRawOccurence } from "../occurences-raw/IRawOccurence"
 
 export class MatterArchive {
     private matterMap: Map<string, ArchivedMatter> = new Map()
-    private lastArchivedMatterOccurence: ArchivedMatterOccurence | undefined
+    private receivedOccurenceByMatter: Map<string, ArchivedReceivedMatterOccurence> = new Map()
 
     newMatterOccurenceProcessed: Observable<ArchivedMatterOccurence>
 
@@ -25,7 +25,6 @@ export class MatterArchive {
             filter(occ => occ.occurenceCategory === OccurenceCategory.Matter),
             map(occ => this.process(occ as IRawMatterOccurence)),
             filter((occ): occ is ArchivedMatterOccurence => occ !== null),
-            tap(occ => (this.lastArchivedMatterOccurence = occ)),
         )
     }
 
@@ -59,35 +58,33 @@ export class MatterArchive {
     private processReceived(
         occ: IRawReceivedMatterOccurence,
     ): ArchivedReceivedMatterOccurence | null {
-        // Skip received occurrences that arrive before any shaped occurrence —
-        // there is no last occurrence to collapse against and nothing has been
-        // archived yet for them to reference.
-        if (this.lastArchivedMatterOccurence === undefined) return null
-
         const matterGuid = occ.receivedMatterGuid
+
+        // Skip received occurrences that reference unknown matter — shaped must
+        // arrive first (which it always does in practice).
+        if (!this.matterMap.has(matterGuid)) return null
+
         this.matterMap.get(matterGuid)?.addReceivingSpell(occ.spellGuid)
 
-        // 🐖 the collapsing functions in the main matter list window as a little anti-spam step
-        // instead of listing every single receival of a given shaped matter, a little counter
-        // will be displayed on the received matter slot + when unfolded will also show a list
-        // of all spells that received it before another matter occurence happened in rzeka
-        const last = this.lastArchivedMatterOccurence
-        if (
-            last.matterOccurenceCategory === MatterOccurenceCategory.Received &&
-            last.matterGuid === matterGuid
-        ) {
-            const lastReceived = last as ArchivedReceivedMatterOccurence
-            lastReceived.addReceivingSpell(occ.spellGuid)
+        // All receivals of the same matter instance collapse into one list entry,
+        // regardless of what other occurrences land between them.  A downstream
+        // reaction emitting its own shaped matter used to break the old
+        // "consecutive last" check and produce duplicate Received rows.
+        const existing = this.receivedOccurenceByMatter.get(matterGuid)
+        if (existing) {
+            existing.addReceivingSpell(occ.spellGuid)
             return null
         }
 
-        return new ArchivedReceivedMatterOccurence(
+        const newOccurence = new ArchivedReceivedMatterOccurence(
             occ.guid,
             occ.timestamp,
             occ.matterOccurenceCategory,
             matterGuid,
             occ.spellGuid,
         )
+        this.receivedOccurenceByMatter.set(matterGuid, newOccurence)
+        return newOccurence
     }
 
     getMatterShapingSpellGuid(matterGuid: string): string | undefined {

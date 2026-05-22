@@ -103,6 +103,30 @@ export class MatterItem extends FASTElement {
         super.connectedCallback()
     }
 
+    occurenceChanged(_old: ArchivedMatterOccurence, newVal: ArchivedMatterOccurence): void {
+        if (!this.matterArchive) return // connectedCallback hasn't run yet; it will initialize
+
+        this.wildcardSubscription?.unsubscribe()
+        this.wildcardSubscription = undefined
+        this.selectionSubscription?.unsubscribe()
+
+        this.matterGuid = newVal.matterGuid
+        this.matterOccurenceCategory = newVal.matterOccurenceCategory
+        this.timestamp = newVal.timestamp
+        this.matterType = this.matterArchive.getMatterType(this.matterGuid)
+        this.matterData = this.matterArchive.getMatterData(this.matterGuid)
+        this.matterContent = this.matterData.content
+        this.listOfReceivingSpells = []
+
+        if (this.matterOccurenceCategory === MatterOccurenceCategory.Received) {
+            this.wildcardSubscription = this.getReceivalSubscription()
+        }
+
+        this.selectionSubscription = this.gefilde.selectedMatterGuid$.subscribe(
+            guid => (this.selected = guid === this.matterGuid),
+        )
+    }
+
     disconnectedCallback(): void {
         this.receivedSubscription?.unsubscribe()
         this.wildcardSubscription?.unsubscribe()

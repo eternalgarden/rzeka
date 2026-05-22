@@ -130,7 +130,7 @@ export class SpellArchive {
 
         if (knownSpell == undefined) {
             this.requested.push(spellGuid)
-            return "derp"
+            return "?"
         } else {
             return knownSpell.spell.whosName
         }
