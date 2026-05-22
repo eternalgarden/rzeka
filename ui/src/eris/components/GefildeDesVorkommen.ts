@@ -15,6 +15,13 @@ import { BehaviorSubject, Subscription, fromEvent } from "rxjs"
 import { map } from "rxjs/operators"
 import { IArchivedOccurence } from "../types/occurences-archived/IArchivedOccurence"
 import { IArchivedMatterOccurence } from "../types/occurences-archived/IArchivedMatterOccurence"
+import {
+    ArchivedReceivedMatterOccurence,
+    ArchivedShapedMatterOccurence,
+} from "../types/occurences-archived/ArchivedMatterOccurence"
+import { ArchivedMessageOccurence } from "../types/occurences-archived/ArchivedMessageOccurence"
+import { MessageType } from "../types/common/message/MessageTypeEnum"
+import { MatterOccurenceCategory } from "../types/occurence-categories/MatterOccurenceCategory"
 import { OccurencesArchive } from "../types/archives/OccurencesArchive"
 
 type WhoDescriptionOption = { value: string; label: string }
@@ -49,6 +56,62 @@ const STYLES = css`
         backdrop-filter: blur(2px);
         padding: 0.3rem;
         font-family: monospace;
+    }
+
+    .header-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .msg-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.1rem 0.4rem;
+        border-radius: 3px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        cursor: pointer;
+        transition: background-color 0.15s;
+        border: 1px solid transparent;
+    }
+
+    .msg-badge.Horror {
+        background-color: #5a1a1a;
+        border-color: #ff6b6b88;
+        color: #ff9999;
+    }
+    .msg-badge.Horror:hover { background-color: #7a2222; }
+    .msg-badge.Horror.active {
+        background-color: #8b0000;
+        border-color: #ff6b6b;
+        color: #ffcccc;
+    }
+
+    .msg-badge.Hunch {
+        background-color: #3a3010;
+        border-color: #ffdd6688;
+        color: #ffdd99;
+    }
+    .msg-badge.Hunch:hover { background-color: #504218; }
+    .msg-badge.Hunch.active {
+        background-color: #5a4a00;
+        border-color: #ffdd66;
+        color: #fff0bb;
+    }
+
+    .msg-badge.Hint {
+        background-color: #0e2040;
+        border-color: #6699ff88;
+        color: #99bbff;
+    }
+    .msg-badge.Hint:hover { background-color: #1a3060; }
+    .msg-badge.Hint.active {
+        background-color: #0a1e5e;
+        border-color: #6699ff;
+        color: #ccdeff;
     }
 
     .who-filter {
@@ -119,12 +182,35 @@ const occurenceTemplates = {
         }} />`,
 }
 
+function messageBadgeEmoji(type: MessageType): string {
+    if (type === MessageType.Horror) return "🧨"
+    if (type === MessageType.Hunch) return "⚠️"
+    return "🐇"
+}
+
 // Designating type with ': ViewTemplate<OccurencesContainerElement>' is not necessary
 // it's a 'typescript' thing, here for clarity,
 // its probably a good practice but honestly it does a bit occlude the code
 const LITTLE_TEMPLATE: ViewTemplate<GefildeDesVorkommen> = html<GefildeDesVorkommen>`
     <div class="menu">
-        <div class="header">😼🗝️🗃️ occurences</div>
+        <div class="header-row">
+            <div class="header">😼🗝️🗃️ occurences</div>
+            <button
+                class="msg-badge Hint"
+                title="Dump listedOccurences to console as JSON"
+                @click="${x => x.dumpListedOccurences()}">🗃️ dump</button>
+            ${repeat(
+                x => x.messageBadges,
+                html<{ type: MessageType; count: number; active: boolean }>`
+                    <button
+                        class="msg-badge ${x => x.type} ${x => (x.active ? "active" : "")}"
+                        @click="${(x, c) =>
+                            (c.parent as GefildeDesVorkommen).toggleMessageTypeFilter(x.type)}">
+                        ${x => messageBadgeEmoji(x.type)} ${x => x.count}
+                    </button>
+                `
+            )}
+        </div>
         <div class="who-filter">
             <select ${ref("whoTypeSelect")}>
                 <option value="">all owners</option>
@@ -189,6 +275,15 @@ export class GefildeDesVorkommen extends FASTElement {
     @observable whoDescriptionOptions: WhoDescriptionOption[] = []
     @observable whoTypeFilter: string = ""
     private whoDescriptionFilter: string = ""
+
+    // 🗣️ Message type badges — counts + active filter
+    private messageCounts: Record<MessageType, number> = {
+        [MessageType.Horror]: 0,
+        [MessageType.Hunch]: 0,
+        [MessageType.Hint]: 0,
+    }
+    private messageTypeFilter: MessageType | null = null
+    @observable messageBadges: { type: MessageType; count: number; active: boolean }[] = []
 
     // 🦄 Purposefully public
     occurenceArchive: OccurencesArchive
@@ -287,10 +382,32 @@ export class GefildeDesVorkommen extends FASTElement {
         )
     }
 
+    toggleMessageTypeFilter(type: MessageType) {
+        this.messageTypeFilter = this.messageTypeFilter === type ? null : type
+        this.refreshMessageBadges()
+        this.applyFilter()
+    }
+
+    private refreshMessageBadges() {
+        this.messageBadges = (Object.keys(this.messageCounts) as MessageType[])
+            .filter(type => this.messageCounts[type] > 0)
+            .map(type => ({
+                type,
+                count: this.messageCounts[type],
+                active: this.messageTypeFilter === type,
+            }))
+    }
+
     private applyFilter() {
         this.listedOccurences = this.allOccurences.filter(occ =>
-            this.matchesSearch(occ)
+            this.matchesMessageTypeFilter(occ) && this.matchesSearch(occ)
         )
+    }
+
+    private matchesMessageTypeFilter(occ: IArchivedOccurence): boolean {
+        if (!this.messageTypeFilter) return true
+        if (occ.occurenceCategory !== OccurenceCategory.Message) return false
+        return (occ as ArchivedMessageOccurence).messageType === this.messageTypeFilter
     }
 
     private matchesSearch(occ: IArchivedOccurence): boolean {
@@ -333,12 +450,82 @@ export class GefildeDesVorkommen extends FASTElement {
                     occ.occurenceCategory !== OccurenceCategory.Message
                 )
                     return
+
+                if (occ.occurenceCategory === OccurenceCategory.Message) {
+                    const msgType = (occ as ArchivedMessageOccurence).messageType
+                    this.messageCounts[msgType]++
+                    this.refreshMessageBadges()
+                }
+
                 this.allOccurences.unshift(occ)
-                if (this.matchesSearch(occ))
+                if (this.matchesMessageTypeFilter(occ) && this.matchesSearch(occ))
                     this.listedOccurences = [occ, ...this.listedOccurences]
             })
 
         this.lifecycleSubscriptions.push(sub)
+    }
+
+    dumpListedOccurences() {
+        const spells = this.occurenceArchive.spellsArchive
+        const matters = this.occurenceArchive.matterArchive
+
+        const serialized = this.listedOccurences.map((occ, idx) => {
+            const base = {
+                idx,
+                occurenceCategory: occ.occurenceCategory,
+                guid: occ.guid,
+                timestamp: occ.timestamp,
+            }
+
+            if (occ.occurenceCategory === OccurenceCategory.Matter) {
+                const m = occ as IArchivedMatterOccurence
+                const matterType = matters.hasMatter(m.matterGuid)
+                    ? matters.getMatterType(m.matterGuid).name
+                    : "UNKNOWN"
+
+                if (m.matterOccurenceCategory === MatterOccurenceCategory.Shaped) {
+                    const shaped = occ as ArchivedShapedMatterOccurence
+                    return {
+                        ...base,
+                        matterOccurenceCategory: "Shaped",
+                        matterGuid: m.matterGuid,
+                        matterType,
+                        shapedBySpell: shaped.spellGuid,
+                        shapedByCaster: spells.getSpellCasterName(shaped.spellGuid),
+                        shapedByTitle: spells.getSpellTitle(shaped.spellGuid),
+                    }
+                }
+
+                if (m.matterOccurenceCategory === MatterOccurenceCategory.Received) {
+                    const received = occ as ArchivedReceivedMatterOccurence
+                    // Access the private list via the subject's current value
+                    const receiverSubjectValue = (received as any).newReceiverSubject?.getValue?.() ?? []
+                    return {
+                        ...base,
+                        matterOccurenceCategory: "Received",
+                        matterGuid: m.matterGuid,
+                        matterType,
+                        receivedBySpells: receiverSubjectValue.map((sg: string) => ({
+                            spellGuid: sg,
+                            caster: spells.getSpellCasterName(sg),
+                            title: spells.getSpellTitle(sg),
+                        })),
+                    }
+                }
+
+                return { ...base, matterOccurenceCategory: m.matterOccurenceCategory, matterGuid: m.matterGuid, matterType }
+            }
+
+            if (occ.occurenceCategory === OccurenceCategory.Message) {
+                const msg = occ as ArchivedMessageOccurence
+                return { ...base, messageType: msg.messageType, message: msg.message }
+            }
+
+            return base
+        })
+
+        console.log("=== listedOccurences dump ===")
+        console.log(JSON.stringify(serialized, null, 2))
     }
 
     setFocusToSearchbar() {
@@ -348,5 +535,12 @@ export class GefildeDesVorkommen extends FASTElement {
     clearOccurences() {
         this.allOccurences = []
         this.listedOccurences = []
+        this.messageCounts = {
+            [MessageType.Horror]: 0,
+            [MessageType.Hunch]: 0,
+            [MessageType.Hint]: 0,
+        }
+        this.messageTypeFilter = null
+        this.messageBadges = []
     }
 }
