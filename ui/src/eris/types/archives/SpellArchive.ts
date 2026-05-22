@@ -10,6 +10,7 @@ import { IRawOtherSpellOccurence } from "../occurences-raw/spell/IRawOtherSpellO
 import { IRawCreatedSpellOccurence } from "../occurences-raw/spell/IRawCreatedSpellOccurence"
 import { IRawSpellOccurence } from "../occurences-raw/spell/IRawSpellOccurence"
 import { ISerlializableBindingSpell } from "../common/spells/ISerlializableBindingSpell"
+import { SpellSchool } from "../common/spells/SpellSchoolEnum"
 
 export class SpellArchive {
     private activeSpells: Map<string, ArchivedSpell> = new Map<
@@ -138,6 +139,10 @@ export class SpellArchive {
 
     getSpellWho(spellGuid: string): Who | undefined {
         return this.getKnownSpell(spellGuid)?.spell.Who
+    }
+
+    getSpellSchool(spellGuid: string): SpellSchool | undefined {
+        return this.getKnownSpell(spellGuid)?.spell.spellSchool
     }
 
     getDistinctWhoTypes(): string[] {

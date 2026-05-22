@@ -10,8 +10,20 @@ import {
 } from "./common-occurence"
 import { ArchivedShapedMatterOccurence } from "../../../types/occurences-archived/ArchivedMatterOccurence"
 import { IArchivedMatterOccurence } from "../../../types/occurences-archived/IArchivedMatterOccurence"
+import { SpellSchool } from "../../../types/common/spells/SpellSchoolEnum"
 
-const EMOJI: string = "🪴"
+const SPELL_SCHOOL_EMOJI: Record<SpellSchool, string> = {
+    [SpellSchool.Looming]:   "🧩", // weaves streams into new matter
+    [SpellSchool.Stranding]: "🌊", // river source, continuous stream
+    [SpellSchool.Plucking]:  "✨", // one-shot imperative spark
+    [SpellSchool.Shuttling]: "🏹", // request/response arrow
+    [SpellSchool.Weaving]:   "🪴", // terminal — shouldn't shape matter, fallback
+}
+
+function getShapedEmoji(x: MatterItem): string {
+    const school = x.spellArchive.getSpellSchool(getShapedSpellGuid(x.occurence))
+    return school ? SPELL_SCHOOL_EMOJI[school] : "🪴"
+}
 
 export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
         class="matter-row">
@@ -29,7 +41,7 @@ export const ShapedMatterOccurenceTemplate = html<MatterItem>`<div
         <div
             slot="start"
             class="emojiguid">
-            <span>${EMOJI}</span>
+            <span>${x => getShapedEmoji(x)}</span>
             <span class="who">
                 ${x => {
                     const guid = x.occurence.matterGuid
