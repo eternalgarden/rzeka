@@ -29,10 +29,16 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
 
     protected override IObservable<TOut> CreateConjuring()
     {
+        bool ingredientSubscribed = false;
         var lastTIn = default(TIn);
-        IObservable<TIn> ingredient = ThisAsBinding
-            .GetObservableIngredient<TIn>()
-            .Do(next => lastTIn = next);
+        IObservable<TIn> ingredient = Observable.Create<TIn>(observer =>
+        {
+            ingredientSubscribed = true;
+            return ThisAsBinding
+                .GetObservableIngredient<TIn>()
+                .Do(next => lastTIn = next)
+                .Subscribe(observer);
+        });
 
         return _spell
             .Invoke(ingredient)
@@ -42,8 +48,17 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                 // stamped manually. Required for the multi-context Shuttle pattern, where the
                 // responder uses Scry<T>() inside the lambda and stamps [req, scryedA, ...]
                 // on the response themselves.
+                if (!ingredientSubscribed)
+                    Eris.PublishMessage(new MessageOccurence
+                    {
+                        Guid = Guid.NewGuid(),
+                        Timestamp = DateTimeOffset.Now,
+                        RzekaMessageType = RzekaMessageType.Horror,
+                        Message = $"Shuttle response {typeof(TOut).Name} fired without the '{typeof(TIn).Name}' request observable being subscribed to. The lambda is not chaining from the request observable.",
+                    });
+
                 bool manualCircumstances = matter.HasCircumstances();
-                if (!manualCircumstances)
+                if (!manualCircumstances && lastTIn is not null)
                     matter = matter.WithCircumstances<TOut>(lastTIn);
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);

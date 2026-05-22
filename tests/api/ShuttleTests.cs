@@ -247,4 +247,25 @@ public class ShuttleTests
         Assert.True(responses[0].WasSuccessful);
         Assert.False(responses[1].WasSuccessful);
     }
+
+    // ── Null-lastT guard ─────────────────────────────────────────────────────
+
+    [Fact]
+    public void Shuttle_response_has_empty_circumstances_when_spell_fires_before_request_arrives()
+    {
+        // Spell returns Observable.Return without subscribing to the request observable.
+        // lastTIn stays null — response should have empty circumstances, not crash.
+        var river = NewRiver();
+        var received = new List<Receipt>();
+        river.Scry<Receipt>().Subscribe(received.Add); // subscribe before emission fires
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => Observable.Return(new Receipt(new WorkOrder(), true))
+        );
+        using var strand = river.Strand("source", new Subject<WorkOrder>()); // gives Shuttle mana → emission fires
+
+        Receipt receipt = Assert.Single(received);
+        Assert.Empty(receipt.Circumstances);
+    }
 }

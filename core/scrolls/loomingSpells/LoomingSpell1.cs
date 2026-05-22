@@ -31,14 +31,17 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
     protected override IObservable<TOut> CreateConjuring()
     {
         /* ⭐ ---- ---- */
-        
-        var lastT = default(T1); // * attach last matter grabber
-        IObservable<T1> ingredientT = ThisAsBinding
-            .GetObservableIngredient<T1>()
-            .Do(nextT =>
-            {
-                lastT = nextT;
-            });
+
+        bool ingredientSubscribed = false;
+        var lastT = default(T1);
+        IObservable<T1> ingredientT = Observable.Create<T1>(observer =>
+        {
+            ingredientSubscribed = true;
+            return ThisAsBinding
+                .GetObservableIngredient<T1>()
+                .Do(nextT => lastT = nextT)
+                .Subscribe(observer);
+        });
 
         var conjuring = _spell
             .Invoke(ingredientT)
@@ -46,12 +49,23 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
             {
 
                 /* ⭐ ---- ---- */
-                
+
+                if (!ingredientSubscribed)
+                    Eris.PublishMessage(new MessageOccurence
+                    {
+                        Guid = Guid.NewGuid(),
+                        Timestamp = DateTimeOffset.Now,
+                        RzekaMessageType = RzekaMessageType.Horror,
+                        Message = $"Loom output {typeof(TOut).Name} fired without the '{typeof(T1).Name}' ingredient being subscribed to. The lambda is not chaining from the provided input observable — use 'events.Select(_ => ...)' not 'Observable.Return(...)'.",
+                    });
+
                 // Automatic circumstance tracking — only if the user hasn't already set them
                 // (e.g. manually via .WithCircumstances() inside an async Observable.Create wrapper)
                 bool manualCircumstances = matter.HasCircumstances();
                 if (!manualCircumstances)
-                    matter = matter.WithCircumstances<TOut>(lastT);
+                    matter = matter.WithCircumstances<TOut>(
+                        lastT is not null ? new IMatter[] { lastT } : Array.Empty<IMatter>()
+                    );
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
 

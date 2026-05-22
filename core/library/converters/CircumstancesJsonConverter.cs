@@ -11,7 +11,8 @@ public class CircumstancesJsonConverter : JsonConverter<IReadOnlyList<IMatter>>
         writer.WriteStartArray();
         foreach (IMatter matter in value)
         {
-            writer.WriteStringValue(matter.Guid);
+            if (matter is not null)
+                writer.WriteStringValue(matter.Guid);
         }
         writer.WriteEndArray();
     }

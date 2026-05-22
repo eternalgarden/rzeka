@@ -431,4 +431,76 @@ public class LoomTests
         Assert.Contains(paint.Circumstances, c => c.Guid == brush.Guid);
         Assert.Contains(paint.Circumstances, c => c.Guid == canvas.Guid);
     }
+
+    // ── Null-lastT guard ─────────────────────────────────────────────────────
+
+    [Fact]
+    public void Loom1_output_has_empty_circumstances_when_spell_fires_before_ingredient_emits()
+    {
+        // Spell returns Observable.Return without subscribing to the ingredient observable.
+        // lastT stays null — output should have empty circumstances, not crash.
+        var river = NewRiver();
+        var received = new List<Paint>();
+        river.Scry<Paint>().Subscribe(received.Add); // subscribe before emission fires
+
+        using var loom = river.Loom<Ink, Paint>(
+            "transformer",
+            inks => Observable.Return(new Paint())
+        );
+        using var strand = river.Strand("source", new Subject<Ink>()); // gives Loom mana → emission fires
+
+        Paint paint = Assert.Single(received);
+        Assert.Empty(paint.Circumstances);
+    }
+
+    [Fact]
+    public void Loom2_output_omits_unused_ingredient_from_circumstances()
+    {
+        // Second ingredient observable is declared but never wired into the chain.
+        // lastT2 stays null — only lastT1 (ink) should appear as a circumstance.
+        var river = NewRiver();
+        var inkSubject = new Subject<Ink>();
+        var received = new List<Paint>();
+
+        using var s1 = river.Strand("s1", inkSubject);
+        using var s2 = river.Strand("s2", new Subject<Brush>());
+        using var loom = river.Loom<Ink, Brush, Paint>(
+            "transformer",
+            (inks, brushes) => inks.Select(_ => new Paint())
+        );
+        river.Scry<Paint>().Subscribe(received.Add);
+
+        var ink = new Ink();
+        inkSubject.OnNext(ink);
+
+        Paint paint = Assert.Single(received);
+        Assert.Equal(1, paint.Circumstances.Count);
+        Assert.Equal(ink.Guid, paint.Circumstances[0].Guid);
+    }
+
+    [Fact]
+    public void Loom3_output_omits_unused_ingredients_from_circumstances()
+    {
+        // Second and third ingredient observables are declared but never wired into the chain.
+        // lastT2 and lastT3 stay null — only lastT1 (ink) should appear as a circumstance.
+        var river = NewRiver();
+        var inkSubject = new Subject<Ink>();
+        var received = new List<Paint>();
+
+        using var s1 = river.Strand("s1", inkSubject);
+        using var s2 = river.Strand("s2", new Subject<Brush>());
+        using var s3 = river.Strand("s3", new Subject<Canvas>());
+        using var loom = river.Loom<Ink, Brush, Canvas, Paint>(
+            "transformer",
+            (inks, brushes, canvases) => inks.Select(_ => new Paint())
+        );
+        river.Scry<Paint>().Subscribe(received.Add);
+
+        var ink = new Ink();
+        inkSubject.OnNext(ink);
+
+        Paint paint = Assert.Single(received);
+        Assert.Equal(1, paint.Circumstances.Count);
+        Assert.Equal(ink.Guid, paint.Circumstances[0].Guid);
+    }
 }
