@@ -8,7 +8,7 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
     where TOut : IMatter
     where T1 : IMatter
 {
-    public override string Title => $"Looming of {typeof(T1).Name}";
+    public override string Title => $"Looming of {typeof(T1).Name} into {typeof(TOut).Name}";
     
     readonly Func<IObservable<T1>, IObservable<TOut>> _spell;
 

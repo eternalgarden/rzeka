@@ -11,7 +11,7 @@ public class LoomingSpell3<T1, T2, T3, TOut> : LoomingSpell<TOut>
     where T2 : IMatter
     where T3 : IMatter
 {
-    public override string Title => $"Looming of {typeof(T1).Name}, {typeof(T2).Name} and {typeof(T3).Name}";
+    public override string Title => $"Looming of {typeof(T1).Name}, {typeof(T2).Name} and {typeof(T3).Name} into {typeof(TOut).Name}";
 
     readonly Func<IObservable<T1>, IObservable<T2>, IObservable<T3>, IObservable<TOut>> _spell;
 
