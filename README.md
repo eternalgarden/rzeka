@@ -16,7 +16,7 @@ You can ask any event "_..., and where the hell did **you** come from?_" and get
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
-> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
+> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#-async-operations).
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
 <br><br>
