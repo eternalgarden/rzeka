@@ -23,6 +23,8 @@ You can ask any event "_..., where the hell did you come from?_" and get the ful
 
 ## 🗺️ Contents
 
+> 📜💎 When actively learning rzeka you will want to use the [wiki version of this README](https://github.com/eternalgarden/little-godot-rzeka/wiki), it also contains more detailed information on the majority of the subjects here.
+
 - [🪞 Grimoire](#grimoire)
 - [💾 Installation](#installation)
 - [🌱 Getting Started](#getting-started)
