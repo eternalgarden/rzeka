@@ -25,6 +25,10 @@ sanctuary-foldout::part(title) {
     outline: rgb(255, 227, 0) solid 1px;
 }
 
+:host([hovered]) .matter-row {
+    outline: #39ff14 solid 2px;
+}
+
 .matter-row { 
     display: flex;
     flex-direction: row;

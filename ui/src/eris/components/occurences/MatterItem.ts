@@ -51,6 +51,7 @@ export class MatterItem extends FASTElement {
     @attr gefilde: GefildeDesVorkommen
     @attr occurence: ArchivedMatterOccurence
     @attr({ mode: "boolean" }) selected: boolean = false
+    @attr({ mode: "boolean" }) hovered: boolean = false
 
     // ☔ Derived observables - populated by initFromOccurence(), not set directly.
     // These are separate @observable fields (rather than template expressions reading
@@ -73,6 +74,7 @@ export class MatterItem extends FASTElement {
 
     receivedSubscription: Subscription | undefined
     selectionSubscription: Subscription
+    hoverSubscription: Subscription
     wildcardSubscription: Subscription
 
     connectedCallback(): void {
@@ -96,6 +98,7 @@ export class MatterItem extends FASTElement {
         this.wildcardSubscription?.unsubscribe()
         this.wildcardSubscription = undefined
         this.selectionSubscription?.unsubscribe()
+        this.hoverSubscription?.unsubscribe()
 
         this.initFromOccurence(newVal)
     }
@@ -123,12 +126,21 @@ export class MatterItem extends FASTElement {
         this.selectionSubscription = this.gefilde.selectedMatterGuid$.subscribe(
             guid => (this.selected = guid === this.matterGuid),
         )
+
+        // Only shaped occurrences can appear as nodes in the causality tree,
+        // so only they need the hover highlight.
+        this.hoverSubscription = this.gefilde.hoveredMatterGuid$.subscribe(
+            guid => (this.hovered =
+                this.matterOccurenceCategory === MatterOccurenceCategory.Shaped &&
+                guid === this.matterGuid),
+        )
     }
 
     disconnectedCallback(): void {
         this.receivedSubscription?.unsubscribe()
         this.wildcardSubscription?.unsubscribe()
         this.selectionSubscription?.unsubscribe()
+        this.hoverSubscription?.unsubscribe()
 
         super.disconnectedCallback()
     }

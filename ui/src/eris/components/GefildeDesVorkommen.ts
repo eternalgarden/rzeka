@@ -292,6 +292,11 @@ export class GefildeDesVorkommen extends FASTElement {
     // Null means nothing is selected.
     readonly selectedMatterGuid$ = new BehaviorSubject<string | null>(null)
 
+    // 🟢 Currently hovered matter guid from the causality tree — drives the
+    // green highlight on the corresponding shaped occurrence in the list.
+    // Null means nothing is hovered.
+    readonly hoveredMatterGuid$ = new BehaviorSubject<string | null>(null)
+
     private lifecycleSubscriptions: Subscription[] = []
 
     constructor() {

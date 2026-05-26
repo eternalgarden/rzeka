@@ -129,7 +129,9 @@ const styles = css`
 `
 
 const template = html<CausalityNode>`
-    <div class="row">
+    <div class="row"
+        @mouseenter="${x => x.hoverEnter()}"
+        @mouseleave="${x => x.hoverLeave()}">
         <button
             class="toggle ${x => (x.node.children.length === 0 ? "leaf" : "")}"
             @click="${x => x.toggle()}">
@@ -200,6 +202,19 @@ export class CausalityNode extends FASTElement {
     @observable node: CausalityTreeNode
     @attr({ mode: "boolean" }) collapsed: boolean = true
     @attr({ mode: "boolean" }) detailsOpen: boolean = false
+
+    private getGefilde() {
+        return document.getElementById("eris-realm-events") as any
+    }
+
+    hoverEnter() {
+        if (this.node.missing) return
+        this.getGefilde()?.hoveredMatterGuid$?.next(this.node.guid)
+    }
+
+    hoverLeave() {
+        this.getGefilde()?.hoveredMatterGuid$?.next(null)
+    }
 
     toggle() {
         if (!this.collapsed) {
