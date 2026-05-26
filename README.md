@@ -1,4 +1,4 @@
-# rzeka
+# 💦📜🐖🏹 rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 [![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
@@ -6,17 +6,21 @@
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 <!-- [![Downloads](https://img.shields.io/nuget/dt/EternalGarden.Rzeka?label=downloads)](https://www.nuget.org/packages/EternalGarden.Rzeka) -->
 
-
 **A reactive event bus for C# that tracks causality.**
 
-rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
+rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-threaded event bus built on Rx.NET. Components [yeet](https://youtu.be/S2t59dPf9K0?si=srvWNs02TmMQwvzH) typed events into the river and act on the events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal chain of anything that happens in your system - live, in a browser, while the game runs.
+What makes rzeka different from a typical event bus is **causality tracking**: every event automatically carries a record of the events that caused it. 
 
-rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
+You can ask any event "_what caused you?_" and get the full chain back. Using rzeka's built-in debugger, Eris, you can walk through the entire causal chain of anything that happens in your system - in real-time, in a browser, while your game runs.
+
+<https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
+
+> 📜⚗️ rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
 <br><br>
+
 ## 🗺️ Contents
 
 - [🪞 Grimoire](#grimoire)
