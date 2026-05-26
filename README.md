@@ -18,12 +18,14 @@ You can ask any event "_..., where the hell did you come from?_" and get the ful
 
 > 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
 
-**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
+**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
 <br><br>
 
 ## 🗺️ Contents
 
 > 📜🧨 When actively learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/little-godot-rzeka/wiki), it contains more detailed information on the majority of the subjects here.
+>
+> Make sure to also check out [little-river](https://github.com/eternalgarden/little-godot-rzeka), a tiny example Godot game using rzeka.
 
 - [🪞 Grimoire](#-grimoire)
 - [💾 Installation](#-installation)
