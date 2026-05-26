@@ -483,6 +483,7 @@ This means you can register spells in any order without worrying about wiring. A
 Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
 
 > 📜🧨 A spell stuck in `NoMana` is a common rzeka bug - usually a missing Strand registration, or an autoload that initialised after its consumers.
+
 <br><br>
 ## 🏹 Eris
 
