@@ -37,13 +37,12 @@ You can ask any event "_..., where the hell did you come from?_" and get the ful
   - [Scry](#-scry---raw-observable)
   - [Shuttle](#-shuttle---async-requestresponse)
   - [Stamping rules](#stamping-rules)
-- [⚗️ Mana & Lifecycle](#-mana--lifecycle)
+- [👻 Mana & Lifecycle](#-mana-and-lifecycle)
 - [🏹 Eris](#-eris)
 - [🪧 Attributes](#-attributes)
 - [🧩 Extension Methods](#-extension-methods)
 - [🛟 Error Boundary](#-error-boundary)
-- [🖇️ Async Operations](#-async-operations)
-
+- [🪃 Async Operations](#-async-operations)
 <br><br>
 ## 🪞 Grimoire
 
@@ -464,7 +463,7 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 
 Manual stamping inside a Loom lambda (via `.WithCircumstances()`) is an **active decision to override the default tracking** - rzeka detects pre-attached circumstances and skips its automatic step.
 <br><br>
-## ⚗️ Mana & Lifecycle
+## 👻 Mana and Lifecycle
 
 > 📜 Mana is a spell's dependency satisfaction status. A spell *has mana* when every matter type it consumes has an active publisher in the river. It *loses mana* when one of its required types goes dark - no Strand, no Pluck source, no upstream Loom producing it.
 
@@ -717,7 +716,7 @@ The whisper to Eris always runs first, the callback is *additional* behavior, no
 
 The boundary applies only to publishing spells. `Weave` is a final terminal subscriber - if your subscribe function throws, that's your own `try`/`catch` responsibility.
 <br><br>
-## 🖇️ Async Operations
+## 🪃 Async Operations
 
 Rzeka is single-threaded, but your game will have async operations - resource loading, network calls, save/load, etc. The pattern for handling these is:
 
