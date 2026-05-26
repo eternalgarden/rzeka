@@ -211,7 +211,7 @@ Q += rzeka.Loom<A, B, Out>(
          .Select((aVal, bVal, cVal) => new Out(...))
 );
 ```
-
+<br><br>
 ### 🧬 Strand - publisher
 
 > 📜 Registers a source `IObservable<T>` into the river.
@@ -234,7 +234,7 @@ Q += rzeka.Strand(
         .Select(_ => new GameClockTick())
 );
 ```
-
+<br><br>
 ### 🧬 Pluck - fire once publisher
 
 > 📜 Publish a single matter value into rzeka imperatively, without an ongoing stream.
@@ -251,7 +251,7 @@ Pluck has no automatic upstream tracking - it does not know what caused it. When
 // Inside a Weave or other context where you have the triggering matter:
 rzeka.Pluck(this, new GamePaused().WithCircumstances(triggeringEvent));
 ```
-
+<br><br>
 ### 🧬 Loom - transform
 
 > 📜 Listens to one or more streams and produces a new stream. 
@@ -287,8 +287,7 @@ Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
         .Select(/* ... */)
 );
 ```
-For neither Loom or Weave overloads with more than three input-matter types
-
+<br><br>
 ### 🧬 Weave - subscriber
 
 > 📜 Final subscriber - consumes streams and produces nothing. 
@@ -330,7 +329,7 @@ class ClockDisplayObserver : IObserver<GameClockTick>
     public void OnCompleted() { }
 }
 ```
-
+<br><br>
 ### 🧬 Scry - raw observable
 
 > 📜 Returns the raw `IObservable<T>` for a matter type - read-only access to the underlying stream, without registering a spell or holding ownership.
@@ -357,6 +356,7 @@ Scry also works inside Loom and Weave when you've exhausted their 3-input overlo
 
 > 📜🧨 Subscribing directly to a Scry'd stream is allowed but bypasses rzeka's lifecycle: the subscription is anonymous to Eris and you own its `IDisposable`. For anything that conceptually belongs to a `who`, prefer `Weave` so Eris can attribute and clean up properly.
 
+<br><br>
 ### 🧬 Shuttle - Async Request/Response
 
 > 📜 Shuttle is rzeka's pattern for triggering operations and awaiting their outcomes - save/load, network calls, path computation, anything with latency or a success/failure result. Pair it with [`Ask`](#ask) on the caller side.
