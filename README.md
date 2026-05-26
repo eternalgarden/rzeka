@@ -23,9 +23,9 @@ You can ask any event "_..., where the hell did you come from?_" and get the ful
 
 ## 🗺️ Contents
 
-> 📜🧨 When actively learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/little-godot-rzeka/wiki), it contains more detailed information on the majority of the subjects here.
+> 📜🧨 When actively learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/rzeka/wiki), it contains more detailed information on the majority of the subjects here.
 >
-> Make sure to also check out [little-river](https://github.com/eternalgarden/little-godot-rzeka), a tiny example Godot game using rzeka.
+> Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 - [🪞 Grimoire](#-grimoire)
 - [💾 Installation](#-installation)
