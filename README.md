@@ -10,9 +10,9 @@
 
 rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-threaded event bus built on Rx.NET. Components [yeet](https://youtu.be/S2t59dPf9K0?si=srvWNs02TmMQwvzH) typed events into the river and act on the events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus is **causality tracking**: every event automatically carries a record of the events that caused it. 
+What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_what caused you?_" and get the full chain back. Using rzeka's built-in debugger, Eris, you can walk through the entire causal chain of anything that happens in your system - in real-time, in a browser, while your game runs.
+You can ask any event "_and where the hell did you come from?_" and get the full chain back. Using rzeka's built-in debugger, Eris, you can walk through the entire causal chain of anything that happens in your project - in real-time, in a browser, while your game runs.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
