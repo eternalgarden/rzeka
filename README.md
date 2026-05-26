@@ -36,7 +36,7 @@ You can ask any event "_..., where the hell did you come from?_" and get the ful
   - [Weave](#-weave---subscriber)
   - [Scry](#-scry---raw-observable)
   - [Shuttle](#-shuttle---async-requestresponse)
-  - [Stamping rules](#stamping-rules)
+  - [Stamping rules](#-stamping-rules)
 - [👻 Mana & Lifecycle](#-mana-and-lifecycle)
 - [🏹 Eris](#-eris)
 - [🪧 Attributes](#-attributes)
@@ -445,8 +445,8 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 - Forgetting the request in a manual stamp does not break `Ask` request/response casuality (but it does orphan the response from its triggering request in Eris matter graph view)
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
-
-### Stamping rules
+<br><br>
+### 🧬 Stamping rules
 
 > 📜 Quick reference for when rzeka attaches circumstances automatically vs when you must attach them yourself.
 
