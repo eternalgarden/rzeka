@@ -155,7 +155,7 @@ class EnemyDefeated : Matter
 
 > 📜🧨 Keep your Matter instances **immutable** - avoid mutable reference type fields. Eris holds references to emitted matter for the causal graph. Mutating after emission corrupts that history and can produce subtle bugs when multiple subscribers hold the same instance.
 
-> 📜🧨 **Mark non-serializable matter properties with `[JsonIgnore]`** (from `System.Text.Json.Serialization`). Eris's dev wire serializes the full matter instance; engine-native handles, IO objects, and throwing getters break serialization. The Shaped occurrence is dropped from the wire and a Horror surfaces in Eris instead.
+> 📜🧭 **For engine-native fields on matter, use `[JsonIgnore]`** (from `System.Text.Json.Serialization`). Game matter routinely carries engine handles - `PackedScene` from a scene load, a `Node` reference, a `Texture2D`. These belong on matter, they just shouldn't go over the dev wire to Eris (`System.Text.Json` can't serialize them). `[JsonIgnore]` is per-property: the rest of the matter still serializes, so the matter and its causality remain visible - you only lose the annotated field's contents in the detail view. Forgetting the annotation doesn't break the game, but it does break Eris: the Shaped occurrence is dropped from the wire, a Horror surfaces, and every downstream Received occurrence or circumstance reference to this matter displays as MISSING until you annotate.
 
 ### Circumstances
 

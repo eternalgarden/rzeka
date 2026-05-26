@@ -22,6 +22,7 @@ public sealed class StrandingSpell<TOut> : IStrandingSpell<TOut> where TOut : IM
     IObservable<TOut> IStrandingSpell<TOut>.CreateConjuring()
     {
         return _spell
+            .ObserveOn(Eris.MainThread)
             .Do(matter => ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped))
             .WhisperOnError(this);
     }

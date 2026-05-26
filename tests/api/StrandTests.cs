@@ -7,7 +7,7 @@ public class StrandTests
 {
     sealed class Ink : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     [Fact]
     public void Strand_emits_Created_and_HasMana_spell_occurences_on_construction()

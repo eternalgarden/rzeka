@@ -42,6 +42,7 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
 
         return _spell
             .Invoke(ingredient)
+            .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
                 // Mirror LoomingSpell1: only auto-stamp [request] when the responder hasn't

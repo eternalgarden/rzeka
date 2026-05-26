@@ -12,7 +12,7 @@ public class LoomTests
     sealed class Brush : Matter { }
     sealed class Canvas : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Lifecycle ────────────────────────────────────────────────────────────
 

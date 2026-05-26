@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -74,11 +75,18 @@ public class Eris : IDisposable
     // debugger sees instances of the same type as identical.
     internal Func<object, string?>? DescribeOwner { get; set; }
 
-    // Optional engine-adapter hook that returns true when the caller is on the main thread.
-    // Set at river creation via Spring.Create(name, isOnMainThread: ...). When null,
-    // the check is skipped entirely - no off-thread warnings are emitted. Godot callers
-    // pass () => Engine.IsMainThread(), Unity callers pass () => UnityMainThreadDispatcher.IsMainThread().
+    // Main-thread check used to whisper Horror when matter is published off-thread.
+    // Wired by Spring.Create: captures the thread that called Create as the main thread
+    // and compares Environment.CurrentManagedThreadId on each publish. Null only when
+    // Eris is constructed directly without going through Spring (which shouldn't happen
+    // in normal use); when null, the check is skipped.
     internal Func<bool>? IsOnMainThread { get; set; }
+
+    // Required main-thread scheduler. Set at river creation via Spring.Create(name, mainThread: ...).
+    // Used by conjuring spells (Strand / Loom / Shuttle) to ObserveOn before publishing matter,
+    // making the main-thread invariant structural rather than runtime-checked. Pluck is not
+    // marshalled - its synchronous one-shot semantics would break if queued through a scheduler.
+    internal IScheduler MainThread { get; set; } = ImmediateScheduler.Instance;
 
     public Eris(string name)
     {

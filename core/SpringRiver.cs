@@ -4,6 +4,7 @@ ZZZzz /,`.-'`'    -.  ;-;;,_
      |,4-  ) )-,_. ,\ (  `'-'
     '---''(_/--'  `-'\_)
 */
+using System.Reactive.Concurrency;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
 using System.Runtime.CompilerServices;
@@ -71,6 +72,8 @@ internal sealed class SpringRiver : IRzeka, IDisposable
     #endregion // END IWhisper
 
     #region IRzeka
+
+    public IScheduler MainThread => Eris.MainThread;
 
     public IObservable<T> Scry<T>()
         where T : IMatter => Library.GetConjurer<T>();

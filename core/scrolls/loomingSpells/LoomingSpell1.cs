@@ -45,6 +45,7 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
 
         var conjuring = _spell
             .Invoke(ingredientT)
+            .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
 

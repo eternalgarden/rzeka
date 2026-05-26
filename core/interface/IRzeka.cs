@@ -1,7 +1,16 @@
+using System.Reactive.Concurrency;
+
 namespace Rzeka;
 
 public interface IRzeka : IWhisper, IDisposable
 {
+    /// <summary>
+    /// The main-thread scheduler passed to Spring.Create. Exposed so user code can ObserveOn it
+    /// when marshalling back to the main thread after an await inside a SelectMany lambda.
+    /// Conjuring spell outputs are already main-thread-marshalled; this is for the post-await case.
+    /// </summary>
+    IScheduler MainThread { get; }
+
     /// <summary>
     /// Scry is used predominantly to attach additional matter context to other API methods.
     /// </summary>

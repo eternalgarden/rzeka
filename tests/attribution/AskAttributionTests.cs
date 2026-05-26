@@ -23,7 +23,7 @@ public class AskAttributionTests
 
     sealed class Trigger : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Circumstance flags ────────────────────────────────────────────────────
 

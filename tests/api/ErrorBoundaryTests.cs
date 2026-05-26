@@ -12,7 +12,7 @@ public class ErrorBoundaryTests
 
     sealed class Pong : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     [Fact]
     public void Strand_whose_source_errors_whispers_to_Eris_as_Horror_with_the_exception()
@@ -91,6 +91,7 @@ public class ErrorBoundaryTests
         var river = (SpringRiver)
             new Spring().Create(
                 "test",
+                ImmediateScheduler.Instance,
                 onUnhandledSourceError: (spell, ex) =>
                 {
                     capturedSpell = spell;
@@ -118,6 +119,7 @@ public class ErrorBoundaryTests
         var river = (SpringRiver)
             new Spring().Create(
                 "test",
+                ImmediateScheduler.Instance,
                 onUnhandledSourceError: (_, ex) => throw ex
             );
         using var _ = river.Eris.SerializableMessageOccurences.Subscribe(captured.Add);

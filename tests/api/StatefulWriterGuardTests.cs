@@ -22,7 +22,7 @@ public class StatefulWriterGuardTests
 
     sealed class Plain : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     [Fact]
     public void First_writer_to_a_HasState_type_registers_and_drives_the_stream()

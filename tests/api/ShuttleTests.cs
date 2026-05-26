@@ -13,7 +13,7 @@ public class ShuttleTests
         public Receipt(WorkOrder order, bool wasSuccessful) : base(order, wasSuccessful) { }
     }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Lifecycle ────────────────────────────────────────────────────────────
 

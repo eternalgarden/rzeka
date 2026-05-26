@@ -29,7 +29,7 @@ public class LoomAskTests
         }
     }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test");
+    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Basic pipeline ────────────────────────────────────────────────────────
 

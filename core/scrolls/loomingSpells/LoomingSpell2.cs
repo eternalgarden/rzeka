@@ -56,6 +56,7 @@ public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
 
         return _spell
             .Invoke(ingredient1, ingredient2)
+            .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
                 if (!ingredient1Subscribed || !ingredient2Subscribed)
