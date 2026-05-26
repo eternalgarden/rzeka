@@ -1,4 +1,4 @@
-# rzeka
+# 💦📜🐖🏹 rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 [![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
@@ -6,38 +6,43 @@
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 <!-- [![Downloads](https://img.shields.io/nuget/dt/EternalGarden.Rzeka?label=downloads)](https://www.nuget.org/packages/EternalGarden.Rzeka) -->
 
-
 **A reactive event bus for C# that tracks causality.**
 
-rzeka ("_river_" in Polish) is a single-threaded event bus built on Rx.NET. Components publish typed events into the river and react to events flowing through it, without holding references to each other.
+rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-threaded event bus built on Rx.NET. Components [yeet](https://youtu.be/S2t59dPf9K0?si=srvWNs02TmMQwvzH) typed events into the river and act on the events flowing through it, without holding references to each other.
 
-What makes rzeka different from a typical event bus or pub/sub library is **causality tracking**: every event automatically carries a record of the events that caused it. You can ask any event "_what caused you?_" and get the full chain back. Combined with Eris, rzeka's built-in debugger, this means you can step through the entire causal chain of anything that happens in your system - live, in a browser, while the game runs.
+What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-rzeka is single-threaded by design. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
+You can ask any event "_..., where the hell did you come from?_" and get the full casual chain back. Using rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your project - in real-time, in a browser, while your game runs.
 
-**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. The Godot integration and Eris UI are actively evolving.
+<https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
+
+> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
+
+**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
 <br><br>
+
 ## 🗺️ Contents
 
-- [🪞 Grimoire](#grimoire)
-- [💾 Installation](#installation)
-- [🌱 Getting Started](#getting-started)
-- [🪽 Matter - Events](#matter---events)
-- [🧬 API](#api)
-  - [Strand](#strand---publisher)
-  - [Pluck](#pluck---fire-once-publisher)
-  - [Loom](#loom---transform)
-  - [Weave](#weave---subscriber)
-  - [Scry](#scry---raw-observable)
-  - [Shuttle](#shuttle---async-requestresponse)
-  - [Stamping rules](#stamping-rules)
-- [⚗️ Mana & Lifecycle](#mana--lifecycle)
-- [🏹 Eris](#eris)
-- [🪧 Attributes](#attributes)
-- [🧩 Extension Methods](#extension-methods)
-- [🛟 Error Boundary](#error-boundary)
-- [🖇️ Async Operations](#async-operations)
+> 📜🧨 When actively learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/little-godot-rzeka/wiki), it contains more detailed information on the majority of the subjects here.
 
+- [🪞 Grimoire](#-grimoire)
+- [💾 Installation](#-installation)
+- [🌱 Getting Started](#-getting-started)
+- [🪽 Matter - Events](#-matter---events)
+- [🧬 API](#-api)
+  - [Strand](#-strand---publisher)
+  - [Pluck](#-pluck---fire-once-publisher)
+  - [Loom](#-loom---transform)
+  - [Weave](#-weave---subscriber)
+  - [Scry](#-scry---raw-observable)
+  - [Shuttle](#-shuttle---async-requestresponse)
+  - [Stamping rules](#-stamping-rules)
+- [👻 Mana & Lifecycle](#-mana-and-lifecycle)
+- [🏹 Eris](#-eris)
+- [🪧 Attributes](#-attributes)
+- [🧩 Extension Methods](#-extension-methods)
+- [🛟 Error Boundary](#-error-boundary)
+- [🪃 Async Operations](#-async-operations)
 <br><br>
 ## 🪞 Grimoire
 
@@ -206,7 +211,7 @@ Q += rzeka.Loom<A, B, Out>(
          .Select((aVal, bVal, cVal) => new Out(...))
 );
 ```
-
+<br><br>
 ### 🧬 Strand - publisher
 
 > 📜 Registers a source `IObservable<T>` into the river.
@@ -229,7 +234,7 @@ Q += rzeka.Strand(
         .Select(_ => new GameClockTick())
 );
 ```
-
+<br><br>
 ### 🧬 Pluck - fire once publisher
 
 > 📜 Publish a single matter value into rzeka imperatively, without an ongoing stream.
@@ -246,7 +251,7 @@ Pluck has no automatic upstream tracking - it does not know what caused it. When
 // Inside a Weave or other context where you have the triggering matter:
 rzeka.Pluck(this, new GamePaused().WithCircumstances(triggeringEvent));
 ```
-
+<br><br>
 ### 🧬 Loom - transform
 
 > 📜 Listens to one or more streams and produces a new stream. 
@@ -282,8 +287,7 @@ Q += rzeka.Loom<InputEvent, PhysicsState, GameState, MovementCommand>(
         .Select(/* ... */)
 );
 ```
-For neither Loom or Weave overloads with more than three input-matter types
-
+<br><br>
 ### 🧬 Weave - subscriber
 
 > 📜 Final subscriber - consumes streams and produces nothing. 
@@ -325,7 +329,7 @@ class ClockDisplayObserver : IObserver<GameClockTick>
     public void OnCompleted() { }
 }
 ```
-
+<br><br>
 ### 🧬 Scry - raw observable
 
 > 📜 Returns the raw `IObservable<T>` for a matter type - read-only access to the underlying stream, without registering a spell or holding ownership.
@@ -352,6 +356,7 @@ Scry also works inside Loom and Weave when you've exhausted their 3-input overlo
 
 > 📜🧨 Subscribing directly to a Scry'd stream is allowed but bypasses rzeka's lifecycle: the subscription is anonymous to Eris and you own its `IDisposable`. For anything that conceptually belongs to a `who`, prefer `Weave` so Eris can attribute and clean up properly.
 
+<br><br>
 ### 🧬 Shuttle - Async Request/Response
 
 > 📜 Shuttle is rzeka's pattern for triggering operations and awaiting their outcomes - save/load, network calls, path computation, anything with latency or a success/failure result. Pair it with [`Ask`](#ask) on the caller side.
@@ -441,7 +446,8 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 
 > 📜🧨 Do not use `.Do()` or `.Reacting()` for internal state mutations inside a Shuttle - this can lead to race conditions since the response stream is shared among multiple potential requesting agents.
 
-### Stamping rules
+<br><br>
+### 🧬 Stamping rules
 
 > 📜 Quick reference for when rzeka attaches circumstances automatically vs when you must attach them yourself.
 
@@ -458,7 +464,7 @@ Q += rzeka.Shuttle<LoadSceneRequest, LoadSceneResponse>(
 
 Manual stamping inside a Loom lambda (via `.WithCircumstances()`) is an **active decision to override the default tracking** - rzeka detects pre-attached circumstances and skips its automatic step.
 <br><br>
-## ⚗️ Mana & Lifecycle
+## 👻 Mana and Lifecycle
 
 > 📜 Mana is a spell's dependency satisfaction status. A spell *has mana* when every matter type it consumes has an active publisher in the river. It *loses mana* when one of its required types goes dark - no Strand, no Pluck source, no upstream Loom producing it.
 
@@ -477,6 +483,7 @@ This means you can register spells in any order without worrying about wiring. A
 Strand and Pluck have no input matter types, so they never enter `NoMana` - they go `Created → HasMana` immediately and stay there until disposed. Loom, Weave, and Shuttle all gate on their declared input types.
 
 > 📜🧨 A spell stuck in `NoMana` is a common rzeka bug - usually a missing Strand registration, or an autoload that initialised after its consumers.
+
 <br><br>
 ## 🏹 Eris
 
@@ -711,7 +718,7 @@ The whisper to Eris always runs first, the callback is *additional* behavior, no
 
 The boundary applies only to publishing spells. `Weave` is a final terminal subscriber - if your subscribe function throws, that's your own `try`/`catch` responsibility.
 <br><br>
-## 🖇️ Async Operations
+## 🪃 Async Operations
 
 Rzeka is single-threaded, but your game will have async operations - resource loading, network calls, save/load, etc. The pattern for handling these is:
 
