@@ -143,6 +143,16 @@ public class Eris : IDisposable
                 }
                 catch (Exception e)
                 {
+                    PublishMessage(new MessageOccurence
+                    {
+                        Guid = Guid.NewGuid(),
+                        Timestamp = DateTimeOffset.Now,
+                        RzekaMessageType = RzekaMessageType.Horror,
+                        Message =
+                            $"Could not serialize {occ.MatterOccurenceCategory} matter of type {occ.Matter.GetType().Name} via {occ.Source.SpellSchool} spell by {occ.Source.Who.GetType().Name}. Likely cause: an engine-native field on the matter is missing [JsonIgnore]. The matter is still in the river; this only affects Eris causality display.",
+                        Exception = e,
+                        Circumstances = Array.Empty<Guid>(),
+                    });
                     return null;
                 }
             })
