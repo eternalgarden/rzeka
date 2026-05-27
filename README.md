@@ -24,8 +24,6 @@ You can ask any event "_..., and where the hell did **you** come from?_" and get
 ## 🗺️ Contents
 
 > 📜🧨 When learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/rzeka/wiki) instead, it contains more detailed information on the majority of the subjects here.
->
-> Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 - [🪞 Grimoire](#-grimoire)
 - [💾 Installation](#-installation)
@@ -84,6 +82,8 @@ dotnet add package Fleck  # only if using EternalGarden.Rzeka.Dev
 ```
 <br><br>
 ## 🌱 Getting Started
+
+> 📜🌱 Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 Create a single river at startup and share its IRzeka reference with the systems that need it:
 
