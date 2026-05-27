@@ -12,18 +12,20 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_..., where the hell did you come from?_" and get the full casual chain back. Using rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your project - in real-time, in a browser, while your game runs.
+You can ask any event "_..., and where the hell did **you** come from?_" and get its full casual chain. Using rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
-> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#async-operations).
+> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries - see [Async Operations](#-async-operations).
 
-**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling application shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
+**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI is actively evolving.
 <br><br>
 
 ## 🗺️ Contents
 
-> 📜🧨 When actively learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/little-godot-rzeka/wiki), it contains more detailed information on the majority of the subjects here.
+> 📜🧨 When learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/rzeka/wiki) instead, it contains more detailed information on the majority of the subjects here.
+>
+> Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 - [🪞 Grimoire](#-grimoire)
 - [💾 Installation](#-installation)
