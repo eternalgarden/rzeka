@@ -12,7 +12,7 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_oh, where did you come from and how did you get here?_" and get its full casual chain. Using rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
+You can ask any event "_oh, where did you come from?_" and get its full casual chain. With rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
