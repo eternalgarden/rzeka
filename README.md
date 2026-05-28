@@ -1,4 +1,4 @@
-# 💦📜🐖🏹 rzeka
+# 💦📜🏹 rzeka
 
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 [![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
@@ -12,7 +12,7 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_..., and where the hell did **you** come from?_" and get its full casual chain. Using rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
+You can ask any event "_oh, where did you come from?_" and get its full casual chain. With rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
@@ -24,8 +24,6 @@ You can ask any event "_..., and where the hell did **you** come from?_" and get
 ## 🗺️ Contents
 
 > 📜🧨 When learning rzeka you will want to use the [rzeka's wiki](https://github.com/eternalgarden/rzeka/wiki) instead, it contains more detailed information on the majority of the subjects here.
->
-> Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 - [🪞 Grimoire](#-grimoire)
 - [💾 Installation](#-installation)
@@ -84,6 +82,8 @@ dotnet add package Fleck  # only if using EternalGarden.Rzeka.Dev
 ```
 <br><br>
 ## 🌱 Getting Started
+
+> 📜🌱 Make sure to also check out [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game using rzeka.
 
 Create a single river at startup and share its IRzeka reference with the systems that need it:
 
