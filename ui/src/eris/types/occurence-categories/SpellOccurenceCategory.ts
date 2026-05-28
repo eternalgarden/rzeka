@@ -3,6 +3,5 @@ export enum SpellOccurenceCategory {
     HasMana = "HasMana",
     NoMana = "NoMana",
     Morphed = "Morphed",
-    Wispd = "Wispd",
     Forgotten = "Forgotten",
 }

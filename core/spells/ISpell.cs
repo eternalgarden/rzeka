@@ -64,20 +64,6 @@ public interface ISpell : IDisposable // TODO Rename to ISpell
         /* ---- ---- 🌠 */
     }
 
-    void SendSpellOccurence(SpellOccurenceCategory occurenceCategory, Exception exception)
-    {
-        var occurence = new SpellOccurence
-        {
-            Guid = Guid.NewGuid(),
-            Timestamp = DateTimeOffset.Now,
-            SpellOccurenceCategory = occurenceCategory,
-            Source = this,
-            Exception = exception
-        };
-
-        Eris.PublishSpellOccurence(occurence);
-    }
-    
     // Reformatted to avoid the boxing of value type implementing IMatter
     // Since we use structs for that
     // https://stackoverflow.com/questions/3032750/structs-interfaces-and-boxing

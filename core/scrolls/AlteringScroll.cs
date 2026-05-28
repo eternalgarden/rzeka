@@ -55,11 +55,19 @@ public sealed class AlteringScroll<T1> : IWeavingSpell
     {
         try
         {
-            ExecuteCast(); 
+            ExecuteCast();
         }
         catch (Exception ex)
         {
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd, ex);
+            Eris.PublishMessage(new MessageOccurence
+            {
+                Guid = Guid.NewGuid(),
+                Timestamp = DateTimeOffset.Now,
+                RzekaMessageType = RzekaMessageType.Horror,
+                Message = $"Setup failed for {Title} (owned by {Who}): {ex.Message}",
+                Exception = ex,
+                Circumstances = Array.Empty<Guid>(),
+            });
             throw;
         }
     }

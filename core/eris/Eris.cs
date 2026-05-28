@@ -173,7 +173,6 @@ public class Eris : IDisposable
                         or SpellOccurenceCategory.Forgotten
                         or SpellOccurenceCategory.HasMana
                         or SpellOccurenceCategory.NoMana
-                        or SpellOccurenceCategory.Wispd
             )
             .Subscribe(occ =>
             {
@@ -185,15 +184,6 @@ public class Eris : IDisposable
                         occ.Guid,
                         occ.Timestamp.ToUnixTimeSeconds(),
                         GetSerializableSpell(occ.Source)
-                    );
-                }
-                else if (occ.SpellOccurenceCategory is SpellOccurenceCategory.Wispd)
-                {
-                    serializableSpellOccurence = new SerializableWispdSpellOccurence(
-                        occ.Guid,
-                        occ.Timestamp.ToUnixTimeSeconds(),
-                        occ.Source.Guid,
-                        SerializableException.FromException(occ.Exception)
                     );
                 }
                 else

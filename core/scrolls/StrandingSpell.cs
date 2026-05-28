@@ -64,18 +64,8 @@ public sealed class StrandingSpell<TOut> : IStrandingSpell<TOut> where TOut : IM
 
         if (_libraryToken is not null) throw new Exception("Was already cast 🦇");
 
-        // try
-        // {
-            _libraryToken = Library.RegisterConjurer(Conjuring);
-            ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
-        // }
-        // catch (Exception ex)
-        // {
-        //     // todo send luggage
-        //     throw ex;
-        //     
-        //     ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.Wispd);
-        // }
+        _libraryToken = Library.RegisterConjurer(Conjuring);
+        ThisAsBase.SendSpellOccurence(SpellOccurenceCategory.HasMana);
 
         /* ---- ---- 🌠 */
     }
