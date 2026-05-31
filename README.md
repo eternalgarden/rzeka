@@ -56,7 +56,7 @@ rzeka uses a river, textile and magic themed naming system:
 
 The metaphor is consistent and once you let it work its magic, the API becomes self-describing.
 
-![](https://media.githubusercontent.com/media/eternalgarden/rzeka/refs/heads/main/docs/Daisuke_Igarashi_Witches.png)
+![](https://github.com/eternalgarden/rzeka/blob/main/docs/Daisuke_Igarashi_Witches.png)
 > A page from [Witches by Daisuke Igarashi](https://en.wikipedia.org/wiki/Witches_(manga))
 
 <br><br>
