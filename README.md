@@ -188,7 +188,12 @@ Rzeka attaches circumstances automatically inside Loom and Shuttle, but requires
 
 All API methods accept a `who` object and return `IDisposable` to unregister. Observables and lambda functions you pass into them are called *spells*.
 
-`who` is the component that owns the subscription. Eris records it on every spell occurrence so the debugger can group spells under their source, and it's what shows up when you're tracing which part of your codebase produced a given matter. Passing `this` from inside a Node or component is the default; for static helpers or singletons, pass a stable object that won't disappear before the subscription does.
+`who` is the component that owns the subscription. Eris records it on every spell occurrence so the debugger can group spells under their source. Passing `this` from inside a Node or component is the default.
+
+![](https://media.githubusercontent.com/media/eternalgarden/rzeka/refs/heads/main/docs/code_aqua.png)
+> 📜🧚🏻‍♀️ rzeka code will make the characteristic waterfall 2D structures that go deep into your indentation while remaining very clear and readable. This depth might not be for everyone though. Personally I really prefer that to a 1D top-down wall of code-text, maybe you might like it too! _Screenshot info_: nvim, theme [Aquavium](https://github.com/T-b-t-nchos/Aquavium.nvim), semitransparent background, CSharpier formatter.
+
+### Collecting subscriptions
 
 A common pattern is to collect them into rzeka's `CollectibleDisposable`:
 
@@ -201,18 +206,7 @@ Q += rzeka.Loom<PlayerInputState, PlayerMovementState>(...)
 Q.Dispose();
 ```
 
-`CollectibleDisposable` is a wrapper around [CompositeDisposable][https://learn.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh228980(v=vs.103)], it overloads `+` operator allowing you to neatly add your rzeka subscriptions to it. It does not implement `.Clear()` method of the `CompositeDisposable` because that would likely lead you to accidental memory leaks.
-
-Loom and Weave API methods below have overloads that allow two input matter types. If you need more, pull additional streams manually via `Scry`:
-
-```csharp
-Q += rzeka.Loom<A, B, Out>(
-    this,
-    (a, b) =>
-        a.WithLatestFrom(b, rzeka.Scry<C>())
-         .Select((aVal, bVal, cVal) => new Out(...))
-);
-```
+`CollectibleDisposable` is a wrapper around [CompositeDisposable](https://learn.microsoft.com/en-us/previous-versions/dotnet/reactive-extensions/hh228980(v=vs.103)), it overloads `+` operator allowing you to neatly add your rzeka subscriptions to it. It does not implement `.Clear()` method of the `CompositeDisposable` because that would likely lead you to accidental memory leaks.
 <br><br>
 ### 🧬 Strand - publisher
 
