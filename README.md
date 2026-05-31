@@ -50,11 +50,15 @@ rzeka uses a river, textile and magic themed naming system:
 - events are **Matter**
 - transformations are **Spells**
 - a Spell's required Matter types fulfillment status is called **Mana**
-- Spell-defining methods (_Strand, Loom, Shuttle, Weave, Pluck_) follow textile-production vocabulary, inspired by [Zeros and Ones by Sadie Plant](https://www.goodreads.com/en/book/show/927879.Zeros_and_Ones))
+- Spell-defining methods (_Strand, Loom, Shuttle, Weave, Pluck_) follow textile-production vocabulary, inspired by [Zeros and Ones by Sadie Plant](https://www.goodreads.com/en/book/show/927879.Zeros_and_Ones) and Witches
 
 **Eris**, the debugger, borrows her name from the Greek goddess of discord.
 
 The metaphor is consistent and once you let it work its magic, the API becomes self-describing.
+
+![](https://media.githubusercontent.com/media/eternalgarden/rzeka/refs/heads/main/docs/Daisuke_Igarashi_Witches.png)
+> A page from [Witches by Daisuke Igarashi](https://en.wikipedia.org/wiki/Witches_(manga))
+
 <br><br>
 ## 💾 Installation
 
