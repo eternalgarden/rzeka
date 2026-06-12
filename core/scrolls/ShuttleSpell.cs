@@ -30,13 +30,11 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
     protected override IObservable<TOut> CreateConjuring()
     {
         bool ingredientSubscribed = false;
-        var lastTIn = default(TIn);
         IObservable<TIn> ingredient = Observable.Create<TIn>(observer =>
         {
             ingredientSubscribed = true;
             return ThisAsBinding
                 .GetObservableIngredient<TIn>()
-                .Do(next => lastTIn = next)
                 .Subscribe(observer);
         });
 
@@ -45,10 +43,6 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
             .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
-                // Mirror LoomingSpell1: only auto-stamp [request] when the responder hasn't
-                // stamped manually. Required for the multi-context Shuttle pattern, where the
-                // responder uses Scry<T>() inside the lambda and stamps [req, scryedA, ...]
-                // on the response themselves.
                 if (!ingredientSubscribed)
                     Eris.PublishMessage(new MessageOccurence
                     {
@@ -58,9 +52,27 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                         Message = $"Shuttle response {typeof(TOut).Name} fired without the '{typeof(TIn).Name}' request observable being subscribed to. The lambda is not chaining from the request observable.",
                     });
 
+                // A response is, by definition, caused by its request. Because
+                // TOut : IResponse<TIn>, the request rides on the response itself
+                // (matter.Request), so we read it straight from there - correct even
+                // across async boundaries, with no reliance on a captured "last request"
+                // that would race when several requests are in flight. Any extra context
+                // the responder Scry'd in and stamped by hand is preserved: we union it
+                // after the request, and since matter equality is by Guid, a hand-stamped
+                // request is deduped rather than doubled.
                 bool manualCircumstances = matter.HasCircumstances();
-                if (!manualCircumstances && lastTIn is not null)
-                    matter = matter.WithCircumstances<TOut>(lastTIn);
+                if (matter.Request is not null)
+                {
+                    var circumstances = new List<IMatter>(matter.Circumstances.Count + 1)
+                    {
+                        matter.Request,
+                    };
+                    foreach (IMatter existing in matter.Circumstances)
+                        if (!existing.Equals(matter.Request))
+                            circumstances.Add(existing);
+
+                    matter = matter.WithCircumstances<TOut>(circumstances.ToArray());
+                }
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
