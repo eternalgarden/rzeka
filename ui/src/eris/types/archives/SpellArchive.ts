@@ -96,9 +96,6 @@ export class SpellArchive {
         } else if (category == SpellOccurenceCategory.NoMana) {
             const knownBindingSpell = knownSpell.spell as ISerlializableBindingSpell
             knownBindingSpell.hasMana = false
-        } else if (category == SpellOccurenceCategory.Wispd) {
-            // TODO wispd?
-            console.log("dows wispd ever happen? 🙉")
         }
 
         return knownSpell

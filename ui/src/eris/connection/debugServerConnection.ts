@@ -3,6 +3,7 @@ import {
     ON_CLEAR_OCCURENCES,
     ON_CONNECTION_STATUS_CHANGE,
     ON_NEW_RAW_OCCURENCE,
+    ON_RIVER_NAME_CHANGE,
 } from "../types/common/ErisEvents"
 
 const DEFAULT_PORT = 10470
@@ -23,19 +24,32 @@ function dispatchStatus(detail: ConnectionStatus) {
     )
 }
 
+let lastRiverName: string | null = null
+
+export function getRiverName(): string | null {
+    return lastRiverName
+}
+
 // Tracks the game-side river identity. The game sends `{ type: "session-started",
-// sessionGuid, ... }` on every fresh socket subscription. A change in sessionGuid
-// means the game restarted while the UI stayed open — the existing list refers to
-// a dead river, so we clear it. Same guid means reconnect-to-same-river (network
-// blip, page reload while game runs); list is preserved.
+// sessionGuid, riverName, ... }` on every fresh socket subscription. A change in
+// sessionGuid means the game restarted while the UI stayed open - the existing
+// list refers to a dead river, so we clear it. Same guid means reconnect-to-same-
+// river (network blip, page reload while game runs); list is preserved.
 let lastSessionGuid: string | null = null
 
-function handleSessionStarted(sessionGuid: string) {
+function handleSessionStarted(sessionGuid: string, riverName: string | null) {
     if (lastSessionGuid !== null && lastSessionGuid !== sessionGuid) {
         console.log(`[Eris] New game session ${sessionGuid}; clearing list`)
         document.dispatchEvent(new CustomEvent(ON_CLEAR_OCCURENCES))
     }
     lastSessionGuid = sessionGuid
+
+    if (riverName !== lastRiverName) {
+        lastRiverName = riverName
+        document.dispatchEvent(
+            new CustomEvent(ON_RIVER_NAME_CHANGE, { detail: riverName }),
+        )
+    }
 }
 
 export function connectToDebugServer(port: number = DEFAULT_PORT) {
@@ -55,7 +69,7 @@ export function connectToDebugServer(port: number = DEFAULT_PORT) {
                 const data = JSON.parse(event.data)
 
                 if (data?.type === "session-started") {
-                    handleSessionStarted(data.sessionGuid)
+                    handleSessionStarted(data.sessionGuid, data.riverName ?? null)
                     return
                 }
 

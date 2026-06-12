@@ -84,6 +84,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+        }
+
+        .heading > eris-river-name {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
         .leftside {
@@ -134,6 +141,7 @@
     <div class="layout">
         <div class="heading">
             <eris-connection-status></eris-connection-status>
+            <eris-river-name></eris-river-name>
             <h2 class="title">🌲🏕️ Eris' Realm of Rzeka 🎠🐛</h3>
         </div>
         <div id="occurencesBox" class="occurences">

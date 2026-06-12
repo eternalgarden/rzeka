@@ -13,6 +13,7 @@ import "./components/causality/CausalityTree.ts"
 import "./components/other/Usagi.ts"
 import "./components/other/WHDIGLoader.ts"
 import "./components/other/ConnectionStatus.ts"
+import "./components/other/RiverName.ts"
 
 import { loadTestDataIfLocal } from "./helpers/loadTestDataIfLocal"
 import { connectToDebugServer } from "./connection/debugServerConnection"
