@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-06-26
+
+### Added
+- Automatic Eris horror logging for unserializable matter passing into rzeka.
+
+### Removed
+- Unused Wispd spell occurence category.
+
+### Fixed
+- IsCircumstancedBy() extension potential infinite loop. Oof.
+
+### Changed
+- Little cute display of the connected river name in Eris.
+
 ## [1.1.0] - 2026-05-26
 
 ### Added
