@@ -248,24 +248,63 @@ public class ShuttleTests
         Assert.False(responses[1].WasSuccessful);
     }
 
-    // ── Null-lastT guard ─────────────────────────────────────────────────────
+    // ── Automatic request circumstance ───────────────────────────────────────
 
     [Fact]
-    public void Shuttle_response_has_empty_circumstances_when_spell_fires_before_request_arrives()
+    public void Shuttle_auto_stamps_the_response_own_request_as_a_circumstance()
     {
-        // Spell returns Observable.Return without subscribing to the request observable.
-        // lastTIn stays null — response should have empty circumstances, not crash.
+        // The responder returns a bare response without stamping anything by hand.
+        // Because Receipt : Response<WorkOrder> carries its request, the Shuttle reads
+        // it off the response itself and records it as the response's circumstance.
         var river = NewRiver();
         var received = new List<Receipt>();
-        river.Scry<Receipt>().Subscribe(received.Add); // subscribe before emission fires
 
         using var shuttle = river.Shuttle<WorkOrder, Receipt>(
             "worker",
-            orders => Observable.Return(new Receipt(new WorkOrder(), true))
+            orders => orders.Select(o => new Receipt(o, true)) // no manual stamp
         );
-        using var strand = river.Strand("source", new Subject<WorkOrder>()); // gives Shuttle mana → emission fires
+        river.Scry<Receipt>().Subscribe(received.Add);
+
+        var order = new WorkOrder();
+        river.Pluck("dispatcher", order);
 
         Receipt receipt = Assert.Single(received);
-        Assert.Empty(receipt.Circumstances);
+        IMatter circumstance = Assert.Single(receipt.Circumstances);
+        Assert.Equal(order.Guid, circumstance.Guid);
+    }
+
+    [Fact]
+    public void Shuttle_auto_stamps_each_response_with_its_own_request_when_resolved_out_of_order()
+    {
+        // Two requests in flight; the second resolves first. With no manual stamping,
+        // each response's auto-stamped circumstance must still be its OWN request -
+        // proving the stamp reads matter.Request, not a captured "last request" that
+        // would attribute both responses to whichever request arrived last.
+        var river = NewRiver();
+        var responses = new List<Receipt>();
+        var completions = new Subject<(System.Guid orderGuid, bool success)>();
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.SelectMany(order =>
+                completions
+                    .Where(c => c.orderGuid == order.Guid)
+                    .Take(1)
+                    .Select(c => new Receipt(order, c.success)) // no manual stamp
+            )
+        );
+        river.Scry<Receipt>().Subscribe(responses.Add);
+
+        var order1 = new WorkOrder();
+        var order2 = new WorkOrder();
+        river.Pluck("dispatcher", order1);
+        river.Pluck("dispatcher", order2);
+
+        completions.OnNext((order2.Guid, true));  // order2 resolves first
+        completions.OnNext((order1.Guid, false)); // order1 resolves second
+
+        Assert.Equal(2, responses.Count);
+        Assert.Equal(order2.Guid, Assert.Single(responses[0].Circumstances).Guid);
+        Assert.Equal(order1.Guid, Assert.Single(responses[1].Circumstances).Guid);
     }
 }
