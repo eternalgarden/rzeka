@@ -35,29 +35,24 @@ public static class RzekaExtensions
         where T : IMatter
         => (T)matter.Clone(circumstances);
 
-    public static bool IsCircumstancedBy<T, U>(this T matter, U other, int maxDepth = 3)
+    public static bool IsCircumstancedBy<T, U>(this T matter, U other)
         where T : IMatter
         where U : IMatter
     {
-        if (maxDepth <= 0)
-            return false;
         if (other is null)
             return false;
 
-        foreach (IMatter circumstance in matter.Circumstances)
-        {
-            if (other.Equals(circumstance))
-            {
-                return true;
-            }
-        }
+        return SearchCircumstances(matter, other, new HashSet<Guid>());
+    }
 
+    static bool SearchCircumstances(IMatter matter, IMatter other, HashSet<Guid> visited)
+    {
         foreach (IMatter circumstance in matter.Circumstances)
         {
-            if (circumstance.IsCircumstancedBy(other, maxDepth - 1))
-            {
+            if (!visited.Add(circumstance.Guid))
+                continue;
+            if (other.Equals(circumstance) || SearchCircumstances(circumstance, other, visited))
                 return true;
-            }
         }
 
         return false;
