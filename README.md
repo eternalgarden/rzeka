@@ -67,7 +67,8 @@ class WardState : Matter
 }
 
 // Summon the river once, share its IRzeka reference with the systems that need it.
-IRzeka rzeka = new Spring().Create("Styx");
+// mainThread is an IScheduler for your engine's main thread - see Getting Started.
+IRzeka rzeka = new Spring().Create("Styx", mainThread);
 
 // Collect your spells so you can let them all go together later.
 CollectibleDisposable Q = new();
@@ -116,19 +117,17 @@ Setup, the live UI, the demo, and structured logging via `Whisper` are all cover
 
 The wiki is the source of truth. Start at the **[Home](https://github.com/eternalgarden/rzeka/wiki)** page, or jump straight to a topic:
 
-| Page | What you'll find |
-|------|------------------|
-| [🪞 Grimoire](https://github.com/eternalgarden/rzeka/wiki/Grimoire) | The full naming metaphor and vocabulary |
-| [💾 Installation](https://github.com/eternalgarden/rzeka/wiki/Installation) | Core, Eris dev server, and Godot-specific setup |
-| [🌱 Getting Started](https://github.com/eternalgarden/rzeka/wiki/Getting-Started) | Creating the river and hosting it in Godot |
-| [🪽 Matter](https://github.com/eternalgarden/rzeka/wiki/Matter) | Defining events and working with circumstances |
-| [🧬 API](https://github.com/eternalgarden/rzeka/wiki/API) | Strand, Pluck, Loom, Weave, Scry, Shuttle, circumstance stamping rules |
-| [👻 Mana & Lifecycle](https://github.com/eternalgarden/rzeka/wiki/Mana-and-Lifecycle) | How spells gate on their ingredients |
-| [🏹 Eris](https://github.com/eternalgarden/rzeka/wiki/Eris) | The debugger, the live UI, and `Whisper` logging |
-| [🪧 Attributes](https://github.com/eternalgarden/rzeka/wiki/Attributes) | `[HasState]` and evolving stateful matter |
-| [🧩 Extension Methods](https://github.com/eternalgarden/rzeka/wiki/Extension-Methods) | `Reacting`, the tuple combinators, `IsRespondingTo` |
-| [🛟 Error Boundary](https://github.com/eternalgarden/rzeka/wiki/Error-Boundary) | How unhandled source errors are caught and surfaced |
-| [🪃 Async Operations](https://github.com/eternalgarden/rzeka/wiki/Async-Operations) | Crossing async boundaries while preserving causality |
+- [🪞 Grimoire](https://github.com/eternalgarden/rzeka/wiki/Grimoire) - the full naming metaphor and vocabulary
+- [💾 Installation](https://github.com/eternalgarden/rzeka/wiki/Installation) - core, Eris dev server, and Godot-specific setup
+- [🌱 Getting Started](https://github.com/eternalgarden/rzeka/wiki/Getting-Started) - creating the river and hosting it in Godot
+- [🪽 Matter](https://github.com/eternalgarden/rzeka/wiki/Matter) - defining events and working with circumstances
+- [🧬 API](https://github.com/eternalgarden/rzeka/wiki/API) - Strand, Pluck, Loom, Weave, Scry, Shuttle, circumstance stamping rules
+- [👻 Mana & Lifecycle](https://github.com/eternalgarden/rzeka/wiki/Mana-and-Lifecycle) - how spells gate on their ingredients
+- [🏹 Eris](https://github.com/eternalgarden/rzeka/wiki/Eris) - the debugger, the live UI, and `Whisper` logging
+- [🪧 Attributes](https://github.com/eternalgarden/rzeka/wiki/Attributes) - `[HasState]` and evolving stateful matter
+- [🧩 Extension Methods](https://github.com/eternalgarden/rzeka/wiki/Extension-Methods) - `Reacting`, the tuple combinators, `IsRespondingTo`
+- [🛟 Error Boundary](https://github.com/eternalgarden/rzeka/wiki/Error-Boundary) - how unhandled source errors are caught and surfaced
+- [🪃 Async Operations](https://github.com/eternalgarden/rzeka/wiki/Async-Operations) - crossing async boundaries while preserving causality
 <br><br>
 
 ## 📜 License
