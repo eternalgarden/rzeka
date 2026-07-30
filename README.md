@@ -12,9 +12,9 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_o little rabbit! where did you come from?_" and get its full casual chain. Thanks to Eris (rzeka's built-in debugger) you can read the entire story of what's happening in your system - real-time, in a browser, while your game runs (both in a game engine and in a build).
+You can ask any event – _o little rabbit! where did you come from?_ – and get its full casual chain – _what fox's chasing glare or carrots allure_. Thanks to Eris (rzeka's built-in debugger) you can read the entire story of what's happening in your system - real-time, in a browser, while your game runs (both in a game engine and in a build).
 
-> 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) - API reference, threading model, Eris, attributes & error handling.
+> 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) – API reference, threading model, Eris, attributes & error handling.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
@@ -104,7 +104,7 @@ Every `WardState` here automatically remembers the `HexCast` that diminished it 
 
 ## 🏹 Eris, the debugger
 
-rzeka ships with a browser-based debugger that connects to your running game over WebSocket and shows matter flow and messages in real time - you don't need to build your own in-game UI! Eris records internally even in release builds (a feature to dump crash logs is underway). The WebSocket server is added only in dev builds via the `EternalGarden.Rzeka.Dev` package so you can easily strip it from your release builds.
+rzeka ships with a browser-based debugger that connects to your running game over WebSocket and shows matter flow and messages in real time – you don't need to build your own in-game UI! Eris records internally even in release builds (a feature to dump crash logs is underway). The WebSocket server is added only in dev builds via the `EternalGarden.Rzeka.Dev` package so you can easily strip it from your release builds.
 
 Setup, the live UI, the demo, and structured logging via `Whisper` are all covered on the **[Eris](https://github.com/eternalgarden/rzeka/wiki/Eris)** page.
 <!-- 
