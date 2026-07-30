@@ -14,7 +14,7 @@ What makes rzeka different from a typical event bus is **causality tracking**: e
 
 You can ask any event – _o little rabbit! where did you come from?_ – and get its full casual chain – _what fox's chasing glare or carrots allure_. 
 
-Thanks to Eris ([rzeka's built-in debugger](https://github.com/eternalgarden/rzeka/wiki/Eris) you can read the entire story of what's happening in your system - real-time, in a browser, while your game runs (both in a game engine and in a build).
+Thanks to Eris ([rzeka's built-in debugger](https://github.com/eternalgarden/rzeka/wiki/Eris)) you can read the entire story of what's happening in your system - real-time, in a browser, while your game runs (both in a game engine and in a build).
 
 > 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) – API reference, threading model, Eris, attributes & error handling.
 
