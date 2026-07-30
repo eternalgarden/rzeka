@@ -12,16 +12,15 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_oh, where did you come from?_" and get its full casual chain. With rzeka's built-in debugger, Eris, you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
+You can ask any event "_o little rabbit! where did you come from?_" and get its full casual chain. Thanks to Eris (rzeka's built-in debugger) you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
+
+> 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) - API reference, threading model, Eris, attributes & error handling.
 
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
-> 📜⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries.
+> ⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries.
 
 **Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI and Godot integration are actively evolving.
-
-> 📜🧨 **This README is a doorway, not the manual.** It shows you what rzeka feels like and gets you installed. For the full reference - every API method, the threading model, Eris, attributes, error handling - head to the **[rzeka wiki](https://github.com/eternalgarden/rzeka/wiki)**. The [Documentation](#-documentation) map below points the way.
-<br><br>
 
 ## 🪞 The metaphor
 
@@ -112,7 +111,7 @@ rzeka ships with a browser-based debugger that connects to your running game ove
 
 Setup, the live UI, the demo, and structured logging via `Whisper` are all covered on the **[Eris](https://github.com/eternalgarden/rzeka/wiki/Eris)** page.
 <br><br>
-
+<!-- 
 ## 📚 Documentation
 
 The wiki is the source of truth. Start at the **[Home](https://github.com/eternalgarden/rzeka/wiki)** page, or jump straight to a topic:
@@ -129,7 +128,7 @@ The wiki is the source of truth. Start at the **[Home](https://github.com/eterna
 - [🛟 Error Boundary](https://github.com/eternalgarden/rzeka/wiki/Error-Boundary) - how unhandled source errors are caught and surfaced
 - [🪃 Async Operations](https://github.com/eternalgarden/rzeka/wiki/Async-Operations) - crossing async boundaries while preserving causality
 <br><br>
-
+-->
 ## 📜 License
 
 See [LICENSE](LICENSE).
