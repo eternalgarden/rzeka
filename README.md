@@ -12,7 +12,7 @@ rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-th
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event "_o little rabbit! where did you come from?_" and get its full casual chain. Thanks to Eris (rzeka's built-in debugger) you can read the entire story of what's happening in your system - in real-time, in a browser, while your game runs.
+You can ask any event "_o little rabbit! where did you come from?_" and get its full casual chain. Thanks to Eris (rzeka's built-in debugger) you can read the entire story of what's happening in your system - real-time, in a browser, while your game runs (both in a game engine and in a build).
 
 > 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) - API reference, threading model, Eris, attributes & error handling.
 
@@ -30,7 +30,6 @@ The metaphor is consistent, and once you let it work its magic the API becomes s
 
 ![](https://github.com/eternalgarden/rzeka/blob/main/docs/Daisuke_Igarashi_Witches.png)
 > A page from [Witches by Daisuke Igarashi](https://en.wikipedia.org/wiki/Witches_(manga))
-<br><br>
 
 ## 💾 Installation
 
@@ -41,7 +40,6 @@ dotnet add package EternalGarden.Rzeka
 ```
 
 For the optional browser-based Eris debugger (`EternalGarden.Rzeka.Dev`) and Godot's transitive-dependency quirks, go to the **[Installation](https://github.com/eternalgarden/rzeka/wiki/Installation)** page.
-<br><br>
 
 ## 🌱 A taste
 
@@ -103,14 +101,12 @@ Every `WardState` here automatically remembers the `HexCast` that diminished it 
 > 📜🧚🏻‍♀️ rzeka code will make the characteristic waterfall 2D structures that go deep into your indentation while remaining very clear and readable. This depth might not be for everyone though. Personally I really prefer that to a 1D top-down wall of code-text, maybe you might like it too! _Screenshot info_: nvim, theme [Aquavium](https://github.com/T-b-t-nchos/Aquavium.nvim), semitransparent background, CSharpier formatter.
 
 > 📜🌱 Want a runnable project instead? See [little-river](https://github.com/eternalgarden/little-river), a tiny example Godot game built on rzeka.
-<br><br>
 
 ## 🏹 Eris, the debugger
 
-rzeka ships with a browser-based debugger that connects to your running game over WebSocket and shows matter flow and messages in real time - you don't need to build your own in-game UI! Eris records internally even in release builds, a feature to dump crash logs is underway. The WebSocket server is added only in dev builds via the `EternalGarden.Rzeka.Dev` package so you can easily strip it from your release builds.
+rzeka ships with a browser-based debugger that connects to your running game over WebSocket and shows matter flow and messages in real time - you don't need to build your own in-game UI! Eris records internally even in release builds (a feature to dump crash logs is underway). The WebSocket server is added only in dev builds via the `EternalGarden.Rzeka.Dev` package so you can easily strip it from your release builds.
 
 Setup, the live UI, the demo, and structured logging via `Whisper` are all covered on the **[Eris](https://github.com/eternalgarden/rzeka/wiki/Eris)** page.
-<br><br>
 <!-- 
 ## 📚 Documentation
 
