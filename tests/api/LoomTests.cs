@@ -503,4 +503,29 @@ public class LoomTests
         Assert.Equal(1, paint.Circumstances.Count);
         Assert.Equal(ink.Guid, paint.Circumstances[0].Guid);
     }
+
+    [Fact]
+    public void Loom_whose_lambda_ignores_its_input_whispers_the_Horror_only_once()
+    {
+        // The detection runs per emission, so a lambda rooted at a repeating generator
+        // would flood Eris with an identical Horror on every tick without the latch.
+        var river = NewRiver();
+        var captured = new List<SerializableMessageOccurence>();
+        using var _ = river.Eris.SerializableMessageOccurences.Subscribe(captured.Add);
+
+        var ticks = new Subject<int>();
+        using var loom = river.Loom<Ink, Paint>(
+            "painter",
+            inks => ticks.Select(__ => new Paint()) // never chains from inks
+        );
+
+        ticks.OnNext(1);
+        ticks.OnNext(2);
+        ticks.OnNext(3);
+
+        SerializableMessageOccurence horror = Assert.Single(
+            captured.Where(m => m.message.Contains("without the 'Ink' ingredient"))
+        );
+        Assert.Equal(RzekaMessageType.Horror, horror.messageType);
+    }
 }

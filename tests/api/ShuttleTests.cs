@@ -180,6 +180,97 @@ public class ShuttleTests
         Assert.Contains(receipt.Circumstances, c => c.Guid == ambient.Guid);
     }
 
+    [Fact]
+    public void Shuttle_does_not_mark_manual_when_only_the_request_was_stamped()
+    {
+        // Stamping the request by hand is redundant - the request is attached automatically -
+        // so the occurrence must not report hand-stamped causality to Eris.
+        var river = NewRiver();
+        var matterOccurences = new List<MatterOccurence>();
+        river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.Select(o => new Receipt(o, true).WithCircumstances<Receipt>(o))
+        );
+
+        river.Pluck("dispatcher", new WorkOrder());
+
+        MatterOccurence emitted = Assert.Single(matterOccurences.Where(o => o.Matter is Receipt));
+        Assert.False(emitted.ManualCircumstances);
+        Assert.Single(emitted.Matter.Circumstances);
+    }
+
+    [Fact]
+    public void Shuttle_marks_manual_when_context_beyond_the_request_was_stamped()
+    {
+        // The counterpart: Scry'd context the responder stamped is causality rzeka could
+        // not derive, so the occurrence must report it as manual.
+        var river = NewRiver();
+        var ambient = new WorkOrder();
+        var matterOccurences = new List<MatterOccurence>();
+        river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.Select(o => new Receipt(o, true).WithCircumstances<Receipt>(o, ambient))
+        );
+
+        river.Pluck("dispatcher", new WorkOrder());
+
+        MatterOccurence emitted = Assert.Single(matterOccurences.Where(o => o.Matter is Receipt));
+        Assert.True(emitted.ManualCircumstances);
+        Assert.Equal(2, emitted.Matter.Circumstances.Count);
+    }
+
+    [Fact]
+    public void Shuttle_whispers_a_Horror_when_the_response_carries_a_null_request()
+    {
+        // A null Request is always a construction bug: causality cannot be recorded, and
+        // no Ask caller can ever be routed to the response. Silence would hide both.
+        var river = NewRiver();
+        var captured = new List<SerializableMessageOccurence>();
+        using var _ = river.Eris.SerializableMessageOccurences.Subscribe(captured.Add);
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.Select(o => new Receipt(null, true))
+        );
+
+        river.Pluck("dispatcher", new WorkOrder());
+
+        SerializableMessageOccurence horror = Assert.Single(
+            captured.Where(m => m.message.Contains("null 'WorkOrder' request"))
+        );
+        Assert.Equal(RzekaMessageType.Horror, horror.messageType);
+        Assert.Contains(nameof(Receipt), horror.message);
+    }
+
+    [Fact]
+    public void Ask_is_not_faulted_by_another_responses_null_request()
+    {
+        // The IsRespondingTo guard: one malformed response must not throw inside the weave
+        // of every other pending Ask that shares its response type.
+        var river = NewRiver();
+        Receipt received = null;
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.SelectMany(o => new[]
+            {
+                new Receipt(null, true), // malformed, passes every Ask's filter
+                new Receipt(o, true),    // the real reply
+            }.ToObservable())
+        );
+
+        using var ask = river
+            .Ask<WorkOrder, Receipt>("caller", new WorkOrder())
+            .Subscribe(r => received = r);
+
+        Assert.NotNull(received);
+        Assert.NotNull(received.Request);
+    }
+
     // ── Async / time-spread ───────────────────────────────────────────────────
 
     [Fact]

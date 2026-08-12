@@ -33,6 +33,9 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
         /* ⭐ ---- ---- */
 
         bool ingredientSubscribed = false;
+        // Whispered at most once: the check below runs per emission, and a lambda rooted at
+        // a repeating generator would otherwise flood Eris with the same Horror forever.
+        bool unchainedHorrorWhispered = false;
         var lastT = default(T1);
         IObservable<T1> ingredientT = Observable.Create<T1>(observer =>
         {
@@ -51,7 +54,9 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
 
                 /* ⭐ ---- ---- */
 
-                if (!ingredientSubscribed)
+                if (!ingredientSubscribed && !unchainedHorrorWhispered)
+                {
+                    unchainedHorrorWhispered = true;
                     Eris.PublishMessage(new MessageOccurence
                     {
                         Guid = Guid.NewGuid(),
@@ -59,6 +64,7 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
                         RzekaMessageType = RzekaMessageType.Horror,
                         Message = $"Loom output {typeof(TOut).Name} fired without the '{typeof(T1).Name}' ingredient being subscribed to. The lambda is not chaining from the provided input observable — use 'events.Select(_ => ...)' not 'Observable.Return(...)'.",
                     });
+                }
 
                 // Automatic circumstance tracking — only if the user hasn't already set them
                 // (e.g. manually via .WithCircumstances() inside an async Observable.Create wrapper)

@@ -30,6 +30,9 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
     protected override IObservable<TOut> CreateConjuring()
     {
         bool ingredientSubscribed = false;
+        // Whispered at most once: the check below runs per emission, and a lambda rooted at
+        // a repeating generator would otherwise flood Eris with the same Horror forever.
+        bool unchainedHorrorWhispered = false;
         IObservable<TIn> ingredient = Observable.Create<TIn>(observer =>
         {
             ingredientSubscribed = true;
@@ -43,14 +46,17 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
             .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
-                if (!ingredientSubscribed)
+                if (!ingredientSubscribed && !unchainedHorrorWhispered)
+                {
+                    unchainedHorrorWhispered = true;
                     Eris.PublishMessage(new MessageOccurence
                     {
                         Guid = Guid.NewGuid(),
                         Timestamp = DateTimeOffset.Now,
                         RzekaMessageType = RzekaMessageType.Horror,
-                        Message = $"Shuttle response {typeof(TOut).Name} fired without the '{typeof(TIn).Name}' request observable being subscribed to. The lambda is not chaining from the request observable.",
+                        Message = $"Shuttle response {typeof(TOut).Name} fired without the '{typeof(TIn).Name}' request observable being subscribed to. The lambda is not chaining from the request observable. In {Title} (owned by {Who}).",
                     });
+                }
 
                 // A response is, by definition, caused by its request. Because
                 // TOut : IResponse<TIn>, the request rides on the response itself
@@ -71,8 +77,19 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                         if (!existing.Equals(matter.Request))
                             circumstances.Add(existing);
 
+                    // A hand-stamped request is redundant with what we attach anyway, so
+                    // it must not report as manual. 
+                    manualCircumstances = circumstances.Count > 1;
                     matter = matter.WithCircumstances<TOut>(circumstances.ToArray());
                 }
+                else
+                    Eris.PublishMessage(new MessageOccurence
+                    {
+                        Guid = Guid.NewGuid(),
+                        Timestamp = DateTimeOffset.Now,
+                        RzekaMessageType = RzekaMessageType.Horror,
+                        Message = $"Shuttle response {typeof(TOut).Name} was constructed with a null '{typeof(TIn).Name}' request. Without the request reference its causality cannot be recorded, so it will break all your Ask's on {Title} (owned by {Who}).",
+                    });
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;

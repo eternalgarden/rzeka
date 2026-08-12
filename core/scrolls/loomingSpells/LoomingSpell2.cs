@@ -32,6 +32,10 @@ public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
 
     protected override IObservable<TOut> CreateConjuring()
     {
+        // Whispered at most once: the check below runs per emission, and a lambda rooted at
+        // a repeating generator would otherwise flood Eris with the same Horror forever.
+        bool unchainedHorrorWhispered = false;
+
         bool ingredient1Subscribed = false;
         var lastT1 = default(T1);
         IObservable<T1> ingredient1 = Observable.Create<T1>(observer =>
@@ -59,7 +63,9 @@ public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
             .ObserveOn(Eris.MainThread)
             .Select(matter =>
             {
-                if (!ingredient1Subscribed || !ingredient2Subscribed)
+                if ((!ingredient1Subscribed || !ingredient2Subscribed) && !unchainedHorrorWhispered)
+                {
+                    unchainedHorrorWhispered = true;
                     Eris.PublishMessage(new MessageOccurence
                     {
                         Guid = Guid.NewGuid(),
@@ -67,6 +73,7 @@ public class LoomingSpell2<T1, T2, TOut> : LoomingSpell<TOut>
                         RzekaMessageType = RzekaMessageType.Horror,
                         Message = $"Loom output {typeof(TOut).Name} fired without the '{(!ingredient1Subscribed ? typeof(T1).Name : typeof(T2).Name)}' ingredient being subscribed to. A declared input was never wired into the observable chain.",
                     });
+                }
 
                 bool manualCircumstances = matter.HasCircumstances();
                 if (!manualCircumstances)

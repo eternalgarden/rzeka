@@ -21,7 +21,10 @@ public static class RzekaExtensions
         where TRequest : IRequest
         where TResponse : IResponse<TRequest>
     {
-        return response.Request.Guid == request.Guid;
+        // A null Request means the response was constructed wrong. ShuttleSpell whispers
+        // a Horror about it; here we only refuse the match, so that one malformed response
+        // won't explode any Ask that works on this Request/Response pair.
+        return response.Request is not null && response.Request.Guid == request.Guid;
     }
 
     /// <summary>
