@@ -84,8 +84,11 @@ public class Eris : IDisposable
 
     // Required main-thread scheduler. Set at river creation via Spring.Create(name, mainThread: ...).
     // Used by conjuring spells (Strand / Loom / Shuttle) to ObserveOn before publishing matter,
-    // making the main-thread invariant structural rather than runtime-checked. Pluck is not
-    // marshalled - its synchronous one-shot semantics would break if queued through a scheduler.
+    // making the main-thread invariant structural rather than runtime-checked. Pluck does not
+    // ObserveOn (that would outlive its one-shot token) but SpringRiver.Pluck schedules the whole
+    // call onto this scheduler when invoked off-thread, so the invariant holds there too. Note the
+    // guarantee is only as strong as the scheduler supplied: ImmediateScheduler runs inline on the
+    // calling thread, which is intended for tests but does not actually hop.
     internal IScheduler MainThread { get; set; } = ImmediateScheduler.Instance;
 
     public Eris(string name)

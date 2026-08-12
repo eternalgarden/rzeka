@@ -89,7 +89,33 @@ internal sealed class SpringRiver : IRzeka, IDisposable
     public void Pluck<T>(object who, T matter)
         where T : IMatter
     {
-        _ = new PluckingSpell<T>(who, matter, Library, Eris);
+        // A pluck is a synchronous one-shot: PluckingSpell registers its conjurer, Observable.Return
+        // fires through it, and the token is disposed - all inside the constructor. Marshalling the
+        // *observable* would break that (the emission would be queued past the token's disposal and
+        // land nowhere), but marshalling the *call* keeps the whole sequence intact and merely runs
+        // it later, on the right thread.
+        //
+        // Only off-thread callers are marshalled. On the main thread a pluck stays fully synchronous,
+        // so downstream Weaves have already run by the time this returns - callers may depend on that.
+        if (Eris.IsOnMainThread is null || Eris.IsOnMainThread())
+        {
+            _ = new PluckingSpell<T>(who, matter, Library, Eris);
+            return;
+        }
+
+        // Not a Horror: the hazard is handled now. But an off-thread pluck usually means the value
+        // should have come back through a spell chain (a Shuttle response, a Strand), so it is still
+        // worth surfacing as a design smell.
+        Eris.PublishMessage(new MessageOccurence
+        {
+            Guid = Guid.NewGuid(),
+            Timestamp = DateTimeOffset.Now,
+            RzekaMessageType = RzekaMessageType.Hunch,
+            Message =
+                $"Off-thread pluck: {typeof(T).Name} by {who.GetType().Name} was plucked from a worker thread and has been marshalled onto the main thread. It will publish later than it would on the main thread. Consider returning the value through a Shuttle response or a Strand instead.",
+        });
+
+        Eris.MainThread.Schedule(() => _ = new PluckingSpell<T>(who, matter, Library, Eris));
     }
 
     public IDisposable Shuttle<TIn, TOut>(object who, Func<IObservable<TIn>, IObservable<TOut>> spell)
