@@ -64,20 +64,25 @@ public static class ScrollExtensions
             .WithLatestFrom(other2, (ab, c) => (ab.a, ab.b, c));
 
     /// <summary>
-    /// Performs a side effect for each emission without breaking the chain.
-    /// Use inside Loom lambdas to signal intentional component reactions, not debug taps.
+    /// Performs an effect for each emission without breaking the chain.
+    /// Use ONLY when the effect is what makes the emitted matter true — i.e. the matter
+    /// would be a lie without it. An effect that is merely a consequence of matter already
+    /// true belongs in a Weave, which records a spell occurrence; this does not.
+    /// Note it re-runs per attempt inside SelectMany inner sequences and under .Retry.
+    /// A Loom that performs work and then reports it usually wants to be a Shuttle.
     /// </summary>
-    public static IObservable<T> Reacting<T>(this IObservable<T> source, Action<T> reaction) =>
-        source.Do(reaction);
+    public static IObservable<T> Perform<T>(this IObservable<T> source, Action<T> effect) =>
+        source.Do(effect);
 
     /// <summary>
-    /// Runs a side effect on each emission and produces output matter in one explicit step.
-    /// Sugar over .Do() + .Select() — signals the reaction happens inside the chain, not as a debug tap.
+    /// Performs an effect and produces the resulting matter in one explicit step.
+    /// Sugar over .Do() + .Select(). Same rule as the Action overload: only for effects the
+    /// emitted matter's truth depends on — consequences belong in a Weave.
     /// </summary>
-    public static IObservable<TOut> Reacting<T, TOut>(
+    public static IObservable<TOut> Perform<T, TOut>(
         this IObservable<T> source,
-        Func<T, TOut> reaction
-    ) => source.Select(reaction);
+        Func<T, TOut> effect
+    ) => source.Select(effect);
 
     // -------------
 }
