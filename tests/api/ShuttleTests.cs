@@ -247,6 +247,32 @@ public class ShuttleTests
     }
 
     [Fact]
+    public void Shuttle_whispers_the_null_request_Horror_only_once_per_spell()
+    {
+        // A null request is a property of how the lambda builds responses, so a broken path
+        // emits it on every response. The second whisper says nothing the first did not.
+        var river = NewRiver();
+        var captured = new List<SerializableMessageOccurence>();
+        using var _ = river.Eris.SerializableMessageOccurences.Subscribe(captured.Add);
+
+        using var shuttle = river.Shuttle<WorkOrder, Receipt>(
+            "worker",
+            orders => orders.Select(o => new Receipt(null, true))
+        );
+
+        var responses = new List<Receipt>();
+        using var collector = river.Weave<Receipt>("collector", r => r.Subscribe(responses.Add));
+
+        river.Pluck("dispatcher", new WorkOrder());
+        river.Pluck("dispatcher", new WorkOrder());
+        river.Pluck("dispatcher", new WorkOrder());
+
+        // Guards against passing vacuously: three malformed responses really were emitted.
+        Assert.Equal(3, responses.Count);
+        Assert.Single(captured.Where(m => m.message.Contains("null 'WorkOrder' request")));
+    }
+
+    [Fact]
     public void Ask_is_not_faulted_by_another_responses_null_request()
     {
         // The IsRespondingTo guard: one malformed response must not throw inside the weave

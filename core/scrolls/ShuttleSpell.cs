@@ -33,6 +33,10 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
         // Whispered at most once: the check below runs per emission, and a lambda rooted at
         // a repeating generator would otherwise flood Eris with the same Horror forever.
         bool unchainedHorrorWhispered = false;
+        // Same reasoning: a null request comes from how the lambda *constructs* responses, so
+        // a broken path emits it on every response it builds. The second whisper carries
+        // nothing the first did not - same types, same spell, same fix.
+        bool nullRequestHorrorWhispered = false;
         IObservable<TIn> ingredient = Observable.Create<TIn>(observer =>
         {
             ingredientSubscribed = true;
@@ -82,7 +86,9 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                     manualCircumstances = circumstances.Count > 1;
                     matter = matter.WithCircumstances<TOut>(circumstances.ToArray());
                 }
-                else
+                else if (!nullRequestHorrorWhispered)
+                {
+                    nullRequestHorrorWhispered = true;
                     Eris.PublishMessage(new MessageOccurence
                     {
                         Guid = Guid.NewGuid(),
@@ -90,6 +96,7 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                         RzekaMessageType = RzekaMessageType.Horror,
                         Message = $"Shuttle response {typeof(TOut).Name} was constructed with a null '{typeof(TIn).Name}' request. Without the request reference its causality cannot be recorded, so it will break all your Ask's on {Title} (owned by {Who}).",
                     });
+                }
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
