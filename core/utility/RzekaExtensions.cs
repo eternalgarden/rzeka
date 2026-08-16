@@ -62,27 +62,33 @@ public static class RzekaExtensions
     }
 
     /// <summary>
-    /// Dispatch a request and observe correlated responses.
-    /// Subscribes a Weave to the response stream BEFORE plucking the request, so the registration
-    /// is visible to Eris and there is no race. Caller controls cardinality (use <c>.Take(1)</c>
-    /// for one-shot or omit for streaming). To thread a triggering matter as a circumstance on
-    /// the request, pre-stamp via <c>request.WithCircumstances&lt;TIn&gt;(trigger)</c>.
+    /// Dispatch a request and observe the correlated response.
+    /// Completes after the first correlated response.
+    /// Don't forget to stamp triggering matter on the request using .WithCircumstances.
     /// </summary>
     public static IObservable<TOut> Ask<TIn, TOut>(this IRzeka rzeka, object who, TIn request)
         where TIn : IRequest
         where TOut : IResponse<TIn>
     {
-        return Observable.Create<TOut>(observer =>
-        {
-            IDisposable weave = rzeka.Weave<TOut>(
-                who,
-                src => src.Where(r => r.IsRespondingTo(request)).Subscribe(observer)
-            );
+        return Observable
+            .Create<TOut>(observer =>
+            {
+                // Subscribes the Weave BEFORE plucking the request, so the registration is
+                // visible to Eris and there is no race.
+                IDisposable weave = rzeka.Weave<TOut>(
+                    who,
+                    src => src.Where(r => r.IsRespondingTo(request)).Subscribe(observer)
+                );
 
-            rzeka.Pluck(who, request);
+                rzeka.Pluck(who, request);
 
-            return weave;
-        });
+                return weave;
+            })
+            // One request, one result - a Response<T> carries WasSuccessful, and a verdict
+            // happens once. Completing here disposes the Weave above; without it a Weave would
+            // stay live per request, and operators that wait on inner completion (Concat)
+            // would deadlock after the first.
+            .Take(1);
     }
 
     // -------------

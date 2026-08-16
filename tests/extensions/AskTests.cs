@@ -17,6 +17,13 @@ public class AskTests
 
     sealed class Trigger : Matter { }
 
+    sealed class Done : Matter
+    {
+        public Guid RequestGuid { get; }
+
+        public Done(Guid requestGuid) => RequestGuid = requestGuid;
+    }
+
     static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Core behavioral ───────────────────────────────────────────────────────
@@ -215,13 +222,17 @@ public class AskTests
         Assert.True(received2[0].WasSuccessful);
     }
 
-    // ── Streaming variant ─────────────────────────────────────────────────────
+    // ── Cardinality ───────────────────────────────────────────────────────────
 
     [Fact]
-    public void Ask_without_Take_receives_multiple_responses_from_streaming_shuttle()
+    public void Ask_takes_the_first_response_and_completes_even_if_the_shuttle_emits_more()
     {
+        // A Shuttle *can* physically answer one request several times - nothing stops its
+        // lambda emitting repeatedly. Ask takes the first verdict and closes, rather than
+        // leaving a Weave live to collect the rest.
         IRzeka rzeka = NewRiver();
         var received = new List<Pong>();
+        bool completed = false;
         var triggers = new Subject<bool>();
 
         var req = new Ping();
@@ -233,13 +244,69 @@ public class AskTests
 
         using var sub = rzeka
             .Ask<Ping, Pong>("asker", req)
-            .Subscribe(received.Add);
+            .Subscribe(received.Add, () => completed = true);
 
         triggers.OnNext(true);
-        triggers.OnNext(true);
+        triggers.OnNext(true); // must not reach the observer
         triggers.OnNext(true);
 
-        Assert.Equal(3, received.Count);
-        Assert.All(received, r => Assert.Equal(req.Guid, r.Request.Guid));
+        Assert.Single(received);
+        Assert.Equal(req.Guid, received[0].Request.Guid);
+        Assert.True(completed);
+    }
+
+    [Fact]
+    public void Ask_inside_a_spell_round_trips_every_trigger()
+    {
+        // Take(1) lives on the inner observable built per call, so repeated triggers
+        // through one long-lived spell each get their own complete round trip.
+        IRzeka rzeka = NewRiver();
+        var saved = new List<Done>();
+        var triggers = new Subject<Trigger>();
+
+        using var shuttle = rzeka.Shuttle<Ping, Pong>(
+            "responder",
+            pings => pings.Select(p => new Pong(p, true))
+        );
+
+        using var strand = rzeka.Strand(rzeka, triggers);
+        using var weave = rzeka.Weave<Done>("collector", done => done.Subscribe(saved.Add));
+
+        using var loom = rzeka.Loom<Trigger, Done>(
+            "asker",
+            evts => evts.SelectMany(_ =>
+                rzeka.Ask<Ping, Pong>("asker", new Ping()).Select(p => new Done(p.Request.Guid))
+            )
+        );
+
+        triggers.OnNext(new Trigger());
+        triggers.OnNext(new Trigger());
+        triggers.OnNext(new Trigger());
+
+        Assert.Equal(3, saved.Count);
+        Assert.Equal(3, saved.Select(d => d.RequestGuid).Distinct().Count());
+    }
+
+    [Fact]
+    public void Ask_queued_with_Concat_sends_every_request_in_order()
+    {
+        // Concat subscribes to the next inner only when the previous completes.
+        // Without Ask completing, this deadlocks after the first request.
+        IRzeka rzeka = NewRiver();
+        var order = new List<int>();
+        var slots = new List<int> { 1, 2, 3 };
+
+        using var shuttle = rzeka.Shuttle<Ping, Pong>(
+            "responder",
+            pings => pings.Select(p => new Pong(p, true))
+        );
+
+        using var sub = slots
+            .ToObservable()
+            .Select(slot => rzeka.Ask<Ping, Pong>("asker", new Ping()).Select(_ => slot))
+            .Concat()
+            .Subscribe(order.Add);
+
+        Assert.Equal(new[] { 1, 2, 3 }, order);
     }
 }
