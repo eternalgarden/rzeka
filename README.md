@@ -6,23 +6,23 @@
 [![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 <!-- [![Downloads](https://img.shields.io/nuget/dt/EternalGarden.Rzeka?label=downloads)](https://www.nuget.org/packages/EternalGarden.Rzeka) -->
 
+> 🌟📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) – API reference, threading model, Eris, attributes & error handling.
+
 **A reactive event bus for C# that tracks causality.**
 
 rzeka ("[_river_](https://en.wikipedia.org/wiki/Nile)" in Polish) is a single-threaded event bus built on Rx.NET. Components [yeet](https://youtu.be/S2t59dPf9K0?si=srvWNs02TmMQwvzH) typed events into the river and act on the events flowing through it, without holding references to each other.
 
 What makes rzeka different from a typical event bus is **causality tracking**: every event carries a record of the events that caused it. 
 
-You can ask any event – _o little rabbit! where did you come from?_ – and get its full casual chain – _what fox's chasing glare or carrots allure_. 
+You can ask any event – _o little rabbit! where did you come from?_ – and get its full casual chain – _what fox's chasing glare or carrots allure brought you here?_
 
 Thanks to Eris ([rzeka's built-in debugger](https://github.com/eternalgarden/rzeka/wiki/Eris)) you can read the entire story of what's happening in your system – real-time, in a browser, while your game runs (both in a game engine and in a build!).
 
-> 📐📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) – API reference, threading model, Eris, attributes & error handling.
-
 <https://github.com/user-attachments/assets/de5e608b-5123-47dd-99c4-996be5ff5259>
 
-> ⚗️ **rzeka is single-threaded by design**. This is the constraint that makes everything else possible: it guarantees that circumstance tracking, mana transitions, and spell lifecycle are always consistent. Async operations are handled within defined boundaries.
+> ⚗️ **rzeka is single-threaded by design**. This constraint guarantees consistent circumstance tracking. Async operations are handled within defined boundaries (see [Shuttle](https://github.com/eternalgarden/rzeka/wiki/API-Shuttle)).
 
-**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI and Godot integration are actively evolving.
+**Status**: rzeka was originally built for [sanctuary](https://github.com/eternalgarden/sanctuary), a 3D journaling software shipped on Unity. It is currently being refactored alongside sanctuary's port to Godot. **The core API is stable**. Eris UI and Godot integration are evolving.
 
 ## 🪞 The metaphor
 
