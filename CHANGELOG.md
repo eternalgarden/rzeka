@@ -8,12 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 Checklist:
 - Move things from unreleased to the new release section.
 - Add new diff at the bottom of the changelog and update the unreleased one.
+- Copy the latest section to the releases page at github.
 
 ## [Unreleased]
 ### Added
+- A Horror latch on shuttle emission of a reponse without a request reference set on it.
+- Error boundary Horrors now carry the matter the spell was handling as circumstances (a Loom's latest inputs, a Shuttle's latest request, a Weave's delivered matter).
+- Weave error boundary: a throwing Weave is whispered to Eris as a Horror and contained. `onUnhandledSourceError` runs for Weave failures too.
 ### Removed
 ### Fixed
+- 🔥 A throwing Weave no longer silently stops its matter type from reaching every other subscriber for the rest of the session. This was a huge hidden bug discovered while working on rzeka-reporting.
 ### Changed
+- Error boundary messages describe the owner by type name (plus `describeOwner`) instead of the owner's `ToString()`.
 
 ## [1.1.3] - 2026-08-16
 

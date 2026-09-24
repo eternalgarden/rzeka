@@ -93,11 +93,11 @@ public class LoomingSpell3<T1, T2, T3, TOut> : LoomingSpell<TOut>
                 bool manualCircumstances = matter.HasCircumstances();
                 if (!manualCircumstances)
                     matter = matter.WithCircumstances<TOut>(
-                        new IMatter?[] { lastT1, lastT2, lastT3 }.Where(x => x is not null).Cast<IMatter>().ToArray()
+                        Present(lastT1, lastT2, lastT3)
                     );
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
             })
-            .WhisperOnError(this);
+            .WhisperOnError(this, () => Present(lastT1, lastT2, lastT3));
     }
 }

@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Rzeka.Tests")]
 [assembly: InternalsVisibleTo("Rzeka.Dev")]
+[assembly: InternalsVisibleTo("Rzeka.Reporting")]
 
 namespace Rzeka;
 internal sealed class SpringRiver : IRzeka, IDisposable

@@ -17,7 +17,8 @@ public class ErrorBoundaryTests
     [Fact]
     public void Strand_whose_source_errors_whispers_to_Eris_as_Horror_with_the_exception()
     {
-        var river = NewRiver();
+        var river = (SpringRiver)
+            new Spring().Create("test", ImmediateScheduler.Instance, describeOwner: who => who as string);
         var captured = new List<SerializableMessageOccurence>();
         using var _ = river.Eris.SerializableMessageOccurences.Subscribe(captured.Add);
 

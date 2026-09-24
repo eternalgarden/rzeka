@@ -37,11 +37,15 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
         // a broken path emits it on every response it builds. The second whisper carries
         // nothing the first did not - same types, same spell, same fix.
         bool nullRequestHorrorWhispered = false;
+        // Only for the error trigger. Circumstances come from matter.Request (see below), since
+        // a "last request" races when several requests are in flight.
+        var lastRequest = default(TIn);
         IObservable<TIn> ingredient = Observable.Create<TIn>(observer =>
         {
             ingredientSubscribed = true;
             return ThisAsBinding
                 .GetObservableIngredient<TIn>()
+                .Do(request => lastRequest = request)
                 .Subscribe(observer);
         });
 
@@ -101,6 +105,6 @@ public class ShuttleSpell<TIn, TOut> : LoomingSpell<TOut>
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
                 return matter;
             })
-            .WhisperOnError(this);
+            .WhisperOnError(this, () => Present(lastRequest));
     }
 }

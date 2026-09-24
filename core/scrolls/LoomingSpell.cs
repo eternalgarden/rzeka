@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Subjects;
 
 namespace Rzeka;
@@ -88,6 +89,10 @@ public abstract class LoomingSpell<TOut> : ILoomingSpell<TOut>
     }
 
     public ReplaySubject<bool> BindingHasMana { get; } = new();
+
+    // The latest inputs that have arrived so far, for circumstance stamping and error triggers.
+    protected static IMatter[] Present(params IMatter?[] latest) =>
+        latest.Where(x => x is not null).Cast<IMatter>().ToArray();
 
     void UnregisterConjurerFromLibrary()
     {

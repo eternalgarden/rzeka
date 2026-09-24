@@ -31,6 +31,16 @@ public class Eris : IDisposable
     Subject<SpellOccurence> SpellStream { get; } = new();
     Subject<MatterOccurence> MatterStream { get; } = new();
     Subject<MessageOccurence> MessageStream { get; } = new();
+    Subject<Miscast> MiscastStream { get; } = new();
+
+    // Every spell failure the boundaries catch, with the matter the spell was handling.
+    // Internal: consumed by companion packages (Rzeka.Reporting), not by users.
+    internal IObservable<Miscast> Miscasts => MiscastStream.AsObservable();
+
+    internal void PublishMiscast(Miscast miscast)
+    {
+        MiscastStream.OnNext(miscast);
+    }
 
     public void PublishSpellOccurence(SpellOccurence spellOccurence)
     {
@@ -341,6 +351,8 @@ public class Eris : IDisposable
         WhosType = source.Who.GetType(),
         WhosDescription = DescribeOwner?.Invoke(source.Who),
     };
+
+    internal string DescribeWho(ISpell source) => ComposeWhosName(GetWho(source));
 
     // TODO there is a problem with that, there are no longer ingredients list
     private Dictionary<string, bool> GetSerializableIngredients(IBindingSpell binding)
