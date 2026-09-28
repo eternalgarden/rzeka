@@ -15,6 +15,7 @@ Checklist:
 - A Horror latch on shuttle emission of a reponse without a request reference set on it.
 - Error boundary Horrors now carry the matter the spell was handling as circumstances (a Loom's latest inputs, a Shuttle's latest request, a Weave's delivered matter).
 - Weave error boundary: a throwing Weave is whispered to Eris as a Horror and contained. `onUnhandledSourceError` runs for Weave failures too.
+- EternalGarden.Rzeka.Reporting: opt-in crash reporting that sends the causal story of a failing spell to an HTTP dnepoint. Structure only, no matter payload values due to privacy reasons).
 ### Removed
 ### Fixed
 - 🔥 A throwing Weave no longer silently stops its matter type from reaching every other subscriber for the rest of the session. This was a huge hidden bug discovered while working on rzeka-reporting.
