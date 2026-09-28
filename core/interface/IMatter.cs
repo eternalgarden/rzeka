@@ -23,7 +23,7 @@ public abstract class Matter : IMatter
 {
     public Guid Guid { get; } = Guid.NewGuid();
 
-    private List<IMatter> _circumstances = new();
+    private List<IMatter> _circumstances = [];
 
     /// <summary>
     /// This JsonConverter is super important to prevent wild serialization blobbing +20MB text file wildness
@@ -34,14 +34,14 @@ public abstract class Matter : IMatter
     public virtual IMatter Clone()
     {
         var clone = (Matter)MemberwiseClone();
-        clone._circumstances = new List<IMatter>(_circumstances);
+        clone._circumstances = [.. _circumstances];
         return clone;
     }
 
     public virtual IMatter Clone(params IMatter[] circumstances)
     {
         var clone = (Matter)MemberwiseClone();
-        clone._circumstances = new List<IMatter>(circumstances);
+        clone._circumstances = [.. circumstances];
         return clone;
     }
 
@@ -49,7 +49,7 @@ public abstract class Matter : IMatter
 
     public bool Equals(IMatter other)
     {
-        if (ReferenceEquals(null, other))
+        if (other is null)
             return false;
         if (ReferenceEquals(this, other))
             return true;
@@ -58,11 +58,11 @@ public abstract class Matter : IMatter
 
     public override bool Equals(object obj)
     {
-        if (ReferenceEquals(null, obj))
+        if (obj is null)
             return false;
         if (ReferenceEquals(this, obj))
             return true;
-        if (obj.GetType() != this.GetType())
+        if (obj.GetType() != GetType())
             return false;
         return Equals((Matter)obj);
     }

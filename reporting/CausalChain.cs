@@ -4,8 +4,9 @@ internal static class CausalChain
 {
     public const int MaxNodes = 50;
 
-    // Breadth-first from the triggers, so the closest causes survive the cap. Circumstances form
-    // a graph (a Loom2 output has two parents, ancestors are shared), hence the visited set.
+    // Walking breadth-first from the triggers, so the closest causes survive the 
+    // max nodes cap. 
+    // Circumstances form a graph so we use 'visited' to avoid node duplicates.
     public static ChainInfo Walk(
         IReadOnlyList<IMatter> triggers,
         Func<Guid, Provenance?> provenanceOf,
@@ -30,7 +31,7 @@ internal static class CausalChain
             }
 
             IMatter matter = pending.Dequeue();
-            IMatter[] causes = matter.Circumstances.Where(c => c is not null).ToArray();
+            IMatter[] causes = [.. matter.Circumstances.Where(c => c is not null)];
             foreach (IMatter cause in causes)
                 if (visited.Add(cause.Guid))
                     pending.Enqueue(cause);
@@ -42,7 +43,7 @@ internal static class CausalChain
                     matter.GetType().Name,
                     provenance?.At,
                     provenance?.ShapedBy,
-                    causes.Select(c => c.Guid).ToArray()
+                    [.. causes.Select(c => c.Guid)]
                 )
             );
         }

@@ -23,14 +23,14 @@ public class AskAttributionTests
 
     sealed class Trigger : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() => (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Circumstance flags ────────────────────────────────────────────────────
 
     [Fact]
     public void Ask_request_emission_is_flagged_with_manual_circumstances_when_pre_stamped()
     {
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         using var shuttle = river.Shuttle<Ping, Pong>(
             "responder",
             pings => pings.Select(p => new Pong(p, true))
@@ -57,7 +57,7 @@ public class AskAttributionTests
     [Fact]
     public void Ask_round_trip_chain_is_attributed_through_plucking_and_shuttling()
     {
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var spellOccurences = new List<SpellOccurence>();
         var matterOccurences = new List<MatterOccurence>();
         river.Eris.SpellOccurences.Subscribe(spellOccurences.Add);
@@ -96,7 +96,7 @@ public class AskAttributionTests
     {
         // Shuttle emits via SpellSchool.Shuttling which publishes to the library,
         // so a Loom subscribed to Pong receives the response and continues the chain.
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var matterOccurences = new List<MatterOccurence>();
         river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
 

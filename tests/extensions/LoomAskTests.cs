@@ -29,14 +29,14 @@ public class LoomAskTests
         }
     }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() => (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Basic pipeline ────────────────────────────────────────────────────────
 
     [Fact]
     public void Loom_uses_Ask_to_query_and_emit_one_output_per_input()
     {
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var triggerSubject = new Subject<Trigger>();
         var received = new List<Signal>();
 
@@ -70,7 +70,7 @@ public class LoomAskTests
         // Two triggers fire before either response arrives. The IsRespondingTo filter
         // inside Ask is the only thing keeping each in-flight query from receiving
         // the other's response. Responses arrive out of order to make the test conclusive.
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var triggerSubject = new Subject<Trigger>();
         var completions = new Subject<(Guid pingGuid, bool success)>();
         var received = new List<Signal>();
@@ -128,7 +128,7 @@ public class LoomAskTests
         // Disposing the Loom must dispose the SelectMany's inner subscriptions,
         // which tears down the in-flight Ask's Weave. A response arriving after
         // disposal must not produce a Signal.
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var triggerSubject = new Subject<Trigger>();
         var completions = new Subject<Guid>();
         var received = new List<Signal>();

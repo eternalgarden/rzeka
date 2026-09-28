@@ -31,6 +31,7 @@ public sealed record ExceptionInfo(
     ExceptionInfo? Inner
 );
 
+// Detailed info on the causal matter chain leading up to the exception.
 public sealed record ChainInfo(IReadOnlyList<ChainNode> Nodes, bool Truncated);
 
 public sealed record ChainNode(
@@ -43,4 +44,6 @@ public sealed record ChainNode(
 
 public sealed record SpellRef(string Title, string School, string OwnerType);
 
+// The last matter emissions before the exception, related to it or not.
+// Much less detailed than a ChainNode, but might still hint at a failure pattern.
 public sealed record Breadcrumb(DateTimeOffset At, string MatterType, string SpellTitle);

@@ -83,7 +83,7 @@ public class Eris : IDisposable
     // Unity callers unwrap MonoBehaviour.gameObject.name, plain C# callers can leave
     // the hook off. When null, Who carries only its type information and the
     // debugger sees instances of the same type as identical.
-    internal Func<object, string?>? DescribeOwner { get; set; }
+    internal Func<object, string?>? DescribeSpellOwner { get; set; }
 
     // Main-thread check used to whisper Horror when matter is published off-thread.
     // Wired by Spring.Create: captures the thread that called Create as the main thread
@@ -349,7 +349,7 @@ public class Eris : IDisposable
     Who GetWho(ISpell source) => new Who
     {
         WhosType = source.Who.GetType(),
-        WhosDescription = DescribeOwner?.Invoke(source.Who),
+        WhosDescription = DescribeSpellOwner?.Invoke(source.Who),
     };
 
     internal string DescribeWho(ISpell source) => ComposeWhosName(GetWho(source));

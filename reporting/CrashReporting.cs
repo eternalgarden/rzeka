@@ -6,7 +6,7 @@ namespace Rzeka.Reporting;
 
 public enum ReportingConsent
 {
-    // Not decided yet (e.g. preferences not loaded): reports are held in memory, never sent.
+    // Not decided yet (e.g. preferences not loaded) reports are held in memory without sending
     Unknown,
     Granted,
     Denied,
@@ -16,10 +16,10 @@ public sealed class CrashReporting : IDisposable
 {
     readonly CrashReportingOptions _options;
     readonly ReportSender _sender;
-    readonly IDisposable _teardown;
+    readonly CompositeDisposable _teardown;
 
     readonly object _gate = new();
-    readonly List<CrashReport> _held = new();
+    readonly List<CrashReport> _held = [];
     ReportingConsent _consent;
     int _reportsThisSession;
 
@@ -38,12 +38,12 @@ public sealed class CrashReporting : IDisposable
         ICrashReportSink sink = options.Sink ?? new HttpCrashReportSink(options.Endpoint!);
 
         _sender = new ReportSender(sink);
-        var currentRiver = new SerialDisposable();
+        var currentRiverSub = new SerialDisposable();
 
         _teardown = new CompositeDisposable(
-            spring.OnCreated.Subscribe(river => currentRiver.Disposable = Watch(river)),
-            spring.OnDisposed.Subscribe(_ => currentRiver.Disposable = Disposable.Empty),
-            currentRiver,
+            spring.OnCreated.Subscribe(river => currentRiverSub.Disposable = Watch(river)),
+            spring.OnDisposed.Subscribe(_ => currentRiverSub.Disposable = Disposable.Empty),
+            currentRiverSub,
             _sender,
             Disposable.Create(() =>
             {
@@ -62,8 +62,7 @@ public sealed class CrashReporting : IDisposable
         }
     }
 
-    // Can be called from any thread, any number of times. Granting sends what was held;
-    // denying discards it. Nothing already sent can be unsent.
+    // Granting consent sends potential withheld reports.
     public void SetConsent(bool granted)
     {
         lock (_gate)
@@ -72,28 +71,33 @@ public sealed class CrashReporting : IDisposable
             if (granted)
                 foreach (CrashReport report in _held)
                     _sender.Enqueue(report);
-            _held.Clear();
+            else
+                _held.Clear();
         }
     }
 
     public void Dispose() => _teardown.Dispose();
 
-    IDisposable Watch(SpringRiver river)
+    // Only 'Shaped' matter occurrences are currently collected, recivals are filtered out.
+    // Incoming miscasts are what triggers a Report.
+    CompositeDisposable Watch(River river)
     {
-        var memory = new RiverMemory();
+        var memory = new RiverMemory(provenanceCapacity: 1000, breadcrumbCapacity: 20);
         return new CompositeDisposable(
             river
                 .Eris.MatterOccurences.Where(o =>
                     o.MatterOccurenceCategory is MatterOccurenceCategory.Shaped
                 )
-                .Subscribe(o =>
-                    NeverThrow(() => memory.RecordShaped(o.Matter, o.Source, o.Timestamp))
+                .Subscribe(occ =>
+                    NeverThrow(() => memory.RecordShaped(occ.Matter, occ.Source, occ.Timestamp))
                 ),
-            river.Eris.Miscasts.Subscribe(m => NeverThrow(() => Report(river, memory, m)))
+            river.Eris.Miscasts.Subscribe(miscast =>
+                NeverThrow(() => Report(river, memory, miscast))
+            )
         );
     }
 
-    void Report(SpringRiver river, RiverMemory memory, Miscast miscast)
+    void Report(River river, RiverMemory memory, Miscast miscast)
     {
         lock (_gate)
         {
@@ -108,7 +112,7 @@ public sealed class CrashReporting : IDisposable
                 miscast,
                 memory,
                 _options,
-                river.Eris.DescribeOwner,
+                river.Eris.DescribeSpellOwner,
                 Guid.NewGuid(),
                 DateTimeOffset.UtcNow
             );

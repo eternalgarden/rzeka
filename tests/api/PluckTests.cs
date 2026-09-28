@@ -11,21 +11,21 @@ public class PluckTests
 {
     sealed class Ink : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() => (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // Builds a river whose "main thread" is a real event loop, so that marshalling is observable.
     // Spring.Create captures the calling thread, so it must be constructed on the loop itself.
-    static (SpringRiver River, EventLoopScheduler Loop, int MainThreadId) NewLoopRiver()
+    static (River River, EventLoopScheduler Loop, int MainThreadId) NewLoopRiver()
     {
         var loop = new EventLoopScheduler();
-        SpringRiver? river = null;
+        River? river = null;
         int mainThreadId = 0;
         var ready = new ManualResetEventSlim(false);
 
         loop.Schedule(() =>
         {
             mainThreadId = Environment.CurrentManagedThreadId;
-            river = (SpringRiver)new Spring().Create("test", loop);
+            river = (River)new Spring().Create("test", loop);
             ready.Set();
         });
 

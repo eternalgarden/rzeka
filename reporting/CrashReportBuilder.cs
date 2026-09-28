@@ -31,7 +31,7 @@ internal static class CrashReportBuilder
                 ),
                 DescribeException(miscast.Exception, options.IncludeExceptionMessages, depth: 0)
             ),
-            miscast.Trigger.Select(m => m.Guid).ToArray(),
+            [.. miscast.Trigger.Select(m => m.Guid)],
             CausalChain.Walk(miscast.Trigger, memory.ProvenanceOf),
             memory.Breadcrumbs()
         );

@@ -10,7 +10,7 @@ public class RiverMemoryTests
 
     static ISpell AnySpell()
     {
-        var river = (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+        var river = (River)new Spring().Create("test", ImmediateScheduler.Instance);
         ISpell spell = null!;
         river.Eris.SpellOccurences.Subscribe(o => spell ??= o.Source);
         river.Strand("game", new Subject<Ping>());

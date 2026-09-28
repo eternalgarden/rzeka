@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Rzeka.Reporting")]
 
 namespace Rzeka;
-internal sealed class SpringRiver : IRzeka, IDisposable
+internal sealed class River : IRzeka, IDisposable
 {
     internal Eris Eris { get; }
     internal Library Library { get; }
@@ -24,7 +24,7 @@ internal sealed class SpringRiver : IRzeka, IDisposable
     readonly Spring _spring;
     bool _disposed;
 
-    internal SpringRiver(string name, Spring spring)
+    internal River(string name, Spring spring)
     {
         Name = name;
         _spring = spring;

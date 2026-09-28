@@ -135,7 +135,7 @@ public class CrashReportingTests
             IRzeka river = spring.Create(
                 "test",
                 ImmediateScheduler.Instance,
-                describeOwner: who => who.ToString()
+                describeSpellOwner: who => who.ToString()
             );
             var pings = new Subject<Ping>();
             using var strand = river.Strand(new Secretive(), pings);

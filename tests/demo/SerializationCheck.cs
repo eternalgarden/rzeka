@@ -21,7 +21,7 @@ namespace Rzeka.Tests.Demo
         public void PrintSerializedOccurences()
         {
             var spring = new Spring();
-            var rzeka = spring.Create("Test", System.Reactive.Concurrency.ImmediateScheduler.Instance) as SpringRiver;
+            var rzeka = spring.Create("Test", System.Reactive.Concurrency.ImmediateScheduler.Instance) as River;
 
             // Capture serialized output
             var spellJsons = new List<string>();

@@ -26,10 +26,10 @@ public class MiscastTests
         public override string ToString() => "dear diary";
     }
 
-    static SpringRiver NewRiver() =>
-        (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() =>
+        (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
-    static (List<Miscast> miscasts, List<MessageOccurence> horrors) Record(SpringRiver river)
+    static (List<Miscast> miscasts, List<MessageOccurence> horrors) Record(River river)
     {
         var miscasts = new List<Miscast>();
         var horrors = new List<MessageOccurence>();
@@ -228,7 +228,7 @@ public class MiscastTests
     public void Weave_throw_invokes_the_error_callback()
     {
         var failed = new List<ISpell>();
-        var river = (SpringRiver)
+        var river = (River)
             new Spring().Create(
                 "test",
                 ImmediateScheduler.Instance,
@@ -247,7 +247,7 @@ public class MiscastTests
     [Fact]
     public void Crash_on_error_callback_escapes_every_weave_and_reaches_the_caller()
     {
-        var river = (SpringRiver)
+        var river = (River)
             new Spring().Create(
                 "test",
                 ImmediateScheduler.Instance,
