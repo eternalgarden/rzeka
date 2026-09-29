@@ -109,6 +109,12 @@ Every `WardState` here automatically remembers the `HexCast` that diminished it 
 rzeka ships with a browser-based debugger that connects to your running game over WebSocket and shows matter flow and messages in real time – you don't need to build your own in-game UI! Eris records internally even in release builds (a feature to dump crash logs is underway). The WebSocket server is added only in dev builds via the `EternalGarden.Rzeka.Dev` package so you can easily strip it from your release builds.
 
 Setup, the live UI, the demo, and structured logging via `Whisper` are all covered on the **[Eris](https://github.com/eternalgarden/rzeka/wiki/Eris)** page.
+
+## 🔖 Crash reporting
+
+When a spell fails in a player's game, the optional `EternalGarden.Rzeka.Reporting` package can send its causal story to a server: which matter led to the failure, which spells shaped it and when. **Structure only, without the values inside your matter**, and nothing is sent until the player agrees. The package just POSTs JSON; a reference backend on Azure lives in [rzeka-reporting-azure](https://github.com/eternalgarden/rzeka-reporting-azure).
+
+Setup, consent, what a report contains and the privacy model are on the **[Crash Reporting](https://github.com/eternalgarden/rzeka/wiki/Crash-Reporting)** page.
 <!-- 
 ## 📚 Documentation
 
@@ -124,6 +130,7 @@ The wiki is the source of truth. Start at the **[Home](https://github.com/eterna
 - [🪧 Attributes](https://github.com/eternalgarden/rzeka/wiki/Attributes) - `[HasState]` and evolving stateful matter
 - [🧩 Extension Methods](https://github.com/eternalgarden/rzeka/wiki/Extension-Methods) - `Reacting`, the tuple combinators, `IsRespondingTo`
 - [🛟 Error Boundary](https://github.com/eternalgarden/rzeka/wiki/Error-Boundary) - how unhandled source errors are caught and surfaced
+- [📮 Crash Reporting](https://github.com/eternalgarden/rzeka/wiki/Crash-Reporting) - sending failures' causal stories to a server, privacy first
 - [🪃 Async Operations](https://github.com/eternalgarden/rzeka/wiki/Async-Operations) - crossing async boundaries while preserving causality
 <br><br>
 -->
