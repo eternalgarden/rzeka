@@ -6,7 +6,6 @@
     <Nullable>enable</Nullable>
 
     <PackageId>EternalGarden.Rzeka.Reporting</PackageId>
-    <Version>1.0.0</Version>
     <Authors>Maria Aurelia Heine</Authors>
     <Description>Opt-in crash reporting for rzeka. Sends the causal story of a failing spell (structure only, no matter values) to an HTTP endpoint.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
