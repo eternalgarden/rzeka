@@ -12,7 +12,7 @@ public class WeaveTests
     sealed class Brush : Matter { }
     sealed class Canvas : Matter { }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() => (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Lifecycle ────────────────────────────────────────────────────────────
 

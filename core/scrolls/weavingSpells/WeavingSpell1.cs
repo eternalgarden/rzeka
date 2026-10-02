@@ -25,7 +25,7 @@ public class WeavingSpell1<T1> : WeavingBase
     {
         /* ⭐ ---- ---- */
         
-        var ingredientT1 = ThisAsBinding.GetObservableIngredient<T1>();
+        var ingredientT1 = ThisAsBinding.GetObservableIngredient<T1>()?.WhisperOnThrow(this);
 
         if (ingredientT1 is null) throw new Exception($"Missing ingredient of type {typeof(T1)}");
 

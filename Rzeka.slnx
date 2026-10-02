@@ -5,6 +5,12 @@
   <Folder Name="/dev/">
     <Project Path="dev/Rzeka.Dev.csproj" />
   </Folder>
+  <Folder Name="/reporting/">
+    <Project Path="reporting/Rzeka.Reporting.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/CrashReportDemo/CrashReportDemo.csproj" />
+  </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Rzeka.Tests.csproj" />
   </Folder>

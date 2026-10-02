@@ -31,9 +31,9 @@ public class WeavingSpell3<T1, T2, T3> : WeavingBase
     {
         /* ⭐ ---- ---- */
 
-        var ingredient1 = ThisAsBinding.GetObservableIngredient<T1>();
-        var ingredient2 = ThisAsBinding.GetObservableIngredient<T2>();
-        var ingredient3 = ThisAsBinding.GetObservableIngredient<T3>();
+        var ingredient1 = ThisAsBinding.GetObservableIngredient<T1>()?.WhisperOnThrow(this);
+        var ingredient2 = ThisAsBinding.GetObservableIngredient<T2>()?.WhisperOnThrow(this);
+        var ingredient3 = ThisAsBinding.GetObservableIngredient<T3>()?.WhisperOnThrow(this);
 
         if (ingredient1 is null) throw new Exception($"Missing ingredient of type {typeof(T1)}");
         if (ingredient2 is null) throw new Exception($"Missing ingredient of type {typeof(T2)}");

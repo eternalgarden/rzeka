@@ -23,8 +23,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Copy of contract/crash-report.v1.sample.json from the rzeka-reporting repo. -->
+    <None Include="reporting/crash-report.v1.sample.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../core/Rzeka.Core.csproj" />
     <ProjectReference Include="../dev/Rzeka.Dev.csproj" />
+    <ProjectReference Include="../reporting/Rzeka.Reporting.csproj" />
   </ItemGroup>
 
 </Project>

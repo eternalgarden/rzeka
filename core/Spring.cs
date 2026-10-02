@@ -5,8 +5,8 @@ using System.Reactive.Subjects;
 namespace Rzeka;
 public sealed class Spring
 {
-    readonly Subject<SpringRiver> _created = new();
-    readonly Subject<SpringRiver> _disposed = new();
+    readonly Subject<River> _created = new();
+    readonly Subject<River> _disposed = new();
     bool _hasRiver;
 
     // Creates the single river for this Spring.
@@ -28,7 +28,7 @@ public sealed class Spring
         string name,
         IScheduler mainThread,
         Action<ISpell, Exception>? onUnhandledSourceError = null,
-        Func<object, string?>? describeOwner = null
+        Func<object, string?>? describeSpellOwner = null
     )
     {
         if (mainThread is null)
@@ -38,7 +38,7 @@ public sealed class Spring
                 "Spring already has a river. v1 supports a single river per Spring."
             );
         _hasRiver = true;
-        var river = new SpringRiver(name, this);
+        var river = new River(name, this);
         river.Eris.MainThread = mainThread;
 
         var mainThreadId = Environment.CurrentManagedThreadId;
@@ -46,16 +46,16 @@ public sealed class Spring
 
         if (onUnhandledSourceError is not null)
             river.Eris.OnUnhandledSourceError = onUnhandledSourceError;
-        if (describeOwner is not null)
-            river.Eris.DescribeOwner = describeOwner;
+        if (describeSpellOwner is not null)
+            river.Eris.DescribeSpellOwner = describeSpellOwner;
         _created.OnNext(river);
         return river;
     }
 
-    internal IObservable<SpringRiver> OnCreated => _created.AsObservable();
-    internal IObservable<SpringRiver> OnDisposed => _disposed.AsObservable();
+    internal IObservable<River> OnCreated => _created.AsObservable();
+    internal IObservable<River> OnDisposed => _disposed.AsObservable();
 
-    internal void NotifyDisposed(SpringRiver river)
+    internal void NotifyDisposed(River river)
     {
         _hasRiver = false;
         _disposed.OnNext(river);

@@ -24,7 +24,7 @@ public class AskTests
         public Done(Guid requestGuid) => RequestGuid = requestGuid;
     }
 
-    static SpringRiver NewRiver() => (SpringRiver)new Spring().Create("test", ImmediateScheduler.Instance);
+    static River NewRiver() => (River)new Spring().Create("test", ImmediateScheduler.Instance);
 
     // ── Core behavioral ───────────────────────────────────────────────────────
 
@@ -99,7 +99,7 @@ public class AskTests
     [Fact]
     public void Ask_does_not_pluck_request_before_subscription()
     {
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var matterOccurences = new List<MatterOccurence>();
         river.Eris.MatterOccurences.Subscribe(matterOccurences.Add);
 
@@ -125,7 +125,7 @@ public class AskTests
     [Fact]
     public void Ask_disposal_emits_Forgotten_for_inner_Weave()
     {
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var spellOccurences = new List<SpellOccurence>();
         river.Eris.SpellOccurences.Subscribe(spellOccurences.Add);
 
@@ -153,7 +153,7 @@ public class AskTests
     public void Ask_does_not_deliver_responses_that_arrive_after_disposal()
     {
         // The Weave is torn down on disposal; a response completing later must not reach the observer.
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var received = new List<Pong>();
         var completions = new Subject<Guid>();
 
@@ -185,7 +185,7 @@ public class AskTests
     {
         // Both Weaves are alive when both responses arrive, so the IsRespondingTo filter
         // is the only thing separating them.
-        SpringRiver river = NewRiver();
+        River river = NewRiver();
         var received1 = new List<Pong>();
         var received2 = new List<Pong>();
         var completions = new Subject<(Guid guid, bool success)>();

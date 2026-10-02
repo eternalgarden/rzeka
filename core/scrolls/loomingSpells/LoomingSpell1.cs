@@ -71,7 +71,7 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
                 bool manualCircumstances = matter.HasCircumstances();
                 if (!manualCircumstances)
                     matter = matter.WithCircumstances<TOut>(
-                        lastT is not null ? new IMatter[] { lastT } : Array.Empty<IMatter>()
+                        Present(lastT)
                     );
 
                 ThisAsBase.SendMatterOccurence(matter, MatterOccurenceCategory.Shaped, manualCircumstances);
@@ -81,7 +81,7 @@ public class LoomingSpell1<T1, TOut> : LoomingSpell<TOut>
                 /* ---- ---- 🌠 */
 
             })
-            .WhisperOnError(this);
+            .WhisperOnError(this, () => Present(lastT));
             // nd
             // TODO this will be deleted since Library will handle that
             // .Multicast(new ReplaySubject<TOut>(bufferSize: 1)) // ? provide alternatives

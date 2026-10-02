@@ -31,6 +31,16 @@ public class Eris : IDisposable
     Subject<SpellOccurence> SpellStream { get; } = new();
     Subject<MatterOccurence> MatterStream { get; } = new();
     Subject<MessageOccurence> MessageStream { get; } = new();
+    Subject<Miscast> MiscastStream { get; } = new();
+
+    // Every spell failure the boundaries catch, with the matter the spell was handling.
+    // Internal: consumed by companion packages (Rzeka.Reporting), not by users.
+    internal IObservable<Miscast> Miscasts => MiscastStream.AsObservable();
+
+    internal void PublishMiscast(Miscast miscast)
+    {
+        MiscastStream.OnNext(miscast);
+    }
 
     public void PublishSpellOccurence(SpellOccurence spellOccurence)
     {
@@ -73,7 +83,7 @@ public class Eris : IDisposable
     // Unity callers unwrap MonoBehaviour.gameObject.name, plain C# callers can leave
     // the hook off. When null, Who carries only its type information and the
     // debugger sees instances of the same type as identical.
-    internal Func<object, string?>? DescribeOwner { get; set; }
+    internal Func<object, string?>? DescribeSpellOwner { get; set; }
 
     // Main-thread check used to whisper Horror when matter is published off-thread.
     // Wired by Spring.Create: captures the thread that called Create as the main thread
@@ -339,8 +349,10 @@ public class Eris : IDisposable
     Who GetWho(ISpell source) => new Who
     {
         WhosType = source.Who.GetType(),
-        WhosDescription = DescribeOwner?.Invoke(source.Who),
+        WhosDescription = DescribeSpellOwner?.Invoke(source.Who),
     };
+
+    internal string DescribeWho(ISpell source) => ComposeWhosName(GetWho(source));
 
     // TODO there is a problem with that, there are no longer ingredients list
     private Dictionary<string, bool> GetSerializableIngredients(IBindingSpell binding)

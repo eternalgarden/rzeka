@@ -92,7 +92,7 @@ public sealed class AlteringScroll<T1> : IWeavingSpell
         // todo add this check
         // if (ThisAsBinding.IsCastable is false) throw new Exception("messed up");
 
-        var ingredient = ThisAsBinding.GetObservableIngredient<T1>();
+        var ingredient = ThisAsBinding.GetObservableIngredient<T1>()?.WhisperOnThrow(this);
 
         if (ingredient is null) throw new Exception($"Missing ingredient of type {typeof(T1)}");
         
