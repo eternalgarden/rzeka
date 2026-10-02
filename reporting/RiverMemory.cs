@@ -39,7 +39,6 @@ internal sealed class RiverMemory(int provenanceCapacity = 1000, int breadcrumbC
     public IReadOnlyList<Breadcrumb> Breadcrumbs() => [.. _breadcrumbs];
 
     // Title, SpellSchool and Who's name
-    // TODO: check if we aren't skipping the 
     public static SpellRef Describe(ISpell spell) =>
         new(spell.Title, spell.SpellSchool.ToString(), spell.Who.GetType().Name);
 }
