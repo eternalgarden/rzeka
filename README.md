@@ -1,9 +1,11 @@
 # 💦📜🏹 rzeka
 
+[![EternalGarden.Rzeka](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget&label=Rzeka)](https://www.nuget.org/packages/EternalGarden.Rzeka)
+[![EternalGarden.Rzeka.Dev](https://img.shields.io/nuget/v/EternalGarden.Rzeka.Dev?logo=nuget&label=Rzeka.Dev)](https://www.nuget.org/packages/EternalGarden.Rzeka.Dev)
+[![EternalGarden.Rzeka.Reporting](https://img.shields.io/nuget/v/EternalGarden.Rzeka.Reporting?logo=nuget&label=Rzeka.Reporting)](https://www.nuget.org/packages/EternalGarden.Rzeka.Reporting)<br>
 [![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)](https://dotnet.microsoft.com/download)
 [![CI](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml/badge.svg)](https://github.com/eternalgarden/rzeka/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/eternalgarden/rzeka/branch/main/graph/badge.svg)](https://codecov.io/gh/eternalgarden/rzeka)
-[![NuGet](https://img.shields.io/nuget/v/EternalGarden.Rzeka?logo=nuget)](https://www.nuget.org/packages/EternalGarden.Rzeka)
 <!-- [![Downloads](https://img.shields.io/nuget/dt/EternalGarden.Rzeka?label=downloads)](https://www.nuget.org/packages/EternalGarden.Rzeka) -->
 
 > 🌟📜 **Important**: This README is a glimpse into rzeka, not the manual. [Full documentation in Wiki](https://github.com/eternalgarden/rzeka/wiki) – API reference, threading model, Eris, attributes & error handling.
