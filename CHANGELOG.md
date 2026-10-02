@@ -10,7 +10,7 @@ Checklist:
 - Add new diff at the bottom of the changelog and update the unreleased one.
 - Copy the latest section to the releases page at github.
 
-## [Unreleased]
+## [1.2.0] – 2026-10-02
 ### Added
 - A Horror latch on shuttle emission of a reponse without a request reference set on it.
 - Error boundary Horrors now carry the matter the spell was handling as circumstances (a Loom's latest inputs, a Shuttle's latest request, a Weave's delivered matter).
