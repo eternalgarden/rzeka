@@ -15,8 +15,9 @@ public sealed class Spring
     // (Strand, Loom, Shuttle) automatically ObserveOn this scheduler before publishing matter, so
     // matter publication is structurally guaranteed on the main thread - downstream subscribers
     // and the synchronous prefix of any downstream SelectMany lambda inherit main-thread context.
-    // Pluck is intentionally NOT marshalled (it's a synchronous one-shot; queuing through a scheduler
-    // would lose the emission when its token disposes); callers are expected to Pluck on main thread.
+    // Pluck's observable is NOT marshalled (queuing its emission through a scheduler would lose it
+    // when its token disposes); instead an off-thread Pluck call is rescheduled whole onto this
+    // scheduler, with a Hunch (see River.Pluck).
     //
     // For tests and non-engine contexts, pass ImmediateScheduler.Instance to keep emissions
     // synchronous on the current thread.

@@ -30,13 +30,19 @@ public static class RzekaExtensions
     /// <summary>
     /// Stamp circumstances on a piece of matter. Returns a clone — the original is unchanged.
     /// Replaces any pre-existing circumstances; pass them all in one call if you need to merge.
+    /// Null circumstances (and a null array) are skipped, so an optional cause can be passed
+    /// as-is. With nothing left to stamp, the matter is returned untouched rather than cloned
+    /// with an empty list, so "no cause" never wipes a stamp that is already there.
     /// Mirrors <see cref="IMatter.WithCircumstances{T}"/> as an extension so concrete-typed
     /// call sites (e.g. <c>new GamePaused().WithCircumstances&lt;GamePaused&gt;(trigger)</c>) don't
     /// need an interface cast.
     /// </summary>
-    public static T WithCircumstances<T>(this T matter, params IMatter[] circumstances)
+    public static T WithCircumstances<T>(this T matter, params IMatter?[]? circumstances)
         where T : IMatter
-        => (T)matter.Clone(circumstances);
+    {
+        IMatter[] present = circumstances?.Where(c => c is not null).Cast<IMatter>().ToArray() ?? [];
+        return present.Length == 0 ? matter : (T)matter.Clone(present);
+    }
 
     public static bool IsCircumstancedBy<T, U>(this T matter, U other)
         where T : IMatter

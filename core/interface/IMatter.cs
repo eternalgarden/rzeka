@@ -14,9 +14,9 @@ public interface IMatter : IEquatable<IMatter>
 
     public bool HasCircumstances() => Circumstances.Count > 0;
 
-    public T WithCircumstances<T>(params IMatter[] circumstances)
+    public T WithCircumstances<T>(params IMatter?[]? circumstances)
         where T : IMatter
-        => (T)Clone(circumstances);
+        => RzekaExtensions.WithCircumstances((T)this, circumstances);
 }
 
 public abstract class Matter : IMatter
