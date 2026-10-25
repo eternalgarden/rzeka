@@ -153,6 +153,62 @@ public class PluckTests
         Assert.Contains(emitted.Matter.Circumstances, c => c.Guid == ctx2.Guid);
     }
 
+    // ── Disposed river ───────────────────────────────────────────────────────
+
+    [Fact]
+    public void Pluck_on_a_disposed_river_is_a_quiet_no_op()
+    {
+        // Teardown order is the engine's business: a lease released by a node that outlives the
+        // river must not crash the shutdown.
+        var river = NewRiver();
+        river.Dispose();
+
+        var ex = Record.Exception(() => river.Pluck(new object(), new Ink()));
+
+        Assert.Null(ex);
+    }
+
+    [Fact]
+    public void Pluck_on_a_disposed_river_reaches_no_one()
+    {
+        // River disposal is shallow (streams stay alive), so without a guard a late pluck would
+        // still be delivered to subscribers whose owners were never disposed.
+        var river = NewRiver();
+        var received = new List<Ink>();
+        river.Weave<Ink>(new object(), System.Reactive.Observer.Create<Ink>(received.Add));
+        river.Dispose();
+
+        river.Pluck(new object(), new Ink());
+
+        Assert.Empty(received);
+    }
+
+    [Fact]
+    public void Pluck_from_a_worker_thread_after_disposal_is_dropped()
+    {
+        var (river, loop, _) = NewLoopRiver();
+        loop.Schedule(river.Dispose);
+
+        Exception? ex = null;
+        var done = new ManualResetEventSlim(false);
+        var worker = new Thread(() =>
+        {
+            ex = Record.Exception(() => river.Pluck(new object(), new Ink()));
+            done.Set();
+        });
+
+        // Make sure the disposal has run on the loop before the worker plucks.
+        var disposed = new ManualResetEventSlim(false);
+        loop.Schedule(disposed.Set);
+        Assert.True(disposed.Wait(5000));
+
+        worker.Start();
+        Assert.True(done.Wait(5000));
+        Assert.Null(ex);
+
+        loop.Dispose();
+    }
+
     // ── Main-thread marshalling ──────────────────────────────────────────────
 
     [Fact]

@@ -10,6 +10,12 @@ Checklist:
 - On GitHub after releasing:
   - Paste in the contents of the changelog for this release.
   - (if it's not there already) Add a link to the new full changelog between this tag's commit and one belonging to the last release.
+## [Unreleased]
+### Added
+### Removed
+### Fixed
+### Changed
+
 ## [1.2.1] – 2026-10-25
 ### Fixed
 - `WithCircumstances` no longer accepts `null` silently only to crash later: a `null` array threw straight away, and a `null` element was stored and blew up in `IsCircumstancedBy` or Eris. Nulls are now skipped.

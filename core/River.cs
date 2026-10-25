@@ -22,7 +22,8 @@ internal sealed class River : IRzeka, IDisposable
     internal string Name { get; }
 
     readonly Spring _spring;
-    bool _disposed;
+    // Volatile: an off-thread Pluck reads it before marshalling.
+    volatile bool _disposed;
 
     internal River(string name, Spring spring)
     {
@@ -98,6 +99,13 @@ internal sealed class River : IRzeka, IDisposable
         //
         // Only off-thread callers are marshalled. On the main thread a pluck stays fully synchronous,
         // so downstream Weaves have already run by the time this returns - callers may depend on that.
+        //
+        // A disposed river drops plucks quietly. Engine teardown order decides who exits last, and
+        // a late pluck (a lease released by an owner that outlived the river) must neither crash
+        // the shutdown nor reach subscribers left behind - disposal is shallow, streams stay alive.
+        // Eris is gone by then, so there is no one to whisper to.
+        if (_disposed) return;
+
         if (Eris.IsOnMainThread is null || Eris.IsOnMainThread())
         {
             _ = new PluckingSpell<T>(who, matter, Library, Eris);
@@ -116,7 +124,12 @@ internal sealed class River : IRzeka, IDisposable
                 $"Off-thread pluck: {typeof(T).Name} by {who.GetType().Name} was plucked from a worker thread and has been marshalled onto the main thread. It will publish later than it would on the main thread. Consider returning the value through a Shuttle response or a Strand instead.",
         });
 
-        Eris.MainThread.Schedule(() => _ = new PluckingSpell<T>(who, matter, Library, Eris));
+        // The river may be disposed between scheduling and running.
+        Eris.MainThread.Schedule(() =>
+        {
+            if (_disposed) return;
+            _ = new PluckingSpell<T>(who, matter, Library, Eris);
+        });
     }
 
     public IDisposable Shuttle<TIn, TOut>(object who, Func<IObservable<TIn>, IObservable<TOut>> spell)
