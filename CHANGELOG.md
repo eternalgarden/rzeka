@@ -10,11 +10,9 @@ Checklist:
 - On GitHub after releasing:
   - Paste in the contents of the changelog for this release.
   - (if it's not there already) Add a link to the new full changelog between this tag's commit and one belonging to the last release.
-## [Unreleased]
-### Added
-### Removed
+## [1.2.2] – 2026-10-25
 ### Fixed
-### Changed
+- Pluck on a disposed river is now dropped quietly.
 
 ## [1.2.1] – 2026-10-25
 ### Fixed
@@ -92,6 +90,7 @@ Checklist:
 - Eris: she is now much prettier 💅🏻
 - Eris: quality of life improvements (autoconnect, clear on new session id)
 
+[1.2.2]: https://github.com/eternalgarden/rzeka/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/eternalgarden/rzeka/compare/v1.2.0...v1.2.1
 [1.1.3]: https://github.com/eternalgarden/rzeka/compare/v1.1.2...v1.1.3
 [1.1.2]: https://github.com/eternalgarden/rzeka/compare/v1.1.1...v1.1.2
