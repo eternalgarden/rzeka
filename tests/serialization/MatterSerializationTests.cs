@@ -1,6 +1,5 @@
 using System;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Rzeka;
 using Rzeka.Serialization;
 
@@ -24,16 +23,51 @@ public class MatterSerializationTests
 
     class MatterWithCircumstances : Matter { }
 
-    static readonly JsonSerializerOptions SerializerOptions = new()
+    // Shaped like an engine vector: public fields, no properties.
+    struct FieldVector
     {
-        Converters =
+        public float X;
+        public float Y;
+        public float Z;
+
+        public FieldVector(float x, float y, float z)
         {
-            new JsonStringEnumConverter(),
-            new TypeJsonConverter(),
-            new MatterJsonConverter(),
-            new CircumstancesJsonConverter(),
+            X = x;
+            Y = y;
+            Z = z;
         }
-    };
+    }
+
+    class MatterWithFieldStruct : Matter
+    {
+        public FieldVector Point { get; }
+
+        public MatterWithFieldStruct(FieldVector point) => Point = point;
+    }
+
+    // The dev server's own options, so these tests check what Eris actually receives.
+    static JsonSerializerOptions SerializerOptions => Rzeka.Dev.RzekaDevExtensions.SerializerOptions;
+
+    [Fact]
+    public void ShapedMatter_StructWithPublicFields_IsSerializedWithItsFields()
+    {
+        var matter = new MatterWithFieldStruct(new FieldVector(1.5f, -2f, 3f));
+        var occ = new SerializableShapedMatter(
+            Guid.NewGuid(),
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds(),
+            matter.GetType(),
+            Guid.NewGuid(),
+            matter
+        );
+
+        string json = JsonSerializer.Serialize(occ, occ.GetType(), SerializerOptions);
+        using var doc = JsonDocument.Parse(json);
+        var point = doc.RootElement.GetProperty("matter").GetProperty("Point");
+
+        Assert.Equal(1.5f, point.GetProperty("X").GetSingle());
+        Assert.Equal(-2f, point.GetProperty("Y").GetSingle());
+        Assert.Equal(3f, point.GetProperty("Z").GetSingle());
+    }
 
     [Fact]
     public void ShapedMatter_UserDefinedProperties_AreIncludedInJson()

@@ -9,8 +9,12 @@ namespace Rzeka.Dev
 {
     public static class RzekaDevExtensions
     {
-        static readonly JsonSerializerOptions SerializerOptions = new()
+        internal static readonly JsonSerializerOptions SerializerOptions = new()
         {
+            // Engine value types keep their data in public fields, not properties (Godot's
+            // Vector3 is X/Y/Z fields, Unity's too). Without this they serialize as {} and
+            // show up blank in Eris.
+            IncludeFields = true,
             Converters =
             {
                 new System.Text.Json.Serialization.JsonStringEnumConverter(),
