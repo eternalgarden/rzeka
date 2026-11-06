@@ -12,9 +12,6 @@ Checklist:
   - (if it's not there already) Add a link to the new full changelog between this tag's commit and one belonging to the last release.
 
 ## [1.2.3] – 2026-11-06
-- (no notes)
-
-## [1.2.3] – 2026-11-06
 ### Changed
 - Dev's JsonSerializerOptions now include 'IncludeFields' option. 
 
