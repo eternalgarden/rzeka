@@ -9,7 +9,9 @@ export function getFewGuidCharacters(guid: string): string {
   return guid.substring(0, 6);
 }
 
-const MAX_DEPTH: number = 3
+// Nesting shown as lists; deeper objects are shown as compact JSON. Still a limit, so a huge or
+// very deep matter can't swamp the page.
+const MAX_DEPTH: number = 6
 export function getObjectContents(
     o: any,
     markup: string,
@@ -36,7 +38,10 @@ export function getObjectContents(
                 currentDepth + 1
             )
             returnedListMarkup += `<li>${key}:<ul>${innerMarkup}</ul></li>`
-        } else returnedListMarkup += `<li>${key}: ${el}</li>`
+        } else if (typeof el === "object")
+            // Past the limit: `${el}` would print [object Object].
+            returnedListMarkup += `<li>${key}: ${JSON.stringify(el)}</li>`
+        else returnedListMarkup += `<li>${key}: ${el}</li>`
     }
 
     return returnedListMarkup
