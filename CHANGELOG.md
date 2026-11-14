@@ -11,6 +11,10 @@ Checklist:
   - Paste in the contents of the changelog for this release.
   - (if it's not there already) Add a link to the new full changelog between this tag's commit and one belonging to the last release.
 
+## [1.2.4] – 2026-11-14
+### Changed
+- Increased listing depth of matter properties in Eris.
+
 ## [1.2.3] – 2026-11-06
 ### Changed
 - Dev's JsonSerializerOptions now include 'IncludeFields' option. 
@@ -95,6 +99,7 @@ Checklist:
 - Eris: she is now much prettier 💅🏻
 - Eris: quality of life improvements (autoconnect, clear on new session id)
 
+[1.2.4]: https://github.com/eternalgarden/rzeka/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/eternalgarden/rzeka/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/eternalgarden/rzeka/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/eternalgarden/rzeka/compare/v1.2.0...v1.2.1
